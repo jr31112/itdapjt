@@ -63,7 +63,7 @@
   
 * 댓글 정보 테이블 `comment_t`
 
-
+  
   | 필드명  | 자료형  | 설명                                   |
   | ------- | ------- | -------------------------------------- |
   | cmid    | integer | Primary Key                            |
@@ -74,22 +74,22 @@
 
 * 스크랩 정보 테이블 `scrap_t`
 
-
+  
   | 필드명   | 자료형  | 설명                                   |
   | -------- | ------- | -------------------------------------- |
   | uid, wid | -       | Primary Key                            |
   | uid      | integer | **(필수)** user_t의 Primary Key(uid)   |
   | wid      | integer | **(필수)** wanted_t의 Primary Key(wid) |
-  
+
 * 기술 스택 테이블 `stack_t`
 
-
+  
   | 필드명 | 자료형  | 설명                                     |
   | ------ | ------- | ---------------------------------------- |
   | sid    | integer | Primary Key                              |
   | tname  | string  | 기술 스택 명                             |
   | cnt    | integer | **(필수, default 0)** 사용자가 선택한 수 |
-  
+
 * 내 스택 정보 테이블 `myStack_t`
 
   | 필드명   | 자료형  | 설명                                  |
@@ -100,12 +100,12 @@
   
 * 자격증 정보 테이블 `cert_t`
 
-
+  
   | 필드명 | 자료형  | 설명                 |
   | ------ | ------- | -------------------- |
   | ctid   | integer | Primary Key          |
   | ctname | string  | **(필수)** 자격증 명 |
-  
+
 * 내 자격증 정보 테이블 `myCert_t`
 
   | 필드명    | 자료형  | 설명                                  |
@@ -113,7 +113,7 @@
   | uid, ctid |         | Primary Key                           |
   | uid       | integer | **(필수)** user_t의 Primary Key(uid)  |
   | ctid      | integer | **(필수)** cert_t의 Primary Key(ctid) |
-  
+
 * 직무 정보 테이블 `job_b`
 
   | 필드명  | 자료형  | 설명                                   |
@@ -127,7 +127,7 @@
   | extra   | text    | 우대사항                               |
   | place   | string  | 근무지                                 |
   | wid     | integer | **(필수) **wanted_t의 Primary Key(wid) |
-  
+
 * 직무 별 기술 스택 정보 테이블 `jobstack_t`
 
   | 필드명   | 자료형  | 설명                                  |
@@ -135,7 +135,7 @@
   | jid, sid |         | Primary Key                           |
   | jid      | integer | **(필수) **job_t의 Primary Key(jid)   |
   | sid      | integer | **(필수) **stack_t의 Primary Key(sid) |
-  
+
 * 직무 별 자격증 정보 테이블 `jobCert_t`
 
   | 필드명    | 자료형  | 설명                                  |
@@ -143,7 +143,7 @@
   | jid, ctid |         | Primary Key                           |
   | jid       | integer | **(필수) **job_t의 Primary Key(jid)   |
   | ctid      | integer | **(필수) **cert_t의 Primary Key(ctid) |
-  
+
 * 기술 스택 추가 요청 테이블 `reqStack_t`
 
   | 필드명 | 자료형  | 설명                                 |
@@ -151,7 +151,7 @@
   | rsid   | integer | Primary Key                          |
   | tname  | string  | **(필수) ** 기술 스택 명             |
   | uid    | integer | **(필수) **user_t의 Primary Key(uid) |
-  
+
 
 ## sql
 

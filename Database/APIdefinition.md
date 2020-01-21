@@ -23,17 +23,16 @@
    { "email" : "string",
        "msg" : "string",
      "state" : "string" }
-     
-   ```
-     
-   ex)
-     
-   ```json
-     { "email" : "admin@it.da",
-       "msg" : "성공적으로 회원가입이 완료되었습니다. ",
-       "state" : "success" }
      ```
      
+     ex)
+     
+     ```json
+     { "email" : "admin@it.da",
+      "msg" : "성공적으로 회원가입이 완료되었습니다. ",
+      "state" : "success" }
+     ```
+  
      
 
 2. `GET /api/emailCheck/{email}` : 입력한 email이 사용가능 한지 중복 체크
@@ -45,16 +44,15 @@
      ```json
 { "msg" : "string",
        "state" : "string" }
-```
+     ```
      
-     ex) 
+     ex)
      
      ```json
      {"msg" : "사용할 수 있는 email입니다.", "state" : "success" }
      ```
-
-
-
+     
+     
 -----------
 
 ## 로그인
@@ -64,33 +62,35 @@
    - Parameter : User의 email, pw
 
      ```json
-  { "email" : "string",
-       "pw" : "string",
-    "uname" : "string",
-       "auth" : 0,
-    "major" : "string",
-       "uimg" : "string" }
-  ```
-   
-  로그인시 **email, pw ** 만 입력하여 로그인 한다.
-   
-- return : 로그인 성공 유무를 결과로 반환. state 결과 success/fail로 확인
-   
-  ```json
    { "email" : "string",
-   "auth" : 0,
-    "msg" : "string",
-   "state" : "string" }
-   ```
-  
-   ex)
-  
-   ```json
-  { "email" : "admin@it.da",
-       "auth" : 0,
-    "msg" : "이메일 또는 비밀번호가 일치하지 않습니다.",
-       "state" : "fail" }
+      "pw" : "string",
+    "uname" : "string",
+      "auth" : 0,
+    "major" : "string",
+      "uimg" : "string" }
      ```
+     
+     로그인시 **email, pw ** 만 입력하여 로그인 한다.
+     
+   - return : 로그인 성공 유무를 결과로 반환. state 결과 success/fail로 확인
+   
+     ```json
+     { "email" : "string",
+      "auth" : 0,
+      "msg" : "string",
+      "state" : "string" }
+     ```
+   
+     ex)
+   
+     ```json
+     { "email" : "admin@it.da",
+      "auth" : 0,
+      "msg" : "이메일 또는 비밀번호가 일치하지 않습니다.",
+      "state" : "fail" }
+     ```
+
+
 
 -------------
 

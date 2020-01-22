@@ -21,9 +21,9 @@
   | ---------- | ------- | ----------------- |
   | cid        | integer | Primary Key       |
   | corpNm     | string  | **(필수)** 회사명 |
-  | totPsncnt  | integer | 근로자수          |
+  | totPsncnt  | string  | 근로자수          |
   | busiSize   | string  | 기업규모          |
-  | yrSalesAmt | integer | 연매출액          |
+  | yrSalesAmt | string  | 연매출액          |
   | corpAddr   | string  | 회사 주소         |
   | homePg     | string  | 회사 홈페이지     |
   | busiCont   | string  | 주요 사업내용     |
@@ -160,9 +160,9 @@
 create table company_t(
 	cid int primary key auto_increment,
     corpNm varchar(100) not null,
-    totPsncnt int,
+    totPsncnt varchar(20),
     busiSize varchar(30),
-    yrSalesAmt int,
+    yrSalesAmt varchar(50),
     corpAddr varchar(500),
     homePg varchar(300),
     busiCont varchar(100),

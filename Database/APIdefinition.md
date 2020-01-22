@@ -8,11 +8,11 @@
 
      ```json
      { "email" : "string",
-     	"pw" : "string",
-     	"uname" : "string",
-     	"auth" : 0,
-     	"major" : "string",
-     	"uimg" : "string" }
+      "pw" : "string",
+      "uname" : "string",
+      "auth" : 0,
+      "major" : "string",
+      "uimg" : "string" }
      ```
 
      회원가입 시 **email, pw, uname** 만 입력하여 회원가입하도록 한다.
@@ -21,8 +21,8 @@
 
      ```json
    { "email" : "string",
-       "msg" : "string",
-     "state" : "string" }
+      "msg" : "string",
+      "state" : "string" }
      ```
      
      ex)
@@ -33,8 +33,6 @@
       "state" : "success" }
      ```
   
-     
-
 2. `GET /api/emailCheck/{email}` : 입력한 email이 사용가능 한지 중복 체크
 
    - Parameter : String
@@ -43,7 +41,7 @@
 
      ```json
 { "msg" : "string",
-       "state" : "string" }
+      "state" : "string" }
      ```
      
      ex)
@@ -51,8 +49,9 @@
      ```json
      {"msg" : "사용할 수 있는 email입니다.", "state" : "success" }
      ```
-     
-     
+
+
+
 -----------
 
 ## 로그인

@@ -5,6 +5,7 @@ import Recruit from '../views/Recruit.vue'
 import RecruitDetail from '../views/RecruitDetail.vue'
 import User from '../views/User.vue'
 import Admin from '../views/Admin.vue'
+import TotalWanted from '../views/TotalWanted.vue'
 
 Vue.use(VueRouter)
 
@@ -33,6 +34,11 @@ const routes = [
     path: '/admin',
     name: 'admin',
     component: Admin
+  },
+  {
+    path: '/totalwanted',
+    name: 'totalwanted',
+    component: TotalWanted
   }
 
 ]

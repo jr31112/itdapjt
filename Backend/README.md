@@ -14,9 +14,9 @@
 1. 기본 위치 (ex. C:\Program Files\Java\jdk-13.0.2)  경로 복사
 2. 환경변수 설정
    1.  윈도우 시스템 환경 변수 편집
-   2. 시스템변수 새로 만들기
-   3. 변수이름 `JAVA_HOME`, 변수값: `복붙(ex. C:\Program Files\Java\jdk-13.0.2) ` 
-   4. 시스템변수 path  새로 만들기 
+   2.  시스템변수 새로 만들기
+   3.  변수이름 `JAVA_HOME`, 변수값: `복붙(ex. C:\Program Files\Java\jdk-13.0.2) ` 
+   4.  시스템변수 path  새로 만들기 
    5.  `%JAVA_HOME%\bin` 엔터 후 맨위로 올리기
 
 
@@ -30,6 +30,7 @@
 ### 프로젝트 생성 및 설정
 
 * 프로젝트 생성
+
   * new > Maven project > next  > `quickstart` 선택 > next > 
 
     `Group Id` : `com.ssafy.itda` (이 프로젝트의 기본이 되는 주소)  
@@ -43,7 +44,8 @@
   * `Java compiler` > `Use default compliance settings` 체크해제 > `Generated .class files compatibility`  1.8  확인 > apply > close
 
 * pom 설정
-  * [pom.xml 소스보기](./java_settings_files/project_setting/pom.xml)
+
+  * [pom.xml 소스보기](./java_setting_files/project_setting/pom.xml)
   * `pom.xml` 설정 파일 덮어쓰기
     * Java Spring 쓸 때 기본적으로 많이 쓰는 것들
     * `<dependency>` : 내가 쓸 라이브러리 추가하는 공간
@@ -78,14 +80,14 @@
 
   * `src/main/java/com.ssafy.itda.itda_test` 위치에 `SSAFYApplication.java`, `SwaggerConfig.java` 파일 복사하기
 
-    * [SSAFYApplication.java 소스보기](./java_settings_files/src_main_java_package/SSAFYApplication.java)
-    * [SwaggerConfig.java 소스보기](./java_settings_files/src_main_java_package/SwaggerConfig.java)
+    * [SSAFYApplication.java 소스보기](./java_setting_files/src_main_java_package/SSAFYApplication.java)
+    * [SwaggerConfig.java 소스보기](./java_setting_files/src_main_java_package/SwaggerConfig.java)
 
   * `src/main/java` 우클릭 > New > package > `com.ssafy.itda.itda_test.controller`(dao, help, model, service) 만들기
 
   * `src` > `main` > `resources` 폴더 만들기 > 파일들 복붙
 
-    * [resources 소스보기](./java_settings_files/src_main_resource)
+    * [resources 소스보기](./java_setting_files/src_main_resource)
 
     * `resources` 폴더의 `application.properties` 
 
@@ -101,6 +103,7 @@
       주소 변경
 
 * 폴더 설명
+
   * `controller` : 클라이언트에서 API 요청 시 해당 api 주소와 매핑되어 실행하게 될 함수들 정의 부분
   * `model` : DB table과 동일한 구조(=dto)
   * `help` : 클라이언트에게 API 호출 시 반환해 줄 데이터 구조(=Response)
@@ -110,7 +113,9 @@
   * `dao` : `src/main/java/resources/mapper` 에 있는 xml과 매핑되어 JPA를 실행할 함수 정의
     * = JPA Repository (참고한 블로그에서 말하는 부분)
     * [JPA(Java Persistent API)란? 블로그 링크](https://blog.woniper.net/255)
+
 * 흐름
+
   * 요청 => `Client` -> `controller` -> `service` -> `dao` -> `xml` -> `Database Server`
   * 반환 => `dao` -> `service` -> `controller` ->`help` -> `Client` 
 
@@ -141,16 +146,56 @@
    return new ResponseEntity<returnResult>('return 결과 변수 명', HttpStatus.OK);
    ```
 
+   emailCheck 예시)
+
+   ```java
+   @ApiOperation(value = " email 중복을 확인한다.", response = UserResult.class)
+   @RequestMapping(value = "/emailCheck/{eamil}", method = RequestMethod.GET)
+   public ResponseEntity<UserResult> signUp(@PathVariable String email) throws Exception {
+       logger.info("1-2-------------emailCheck-------------------------" + new Date());
+       logger.info("1-2-------------emailCheck-------------------------" + email);
    
+       // 'email'이라는 email 을 가지고 있는 객체 user에 저장
+       User user = userService.emailCheck(email);
+       // 새로운 UserResult 생성, 반환객체
+       UserResult ur = new UserResult();
+       if (user != null) {
+           ur.setMsg("중복된 아이디입니다.");
+           ur.setState("fail");
+       } else {
+           ur.setMsg("사용가능한 아이디입니다.");
+           ur.setState("success");
+       }
+       return new ResponseEntity<UserResult>(ur, HttpStatus.OK);
+   }
+   ```
+
+   * `RequestMethod`가 `GET`일 때 `@PathVariable`
+   * `POST`일 때 `@RequestBody`
+   * 주의) `user`는 객체이므로 `if (user)`가 아닌 `if (user != null)`로 써줘야한다.
 
 #### Service
 
 * service -> new -> Interface -> 인터페이스명 (IXxxService) -> finish
 
 1. 사용할 함수를 **선언**만
+
 2. 규칙 : 'return 타입' '함수 명'('파라미터')
 
-​	
+   emailCheck 예제)
+
+   ```java
+   package com.ssafy.itda.itda_test.service;
+   
+   import com.ssafy.itda.itda_test.model.User;
+   
+   public interface IUserService {
+   	void signUp(User u);
+   	void emailCheck(String email);
+   }
+   ```
+
+   
 
 * service -> new -> class -> 클래스명(XxxServiceImpl) -> Interface -> IXxxService -> finish
 
@@ -159,12 +204,12 @@
 2. [dao 먼저 정의하기](#dao)
 
 3. #service autowired
-   
+
    ```java
    @Autowired
-private XxxDao xxxDao;
+   private XxxDao xxxDao;
    ```
-   
+
 4. 함수 구현 
 
    ```java
@@ -174,7 +219,22 @@ private XxxDao xxxDao;
    }
    ```
 
+   * emailCheck 예시)
 
+     ```java
+     public void signUp(User u) {
+         // TODO Auto-generated method stub
+         userDao.signUp(u);
+     }
+     
+     @Override
+     public User emailCheck(String email) {
+         return userDao.emailCheck(email);
+     }
+     ```
+
+     * `signUp()`은 반환 결과가 없다. DB에서 insert
+     * `emailCheck()`는 반환결과가 User 객체이다. DB에서 select
 
 #### #Dao
 
@@ -205,7 +265,19 @@ private XxxDao xxxDao;
 
 5. [다시 Service 로 가기](#service-autowired)
 
+   * emailCheck 예시)
 
+     ```java
+     public void signUp(User u) {
+         sqlSession.insert(ns + "signUp", u);
+     }
+     
+     public User emailCheck(String email) {
+         return sqlSession.selectOne(ns + "emailCheck",  email);
+     }
+     ```
+
+     
 
 #### XML
 
@@ -221,7 +293,26 @@ private XxxDao xxxDao;
 
   SQL 문 안에 모델의 데이터는 `#{ 변수명(소문자) }` 으로 작성
 
+  * emailCheck 예시)
 
+    ```java
+    <!-- sha1 : sha1이라는 보안기법에 의해 pw 자동 변환 -->
+    <insert id="signUp" 
+        parameterType="com.ssafy.itda.itda_test.model.User">
+        INSERT INTO USER_T(EMAIL, PW, UNAME)
+        VALUES ( #{email}, sha1(#{pw}), #{uname} ) 
+    </insert>
+    
+    <select id="emailCheck"
+        parameterType="String"
+        resultType="com.ssafy.itda.itda_test.model.User">
+        SELECT *
+        FROM USER_T
+        WHERE EMAIL = #{email}
+    </select>
+    ```
+
+    * `insert` 문은 리턴이 없다. 
 
 #### Help
 

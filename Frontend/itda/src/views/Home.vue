@@ -1,21 +1,44 @@
 <template>
-  <div class="home">
-    <v-container>
-      <wanted-login/>
-      <wanted-default/>
-    </v-container>
-  </div>
+    <div class="home">
+        <ImgBanner :imgSrc="getImgUrl('333.jpg')">
+            <div
+                class="font-weight-black text-center"
+                style="padding-left :50px; line-height:1.2em; font-size: calc((80vw / 1240) * 40) "
+                slot="text">Just Do it! you'll just win.</div>
+        </ImgBanner>
+
+        <v-container>
+            <v-layout my-5="my-5">
+                <v-flex >
+                    <v-col cols="8" sm="12">
+                        <RecentList></RecentList>
+                    </v-col>
+                </v-flex>
+            </v-layout>
+            <!-- <WantedLogin></WantedLogin> -->
+            <wanted-login/>
+            <wanted-default/>
+        </v-container>
+    </div>
 </template>
-
 <script>
-import WantedLogin from '../components/WantedLogin.vue'
-import WantedDefault from '../components/WantedDefault.vue'
-
-export default {
-  name: 'home',
-  components: {
-    WantedLogin,
-    WantedDefault
-  }
-}
+    import RecentList from '../components/RecentList'
+    import WantedLogin from '../components/WantedLogin.vue'
+    import WantedDefault from '../components/WantedDefault.vue'
+    import ImgBanner from '../components/ImgBanner.vue'
+    // import ImgBanner from '../components/ImgBanner.vue'
+    export default {
+        name: 'home',
+        components: {
+            WantedLogin,
+            WantedDefault,
+            ImgBanner,
+            RecentList
+        },
+        methods: {
+            getImgUrl(img) {
+                return require('../assets/' + img)
+            }
+        }
+    }
 </script>

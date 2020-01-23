@@ -1,7 +1,6 @@
 <template>
     <v-footer>
         <v-spacer></v-spacer>
-
         <v-btn href="dart.fss.or.krt" target="_blank" text="text">
             <v-avatar size="25px" class="mx-1">
                 <v-img :src="getImgUrl('job.png')"/>

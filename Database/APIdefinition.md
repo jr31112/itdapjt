@@ -10,17 +10,15 @@
      { "email" : "string",
       "pw" : "string",
       "uname" : "string",
-      "auth" : 0,
-      "major" : "string",
-      "uimg" : "string" }
+      }
      ```
-
+     
      회원가입 시 **email, pw, uname** 만 입력하여 회원가입하도록 한다.
 
    - return : 회원가입 성공 유무를 결과로 반환. state 결과 success/fail로 확인
 
      ```json
-   { "msg" : "string",
+{ "msg" : "string",
       "state" : "string" }
      ```
      
@@ -77,6 +75,7 @@
       "auth" : 0,
       "msg" : "string",
       "state" : "string" }
+     ```
    ```
      
    ex)
@@ -87,7 +86,7 @@
       "auth" : 0,
       "msg" : "이메일 또는 비밀번호가 일치하지 않습니다.",
       "state" : "fail" }
-     ```
+   ```
 
 
 

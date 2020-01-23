@@ -1,16 +1,14 @@
 <template>
-  <v-col class="wanteddeadline" cols="12" md="6">
-    <carousel :per-page="1" :paginationEnabled="false">
-      <slide>
-        <v-data-table :headers="headers" :items="desserts.slice(0, 5)" :hide-default-footer="true">
-          <template v-slot:item.action="{ item }">
+  <v-data-table :headers="headers" :items="desserts" :hide-default-footer="true" class="adminuser">
+      <template v-slot:item.action="{ item }">
             <v-icon
               small
               class="mr-2"
-              @click="editItem(item)"
+              @click="deleteItem(item)"
             >
               edit
             </v-icon>
+
             <v-icon
               small
               @click="deleteItem(item)"
@@ -18,34 +16,17 @@
               delete
             </v-icon>
           </template>
-        </v-data-table>
-      </slide>
-      <slide>
-        <v-data-table :headers="headers" :items="desserts.slice(5, 10)" :hide-default-footer="true">
-        </v-data-table>
-      </slide>
-    </carousel>
-  </v-col>
+  </v-data-table>
+  
 </template>
 
 <script>
-import { Carousel, Slide } from 'vue-carousel'
-
 export default {
-    name: "wanteddeadline",
-    components: {
-      Carousel,
-      Slide
-    },
-    data() {
-      return {
+    name: "adminuser",
+    data(){
+        return{
         headers: [
-          {
-            text: 'Dessert (100g serving)',
-            align: 'left',
-            sortable: false,
-            value: 'name',
-          },
+          { text: 'Dessert (100g serving)', align: 'left', sortable: false, value: 'name'},
           { text: 'Calories', value: 'calories' },
           { text: 'Fat (g)', value: 'fat' },
           { text: 'Carbs (g)', value: 'carbs' },

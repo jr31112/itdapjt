@@ -6,28 +6,28 @@
             style="height: 64px; margin-top: 0px; transform: translateY(0px); left: 0px; right: 0px;">
             <div class="v-toolbar__content" style="height: 64px;">
                 <button
-                    type="button"
+                    type="button"   
                     class="v-app-bar__nav-icon hidden-lg-and-up v-btn v-btn--flat v-btn--icon v-btn--round theme--dark v-size--default">
                     <span class="v-btn__content">
                         <i aria-hidden="true" class="v-icon notranslate mdi mdi-menu theme--dark"></i>
                     </span>
                 </button>
                 <a
-                    href="/en/"
+                    href=""
                     class="d-flex align-center router-link-active"
                     aria-label="It da"
                     title="It da">
                     <div
-                        role="img"
+                        role=""
                         aria-label="Vuetify Logo"
-                        class="v-responsive v-image shrink mr-2"
-                        style="width: 100px;">
+                        class="v-responsive v-image shrink ml-3 mt-2"
+                        style="width: 80px;">
                         <div class="v-responsive__sizer" style="padding-bottom: 114.132%;"></div>
-                        <div
-                            class="v-image__image v-image__image--contain"
-                            style="background-image: url( https://postfiles.pstatic.net/MjAyMDAxMjFfMjk5/MDAxNTc5NTk1OTk3Mzc1.EBmMpx9wKwBHAV6ElSyFWYngGCuPpPcCgHHv-XxaaSEg.AmDumjW_5PnaQKYwqR-jEXkmNAgue8HPMABXjnu2eDcg.PNG.koo_m/fe.png?type=w966); background-position: center center;"></div>
-                        <div class="v-responsive__content" style="width: 1118px;"></div>
+                        <v-img :src="getImgUrl('logoo.png')" style="width :100%"/>
+                        
+                   <!-- //<v-img :src="getImgUrl('itda1.png')" /> -->
                     </div>
+                                    <!--  -->
                     <!-- <div
                         role="img"
                         aria-label="Vuetify Name"
@@ -56,7 +56,7 @@
                                     <div class="v-text-field__slot">
                                         <label for="search"
                                             class="v-label theme--dark"
-                                            style="left: 0px; right: auto; position: absolute;">기업을 검색해주세요</label>
+                                            style="left: 0px; right: auto; position: absolute;">기업명을 검색해주세요</label>
                                         <input
                                             id="search"
                                             type="text"

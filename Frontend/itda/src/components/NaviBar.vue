@@ -13,7 +13,7 @@
                     </span>
                 </button>
                 <a
-                    href=""
+                    href="/"
                     class="d-flex align-center router-link-active"
                     aria-label="It da"
                     title="It da">
@@ -107,9 +107,9 @@
                                 class="v-icon notranslate v-icon--right mdi mdi-open-in-new theme--dark"></i>
                         </span>
                     </a>
-                    <a
-                        href="/en/professional-support/enterprise"
-                        class="hidden-sm-and-down v-btn v-btn--flat v-btn--router v-btn--text theme--dark v-size--default"
+                    <a>
+                    <v-btn
+                        v-on:click="goTotalWantedPage()" class="hidden-sm-and-down v-btn v-btn--flat v-btn--router v-btn--text theme--dark v-size--default"
                         aria-label="For Enterprise"
                         style="min-width: 48px;">
                         <span class="v-btn__content">
@@ -119,6 +119,7 @@
                                 </div>
                             </span>
                         </span>
+                    </v-btn>
                     </a>
                     <div class="v-menu">
                         <div
@@ -157,10 +158,18 @@
             </header>
     </template>
     <script>
+    import router from "../router/index.js"
+
     export default {
+        components:{
+            
+        },
         methods: {
             getImgUrl(img) {
                 return require("../assets/" + img);
+            },
+            goTotalWantedPage(){
+                router.push({name:'totalwanted'}).catch(() => {});
             }
         }
     };

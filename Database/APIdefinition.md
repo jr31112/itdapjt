@@ -10,29 +10,25 @@
      { "email" : "string",
       "pw" : "string",
       "uname" : "string",
-      "auth" : 0,
-      "major" : "string",
-      "uimg" : "string" }
+      }
      ```
-
+     
      회원가입 시 **email, pw, uname** 만 입력하여 회원가입하도록 한다.
 
    - return : 회원가입 성공 유무를 결과로 반환. state 결과 success/fail로 확인
 
      ```json
-   { "email" : "string",
-      "msg" : "string",
+{ "msg" : "string",
       "state" : "string" }
      ```
      
      ex)
      
      ```json
-     { "email" : "admin@it.da",
-      "msg" : "성공적으로 회원가입이 완료되었습니다. ",
+     { "msg" : "성공적으로 회원가입이 완료되었습니다. ",
       "state" : "success" }
      ```
-  
+   
 2. `GET /api/emailCheck/{email}` : 입력한 email이 사용가능 한지 중복 체크
 
    - Parameter : String
@@ -74,24 +70,98 @@
    - return : 로그인 성공 유무를 결과로 반환. state 결과 success/fail로 확인
    
      ```json
-     { "email" : "string",
+     { "uid" : 0, 
+      "email" : "string",
       "auth" : 0,
       "msg" : "string",
       "state" : "string" }
      ```
-   
-     ex)
-   
+   ```
+     
+   ex)
+     
      ```json
-     { "email" : "admin@it.da",
+     { "uid" : 10, 
+      "email" : "admin@it.da",
       "auth" : 0,
       "msg" : "이메일 또는 비밀번호가 일치하지 않습니다.",
       "state" : "fail" }
-     ```
+   ```
 
 
 
 -------------
+
+## 회원관리
+
+1. `GET /api/getAllUsers` : 전체 회원의 목록을 확인한다.
+
+   - Parameter : {}
+
+   - return : 전체 회원의 목록을 반환
+
+     - 회원의 비밀번호를 제외한 모든 정보를 반환한다.
+
+     ```json
+     [
+         {
+             "uid" : 1,
+             "email" : "admin@it.da",
+             "pw" : null,
+             "auth" : 0,
+             "major" : "컴퓨터공학과",
+             "uimg" : "C:\img\myimg.jpg",
+             
+         },
+         {
+         	...   
+         }
+     ]
+     ```
+
+2. `GET /api/getUser/{uid}` : 회원의 정보를 확인한다.
+
+   - Parameter : Integer
+
+   - return : uid에 해당하는 회원의 정보를 반환
+
+     - 회원의 비밀번호를 제외한 모든 정보를 반환한다.
+
+     ```json
+     {
+         "uid" : 1,
+         "email" : "admin@it.da",
+         "pw" : null,
+         "auth" : 0,
+         "major" : "컴퓨터공학과",
+         "uimg" : "C:\img\myimg.jpg",
+         "stack" : [
+             {"tname" : "Java", ...}
+         ]
+     }
+     ```
+
+3. `UPDATE /api/updateUser` : 회원의 정보를 수정한다.
+
+   - Parameter : User
+
+     - uid, email, auth는 변경이 불가능하다.
+     - 비밀번호, 전공
+
+     ```json
+     {
+         "uid" : 0,
+         "email" : "String",
+         "pw" : "String",
+         "auth" : 0,
+         "major" : "String",
+         "uimg" : "String"
+     }
+     ```
+
+     
+
+--------------------
 
 
 

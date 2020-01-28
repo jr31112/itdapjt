@@ -1,6 +1,8 @@
 # API 명세
 
-## 회원가입
+# User
+
+## 1. 회원가입
 
 1. `POST /api/signUp` : 새로운 회원의 정보를 DB에 저장
 
@@ -50,7 +52,7 @@
 
 -----------
 
-## 로그인
+## 2. 로그인
 
 1. `POST /api/login` : 사용자의 정보(email, pw)가 일치하면 로그인
 
@@ -76,9 +78,8 @@
       "msg" : "string",
       "state" : "string" }
      ```
-   ```
      
-   ex)
+     ex)
      
      ```json
      { "uid" : 10, 
@@ -86,9 +87,7 @@
       "auth" : 0,
       "msg" : "이메일 또는 비밀번호가 일치하지 않습니다.",
       "state" : "fail" }
-   ```
-
-
+     ```
 
 -------------
 
@@ -159,7 +158,39 @@
      }
      ```
 
-     
+4. `DELETE /api/deleteUser/{uid}` : uid에 해당하는 회원의 정보를 삭제한다.
+
+   * Parameter : Integer
+
+   * return : 회원 탈퇴에 대한 결과 반환.  state 결과 success/fail로 확인
+
+     ```json
+     { "msg" : "string",
+      "state" : "string" }
+     ```
+
+     ex)
+
+     ```json
+     {"msg" : "성공적으로 탈퇴되었습니다.", "state" : "success" }
+     ```
+
+5. `UPDATE /api/updatePermission/{uid}` : uid에 해당하는 회원의 권한을 수정한다.
+
+   * Parameter : Integer
+
+   * return : 회원 권한 수정에 대한 결과 반환.  state 결과 success/fail로 확인
+
+     ```json
+     { "msg" : "string",
+      "state" : "string" }
+     ```
+
+     ex)
+
+     ```json
+     {"msg" : "성공적으로 회원 권한이 수정되었습니다.", "state" : "success" }
+     ```
 
 --------------------
 

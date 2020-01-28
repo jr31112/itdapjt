@@ -1,176 +1,284 @@
 <template>
-        <header
-            class="v-sheet v-sheet--tile theme--dark v-toolbar v-app-bar v-app-bar--clipped v-app-bar--fixed v-app-bar--is-scrolled primary"
-            id="documentation-app-bar"
-            data-booted="true"
-            style="height: 64px; margin-top: 0px; transform: translateY(0px); left: 0px; right: 0px;">
-            <div class="v-toolbar__content" style="height: 64px;">
-                <button
-                    type="button"   
-                    class="v-app-bar__nav-icon hidden-lg-and-up v-btn v-btn--flat v-btn--icon v-btn--round theme--dark v-size--default">
-                    <span class="v-btn__content">
-                        <i aria-hidden="true" class="v-icon notranslate mdi mdi-menu theme--dark"></i>
-                    </span>
-                </button>
-                <a
-                    href="/"
-                    class="d-flex align-center router-link-active"
-                    aria-label="It da"
-                    title="It da">
+    <header
+        class="v-sheet v-sheet--tile theme--dark v-toolbar v-app-bar v-app-bar--clipped v-app-bar--fixed v-app-bar--is-scrolled primary"
+        id="documentation-app-bar"
+        data-booted="true"
+        style="height: 64px; margin-top: 0px; transform: translateY(0px); left: 0px; right: 0px;">
+        <div class="v-toolbar__content" style="height: 64px;">
+            <button
+                type="button"
+                class="v-app-bar__nav-icon hidden-lg-and-up v-btn v-btn--flat v-btn--icon v-btn--round theme--dark v-size--default">
+                <span class="v-btn__content">
+                    <i aria-hidden="true" class="v-icon notranslate mdi mdi-menu theme--dark"></i>
+                </span>
+            </button>
+            <div>
+                <v-btn
+                    router="router"
+                    :to="{name: 'home'}"
+                    class="v-btn--text"
+                    depressed="depressed"
+                    large="large"
+                    icon="icon">
                     <div
                         role=""
                         aria-label="Vuetify Logo"
-                        class="v-responsive v-image shrink ml-3 mt-2"
+                        class="v-responsive v-image shrink ml-12 mt-2"
                         style="width: 80px;">
                         <div class="v-responsive__sizer" style="padding-bottom: 114.132%;"></div>
                         <v-img :src="getImgUrl('logoo.png')" style="width :100%"/>
-                        
-                   <!-- //<v-img :src="getImgUrl('itda1.png')" /> -->
+                        <!-- //<v-img :src="getImgUrl('itda1.png')" /> -->
                     </div>
-                                    <!--  -->
-                    <!-- <div
-                        role="img"
-                        aria-label="Vuetify Name"
-                        class="v-responsive v-image shrink mt-1 hidden-sm-and-down"
-                        style="min-width: 40px; width: 100px;">
-                        
-                        <div class="v-responsive__sizer" style="padding-bottom: 29.878%;"></div>
-                        <div
-                            class="v-image__image v-image__image--contain"
-                            style="background-image: url(https://postfiles.pstatic.net/MjAyMDAxMjFfMTE5/MDAxNTc5NTk1MTc1MDYy.h_8XqFWZlnqK7kTbiY8NEeKFyVAIXngia_MYGDeCl7Eg.qGl_-nj2NPmjih8sNdZt7XplORK2lePOrpfcNlqkl4Qg.PNG.koo_m/itda.png?type=w966); background-position: center center;"></div>
-                        <div class="v-responsive__content" style="width: 328px;"></div>
-                    </div> -->
-                </a>
-                <div class="spacer"></div>
-                <div class="v-responsive mr-0 mr-md-6 hidden-xs-only" style="max-width: 300px;">
-                    <div class="v-responsive__content">
-                        <div
-                            class="v-input v-input--hide-details v-input--dense theme--dark v-text-field v-text-field--single-line v-text-field--solo v-text-field--solo-inverted v-text-field--solo-flat v-text-field--is-booted v-text-field--enclosed v-text-field--rounded">
-                            <div class="v-input__control">
-                                <div class="v-input__slot">
-                                    <div class="v-input__prepend-inner">
-                                        <div class="v-input__icon v-input__icon--prepend-inner">
-                                            <i aria-hidden="true" class="v-icon notranslate mdi mdi-magnify theme--dark"></i>
-                                        </div>
+                </v-btn>
+            </div>
+            <div class="spacer"></div>
+            <div class="v-responsive mr-0 mr-md-6 hidden-xs-only" style="max-width: 300px;">
+                <div class="v-responsive__content">
+                    <div
+                        class="v-input v-input--hide-details v-input--dense theme--dark v-text-field v-text-field--single-line v-text-field--solo v-text-field--solo-inverted v-text-field--solo-flat v-text-field--is-booted v-text-field--enclosed v-text-field--rounded">
+                        <div class="v-input__control">
+                            <div class="v-input__slot">
+                                <div class="v-input__prepend-inner">
+                                    <div class="v-input__icon v-input__icon--prepend-inner">
+                                        <i aria-hidden="true" class="v-icon notranslate mdi mdi-magnify theme--dark"></i>
                                     </div>
-                                    <div class="v-text-field__slot">
-                                        <label for="search"
-                                            class="v-label theme--dark"
-                                            style="left: 0px; right: auto; position: absolute;">기업명을 검색해주세요</label>
-                                        <input
-                                            id="search"
-                                            type="text"
-                                            class="ds-input"
-                                            autocomplete="off"
-                                            spellcheck="false"
-                                            role="combobox"
-                                            aria-autocomplete="list"
-                                            aria-expanded="false"
-                                            aria-label="search input"
-                                            aria-owns="algolia-autocomplete-listbox-0"
-                                            dir="auto"
-                                            style="">
-                                            <pre aria-hidden="true" style="position: absolute; visibility: hidden; white-space: pre; font-family: Roboto, sans-serif; font-size: 16px; font-style: normal; font-variant: normal; font-weight: 400; word-spacing: 0px; letter-spacing: normal; text-indent: 0px; text-rendering: auto; text-transform: none;"></pre>
-                                        </div>
-                                    </div>
+                                </div>
+                                <div class="v-text-field__slot">
+                                    <label
+                                        for="search"
+                                        class="v-label theme--dark"
+                                        style="left: 0px; right: auto; position: absolute;">기업명을 검색해주세요</label >
+                                    <input
+                                        id="search"
+                                        type="text"
+                                        class="ds-input"
+                                        autocomplete="off"
+                                        spellcheck="false"
+                                        role="combobox"
+                                        aria-autocomplete="list"
+                                        aria-expanded="false"
+                                        aria-label="search input"
+                                        aria-owns="algolia-autocomplete-listbox-0"
+                                        dir="auto"
+                                        style=""/>
+                                    <pre
+										aria-hidden="true"
+										style="position: absolute; visibility: hidden; white-space: pre; font-family: Roboto, sans-serif; font-size: 16px; font-style: normal; font-variant: normal; font-weight: 400; word-spacing: 0px; letter-spacing: normal; text-indent: 0px; text-rendering: auto; text-transform: none;"
+									></pre>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <a href="https://www.naver.com"
-                        target="_blank"
-                        class="hidden-xs-only v-btn v-btn--flat v-btn--text theme--dark v-size--default"
-                        aria-label="Store"
-                        rel="noopener"
-                        style="min-width: 48px;">
-                        <span class="v-btn__content">
-                            <span class="v-badge v-badge--left theme--dark">
-                                <span class="subtitle-1 text-capitalize font-weight-light">
-                                    <div class="v-markdown">
-                                        <span class="mr">JoB Korea</span>
-                                    </div>
-                                </span>
-                                <span class="v-badge__wrapper">
-                                    <span
-                                        aria-atomic="true"
-                                        aria-label="Badge"
-                                        aria-live="polite"
-                                        role="status"
-                                        class="v-badge__badge red"
-                                        style="bottom: calc(100% - 4px); left: auto; right: calc(100% - 4px); top: auto; display: none;">
-                                        <i aria-hidden="true" class="v-icon notranslate mdi mdi-tag-text theme--dark"></i>
-                                    </span>
-                                </span>
-                            </span>
-                            <i
-                                aria-hidden="true"
-                                class="v-icon notranslate v-icon--right mdi mdi-open-in-new theme--dark"></i>
-                        </span>
-                    </a>
-                    <a>
-                    <v-btn
-                        v-on:click="goTotalWantedPage()" class="hidden-sm-and-down v-btn v-btn--flat v-btn--router v-btn--text theme--dark v-size--default"
-                        aria-label="For Enterprise"
-                        style="min-width: 48px;">
-                        <span class="v-btn__content">
-                            <span class="subtitle-1 text-capitalize font-weight-light">
-                                <div class="v-markdown">
-                                     <span class="mr">상세보기</span>
-                                </div>
-                            </span>
-                        </span>
-                    </v-btn>
-                    </a>
-                    <div class="v-menu">
-                        <div
-                            role="menu"
-                            class="v-menu__content theme--light "
-                            style="max-height: calc(100% - 16px); min-width: 0px; top: 12px; left: 12px; transform-origin: left top; z-index: 0; display: none;"></div>
-                    </div>
-                   
-                    <div class="v-menu">
-                        <div
-                            role="menu"
-                            class="v-menu__content theme--light "
-                            style="max-height: calc(100% - 16px); min-width: 0px; top: 12px; left: 12px; transform-origin: left top; z-index: 0; display: none;"></div>
-                    </div>
-                    <button
-                        type="button"
-                        class="v-btn v-btn--flat v-btn--text theme--dark v-size--default"
-                        aria-label="Support"
-                        style="min-width: 48px;">
-                        <span class="v-btn__content">
-                            <span class="subtitle-1 text-capitalize font-weight-light hidden-sm-and-down">
-                                <div class="v-markdown">
-                                    <span class="mr">로그인/회원가입</span>
-                                </div>
-                            </span>
-                            <i
-                                aria-hidden="true"
-                                class="v-icon notranslate hidden-sm-and-down v-icon--right mdi mdi-menu-down theme--dark"></i>
-                            <i
-                                aria-hidden="true"
-                                class="v-icon notranslate hidden-md-and-up mdi mdi-comment-question theme--dark"></i>
-                        </span>
-                    </button>
                 </div>
-                
-            </header>
-    </template>
-    <script>
-    import router from "../router/index.js"
+            </div>
+            <a
+                href="https://www.naver.com"
+                target="_blank"
+                class="hidden-xs-only v-btn v-btn--flat v-btn--text theme--dark v-size--default"
+                aria-label="Store"
+                rel="noopener"
+                style="min-width: 48px;">
+                <span class="v-btn__content">
+                    <span class="v-badge v-badge--left theme--dark">
+                        <span class="subtitle-1 text-capitalize font-weight-light">
+                            <div class="v-markdown">
+                                <span class="mr">JoB Korea</span>
+                            </div>
+                        </span>
+                        <span class="v-badge__wrapper">
+                            <span
+                                aria-atomic="true"
+                                aria-label="Badge"
+                                aria-live="polite"
+                                role="status"
+                                class="v-badge__badge red"
+                                style="bottom: calc(100% - 4px); left: auto; right: calc(100% - 4px); top: auto; display: none;">
+                                <i aria-hidden="true" class="v-icon notranslate mdi mdi-tag-text theme--dark"></i>
+                            </span>
+                        </span>
+                    </span>
+                    <i
+                        aria-hidden="true"
+                        class="v-icon notranslate v-icon--right mdi mdi-open-in-new theme--dark"></i>
+                </span>
+            </a>
+            <a>
+                <v-btn
+                    v-on:click="goTotalWantedPage()"
+                    class="hidden-sm-and-down v-btn v-btn--flat v-btn--router v-btn--text theme--dark v-size--default"
+                    aria-label="For Enterprise"
+                    style="min-width: 48px;">
+                    <span class="v-btn__content">
+                        <span class="subtitle-1 text-capitalize font-weight-light">
+                            <div class="v-markdown">
+                                <span class="mr">상세보기</span>
+                            </div>
+                        </span>
+                    </span>
+                </v-btn>
+            </a>
+            <div class="v-menu">
+                <div
+                    role="menu"
+                    class="v-menu__content theme--light "
+                    style="max-height: calc(100% - 16px); min-width: 0px; top: 12px; left: 12px; transform-origin: left top; z-index: 0; display: none;"></div>
+            </div>
 
+            <div class="v-menu">
+                <div
+                    role="menu"
+                    class="v-menu__content theme--light "
+                    style="max-height: calc(100% - 16px); min-width: 0px; top: 12px; left: 12px; transform-origin: left top; z-index: 0; display: none;"></div>
+            </div>
+            <!--
+            +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+            -->
+
+            <!-- // v-on:click="goTotalWantedPage()" -->
+            <v-btn
+                v-if="isLogin"
+                @click="$store.dispatch('logout')"
+                class="v-btn v-btn--flat v-btn--text theme--dark v-size--default"
+                aria-label="Support"
+                style="min-width: 48px;">
+                <span class="v-btn__content">
+                    <span class="subtitle-1 text-capitalize font-weight-light">
+                        <div class="v-markdown">
+                            Log Out
+                        </div>
+                        <!-- 디스패치는 스토어에서 엑션스 내에 함수를 실행가능 -->
+                        <!--만약에 $store.commit('logout')으로 뮤테이션에서 바로 접근할 수도 있다. -->
+                    </span>
+                </span>
+            </v-btn>
+
+            <v-btn
+                v-else
+				@click.stop="dialog=!dialog"
+                class="v-btn v-btn--flat v-btn--text theme--dark v-size--default"
+                aria-label="Support"
+                style="min-width: 48px;">
+                <!-- v-else router :to="{name: 'login'}" -->
+                <span class="v-btn__content">
+                    <span class="subtitle-1 text-capitalize font-weight-light">
+                        <div class="v-markdown">
+                            Login | SignUp
+                        </div>
+                    </span>
+                </span>
+            </v-btn>
+            <v-dialog 
+			v-model="dialog" 
+			z-index="3"
+			overlay-opacity="0.4"
+			max-width= "545px"
+			>
+                <v-container > 
+                    <!-- 컨테이너 크기를 500으로해 해주고, fill-heigt를 통해서아래 align center를 이용할 수 있게 됨. -->
+                    <v-layout wrap="no wrap">
+                        <v-flex xs12="xs12">
+                            <v-alert class="mb-1" :value="isLoginError" type="error">
+                                아이디와 비밀번호를 확인해주세요.
+                            </v-alert>
+                            <v-alert class="mb-1" :value="isLogin" type="success">
+                                로그인이 완료되었습니다.
+                            </v-alert>
+                            <v-card>
+                                <v-toolbar flat="flat">
+                                    <!-- flat은 toolbar의 속성이고 아래 그림자 없애주는건가.. 뭐지..? -->
+                                    <v-toolbar-title>Login</v-toolbar-title>
+                                    <v-btn color="green darken-1" text="text" @click="dialog = false">
+                                        Close
+                                    </v-btn>
+                                </v-toolbar>
+                                <div class="pa-4" style="max-width: 520px">
+                                    <!-- pa는 패딩오토 -->
+                                    <v-text-field v-model="email" label="email을 입력하세요"></v-text-field>
+                                    <v-text-field v-model="password" type="password" label="password를 입력하세요"></v-text-field>
+                                    <v-btn
+                                        class="mb-1"
+                                        color="primary"
+                                        depressed="depressed"
+                                        block="block"
+                                        large="large"
+                                        @click="login({email,password})">로그인
+                                    </v-btn >
+                                    <v-btn class="mb-1" depressed="depressed" block="block" large="large">회원가입</v-btn>
+                                    <!-- store.js에 signin값에 email과 password를 보낸다는 말이된다. -->
+                                    <!-- depressed 쉐도우 없애줌, block 한줄을 꽉차게 가져감, large는 조금 더 크게 만듬 -->
+                                    <!-- <v-btn @click="test">get테스트</v-btn>
+                                    <v-btn @click="test1">Post테스트</v-btn> -->
+                                </div>
+                            </v-card>
+                        </v-flex>
+                    </v-layout>
+                </v-container>
+            </v-dialog>
+        </div>
+    </header>
+</template>
+<script>
+
+    // import Login from '../views/Login.vue' import axios from "axios"
+	import {mapState, mapActions} from 'vuex';
+	import axios from "axios"
+	import router from '../router/index.js';
+//	const axios = require('axios');
     export default {
-        components:{
-            
+        data() {
+            return {email: null, password: null,dialog:false};
+        },
+        computed: {
+            ...mapState(["isLogin", "isLoginError"])
+        },
+        components: {
+            //		Login
         },
         methods: {
             getImgUrl(img) {
-                return require("../assets/" + img);
+                return require('../assets/' + img);
             },
-            goTotalWantedPage(){
-                router.push({name:'totalwanted'}).catch(() => {});
-            }
+            goTotalWantedPage() {
+                router
+                    .push({name: 'totalwanted'})
+                    .catch(() => {});
+			},
+			// test()
+		// {	
+		// 	//get 뒤에 우리가 쓸 주소를 통해서 얻어온다. 
+		// 	axios
+		// 	.get("https://reqres.in/api/users?page=2"
+		// 	)
+		// 	.then(res=>{
+		// 		console.log(res);
+		// 	})
+		// 	.catch(err=> {
+		// 		console.log(err);
+		// 	})
+		// 	.then(()=> {
+		// 		console.log("test")
+		// 	});
+		// 	//then은 성공이든 실패든 수행한다. 	
+		// },
+			test1() //post_test
+			{	
+				//첫번째 인자에 주소가 들어간다.
+				//두번째 인자에는 정보를 담아서 보낸다. 	
+				// 근데 왜 에러나지..
+				axios
+				.post('https://reqres.in/api/register', {
+					email: "sydney@fife"
+					})
+					.then(res=> {
+						console.log(res);
+					})
+					.catch(err=> {
+						console.log(err);
+					});
+				//then은 성공이든 실패든 수행한다. 	
+			}
+		,
+            ...mapActions(["login"])
         }
     };
 </script>

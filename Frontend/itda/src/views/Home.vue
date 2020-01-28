@@ -39,6 +39,7 @@
             getImgUrl(img) {
                 return require('../assets/' + img)
             }
-        }
+        },
+        
     }
 </script>

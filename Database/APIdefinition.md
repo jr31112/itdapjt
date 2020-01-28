@@ -97,7 +97,7 @@
 
    - Parameter : {}
 
-   - return : 전체 회원의 목록을 반환
+   - return : 전체 회원의 목록을 반환 `List`
 
      - 회원의 비밀번호를 제외한 모든 정보를 반환한다.
 
@@ -145,19 +145,21 @@
    - Parameter : User
 
      - uid, email, auth는 변경이 불가능하다.
-     - 비밀번호, 전공
+     - pw, major, uimg, uname 변경 가능
 
      ```json
      {
          "uid" : 0,
+         "uname" : "String",
          "email" : "String",
          "pw" : "String",
          "auth" : 0,
          "major" : "String",
          "uimg" : "String"
      }
-     ```
-
+```
+     
+   
 4. `DELETE /api/deleteUser/{uid}` : uid에 해당하는 회원의 정보를 삭제한다.
 
    * Parameter : Integer

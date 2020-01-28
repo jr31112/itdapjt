@@ -33,6 +33,11 @@ const rejectAuthUser = (to, from, next)=>
 
 const routes = [
   {
+    path: '*',
+    name: 'notfound',
+    component: NotFound
+  },
+  {
     path: '/',
     name: 'home',
     component: Home

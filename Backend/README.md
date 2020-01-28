@@ -8,6 +8,7 @@
   * [Eclipse IDE for Java EE Developers download](https://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/photon/R/eclipse-jee-photon-R-win32-x86_64.zip)
 * MySQL
   * [MySQL 워크벤치 download](https://dev.mysql.com/downloads/file/?id=492814)
+  * [설치 가이드](https://dog-developers.tistory.com/20)
 
 ## Java Eclipse 환경설정
 

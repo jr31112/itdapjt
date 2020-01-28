@@ -1,5 +1,7 @@
 package com.ssafy.itda.itda_test.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,5 +28,25 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public User login(User u) {
 		return userDao.login(u);
+	}
+	
+	@Override
+	public User getUser(Integer uid) {
+		return userDao.getUser(uid);
+	}
+	
+	@Override
+	public void deleteUser(Integer uid) {
+		userDao.deleteUser(uid);
+	}
+	
+	@Override
+	public List<User> getAllUsers() {
+		return userDao.getAllUsers();
+	}
+	
+	@Override
+	public void updateUser(User u) {
+		userDao.updateUser(u);
 	}
 }

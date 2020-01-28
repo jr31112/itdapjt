@@ -6,7 +6,6 @@
                 style="padding-left :50px; line-height:1.2em; font-size: calc((80vw / 1240) * 40) "
                 slot="text">Just Do it! you'll just win.</div>
         </ImgBanner>
-
         <v-container>
             <v-layout my-5="my-5">
                 <v-flex >
@@ -27,6 +26,8 @@
     import WantedDefault from '../components/WantedDefault.vue'
     import ImgBanner from '../components/ImgBanner.vue'
     // import ImgBanner from '../components/ImgBanner.vue'
+    // import router from '../router'
+
     export default {
         name: 'home',
         components: {
@@ -38,8 +39,10 @@
         methods: {
             getImgUrl(img) {
                 return require('../assets/' + img)
-            }
-        },
-        
+            },
+            // goDetailPage(id){
+            //     router.push({name:'recruitdetail',params:{id:id}})
+            // }
+        }
     }
 </script>

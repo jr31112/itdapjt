@@ -34,7 +34,6 @@ export default {
   },
   methods: {
     getDetailData(){
-      console.log(this.$route)
       axios.get(`http://192.168.31.54:8197/ssafyvue/api/getWantedByID/${this.$route.params.id}`)
         .then(response=>{
           this.recruit = response.data

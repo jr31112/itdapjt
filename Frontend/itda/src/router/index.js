@@ -7,6 +7,7 @@ import User from '../views/User.vue'
 import Admin from '../views/Admin.vue'
 import TotalWanted from '../views/TotalWanted.vue'
 import store from '../store/index.js';
+import NotFound from '../views/NotFound.vue'
 
 Vue.use(VueRouter)
 const rejectAuthUser = (to, from, next)=>

@@ -1,5 +1,6 @@
 <template>
-  <v-container class="detailcompanyinfo my-2 white">
+  <v-container class="detailcompanyinfo white py-0">
+    <v-row><v-col class="pb-0"><h2>기업정보</h2></v-col></v-row>
     <v-row justify="center">
       <v-col cols="2" align-self="center">
         
@@ -10,9 +11,9 @@
        
       </v-col>
       <v-col cols="10" justify="center">
-        <h1>{{company.corpNm}}</h1>
+        <h3>{{company.corpNm}}</h3>
         <br>
-        <p>홈페이지 : <a :href="company.homePg">{{company.homePg}}</a></p>
+        <p>홈페이지 : <a :href="company.homePg" style="text-decoration: none; color:black;">{{company.homePg}}</a></p>
         <p>기업주소 : {{company.corpAddr}}</p>
         <p>주요사업 : {{company.busiCont}}</p>
       </v-col>
@@ -55,6 +56,7 @@
         </v-card>
       </v-col>
     </v-row>
+    <v-divider></v-divider>
   </v-container>
 </template>
 

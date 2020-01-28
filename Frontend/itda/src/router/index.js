@@ -6,10 +6,15 @@ import RecruitDetail from '../views/RecruitDetail.vue'
 import User from '../views/User.vue'
 import Admin from '../views/Admin.vue'
 import TotalWanted from '../views/TotalWanted.vue'
-
+import NotFound from '../views/NotFound.vue'
 Vue.use(VueRouter)
 
 const routes = [
+  {
+    path: '*',
+    name: 'notfound',
+    component: NotFound
+  },
   {
     path: '/',
     name: 'home',

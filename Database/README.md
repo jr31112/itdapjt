@@ -196,7 +196,7 @@ create table wanted_t(
     process text not null,
     etc text,
     question text,
-    vcnt int not null,
+    vcnt int not null default 0,
     cid int not null,
     foreign key(cid) references company_t(cid) on delete cascade
 );

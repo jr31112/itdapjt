@@ -193,21 +193,23 @@
                                 </v-toolbar>
                                 <div class="pa-4" style="max-width: 520px">
                                     <!-- pa는 패딩오토 -->
-                                    <v-text-field v-model="email" label="email을 입력하세요"></v-text-field>
-                                    <v-text-field v-model="password" type="password" label="password를 입력하세요"></v-text-field>
+                                    <v-text-field v-model="email" name = "email" label="email을 입력하세요"></v-text-field>
+                                    <v-text-field  v-model="password" name = "password" type="password" label="password를 입력하세요"></v-text-field>
                                     <v-btn
                                         class="mb-1"
                                         color="primary"
                                         depressed="depressed"
                                         block="block"
                                         large="large"
-                                        @click="login({email,password})">로그인
+                                         @click="login(
+                                        {
+                                            email:email,
+                                            password:password
+                                        }
+                                        )">로그인
                                     </v-btn >
                                     <v-btn class="mb-1" depressed="depressed" block="block" large="large">회원가입</v-btn>
-                                    <!-- store.js에 signin값에 email과 password를 보낸다는 말이된다. -->
-                                    <!-- depressed 쉐도우 없애줌, block 한줄을 꽉차게 가져감, large는 조금 더 크게 만듬 -->
-                                    <!-- <v-btn @click="test">get테스트</v-btn>
-                                    <v-btn @click="test1">Post테스트</v-btn> -->
+                               
                                 </div>
                             </v-card>
                         </v-flex>
@@ -219,11 +221,9 @@
 </template>
 <script>
 
-    // import Login from '../views/Login.vue' import axios from "axios"
 	import {mapState, mapActions} from 'vuex';
-	import axios from "axios"
+	// import axios from "axios"
 	import router from '../router/index.js';
-//	const axios = require('axios');
     export default {
         data() {
             return {email: null, password: null,dialog:false};
@@ -232,7 +232,7 @@
             ...mapState(["isLogin", "isLoginError"])
         },
         components: {
-            //		Login
+
         },
         methods: {
             getImgUrl(img) {
@@ -243,41 +243,6 @@
                     .push({name: 'totalwanted'})
                     .catch(() => {});
 			},
-			// test()
-		// {	
-		// 	//get 뒤에 우리가 쓸 주소를 통해서 얻어온다. 
-		// 	axios
-		// 	.get("https://reqres.in/api/users?page=2"
-		// 	)
-		// 	.then(res=>{
-		// 		console.log(res);
-		// 	})
-		// 	.catch(err=> {
-		// 		console.log(err);
-		// 	})
-		// 	.then(()=> {
-		// 		console.log("test")
-		// 	});
-		// 	//then은 성공이든 실패든 수행한다. 	
-		// },
-			test1() //post_test
-			{	
-				//첫번째 인자에 주소가 들어간다.
-				//두번째 인자에는 정보를 담아서 보낸다. 	
-				// 근데 왜 에러나지..
-				axios
-				.post('https://reqres.in/api/register', {
-					email: "sydney@fife"
-					})
-					.then(res=> {
-						console.log(res);
-					})
-					.catch(err=> {
-						console.log(err);
-					});
-				//then은 성공이든 실패든 수행한다. 	
-			}
-		,
             ...mapActions(["login"])
         }
     };

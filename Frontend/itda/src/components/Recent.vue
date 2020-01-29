@@ -6,7 +6,7 @@
 			<div>
 				<div class="headline over">{{ company.corpNm }}</div>
 				<div class="grey--text">{{ wanted.wantedTitle }}</div>
-				<span class="grey--text">{{ wanted.EndDate }}</span>
+				<span class="grley--text">{{ wanted.EndDate }}</span>
 			</div>
 		</v-card-title>
 	</v-card>

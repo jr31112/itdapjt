@@ -1,12 +1,12 @@
 <template>
-	
-	<v-card >
-		<v-img :src="logImgSrc" style="width: auto; height: 120px;"> </v-img>
+	<v-card>
+		<div v-if="company.logo"><v-img :src="company.logo" :alt="company.corpNm" style="width: auto; height: 120px;"></v-img></div>
+		<div v-else>공고 이미지가 없습니다.</div>
 		<v-card-title primary-title>
 			<div>
-				<div class="headline over">{{ corpNm }}</div>
-				<div class="grey--text">{{ jname }}</div>
-				<span class="grey--text">{{ EndDate }}</span>
+				<div class="headline over">{{ company.corpNm }}</div>
+				<div class="grey--text">{{ wanted.wantedTitle }}</div>
+				<span class="grey--text">{{ wanted.EndDate }}</span>
 			</div>
 		</v-card-title>
 	</v-card>
@@ -15,22 +15,10 @@
 export default {
 	name: 'Recent',
 	props: {
-		logImgSrc: String,
-		corpNm: String,
-		jname: String,
-		EndDate: String,
+		company:{type:Object},
+		wanted:{type:Object}
 	},
-	data() {
-		return {
-			//
-		};
-	},
-	methods: {
-		getImgUrl(img) {
-			return require('../assets/' + img);
-		},
-	},
-};
+}
 </script>
 <style>
 .target {

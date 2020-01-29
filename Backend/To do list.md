@@ -30,7 +30,7 @@
    insert into wanted_t(wantedTitle, startDate, endDate, process, etc, question, cid) values('','','','','','',0);
    ```
 
-   
+   `createWanted`
 
 3. job_t -> Job param
 
@@ -65,6 +65,7 @@
 - company가 없어지는 경우 : delete from company_t where cid = #{cid}
   - `deleteCompany`
 - wanted가 없어지는 경우 : delete from wanted_t where wid = #{wid}
+  - `deleteWanted`
 - job이 없어지는 경우 : delete from job_t where jid = #{jid}
 - 직무별 기술스택을 지울 경우 : delte from jobstack_t where jid = #{jid} and sid = #{sid} -> Jobstack 모델 별도
 
@@ -73,8 +74,10 @@
 #### U
 
 - 공고 내용만 수정 : wanted 에서 수정하기 -> Wanted 가 param
+  * `updateWanted`
 - 직무 내용만 수정 : job_t 수정 -> Job 이 param
 - 기업 정보 수정 : company_t 수정 -> Company 가 param
+  - `updateCompany`
 
 
 

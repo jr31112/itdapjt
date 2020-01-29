@@ -75,4 +75,18 @@ public class WantedServiceImpl implements IWantedService {
 		return wantedDao.getWantedAll();
 	}
 
+	@Override
+	public void createWanted(Wanted model) {
+		wantedDao.createWanted(model);
+	}
+	
+	@Override
+	public void deleteWanted(Integer wid) {
+		wantedDao.deleteWanted(wid);
+	}
+	
+	@Override
+	public void updateWanted(Wanted model) {
+		wantedDao.updateWanted(model);
+	}
 }

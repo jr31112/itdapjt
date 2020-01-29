@@ -20,6 +20,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	parameterType="Integer">
 		UPDATE COMPANY_T
 		SET CORPNM = #{corpNm}, TOTPSNCNT = #{totPsncnt}, BUSISIZE = #{busiSize}, YRSALESAMT = #{yrSalesAmt}, CORPADDR = #{corpAddr}, HOMEPG = #{homePg}, BUSICONT = #{busiCont}, LOGO = #{logo})
-		WHERE UID = #{UID}
+		WHERE UID = #{cid}
 	</update>
 </mapper>

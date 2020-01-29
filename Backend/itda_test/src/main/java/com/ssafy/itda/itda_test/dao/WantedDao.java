@@ -62,4 +62,17 @@ public class WantedDao {
 	public List<Integer> getWantedAll() {
 		return sqlSession.selectList(ns + "getWantedAll");
 	}
+	
+	public void createWanted(Wanted model) {
+		sqlSession.insert(ns + "createWanted", model);
+	}
+	
+	public void deleteWanted(Integer wid) {
+		sqlSession.delete(ns + "deleteWanted", wid);
+	}
+	
+	public void updateWanted(Wanted model) {
+		sqlSession.update(ns + "updateWanted", model);
+	}
+	
 }

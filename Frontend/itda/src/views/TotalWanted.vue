@@ -23,9 +23,11 @@
                         dense="dense"
                         hide-detaileds="hide-detaileds"
                         append-outer-icon="append-outer-icon"></v-select>
+                    e
                 </v-col>
                 <v-col cols="6" md="2">
                     <v-select
+                        :v-model="techStacklist"
                         :items="techstackmentOptions"
                         class="mt-3"
                         label="기술 스택"
@@ -80,6 +82,8 @@
 <script>
     export default {
         data: () => ({
+            techStacklist: ["Java", "C", "Python"],
+
             focus: '',
             type: 'month',
 
@@ -127,6 +131,9 @@
                 }, {
                     text: 'Python',
                     value: 'python'
+                }, {
+                    text: 'C',
+                    value: 'C'
                 }
             ]
 
@@ -159,10 +166,13 @@
                     .getFormatter({timeZone: 'UTC', month: 'long'})
             }
         },
+        created() {
+            this.addwanteds()
+        },
         mounted() {
             // 전체 공고를 가져오는 함수( 예상 함수명 : getWantedAll event 객체에 넣는다.) name : 회사명, start : 공고
             // 시작일, end : 공고 종료일, color : 기술 스택별 색상 Post를 받아오는 함수 서버에서 공고를 받아올 함수
-            this.addwanteds()
+
         },
         methods: {
             addwanteds() {
@@ -171,8 +181,7 @@
                         title: "농협은행IT",
                         start: "2020-01-23",
                         end: "2020-01-23",
-
-                        TechStack: "java"
+                        TechStack: "Java"
                     }, {
                         title: "농협은행IT",
                         start: "2020-01-23",
@@ -182,10 +191,9 @@
                         title: "SSAFY 공고",
                         start: "2020-01-23",
                         end: "2020-01-23",
-                        TechStack: "Java, Python"
+                        TechStack: "Python"
                     }
                 ]
-                alert("mounted" + this.wanteds.length)
             },
             viewDay({date}) {
                 this.focus = date
@@ -215,25 +223,33 @@
             // 받아온 Post를 event로 처리하는 함수
             updateRange({start, end}) {
                 const events = []
-                // for (var idx = 0; idx < this.wanteds.length; idx++) {
-                //     events.push({
-                //         name: this.wanteds[idx].title,
-                //         start: this.wanteds[idx].start,
-                //         end: this.wanteds[idx].end,
-                //         color:'blue'
-                //     })
-                    
-                // }
-                alert("updateRange에서 Wanted 길이" + this.wanteds.length)
-                    events.push(
-                        {name: "안녕 정원 python", start: "2020-01-23", end: "2020-01-23", color: 'blue'}
-                    ),
-                    events.push(
-                        {name: "안녕 정원 python", start: "2020-01-25", end: "2020-01-25", color: 'blue'}
-                    ),
-                    events.push(
-                        {name: "안녕 정원", start: "2020-01-23", end: "2020-01-23", color: 'red'}
-                    ),
+                    // for (var idx = 0; idx < this.wanteds.length; idx++) {     events.push({
+                    // name: this.wanteds[idx].title,         start: this.wanteds[idx].start,
+                    // end: this.wanteds[idx].end,         color:'blue'     }) }
+                    events.push({
+                        name: this
+                            .wanteds[0]
+                            .title,
+                        start: "2020-01-23",
+                        end: "2020-01-23",
+                        color: 'blue'
+                    }),
+                    events.push({
+                        name: this
+                            .wanteds[1]
+                            .title,
+                        start: "2020-01-25",
+                        end: "2020-01-25",
+                        color: 'blue'
+                    }),
+                    events.push({
+                        name: this
+                            .wanteds[2]
+                            .title,
+                        start: "2020-01-23",
+                        end: "2020-01-23",
+                        color: 'red'
+                    }),
 
                     events.push(
                         {name: "민규야..힘내자", start: "2020-01-23", end: "2020-01-23", color: 'yellow'}

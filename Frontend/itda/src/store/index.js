@@ -1,15 +1,15 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from "axios"
-import router from "../router"
-
+//import router from '../router/index.js';
 Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     userInfo: null, // 필요한 이유는 계속 이메일과 패스워드를 확인 할 수 없으니까, 
                     // selectedUser가 allUsers에 찾은 사람을 객체로 userInfo를 저장한다. 
     isLogin: false, 
-    isLoginError: false
+    isLoginError: false,
+    isDialog: true,
   },
   //뮤테이션과 엑션스 차이는? 
   //뮤테이션 : state 값 변경. 
@@ -21,6 +21,7 @@ export default new Vuex.Store({
     {
         state.isLogin= true
         state.isLoginError = false      
+        state.isDialog =false
         state.userInfo = payload
         localStorage.setItem('user_info', payload)
         
@@ -30,46 +31,51 @@ export default new Vuex.Store({
     { 
         state.isLogin = false
         state.isLoginError= true
+        state.isDialog =true
     },
     logout(state)
     {
       state.isLogin = false
       state.isLoginError =false
+      state.isDialog= true
       state.userInfo =null
     }
   },
   actions: 
   {
-    login({commit},{email,password})
+    login({commit},{email,pw})
     {
-        let selectedUser = null;
         axios
-        .post('https://reqres.in/api/login', {
-          email,password
+        .post('http://192.168.31.54:8197/itda/api/login', {
+          email, pw
           })
           .then(res=> {
-            selectedUser = res;
-            //성공시, email,비번이옴.  
-            console.log(selectedUser);
-            commit('loginSuccess', selectedUser)
+            if(res.data.state == 'success'){
+              let token = res.headers['jwt-auth-token']
+              console.log(res.headers)
+              alert(token)
+              localStorage.setItem("access_token", token)
+            }
+            else{
+              alert("이메일과 비밀번호를 확인하세요.")
+              return;
+            }
           })
           .catch(err=> {
-            console.log("hihi"+err);
+            console.log("hi"+err);
             commit('loginError')
           });
       },
       logout({commit})
       {
         commit("logout")
-          router.push({name: "home"})
-      },
-      goDetailPage(id){
-        router.push({name:'recruitdetail',params:{id:id}})
       }
     },
-  modules: {
+  modules: 
+  {
   }
 })
 // 
 // 
 // console.log(user1);
+// 관리자가 0 , 기본 1

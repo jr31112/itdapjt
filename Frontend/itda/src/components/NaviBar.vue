@@ -167,7 +167,8 @@
                     </span>
                 </span>
             </v-btn>
-            <v-dialog 
+            <v-dialog  
+            v-if ="isDialog" 
 			v-model="dialog" 
 			z-index="3"
 			overlay-opacity="0.4"
@@ -194,7 +195,7 @@
                                 <div class="pa-4" style="max-width: 520px">
                                     <!-- pa는 패딩오토 -->
                                     <v-text-field v-model="email" name = "email" label="email을 입력하세요"></v-text-field>
-                                    <v-text-field  v-model="password" name = "password" type="password" label="password를 입력하세요"></v-text-field>
+                                    <v-text-field  v-model="pw" name = "pw" type="password" label="password를 입력하세요"></v-text-field>
                                     <v-btn
                                         class="mb-1"
                                         color="primary"
@@ -204,7 +205,7 @@
                                          @click="login(
                                         {
                                             email:email,
-                                            password:password
+                                            pw:pw
                                         }
                                         )">로그인
                                     </v-btn >
@@ -226,10 +227,10 @@
 	import router from '../router/index.js';
     export default {
         data() {
-            return {email: null, password: null,dialog:false};
+            return {email: null, password: null, dialog:false};
         },
         computed: {
-            ...mapState(["isLogin", "isLoginError"])
+            ...mapState(["isLogin", "isLoginError","isDialog"])
         },
         components: {
 

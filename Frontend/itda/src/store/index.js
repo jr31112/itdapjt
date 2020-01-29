@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import router from '../router/index.js';
+import router from '../router/index.js'
 
 Vue.use(Vuex)
 
@@ -89,6 +89,9 @@ export default new Vuex.Store({
         commit("logout")
           router.push({name: "home"})
       },
+      goDetailPage(id){
+        router.push({name:'recruitdetail',params:{id:id}})
+      }
     },
   modules: {
   }

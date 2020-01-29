@@ -180,10 +180,10 @@
                             <v-alert class="mb-1" :value="isLoginError" type="error">
                                 아이디와 비밀번호를 확인해주세요.
                             </v-alert>
-                            <v-alert class="mb-1" :value="isLogin" type="success" dialog=false>
+                            <v-alert class="mb-1" :value="isLogin" type="success">
                                 로그인이 완료되었습니다.
                             </v-alert>
-                            <v-card >
+                            <v-card>
                                 <v-toolbar flat="flat">
                                     <!-- flat은 toolbar의 속성이고 아래 그림자 없애주는건가.. 뭐지..? -->
                                     <v-toolbar-title>Login</v-toolbar-title>
@@ -193,21 +193,23 @@
                                 </v-toolbar>
                                 <div class="pa-4" style="max-width: 520px">
                                     <!-- pa는 패딩오토 -->
-                                    <v-text-field v-model="email" label="email을 입력하세요"></v-text-field>
-                                    <v-text-field v-model="pw" type="password" label="password를 입력하세요"></v-text-field>
+                                    <v-text-field v-model="email" name = "email" label="email을 입력하세요"></v-text-field>
+                                    <v-text-field  v-model="password" name = "password" type="password" label="password를 입력하세요"></v-text-field>
                                     <v-btn
                                         class="mb-1"
                                         color="primary"
                                         depressed="depressed"
                                         block="block"
                                         large="large"
-                                        @click="login({email,pw})">로그인
+                                         @click="login(
+                                        {
+                                            email:email,
+                                            password:password
+                                        }
+                                        )">로그인
                                     </v-btn >
                                     <v-btn class="mb-1" depressed="depressed" block="block" large="large">회원가입</v-btn>
-                                    <!-- store.js에 signin값에 email과 password를 보낸다는 말이된다. -->
-                                    <!-- depressed 쉐도우 없애줌, block 한줄을 꽉차게 가져감, large는 조금 더 크게 만듬 -->
-                                    <!-- <v-btn @click="test">get테스트</v-btn>
-                                    <v-btn @click="test1">Post테스트</v-btn> -->
+                               
                                 </div>
                             </v-card>
                         </v-flex>
@@ -219,21 +221,18 @@
 </template>
 <script>
 
-//  import Login from '../views/Login.vue'
 	import {mapState, mapActions} from 'vuex';
-	import axios from "axios"
+	// import axios from "axios"
 	import router from '../router/index.js';
-	import router from '../store/index.js';
-//	const axios = require('axios');
     export default {
         data() {
-            return {email: null, pw: null,dialog:false};
+            return {email: null, password: null,dialog:false};
         },
         computed: {
             ...mapState(["isLogin", "isLoginError"])
         },
         components: {
-            //		Login
+
         },
         methods: {
             getImgUrl(img) {
@@ -243,11 +242,8 @@
                 router
                     .push({name: 'totalwanted'})
                     .catch(() => {});
-			}
-			,
-			...mapActions(["login"])
-		}
-	;
-
+			},
+            ...mapActions(["login"])
+        }
+    };
 </script>
-		

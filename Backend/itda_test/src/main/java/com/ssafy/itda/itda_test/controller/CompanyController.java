@@ -96,7 +96,7 @@ public class CompanyController {
 			cr.setMsg("잘못된 기업명이 입력되었습니다.");
 			cr.setState("fail");
 		}
-		companyService.updateCompany(cid);
+		companyService.updateCompany(model);
 		cr.setMsg("기업 수정이 성공적으로 이루어졌습니다.");
 		cr.setState("success");
 		return new ResponseEntity<CompanyResult>(cr, HttpStatus.OK);

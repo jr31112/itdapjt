@@ -282,6 +282,21 @@
 
 #### XML
 
+* src/main/resources/mapper/mybatis-config 수정
+
+  * 맵퍼 부분에 아래와 같이 일치시켜준다.
+
+    ```xml
+    <mappers>
+        <mapper resource="mapper/user.xml"/>
+        <mapper resource="mapper/wanted.xml"/>
+        <mapper resource="mapper/company.xml"/>        
+        <mapper resource="mapper/job.xml"/>        
+    </mappers>
+    ```
+
+    
+
 * src/main/java/resources/mapper 위치에 있는 xxx.xml 파일에서 sql문 정의
 
   ```xml

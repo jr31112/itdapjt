@@ -88,8 +88,6 @@ public class UserController {
 	public ResponseEntity<UserResult> login(@RequestBody User model, HttpServletResponse response) throws Exception {
 		logger.info("1-3-------------login------------------------------" + new Date());
 		logger.info("1-3-------------login------------------------------" + model);
-		System.out.println(model);
-		System.out.println(response);
 		User user = userService.login(model);
 		UserResult ur = new UserResult();
 		if (user == null || user.getEmail() == null || user.getEmail().equals("")) {
@@ -114,8 +112,6 @@ public class UserController {
 			throws Exception {
 		logger.info("1-3-------------getInfo------------------------------" + new Date());
 		logger.info("1-3-------------getInfo------------------------------" + model);
-		System.out.println(model);
-		System.out.println(req);
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = null;
 		try {

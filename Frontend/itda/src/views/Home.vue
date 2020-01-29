@@ -10,7 +10,7 @@
             <v-layout my-5="my-5">
                 <v-flex >
                     <v-col cols="8" sm="12">
-                        <RecentList></RecentList>
+                        <RecentList/>
                     </v-col>
                 </v-flex>
             </v-layout>
@@ -25,8 +25,6 @@
     import WantedLogin from '../components/WantedLogin.vue'
     import WantedDefault from '../components/WantedDefault.vue'
     import ImgBanner from '../components/ImgBanner.vue'
-    // import ImgBanner from '../components/ImgBanner.vue'
-    // import router from '../router'
 
     export default {
         name: 'home',
@@ -36,13 +34,15 @@
             ImgBanner,
             RecentList
         },
+        data(){
+            return{
+                recentlist:[]
+            }
+        },
         methods: {
             getImgUrl(img) {
                 return require('../assets/' + img)
             },
-            // goDetailPage(id){
-            //     router.push({name:'recruitdetail',params:{id:id}})
-            // }
-        }
+        },
     }
 </script>

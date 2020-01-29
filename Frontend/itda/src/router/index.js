@@ -49,7 +49,7 @@ const routes = [
     component: Recruit
   },
   {
-    path: '/recruit/detail',
+    path: '/recruit/detail/:id',
     name: 'recruitdetail',
     component: RecruitDetail
   },

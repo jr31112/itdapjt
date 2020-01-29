@@ -4,7 +4,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ssafy.wanted">
 
-	<select id="getWantedAll">
+	<select id="getWantedAll" resultType="java.lang.Integer">
 		SELECT WID FROM WANTED_T ORDER BY STARTDATE ASC
 	</select>
 
@@ -61,4 +61,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		DELETE FROM SCRAP WHERE UID = #{uid} AND WID = #{wid}
 	</delete>
 
+	<insert id="createWanted"
+	parameterType="com.ssafy.itda.itda_test.model.Wanted">
+		INSERT INTO WANTED_T(WANTEDTITLE, STARTDATE, ENDDATE, PROCESS, ETC, QUESTION, CID)
+		VALUES(#{wantedTitle}, #{startDate}, #{endDate}, #{process}, #{etc}, #{question}, #{cid})
+	</insert>
+	
+	<delete id="deleteWanted"
+	parameterType="Integer">
+		DELETE FROM WANTED_T
+		WHERE WID = #{wid}
+	</delete>
+	
+	<insert id="updateWanted"
+	parameterType="com.ssafy.itda.itda_test.model.Wanted">
+		INSERT INTO WANTED_T(WANTEDTITLE, STARTDATE, ENDDATE, PROCESS, ETC, QUESTION, CID)
+		VALUES(#{wantedTitle}, #{startDate}, #{endDate}, #{process}, #{etc}, #{question}, #{cid})
+	</insert>
 </mapper>

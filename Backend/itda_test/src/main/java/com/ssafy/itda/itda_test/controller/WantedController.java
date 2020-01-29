@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.itda.itda_test.help.CompanyResult;
 import com.ssafy.itda.itda_test.help.Result;
 import com.ssafy.itda.itda_test.help.WantedResult;
 import com.ssafy.itda.itda_test.model.Company;
@@ -153,4 +154,62 @@ public class WantedController {
 		return new ResponseEntity<Result>(r, HttpStatus.OK);
 	}
 
+	@ApiOperation(value = "공고를 추가한다.", response = Wanted.class)
+	@RequestMapping(value = "/createWanted", method = RequestMethod.POST)
+	public ResponseEntity<Result> createWanted(@RequestBody Wanted model) throws Exception {
+		logger.info("6-------------createWanted-----------------------------" + new Date());
+		logger.info("6-------------createWanted-----------------------------" + model);
+		Result r = new Result();
+		if (model.getWantedTitle() == null || model.getWantedTitle().equals("") 
+		|| model.getStartDate() == null || model.getStartDate().equals("") || model.getEndDate() == null 
+		|| model.getEndDate().equals("") || model.getProcess() == null || model.getProcess().equals("")) {
+			r.setMsg("필수 입력값이 누락되었습니다.");
+			r.setState("fail");
+		}
+		wantedService.createWanted(model);
+		r.setMsg("공고 입력이 성공적으로 완료되었습니다.");
+		r.setState("success");
+		return new ResponseEntity<Result>(r, HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "공고를 삭제한다.", response = Wanted.class)
+	@RequestMapping(value = "/deleteWanted", method = RequestMethod.DELETE)
+	public ResponseEntity<Result> deleteWanted(@RequestBody Integer wid) throws Exception {
+		logger.info("7-------------deleteWanted-----------------------------" + new Date());
+		logger.info("7-------------deleteWanted-----------------------------" + wid);
+		Result r = new Result();
+		Wanted wanted = wantedService.getWantedInfo(wid);
+		if (wid == 0 || wanted == null) {
+			r.setMsg("존재하지 않는 wid값입니다.");
+			r.setState("fail");
+		}
+		wantedService.deleteWanted(wid);
+		r.setMsg("공고 삭제가 성공적으로 완료되었습니다.");
+		r.setState("success");
+		return new ResponseEntity<Result>(r, HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "공고를 수정한다.", response = Wanted.class)
+	@RequestMapping(value = "/updateWanted", method = RequestMethod.DELETE)
+	public ResponseEntity<Result> deleteWanted(@RequestBody Wanted model) throws Exception {
+		logger.info("8-------------updateWanted-----------------------------" + new Date());
+		logger.info("8-------------updateWanted-----------------------------" + model);
+		Result r = new Result();
+		int wid = model.getWid();
+		Wanted wanted = wantedService.getWantedInfo(wid);
+		if (wid == 0 || wanted == null) {
+			r.setMsg("존재하지 않는 wid값입니다.");
+			r.setState("fail");
+		}
+		else if (model.getWantedTitle() == null || model.getWantedTitle().equals("") 
+				|| model.getStartDate() == null || model.getStartDate().equals("") || model.getEndDate() == null 
+				|| model.getEndDate().equals("") || model.getProcess() == null || model.getProcess().equals("")) {
+			r.setMsg("입력되지 않은 필수값이 있습니다.");
+			r.setState("fail");
+		}
+		wantedService.updateWanted(model);
+		r.setMsg("공고 수정이 성공적으로 완료되었습니다.");
+		r.setState("success");
+		return new ResponseEntity<Result>(r, HttpStatus.OK);
+	}
 }

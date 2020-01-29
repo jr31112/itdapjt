@@ -1,7 +1,7 @@
 <template>
-	<v-card>
-		<div v-if="company.logo"><v-img :src="company.logo" :alt="company.corpNm" style="width: auto; height: 120px;"></v-img></div>
-		<div v-else>공고 이미지가 없습니다.</div>
+	<v-card @click="goDetailPage(wanted.wid)">
+		<v-img v-if="company.logo" :src="company.logo" :alt="company.corpNm" height="120" :contain="true"></v-img>
+		<v-img v-else :src="getImgUrl('noimg.png')" alt="noimg" height="120" :contain="true"></v-img>
 		<v-card-title primary-title>
 			<div>
 				<div class="headline over">{{ company.corpNm }}</div>
@@ -12,12 +12,22 @@
 	</v-card>
 </template>
 <script>
+import router from '../router'
+
 export default {
 	name: 'Recent',
 	props: {
 		company:{type:Object},
 		wanted:{type:Object}
 	},
+	methods:{
+	  getImgUrl(img) {
+	    return require('../assets/' + img)
+	  },
+	  goDetailPage(wid){
+        	router.push({name:'recruitdetail',params:{id:wid}})
+    	}
+	}
 }
 </script>
 <style>

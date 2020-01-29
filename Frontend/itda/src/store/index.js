@@ -9,7 +9,7 @@ export default new Vuex.Store({
     userInfo: null, // 필요한 이유는 계속 이메일과 패스워드를 확인 할 수 없으니까, 
                     // selectedUser가 allUsers에 찾은 사람을 객체로 userInfo를 저장한다. 
     isLogin: false, 
-    isLoginError: false
+    isLoginError: false,
   },
   //뮤테이션과 엑션스 차이는? 
   //뮤테이션 : state 값 변경. 
@@ -63,9 +63,6 @@ export default new Vuex.Store({
         commit("logout")
           router.push({name: "home"})
       },
-      goDetailPage(id){
-        router.push({name:'recruitdetail',params:{id:id}})
-      }
     },
   modules: {
   }

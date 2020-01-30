@@ -103,7 +103,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	SELECT DISTINCT S.SID, S.TNAME
 	FROM WANTED_T AS W, JOB_T AS J, JOBSTACK_T AS JS, stack_t AS S
 	WHERE W.WID = J.WID AND J.JID = JS.JID AND JS.SID = S.SID AND W.WID =
-	#{wid};
-
+	#{wid}
+	</select>
+	
+	<select id="getMyScrapWanteds" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+		SELECT WID FROM SCRAP_T WHERE UID = #{uid}
 	</select>
 </mapper>

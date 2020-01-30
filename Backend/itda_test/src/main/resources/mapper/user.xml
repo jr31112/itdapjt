@@ -53,4 +53,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SET PW = sha1(#{pw}), EMAIL = #{email}, UIMG = #{uimg}, UNAME = #{uname}
 		WHERE UID = #{uid}
 	</update>
+	
+	<select id="getMyStacks" parameterType="java.lang.Integer" resultType="com.ssafy.itda.itda_test.model.Stack">
+		SELECT S.SID, S.TNAME
+		FROM MYSTACK_T AS MS JOIN STACK_T AS S ON MS.SID = S.SID
+		WHERE MS.UID = #{uid}
+	</select>
 </mapper>

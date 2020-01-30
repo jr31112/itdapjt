@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.itda.itda_test.dao.UserDao;
+import com.ssafy.itda.itda_test.model.Stack;
 import com.ssafy.itda.itda_test.model.User;
 
 @Service
@@ -48,5 +49,15 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public void updateUser(User u) {
 		userDao.updateUser(u);
+	}
+
+	@Override
+	public List<Stack> getMyStacks(int uid) {
+		return userDao.getMyStacks(uid);
+	}
+
+	@Override
+	public List<Integer> getMyScrapWanteds(int uid) {
+		return userDao.getMyScrapWanteds(uid);
 	}
 }

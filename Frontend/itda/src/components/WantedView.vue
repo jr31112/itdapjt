@@ -1,7 +1,8 @@
 <template>
   <v-col class="wantedview" cols="12" md="6">
-    <carousel :per-page="1" :paginationEnabled="false" v-if="wantedlist.length">
-      <slide v-for="j in 2" :key="j">
+    <h2>요즘 핫한 공고들이에요!</h2>
+    <v-carousel v-if="wantedlist.length" hide-delimiters :show-arrows="false" cycle interval="2500" height="400">
+      <v-carousel-item v-for="j in 2" :key="j">
         <v-container white>
           <v-row v-for="i in 5" :key="i" style="height:78px;" @click="goDetailPage(wantedlist[2*(j-1)+i-1].wanted.wid)">
             <v-col cols="3">
@@ -14,13 +15,12 @@
             </v-col>
           </v-row>
         </v-container>
-      </slide>
-    </carousel>
+      </v-carousel-item>
+    </v-carousel>
   </v-col>
 </template>
 
 <script>
-import { Carousel, Slide } from 'vue-carousel'
 import axios from 'axios'
 import router from '../router'
 
@@ -28,11 +28,9 @@ import router from '../router'
 export default {
   name: "wantedview",
   components: {
-    Carousel,
-    Slide
   },
   methods:{
-		getRecentRecruit(){
+		getWantedList(){
 			axios.get(`http://192.168.31.54:8197/itda/api/getWantedByView/`)
 				.then(response=>{
 					this.wantedlist = response.data
@@ -47,7 +45,7 @@ export default {
     }
 	},
 	mounted(){
-		this.getRecentRecruit()
+		this.getWantedList()
 	},
   data() {
     return {

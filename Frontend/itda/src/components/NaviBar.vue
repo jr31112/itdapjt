@@ -4,33 +4,8 @@
         id="documentation-app-bar"
         data-booted="true"
         style="height: 64px; margin-top: 0px; transform: translateY(0px); left: 0px; right: 0px;">
-        <div class="v-toolbar__content" style="height: 64px;">
-            <button
-                type="button"
-                class="v-app-bar__nav-icon hidden-lg-and-up v-btn v-btn--flat v-btn--icon v-btn--round theme--dark v-size--default">
-                <span class="v-btn__content">
-                    <i aria-hidden="true" class="v-icon notranslate mdi mdi-menu theme--dark"></i>
-                </span>
-            </button>
-            <div>
-                <v-btn
-                    router="router"
-                    :to="{name: 'home'}"
-                    class="v-btn--text"
-                    depressed="depressed"
-                    large="large"
-                    icon="icon">
-                    <div
-                        role=""
-                        aria-label="Vuetify Logo"
-                        class="v-responsive v-image shrink ml-12 mt-2"
-                        style="width: 80px;">
-                        <div class="v-responsive__sizer" style="padding-bottom: 114.132%;"></div>
-                        <v-img :src="getImgUrl('logoo.png')" style="width :100%"/>
-                        <!-- //<v-img :src="getImgUrl('itda1.png')" /> -->
-                    </div>
-                </v-btn>
-            </div>
+        <div class="v-toolbar__content" style="height: 64px;"> 
+            <router-link class="mt-2" :to="{name:'home'}"><v-img :src="getImgUrl('logoo.png')" style="width :6.5rem"/></router-link>
             <div class="spacer"></div>
             <div class="v-responsive mr-0 mr-md-6 hidden-xs-only" style="max-width: 300px;">
                 <div class="v-responsive__content">
@@ -102,21 +77,19 @@
                         class="v-icon notranslate v-icon--right mdi mdi-open-in-new theme--dark"></i>
                 </span>
             </a>
-            <a>
-                <v-btn
-                    v-on:click="goTotalWantedPage()"
-                    class="hidden-sm-and-down v-btn v-btn--flat v-btn--router v-btn--text theme--dark v-size--default"
-                    aria-label="For Enterprise"
-                    style="min-width: 48px;">
-                    <span class="v-btn__content">
-                        <span class="subtitle-1 text-capitalize font-weight-light">
-                            <div class="v-markdown">
-                                <span class="mr">상세보기</span>
-                            </div>
-                        </span>
+            <v-btn
+                v-on:click="goTotalWantedPage()"
+                class="hidden-sm-and-down v-btn v-btn--flat v-btn--router v-btn--text theme--dark v-size--default"
+                aria-label="For Enterprise"
+                style="min-width: 48px;">
+                <span class="v-btn__content">
+                    <span class="subtitle-1 text-capitalize font-weight-light">
+                        <div class="v-markdown">
+                            <span class="mr">상세보기</span>
+                        </div>
                     </span>
-                </v-btn>
-            </a>
+                </span>
+            </v-btn>
             <div class="v-menu">
                 <div
                     role="menu"
@@ -195,7 +168,7 @@
                                 <div class="pa-4" style="max-width: 520px">
                                     <!-- pa는 패딩오토 -->
                                     <v-text-field v-model="email" name = "email" label="email을 입력하세요"></v-text-field>
-                                    <v-text-field  v-model="pw" name = "pw" type="password" label="password를 입력하세요"></v-text-field>
+                                    <v-text-field  v-model="password" name = "pw" type="password" label="password를 입력하세요"></v-text-field>
                                     <v-btn
                                         class="mb-1"
                                         color="primary"
@@ -205,7 +178,7 @@
                                          @click="login(
                                         {
                                             email:email,
-                                            pw:pw
+                                            pw:password
                                         }
                                         )">로그인
                                     </v-btn >
@@ -227,7 +200,8 @@
 	import router from '../router/index.js';
     export default {
         data() {
-            return {email: null, password: null, dialog:false};
+            return {email: null, password: null, dialog:false,
+            token : localStorage.getItem("access_token")};
         },
         computed: {
             ...mapState(["isLogin", "isLoginError","isDialog"])

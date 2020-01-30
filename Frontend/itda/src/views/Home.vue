@@ -18,7 +18,7 @@
     import WantedLogin from '../components/WantedLogin.vue'
     import WantedDefault from '../components/WantedDefault.vue'
     import ImgBanner from '../components/ImgBanner.vue'
-
+    
     export default {
         name: 'home',
         components: {

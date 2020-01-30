@@ -95,7 +95,7 @@ public class UserController {
 			ur.setState("fail");
 		} else {
 			String token = jwtService.create(user);
-			response.setHeader("jwt-auth-token", token);
+  			response.setHeader("jwt-auth-token", token);
 			ur.setUid(user.getUid());
 			ur.setUname(user.getUname());
 			ur.setEmail(user.getEmail());
@@ -129,11 +129,12 @@ public class UserController {
 	}
 
 	@ApiOperation(value = "ID에 해당하는 회원의 정보를 반환한다.", response = UserResult.class)
-	@RequestMapping(value = "/getUser/{uid}", method = RequestMethod.POST)
-	public ResponseEntity<UserResult> getUser(@RequestBody int uid) throws Exception {
+	@RequestMapping(value = "/getUser", method = RequestMethod.GET)
+	public ResponseEntity<UserResult> getUser(HttpServletRequest req) throws Exception {
 		logger.info("1-4-------------getUser------------------------------" + new Date());
-		logger.info("1-4-------------getUser------------------------------" + uid);
-
+		Map<String, Object> resultMap = new HashMap<>();
+		resultMap.putAll(jwtService.get(req.getHeader("jwt-auth-token")));
+		int uid = (int) resultMap.get("uid");
 		User user = userService.getUser(uid);
 		UserResult ur = new UserResult();
 		if (user == null || user.getEmail() == null || user.getEmail().equals("")) {

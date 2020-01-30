@@ -1,202 +1,238 @@
 # API 명세
 
-# User
+# 회원(User)
 
-## 1. 회원가입
+* API
 
-1. `POST /api/signUp` : 새로운 회원의 정보를 DB에 저장
+  ![api_user](./imgs/api_user.PNG)
+
+## 1. 회원가입(C) 
+
+1. `POST /api/signUp` : 새로운 회원의 정보를 DB에 저장한다.
 
    - Parameter : User
 
      ```json
-     { "email" : "string",
-      "pw" : "string",
-      "uname" : "string",
-      }
+     {
+       "email": "string",	//id 겸 이메일
+       "pw": "string",		//비밀번호
+       "uname": "string"		//이름
+     }
+     ```
+   
+  * 필수 :  `email`, `pw`, `uname` 만 입력받아 회원가입 한다.
+   
+- Return : UserResult
+   
+  ```json
+   {
+       "msg": "string",		//결과 정보
+       "state": "string"		//상태 (success / fail)
+     }
      ```
      
-     회원가입 시 **email, pw, uname** 만 입력하여 회원가입하도록 한다.
-
-   - return : 회원가입 성공 유무를 결과로 반환. state 결과 success/fail로 확인
-
-     ```json
-{ "msg" : "string",
-      "state" : "string" }
-     ```
      
-     ex)
-     
-     ```json
-     { "msg" : "성공적으로 회원가입이 완료되었습니다. ",
-      "state" : "success" }
-     ```
    
 2. `GET /api/emailCheck/{email}` : 입력한 email이 사용가능 한지 중복 체크
 
    - Parameter : String
 
-   - return : 중복 유무에 대한 결과 반환.  state 결과 success/fail로 확인
+   - Return : `email` 중복 유무에 대한 결과를 반환한다.
 
      ```json
-{ "msg" : "string",
-      "state" : "string" }
-     ```
-     
-     ex)
-     
-     ```json
-     {"msg" : "사용할 수 있는 email입니다.", "state" : "success" }
-     ```
-
-
-
------------
-
-## 2. 로그인
-
-1. `POST /api/login` : 사용자의 정보(email, pw)가 일치하면 로그인
-
-   - Parameter : User의 email, pw
-
-     ```json
-   { "email" : "string",
-      "pw" : "string",
-    "uname" : "string",
-      "auth" : 0,
-    "major" : "string",
-      "uimg" : "string" }
-     ```
-     
-     로그인시 **email, pw ** 만 입력하여 로그인 한다.
-     
-   - return : 로그인 성공 유무를 결과로 반환. state 결과 success/fail로 확인
-   
-     ```json
-     { "uid" : 0, 
-      "email" : "string",
-      "auth" : 0,
-      "msg" : "string",
-      "state" : "string" }
-     ```
-     
-     ex)
-     
-     ```json
-     { "uid" : 10, 
-      "email" : "admin@it.da",
-      "auth" : 0,
-      "msg" : "이메일 또는 비밀번호가 일치하지 않습니다.",
-      "state" : "fail" }
-     ```
-
--------------
-
-## 회원관리
-
-1. `GET /api/getAllUsers` : 전체 회원의 목록을 확인한다.
-
-   - Parameter : {}
-
-   - return : 전체 회원의 목록을 반환 `List`
-
-     - 회원의 비밀번호를 제외한 모든 정보를 반환한다.
-
-     ```json
-     [
-         {
-             "uid" : 1,
-             "email" : "admin@it.da",
-             "pw" : null,
-             "auth" : 0,
-             "major" : "컴퓨터공학과",
-             "uimg" : "C:\img\myimg.jpg",
-             
-         },
-         {
-         	...   
-         }
-     ]
-     ```
-
-2. `GET /api/getUser/{uid}` : 회원의 정보를 확인한다.
-
-   - Parameter : Integer
-
-   - return : uid에 해당하는 회원의 정보를 반환
-
-     - 회원의 비밀번호를 제외한 모든 정보를 반환한다.
-
-     ```json
-     {
-         "uid" : 1,
-         "email" : "admin@it.da",
-         "pw" : null,
-         "auth" : 0,
-         "major" : "컴퓨터공학과",
-         "uimg" : "C:\img\myimg.jpg",
-         "stack" : [
-             {"tname" : "Java", ...}
-         ]
+{
+       "msg": "string",		
+       "state": "string"		
      }
      ```
 
-3. `UPDATE /api/updateUser` : 회원의 정보를 수정한다.
+## 2. 로그인(R)
 
-   - Parameter : User
+* `POST /api/login` : 로그인을 시도한다.
 
-     - uid, email, auth는 변경이 불가능하다.
-     - pw, major, uimg, uname 변경 가능
+  * Parameter : User
 
-     ```json
-     {
-         "uid" : 0,
-         "uname" : "String",
-         "email" : "String",
-         "pw" : "String",
-         "auth" : 0,
-         "major" : "String",
-         "uimg" : "String"
-     }
-```
-     
-   
-4. `DELETE /api/deleteUser/{uid}` : uid에 해당하는 회원의 정보를 삭제한다.
+    ```json
+    {
+      "email": "string",
+      "pw": "string"
+    }
+    ```
 
-   * Parameter : Integer
+    * 필수 : `email`, `pw`
 
-   * return : 회원 탈퇴에 대한 결과 반환.  state 결과 success/fail로 확인
+  * Return : UserResult
 
-     ```json
-     { "msg" : "string",
-      "state" : "string" }
-     ```
+    ```json
+    {
+      "msg": "string",		
+      "state": "string"		
+    }
+    ```
 
-     ex)
+    
 
-     ```json
-     {"msg" : "성공적으로 탈퇴되었습니다.", "state" : "success" }
-     ```
+## 3. 회원 탈퇴(D)
 
-5. `UPDATE /api/updatePermission/{uid}` : uid에 해당하는 회원의 권한을 수정한다.
+* `DELETE /api/deleteUser/{uid}` : 해당 uid를 가진 회원의 정보를 삭제한다.
 
-   * Parameter : Integer
+  * Parameter : integer
 
-   * return : 회원 권한 수정에 대한 결과 반환.  state 결과 success/fail로 확인
+  * Return : UserResult
 
-     ```json
-     { "msg" : "string",
-      "state" : "string" }
-     ```
+    ```json
+    {
+      "msg": "string",		
+      "state": "string"	
+    }
+    ```
 
-     ex)
+    
 
-     ```json
-     {"msg" : "성공적으로 회원 권한이 수정되었습니다.", "state" : "success" }
-     ```
+## 4. 회원 목록(R)
+
+* `GET /api/getAllUsers` : 전체 회원의 목록을 확인한다.
+
+  * Parameter : {}
+
+  * Return : 전체 회원의 목록 `List` 를 반환
+
+    ```json
+    [
+      {
+        "uid": 1,
+        "email": "admin@it.da",
+        "uname": "어드민",
+        "auth": 0,
+        "major": null,
+        "uimg": null,
+        "cid": 0				//취업한 기업id
+      },
+      {
+    	...
+      }
+    ]
+    ```
+
+    
+
+## 5. 회원 상세(R)
+
+* `GET /api/getUser/{uid}` : uid에 해당하는 회원의 정보를 반환한다.
+
+  * Parameter : {}
+
+  * Return : UserResult
+
+    ```json
+    {
+      "msg": "string",		
+      "state": "string"
+    }
+    ```
+
+    
+
+## 6. 회원 정보 수정(U)
+
+* `UPDATE /api/updateUser` : 회원의 정보를 수정한다.
+
+  - Parameter : User
+
+    ```json
+    {
+      "auth": 0,
+      "cid": 0,
+      "email": "string",
+      "major": "string",
+      "pw": "string",
+      "uid": 0,
+      "uimg": "string",
+      "uname": "string"
+    }
+    ```
+
+    - 필수 : `pw`, `uname`
+    - `uid`, `email`, `auth`는 변경이 불가능하다.
+    - `pw`, `major`, `uimg`, `uname` 변경 가능
+
+  - Return : UserResult
+
+    ```json
+    {
+      "msg": "string",		
+      "state": "string"
+    }
+    ```
+
+    
+
+## 7. 토큰 정보 확인
+
+* `POST /api/info` : 토큰이 유효한지 검사한다.
+
+## 8. 회원 권한 수정(U)
+
+* `UPDATE /api/updatePermission/{uid}` : uid에 해당하는 회원의 권한을 수정한다.
+  * Parameter : User
+    * 필수 : `uid`, `auth`
+  * return : UserResult
 
 --------------------
 
+# 기업(Company)
 
+* API
+
+  ![api_company](./imgs/api_company.PNG)
+
+## 1. 기업 생성(C)
+
+## 2. 기업 수정(R)
+
+## 3. 기업 삭제(D)
+
+
+
+# 직무(Job)
+
+* API
+
+  ![api_job](./imgs/api_job.PNG)
+
+## 1. 직무 생성(C)
+
+## 2. 직무 수정(R)
+
+## 3. 직무 삭제(D)
+
+# 댓글(Comment)
+
+* API
+
+  ![api_comment](./imgs/api_comment.PNG)
+
+## 1. 댓글 생성(C)
+
+> 댓글 생성은 회원만 가능하다.
+
+* `POST /api/createComment` 
+
+  * Parameter : Comment
+
+    ```json
+    
+    ```
+
+    
+
+## 2. 댓글 수정(R)
+
+> 댓글 수정은 글 작성자만 가능하다.
+
+## 3. 댓글 삭제(D)
+
+> 댓글 삭제는 글 작성자 + 관리자만 가능하다.
 
 ## 공고
 

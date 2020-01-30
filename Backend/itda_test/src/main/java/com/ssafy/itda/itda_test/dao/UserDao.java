@@ -51,4 +51,8 @@ public class UserDao {
 	public List<Integer> getMyScrapWanteds(int uid){
 		return sqlSession.selectList(ns + "getMyScrapWanteds", uid);
 	}
+	
+	public void updatePermission(User model) {
+		sqlSession.update(ns + "updatePermission", model);
+	}
 }

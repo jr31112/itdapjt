@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ssafy.comment">
+
+	<select id="getComment"
+	parameterType="java.lang.Integer"
+	resultType="com.ssafy.itda.itda_test.model.Comment">
+		SELECT * 
+		FROM COMMENT_T
+		WHERE CMID = #{cmid}
+	</select>
+	
+	<insert id="createComment" 
+	parameterType="com.ssafy.itda.itda_test.model.Comment">
+		INSERT INTO COMMENT_T(UID, WID, WRITER, CONTENT)
+		VALUES ( #{uid}, #{wid}, #{writer}, #{content} ) 
+	</insert>
+	
+	<delete id="deleteComment" 
+	parameterType="java.lang.Integer">
+		DELETE FROM COMMENT_T
+		WHERE CMID = #{cmid}
+	</delete>
+	
+	<update id="updateComment"
+	parameterType="com.ssafy.itda.itda_test.model.Comment">
+		UPDATE COMMENT_T
+		SET CONTENT = #{content}
+		WHERE CMID = #{cmid}
+	</update>
+</mapper>

@@ -64,7 +64,7 @@ public class CompanyController {
 	}
 	
 	@ApiOperation(value = "해당 기업 정보를 삭제한다.", response = CompanyResult.class)
-	@RequestMapping(value = "/deleteCompany/{cid}", method = RequestMethod.POST)
+	@RequestMapping(value = "/deleteCompany/{cid}", method = RequestMethod.DELETE)
 	public ResponseEntity<CompanyResult> deleteCompany(@RequestBody Integer cid) throws Exception {
 		logger.info("2-2-------------deleteCompany-----------------------------" + new Date());
 		logger.info("2-2-------------deleteCompany-----------------------------" + cid);

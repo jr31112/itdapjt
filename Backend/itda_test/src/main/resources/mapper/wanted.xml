@@ -106,7 +106,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	#{wid}
 	</select>
 	
-	<select id="getMyScrapWanteds" parameterType="java.lang.Integer" resultType="java.lang.Integer">
-		SELECT WID FROM SCRAP_T WHERE UID = #{uid}
+	<select id="getWantedByStack" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+		SELECT DISTINCT W.WID FROM MYSTACK_T AS MS, JOBSTACK_T AS JS, JOB_T AS J, WANTED_T AS W
+		WHERE MS.UID = #{uid} AND MS.SID = JS.SID AND JS.JID = J.JID ORDER BY ENDDATE LIMIT 10;
+	</select>
+	
+	<select id="getWantedByScrap" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+		SELECT W.WID FROM SCRAP_T AS S, WANTED_T AS W
+		WHERE S.UID = #{uid} AND S.WID = W.WID ORDER BY ENDDATE LIMIT 10;
 	</select>
 </mapper>

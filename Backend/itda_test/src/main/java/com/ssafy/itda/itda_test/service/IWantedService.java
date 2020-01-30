@@ -25,4 +25,6 @@ public interface IWantedService {
 	void updateWanted(Wanted model);
 	List<Stack> getStackInfo(int jid);
 	List<Stack> getWantedStackInfo(int i);
+	List<Integer> getWantedByStack(int uid);
+	List<Integer> getWantedByScrap(int uid);
 }

@@ -84,7 +84,7 @@ public class WantedController {
 	}
 
 	@ApiOperation(value = "최신 공고 목록을 요청 받아 응답한다.", response = List.class)
-	@RequestMapping(value = "/getWantedByRecent/", method = RequestMethod.GET)
+	@RequestMapping(value = "/getWantedByRecent", method = RequestMethod.GET)
 	public ResponseEntity<List<WantedResult>> getWantedByRecent(HttpServletRequest req) throws Exception {
 		logger.info("5-------------getWantedByRecent-----------------------------" + new Date());
 		Map<String, Object> resultMap = new HashMap<>();
@@ -104,7 +104,7 @@ public class WantedController {
 	}
 
 	@ApiOperation(value = "마감순 공고 목록을 요청 받아 응답한다.", response = List.class)
-	@RequestMapping(value = "/getWantedByCloseEnd/", method = RequestMethod.GET)
+	@RequestMapping(value = "/getWantedByCloseEnd", method = RequestMethod.GET)
 	public ResponseEntity<List<WantedResult>> getWantedByCloseEnd(HttpServletRequest req) throws Exception {
 		logger.info("5-------------getWantedByCloseEnd-----------------------------" + new Date());
 		Map<String, Object> resultMap = new HashMap<>();
@@ -124,7 +124,7 @@ public class WantedController {
 	}
 
 	@ApiOperation(value = "조회순 공고 목록을 요청 받아 응답한다.", response = List.class)
-	@RequestMapping(value = "/getWantedByView/", method = RequestMethod.GET)
+	@RequestMapping(value = "/getWantedByView", method = RequestMethod.GET)
 	public ResponseEntity<List<WantedResult>> getWantedByView(HttpServletRequest req) throws Exception {
 		logger.info("5-------------getWantedByView-----------------------------" + new Date());
 		Map<String, Object> resultMap = new HashMap<>();
@@ -143,8 +143,44 @@ public class WantedController {
 		}
 	}
 
+	@ApiOperation(value = "내 기술스택에 맞는 공고 정보를 확인한다.", response = List.class)
+	@RequestMapping(value = "/getWantedByStack", method = RequestMethod.GET)
+	public ResponseEntity<List<WantedResult>> getWantedByStack(HttpServletRequest req) throws Exception {
+		logger.info("5-------------getWantedByStack-----------------------------" + new Date());
+		Map<String, Object> resultMap = new HashMap<>();
+		String token = req.getHeader("jwt-auth-token");
+		if(token != null) {
+			resultMap.putAll(jwtService.get(req.getHeader("jwt-auth-token")));
+			int uid = (int) resultMap.get("uid");
+			List<Integer> widList = wantedService.getWantedByStack(uid);
+			List<WantedResult> wrlist = getWantedListFunction(widList, uid);
+			return new ResponseEntity<List<WantedResult>>(wrlist, HttpStatus.OK);
+		}
+		else {
+			return new ResponseEntity(HttpStatus.NO_CONTENT);
+		}
+	}
+	
+	@ApiOperation(value = "내 스크랩 공고에 맞는 공고 정보를 확인한다.", response = List.class)
+	@RequestMapping(value = "/getWantedByScrap", method = RequestMethod.GET)
+	public ResponseEntity<List<WantedResult>> getWantedByScrap(HttpServletRequest req) throws Exception {
+		logger.info("5-------------getWantedByScrap-----------------------------" + new Date());
+		Map<String, Object> resultMap = new HashMap<>();
+		String token = req.getHeader("jwt-auth-token");
+		if(token != null) {
+			resultMap.putAll(jwtService.get(req.getHeader("jwt-auth-token")));
+			int uid = (int) resultMap.get("uid");
+			List<Integer> widList = wantedService.getWantedByScrap(uid);
+			List<WantedResult> wrlist = getWantedListFunction(widList, uid);
+			return new ResponseEntity<List<WantedResult>>(wrlist, HttpStatus.OK);
+		}
+		else {
+			return new ResponseEntity(HttpStatus.NO_CONTENT);
+		}
+	}
+	
 	@ApiOperation(value = "사용자가 공고를 스크랩한다.", response = Result.class)
-	@RequestMapping(value = "/scrapWanted/", method = RequestMethod.POST)
+	@RequestMapping(value = "/scrapWanted", method = RequestMethod.POST)
 	public ResponseEntity<Result> scrapWanted(@RequestBody Scrap model) throws Exception {
 		logger.info("5-------------scrapWanted-----------------------------" + new Date());
 		Scrap scrap = wantedService.isScraped(model);

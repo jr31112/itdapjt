@@ -110,4 +110,9 @@ public class WantedServiceImpl implements IWantedService {
 	public List<Integer> getWantedByScrap(int uid) {
 		return wantedDao.getWantedByScrap(uid);
 	}
+
+	@Override
+	public void updateVcnt(int wid) {
+		wantedDao.updateVcnt(wid);
+	}
 }

@@ -92,4 +92,8 @@ public class WantedDao {
 		return sqlSession.selectList(ns + "getWantedByScrap", uid);
 	}
 
+	public void updateVcnt(int wid) {
+		sqlSession.update(ns + "updateVcnt", wid);
+	}
+
 }

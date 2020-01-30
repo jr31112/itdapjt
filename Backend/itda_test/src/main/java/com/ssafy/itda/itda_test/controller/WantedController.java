@@ -2,7 +2,11 @@ package com.ssafy.itda.itda_test.controller;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,8 +26,10 @@ import com.ssafy.itda.itda_test.model.Company;
 import com.ssafy.itda.itda_test.model.Job;
 import com.ssafy.itda.itda_test.model.Scrap;
 import com.ssafy.itda.itda_test.model.Stack;
+import com.ssafy.itda.itda_test.model.User;
 import com.ssafy.itda.itda_test.model.Wanted;
 import com.ssafy.itda.itda_test.service.IWantedService;
+import com.ssafy.itda.itda_test.service.JwtServiceImpl;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -39,13 +45,27 @@ public class WantedController {
 	@Autowired
 	private IWantedService wantedService;
 
+	@Autowired
+	private JwtServiceImpl jwtService;
+
 	@ApiOperation(value = " 공고 정보를 확인한다.", response = List.class)
 	@RequestMapping(value = "/getWantedAll", method = RequestMethod.GET)
-	public ResponseEntity<List<WantedResult>> getWantedAll() throws Exception {
+	public ResponseEntity<List<WantedResult>> getWantedAll(HttpServletRequest req) throws Exception {
 		logger.info("5-------------getWantedAll-----------------------------" + new Date());
-		List<Integer> widList = wantedService.getWantedAll();
-		List<WantedResult> wrlist = getWantedListFunction(widList);
-		return new ResponseEntity<List<WantedResult>>(wrlist, HttpStatus.OK);
+		Map<String, Object> resultMap = new HashMap<>();
+		String token = req.getHeader("jwt-auth-token");
+		if(token != null) {
+			resultMap.putAll(jwtService.get(req.getHeader("jwt-auth-token")));
+			int uid = (int) resultMap.get("uid");
+			List<Integer> widList = wantedService.getWantedAll();
+			List<WantedResult> wrlist = getWantedListFunction(widList, uid);
+			return new ResponseEntity<List<WantedResult>>(wrlist, HttpStatus.OK);
+		}
+		else {
+			List<Integer> widList = wantedService.getWantedAll();
+			List<WantedResult> wrlist = getWantedListFunction(widList);
+			return new ResponseEntity<List<WantedResult>>(wrlist, HttpStatus.OK);
+		}
 	}
 
 	@ApiOperation(value = " 공고 정보를 확인한다.", response = WantedResult.class)
@@ -65,32 +85,62 @@ public class WantedController {
 
 	@ApiOperation(value = "최신 공고 목록을 요청 받아 응답한다.", response = List.class)
 	@RequestMapping(value = "/getWantedByRecent/", method = RequestMethod.GET)
-	public ResponseEntity<List<WantedResult>> getWantedByRecent() throws Exception {
+	public ResponseEntity<List<WantedResult>> getWantedByRecent(HttpServletRequest req) throws Exception {
 		logger.info("5-------------getWantedByRecent-----------------------------" + new Date());
-		List<Integer> widList = wantedService.getWantedByRecent();
-		List<WantedResult> wrlist = getWantedListFunction(widList);
-
-		return new ResponseEntity<List<WantedResult>>(wrlist, HttpStatus.OK);
+		Map<String, Object> resultMap = new HashMap<>();
+		String token = req.getHeader("jwt-auth-token");
+		if(token != null) {
+			resultMap.putAll(jwtService.get(req.getHeader("jwt-auth-token")));
+			int uid = (int) resultMap.get("uid");
+			List<Integer> widList = wantedService.getWantedByRecent();
+			List<WantedResult> wrlist = getWantedListFunction(widList, uid);
+			return new ResponseEntity<List<WantedResult>>(wrlist, HttpStatus.OK);
+		}
+		else {
+			List<Integer> widList = wantedService.getWantedByRecent();
+			List<WantedResult> wrlist = getWantedListFunction(widList);
+			return new ResponseEntity<List<WantedResult>>(wrlist, HttpStatus.OK);
+		}
 	}
 
 	@ApiOperation(value = "마감순 공고 목록을 요청 받아 응답한다.", response = List.class)
 	@RequestMapping(value = "/getWantedByCloseEnd/", method = RequestMethod.GET)
-	public ResponseEntity<List<WantedResult>> getWantedByCloseEnd() throws Exception {
+	public ResponseEntity<List<WantedResult>> getWantedByCloseEnd(HttpServletRequest req) throws Exception {
 		logger.info("5-------------getWantedByCloseEnd-----------------------------" + new Date());
-		List<Integer> widList = wantedService.getWantedByCloseEnd();
-		List<WantedResult> wrlist = getWantedListFunction(widList);
-
-		return new ResponseEntity<List<WantedResult>>(wrlist, HttpStatus.OK);
+		Map<String, Object> resultMap = new HashMap<>();
+		String token = req.getHeader("jwt-auth-token");
+		if(token != null) {
+			resultMap.putAll(jwtService.get(req.getHeader("jwt-auth-token")));
+			int uid = (int) resultMap.get("uid");
+			List<Integer> widList = wantedService.getWantedByCloseEnd();
+			List<WantedResult> wrlist = getWantedListFunction(widList, uid);
+			return new ResponseEntity<List<WantedResult>>(wrlist, HttpStatus.OK);
+		}
+		else {
+			List<Integer> widList = wantedService.getWantedByCloseEnd();
+			List<WantedResult> wrlist = getWantedListFunction(widList);
+			return new ResponseEntity<List<WantedResult>>(wrlist, HttpStatus.OK);
+		}
 	}
 
 	@ApiOperation(value = "조회순 공고 목록을 요청 받아 응답한다.", response = List.class)
 	@RequestMapping(value = "/getWantedByView/", method = RequestMethod.GET)
-	public ResponseEntity<List<WantedResult>> getWantedByView() throws Exception {
+	public ResponseEntity<List<WantedResult>> getWantedByView(HttpServletRequest req) throws Exception {
 		logger.info("5-------------getWantedByView-----------------------------" + new Date());
-		List<Integer> widList = wantedService.getWantedByView();
-		List<WantedResult> wrlist = getWantedListFunction(widList);
-
-		return new ResponseEntity<List<WantedResult>>(wrlist, HttpStatus.OK);
+		Map<String, Object> resultMap = new HashMap<>();
+		String token = req.getHeader("jwt-auth-token");
+		if(token != null) {
+			resultMap.putAll(jwtService.get(req.getHeader("jwt-auth-token")));
+			int uid = (int) resultMap.get("uid");
+			List<Integer> widList = wantedService.getWantedByView();
+			List<WantedResult> wrlist = getWantedListFunction(widList, uid);
+			return new ResponseEntity<List<WantedResult>>(wrlist, HttpStatus.OK);
+		}
+		else {
+			List<Integer> widList = wantedService.getWantedByView();
+			List<WantedResult> wrlist = getWantedListFunction(widList);
+			return new ResponseEntity<List<WantedResult>>(wrlist, HttpStatus.OK);
+		}
 	}
 
 	@ApiOperation(value = "사용자가 공고를 스크랩한다.", response = Result.class)
@@ -171,6 +221,36 @@ public class WantedController {
 		return new ResponseEntity<Result>(r, HttpStatus.OK);
 	}
 
+	private List<WantedResult> getWantedListFunction(List<Integer> widList, int uid) {
+		List<WantedResult> wrlist = new ArrayList<>();
+		for (int i : widList) {
+			int cid = wantedService.getCompanyId(i);
+			Company company = wantedService.getCompanyInfo(cid);
+			Wanted wanted = wantedService.getWantedInfo(i);
+			List<Job> jobs = wantedService.getJobsInfo(i);
+			List<Stack> wantedStacks = wantedService.getWantedStackInfo(i);
+			for (Job j : jobs) {
+				j.setStacks(wantedService.getStackInfo(j.getJid()));
+			}
+			Scrap model = new Scrap();
+			model.setUid(uid);
+			model.setWid(i);
+			Scrap scrap = wantedService.isScraped(model);
+			WantedResult wr = new WantedResult();
+			wr.setCompany(company);
+			wr.setWanted(wanted);
+			wr.setJobs(jobs);
+			wr.setStacks(wantedStacks);
+			if (scrap == null) {
+				wr.setScrap(false);
+			} else {
+				wr.setScrap(true);
+			}
+			wrlist.add(wr);
+		}
+		return wrlist;
+	}
+	
 	private List<WantedResult> getWantedListFunction(List<Integer> widList) {
 		List<WantedResult> wrlist = new ArrayList<>();
 		for (int i : widList) {

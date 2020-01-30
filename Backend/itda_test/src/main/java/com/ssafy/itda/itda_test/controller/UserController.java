@@ -1,5 +1,6 @@
 package com.ssafy.itda.itda_test.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -21,8 +22,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.itda.itda_test.help.UserResult;
+import com.ssafy.itda.itda_test.help.WantedResult;
+import com.ssafy.itda.itda_test.model.Company;
+import com.ssafy.itda.itda_test.model.Job;
+import com.ssafy.itda.itda_test.model.Stack;
 import com.ssafy.itda.itda_test.model.User;
+import com.ssafy.itda.itda_test.model.Wanted;
 import com.ssafy.itda.itda_test.service.IUserService;
+import com.ssafy.itda.itda_test.service.IWantedService;
 import com.ssafy.itda.itda_test.service.JwtServiceImpl;
 
 import io.swagger.annotations.Api;
@@ -38,6 +45,9 @@ public class UserController {
 
 	@Autowired
 	private IUserService userService;
+
+	@Autowired
+	private IWantedService wantedService;
 
 	@Autowired
 	private JwtServiceImpl jwtService;
@@ -95,11 +105,8 @@ public class UserController {
 			ur.setState("fail");
 		} else {
 			String token = jwtService.create(user);
-  			response.setHeader("jwt-auth-token", token);
-			ur.setUid(user.getUid());
-			ur.setUname(user.getUname());
-			ur.setEmail(user.getEmail());
-			ur.setAuth(user.getAuth());
+			response.setHeader("jwt-auth-token", token);
+			ur.setUser(user);
 			ur.setMsg("성공적으로 로그인 되었습니다.");
 			ur.setState("success");
 		}
@@ -133,25 +140,52 @@ public class UserController {
 	public ResponseEntity<UserResult> getUser(HttpServletRequest req) throws Exception {
 		logger.info("1-4-------------getUser------------------------------" + new Date());
 		Map<String, Object> resultMap = new HashMap<>();
-		resultMap.putAll(jwtService.get(req.getHeader("jwt-auth-token")));
-		int uid = (int) resultMap.get("uid");
-		User user = userService.getUser(uid);
-		// 내 기술스택 list , 내 스크랩 list
-		UserResult ur = new UserResult();
-		if (user == null || user.getEmail() == null || user.getEmail().equals("")) {
+		String token = req.getHeader("jwt-auth-token");
+		if(token!=null) {
+			resultMap.putAll(jwtService.get(token));
+			int uid = (int) resultMap.get("uid");
+			User user = userService.getUser(uid);
+			// 내 기술스택 list , 내 스크랩 list
+			List<Stack> mystacks = userService.getMyStacks(uid);
+			List<Integer> myScrapWanteds = userService.getMyScrapWanteds(uid);
+			List<WantedResult> wrlist = new ArrayList<>();
+			for (int i : myScrapWanteds) {
+				int cid = wantedService.getCompanyId(i);
+				Company company = wantedService.getCompanyInfo(cid);
+				Wanted wanted = wantedService.getWantedInfo(i);
+				List<Job> jobs = wantedService.getJobsInfo(i);
+				List<Stack> wantedStacks = wantedService.getWantedStackInfo(i);
+				for (Job j : jobs) {
+					j.setStacks(wantedService.getStackInfo(j.getJid()));
+				}
+				WantedResult wr = new WantedResult();
+				wr.setCompany(company);
+				wr.setWanted(wanted);
+				wr.setJobs(jobs);
+				wr.setStacks(wantedStacks);
+				wrlist.add(wr);
+			}
+			
+			UserResult ur = new UserResult();
+			if (user == null || user.getEmail() == null || user.getEmail().equals("")) {
+				ur.setMsg("회원정보를 가져오는데 실패했습니다.");
+				ur.setState("fail");
+			} else {
+				ur.setMsg("회원정보를 성공적으로 가져왔습니다.");
+				ur.setUser(user);
+				ur.setMystacks(mystacks);
+				ur.setMyScrapWanteds(wrlist);
+				ur.setState("success");
+			}
+			return new ResponseEntity<UserResult>(ur, HttpStatus.OK);
+		}
+		else {
+			UserResult ur = new UserResult();
 			ur.setMsg("회원정보를 가져오는데 실패했습니다.");
 			ur.setState("fail");
-		} else {
-			ur.setMsg("회원정보를 성공적으로 가져왔습니다.");
-			ur.setUid(user.getUid());
-			ur.setUname(user.getUname());
-			ur.setEmail(user.getEmail());
-			ur.setAuth(user.getAuth());
-			ur.setMajor(user.getMajor());
-			ur.setUimg(user.getUimg());
-			ur.setState("success");
+			return new ResponseEntity<UserResult>(ur, HttpStatus.OK);
+
 		}
-		return new ResponseEntity<UserResult>(ur, HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "해당 회원의 정보를 삭제한다.", response = UserResult.class)
@@ -202,12 +236,7 @@ public class UserController {
 		} else {
 			userService.updateUser(model);
 			user = userService.getUser(model.getUid());
-			ur.setUid(user.getUid());
-			ur.setUname(user.getUname());
-			ur.setEmail(user.getEmail());
-			ur.setAuth(user.getAuth());
-			ur.setMajor(user.getMajor());
-			ur.setUimg(user.getUimg());
+			ur.setUser(user);
 			ur.setMsg("성공적으로 회원 수정을 완료했습니다.");
 			ur.setState("success");
 		}

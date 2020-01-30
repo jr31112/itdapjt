@@ -21,6 +21,9 @@ public class WantedResult implements Serializable {
 	// Stack Info
 	private List<Stack> stacks;
 
+	// Scrap Info
+	private boolean isScrap;
+
 	public WantedResult() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -61,6 +64,14 @@ public class WantedResult implements Serializable {
 
 	public void setStacks(List<Stack> stacks) {
 		this.stacks = stacks;
+	}
+
+	public boolean isScrap() {
+		return isScrap;
+	}
+
+	public void setScrap(boolean isScrap) {
+		this.isScrap = isScrap;
 	}
 
 }

@@ -1,20 +1,23 @@
 package com.ssafy.itda.itda_test.help;
 
 import java.io.Serializable;
+import java.util.List;
+
+import com.ssafy.itda.itda_test.model.Scrap;
+import com.ssafy.itda.itda_test.model.Stack;
+import com.ssafy.itda.itda_test.model.User;
 
 public class UserResult implements Serializable {
 
 	// User Model
-	private int uid;
-	private String email;
-	private String pw;
-	private String uname;
-	private int auth;
-	private String major;
-	private String uimg;
-	private int cid;
+	private User user;
 
 	// Stack Model
+	private List<Stack> mystacks;
+
+	// Scrap Model
+	private List<Scrap> myScraps;
+	private List<WantedResult> myScrapWanteds;
 
 	// Response result
 	private String msg;
@@ -25,83 +28,28 @@ public class UserResult implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public UserResult(int uid, String email, String pw, String uname, int auth, String major, String uimg, int cid,
-			String msg, String state) {
-		super();
-		this.uid = uid;
-		this.email = email;
-		this.pw = pw;
-		this.uname = uname;
-		this.auth = auth;
-		this.major = major;
-		this.uimg = uimg;
-		this.cid = cid;
-		this.msg = msg;
-		this.state = state;
+	public User getUser() {
+		return user;
 	}
 
-	public int getUid() {
-		return uid;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
-	public void setUid(int uid) {
-		this.uid = uid;
+	public List<Stack> getMystacks() {
+		return mystacks;
 	}
 
-	public String getEmail() {
-		return email;
+	public void setMystacks(List<Stack> mystacks) {
+		this.mystacks = mystacks;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public List<Scrap> getMyScraps() {
+		return myScraps;
 	}
 
-	public String getPw() {
-		return pw;
-	}
-
-	public void setPw(String pw) {
-		this.pw = pw;
-	}
-
-	public String getUname() {
-		return uname;
-	}
-
-	public void setUname(String uname) {
-		this.uname = uname;
-	}
-
-	public int getAuth() {
-		return auth;
-	}
-
-	public void setAuth(int auth) {
-		this.auth = auth;
-	}
-
-	public String getMajor() {
-		return major;
-	}
-
-	public void setMajor(String major) {
-		this.major = major;
-	}
-
-	public String getUimg() {
-		return uimg;
-	}
-
-	public void setUimg(String uimg) {
-		this.uimg = uimg;
-	}
-
-	public int getCid() {
-		return cid;
-	}
-
-	public void setCid(int cid) {
-		this.cid = cid;
+	public void setMyScraps(List<Scrap> myScraps) {
+		this.myScraps = myScraps;
 	}
 
 	public String getMsg() {
@@ -120,10 +68,18 @@ public class UserResult implements Serializable {
 		this.state = state;
 	}
 
+	public List<WantedResult> getMyScrapWanteds() {
+		return myScrapWanteds;
+	}
+
+	public void setMyScrapWanteds(List<WantedResult> myScrapWanteds) {
+		this.myScrapWanteds = myScrapWanteds;
+	}
+
 	@Override
 	public String toString() {
-		return "UserResult [uid=" + uid + ", email=" + email + ", pw=" + pw + ", uname=" + uname + ", auth=" + auth
-				+ ", major=" + major + ", uimg=" + uimg + ", cid=" + cid + ", msg=" + msg + ", state=" + state + "]";
+		return "UserResult [user=" + user + ", mystacks=" + mystacks + ", myScraps=" + myScraps + ", msg=" + msg
+				+ ", state=" + state + "]";
 	}
 
 }

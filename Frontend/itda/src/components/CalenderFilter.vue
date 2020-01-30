@@ -9,7 +9,8 @@
                     attach="attach"
                     chips="chips"
                     label="기간"
-                    multiple="multiple"></v-select>
+                    multiple="multiple"
+                    @change="optionmanager"></v-select>
             </v-col>
             <v-col cols="12" sm="4">
                 <v-select
@@ -30,7 +31,7 @@
                     multiple="multiple"></v-select>
             </v-col>
         </v-row>
-        <WantedCalender v-if="recentlist.length != 0" :wlist="recentlist" :cperiod="period"/>
+        <WantedCalender v-if="recentlist.length != 0" :wlist="recentlist" :cperiod="period" :options="options"/>
         </v-col>
     </v-layout>
 </template>
@@ -41,8 +42,13 @@
     export default {
         data() {
             return {
+                options: {
+                    period:0
+                },
                 period: [],
                 recentlist: [],
+                techstack: [],
+                recruit:[],
                 periodOptions: [
                     {
                         text: '시작',
@@ -86,19 +92,31 @@
                 axios
                     .get(`http://192.168.31.54:8197/itda/api/getWantedAll/`)
                     .then(response => {
-                        this.recentlist = response
-                            .data
-                            console
-                            .log(this.recentlist)
+                        this.recentlist = response.data
+                            console.log(this.recentlist)
                     })
                     .catch(error => {
                         console.log(error)
                     })
+                },
+            optionmanager(){
+                if (this.period.length == 1){
+                    if (this.period[0] == "시작"){
+                        this.options.period = 1
+                    }
+                    else{
+                        this.options.period = 2
+                    }
                 }
+                else{
+                    this.options.period = 0
+                }
+                
+            }
         },
         mounted() {
             this.getRecentRecruit()
-        }
+        },
     }
 </script>
 

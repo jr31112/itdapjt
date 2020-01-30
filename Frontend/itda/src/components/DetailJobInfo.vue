@@ -1,13 +1,16 @@
 <template>
 <div>
     <v-card @click.stop="overlay = !overlay">
-      <v-card-text class="cardtext">
-        <v-container class="px-0">
+      <v-card-text class="cardtext py-0">
+        <v-container class="px-0 py-0">
         <v-row>
             <v-col cols="8"><h4>{{job.jname}}</h4></v-col>
             <v-spacer></v-spacer>
-            <v-col cols="4">신입</v-col>
+            <v-col cols="4" class="text-right">{{job.jtype}}</v-col>
         </v-row>
+        <v-row>
+					<v-col class="pt-1" v-if="job.stacks.length"><span v-for="i in job.stacks.length > len ? len: job.stacks.length" :key="i" style="color:blue">#{{job.stacks[i-1].tname}} </span></v-col>
+				</v-row>
         <v-divider></v-divider>
         <v-row><v-col v-html="job.jdetail"></v-col></v-row>
         </v-container>
@@ -58,7 +61,8 @@ export default {
     },
     data(){
         return{
-            overlay: false
+            overlay: false,
+            len:3
         }
     }
 }

@@ -3,7 +3,6 @@
     <v-row><v-col class="pb-0"><h2>기업정보</h2></v-col></v-row>
     <v-row justify="center">
       <v-col cols="2" align-self="center">
-        
           <v-card width="150" height="150">
             <v-img v-if="company.logo" :src="company.logo" :alt="company.corpNm" width="150" aspect-ratio="1" :contain="true"></v-img>
             <v-img v-else :src="getImgUrl('noimg.png')" alt="noimg" width="150" aspect-ratio="1" :contain="true"></v-img>
@@ -13,7 +12,7 @@
       <v-col cols="10" justify="center">
         <h3>{{company.corpNm}}</h3>
         <br>
-        <p>홈페이지 : <a :href="'http://'+company.homePg" style="text-decoration: none; color:black;">{{company.homePg}}</a></p>
+        <p v-if="company.homePg">홈페이지 : <a :href="'http://'+company.homePg" style="text-decoration: none; color:black;">{{company.homePg}}</a></p>
         <p>기업주소 : {{company.corpAddr}}</p>
         <p>주요사업 : {{company.busiCont}}</p>
       </v-col>
@@ -36,7 +35,8 @@
           <v-list-item>
             <v-list-item-content>
               <v-list-item-title two-line>
-                {{company.totPsncnt}}
+                <p class="mb-0" v-if="company.totPsncnt">{{company.totPsncnt}}</p>
+                <p class="mb-0" v-else>-</p>
               </v-list-item-title>
               <v-list-item-subtitle>사원수</v-list-item-subtitle>
             </v-list-item-content>
@@ -48,7 +48,9 @@
           <v-list-item>
             <v-list-item-content>
               <v-list-item-title two-line>
-                {{company.yrSalesAmt}}
+                <p class="mb-0" v-if="company.yrSalesAmt">{{company.yrSalesAmt}}</p>
+                <p class="mb-0" v-else>-</p>
+                
               </v-list-item-title>
               <v-list-item-subtitle>매출</v-list-item-subtitle>
             </v-list-item-content>
@@ -65,6 +67,16 @@ export default {
     name: "detailcompanyinfo",
     props:{
       company:{type:Object}
+    },
+    methods:{
+      getImgUrl(img) {
+        return require('../assets/' + img)
+      },
+    },
+    data(){
+      return{
+        on : false
+      }
     }
 }
 </script>

@@ -9,7 +9,7 @@
             <v-col cols="4">신입</v-col>
         </v-row>
         <v-divider></v-divider>
-        <v-row><v-col>{{job.jdetail}}</v-col></v-row>
+        <v-row><v-col v-html="job.jdetail"></v-col></v-row>
         </v-container>
       </v-card-text>
     </v-card>

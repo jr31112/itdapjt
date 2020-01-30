@@ -7,21 +7,14 @@
                 slot="text">Just Do it! you'll just win.</div>
         </ImgBanner>
         <v-container>
-            <v-layout my-5="my-5">
-                <v-flex >
-                    <v-col cols="8" sm="12">
-                        <RecentList/>
-                    </v-col>
-                </v-flex>
-            </v-layout>
-            <!-- <WantedLogin></WantedLogin> -->
+            <recent-list/>
             <wanted-login/>
             <wanted-default/>
         </v-container>
     </div>
 </template>
 <script>
-    import RecentList from '../components/RecentList'
+    import RecentList from '../components/RecentList.vue'
     import WantedLogin from '../components/WantedLogin.vue'
     import WantedDefault from '../components/WantedDefault.vue'
     import ImgBanner from '../components/ImgBanner.vue'

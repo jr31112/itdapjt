@@ -20,6 +20,7 @@
         },
         computed: {
 		...mapState(["isLogin"])
-	    }
+        }
+        
     };
 </script>

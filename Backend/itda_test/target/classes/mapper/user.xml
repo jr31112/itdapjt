@@ -4,10 +4,53 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ssafy.user">
 
-	<insert id="signUp"
+	<!-- sha1 : sha1이라는 보안기법에 의해 pw 자동 변환 -->
+	<insert id="signUp" 
 	parameterType="com.ssafy.itda.itda_test.model.User">
 		INSERT INTO USER_T(EMAIL, PW, UNAME)
-		VALUES ( #{email}, sha1(#{pw}), #{uname} )		
+		VALUES ( #{email}, sha1(#{pw}), #{uname} ) 
 	</insert>
 
+	<select id="emailCheck"
+	parameterType="String"
+	resultType="com.ssafy.itda.itda_test.model.User">
+		SELECT UID, EMAIL
+		FROM USER_T
+		WHERE EMAIL = #{email}
+	</select>
+	
+	<select id="login"
+	parameterType="com.ssafy.itda.itda_test.model.User"
+	resultType="com.ssafy.itda.itda_test.model.User">
+		SELECT UID, EMAIL, UNAME, AUTH, MAJOR, UIMG, CID
+		FROM USER_T
+		WHERE EMAIL = #{email} AND PW = sha1(#{pw})
+	</select>
+	
+	<select id="getUser"
+	parameterType="Integer"
+	resultType="com.ssafy.itda.itda_test.model.User">
+		SELECT UID, EMAIL, UNAME, AUTH, MAJOR, UIMG, CID
+		FROM USER_T
+		WHERE UID = #{uid}
+	</select>
+	
+	<delete id="deleteUser"
+	parameterType="Integer">
+		DELETE FROM USER_T
+		WHERE UID = #{uid}
+	</delete>
+	
+	<select id="getAllUsers"
+	resultType="com.ssafy.itda.itda_test.model.User">
+		SELECT UID, EMAIL, UNAME, AUTH, MAJOR, UIMG, CID
+		FROM USER_T
+	</select>
+	
+	<update id="updateUser"
+	parameterType="com.ssafy.itda.itda_test.model.User">
+		UPDATE USER_T
+		SET PW = sha1(#{pw}), EMAIL = #{email}, UIMG = #{uimg}, UNAME = #{uname}
+		WHERE UID = #{uid}
+	</update>
 </mapper>

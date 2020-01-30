@@ -26,5 +26,7 @@
     <mappers>
         <mapper resource="mapper/user.xml"/>
         <mapper resource="mapper/wanted.xml"/>
+        <mapper resource="mapper/company.xml"/>        
+        <mapper resource="mapper/job.xml"/>        
     </mappers>
 </configuration>

@@ -41,6 +41,7 @@ public class JobController {
 				|| model.getWid() == 0) {
 			r.setMsg("필수 입력값이 누락되었습니다.");
 			r.setState("fail");
+			return new ResponseEntity<Result>(r, HttpStatus.OK);
 		}
 		jobService.createJob(model);
 		r.setMsg("직무 입력이 성공적으로 완료되었습니다.");
@@ -58,6 +59,7 @@ public class JobController {
 		if (jid == 0 || job == null) {
 			r.setMsg("존재하지 않는 jid값입니다.");
 			r.setState("fail");
+			return new ResponseEntity<Result>(r, HttpStatus.OK);
 		}
 		jobService.deleteJob(jid);
 		r.setMsg("직무 삭제가 성공적으로 완료되었습니다.");
@@ -76,11 +78,13 @@ public class JobController {
 		if (jid == 0 || job == null) {
 			r.setMsg("존재하지 않는 jid값입니다.");
 			r.setState("fail");
+			return new ResponseEntity<Result>(r, HttpStatus.OK);
 		}
 		if (model.getTo() == null || model.getTo().equals("") || model.getJname() == null || model.getJname().equals("")
 				|| model.getWid() == 0) {
 			r.setMsg("입력되지 않은 필수값이 있습니다.");
 			r.setState("fail");
+			return new ResponseEntity<Result>(r, HttpStatus.OK);
 		}
 		jobService.updateJob(model);
 		r.setMsg("직무 수정이 성공적으로 완료되었습니다.");

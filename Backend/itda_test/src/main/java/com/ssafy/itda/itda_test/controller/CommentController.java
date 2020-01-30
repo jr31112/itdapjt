@@ -62,11 +62,13 @@ public class CommentController {
 		if (uid == 0 || wid == 0 || model.getContent() == null || model.getContent().equals("")) {
 			r.setMsg("필수 입력값이 누락되었습니다.");
 			r.setState("fail");
+			return new ResponseEntity<Result>(r, HttpStatus.OK);
 		}
 		User u = userService.getUser(uid);
 		if (u == null) {
 			r.setMsg("해당 uid를 가진 user를 찾을 수 없습니다.");
 			r.setState("fail");
+			return new ResponseEntity<Result>(r, HttpStatus.OK);
 		}
 		model.setWriter(u.getUname());
 		commentService.createComment(model);
@@ -85,10 +87,11 @@ public class CommentController {
 		if (cmid == 0 || cmt == null) {
 			r.setMsg("존재하지 않는 cmid값입니다.");
 			r.setState("fail");
+		} else {
+			commentService.deleteComment(cmid);
+			r.setMsg("댓글 삭제가 성공적으로 완료되었습니다.");
+			r.setState("success");
 		}
-		commentService.deleteComment(cmid);
-		r.setMsg("댓글 삭제가 성공적으로 완료되었습니다.");
-		r.setState("success");
 		return new ResponseEntity<Result>(r, HttpStatus.OK);
 	}
 
@@ -103,14 +106,14 @@ public class CommentController {
 		if (cmid == 0 || cmt == null) {
 			r.setMsg("존재하지 않는 cmid값입니다.");
 			r.setState("fail");
-		}
-		if (model.getContent() == null || model.getContent().equals("")) {
+		} else if (model.getContent() == null || model.getContent().equals("")) {
 			r.setMsg("입력되지 않은 필수값이 있습니다.");
 			r.setState("fail");
+		} else {
+			commentService.updateComment(model);
+			r.setMsg("댓글 수정이 성공적으로 완료되었습니다.");
+			r.setState("success");
 		}
-		commentService.updateComment(model);
-		r.setMsg("댓글 수정이 성공적으로 완료되었습니다.");
-		r.setState("success");
 		return new ResponseEntity<Result>(r, HttpStatus.OK);
 	}
 }

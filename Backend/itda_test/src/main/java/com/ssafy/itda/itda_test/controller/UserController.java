@@ -253,11 +253,11 @@ public class UserController {
 		if (user == null) {
 			ur.setMsg("회원 수정에 실패했습니다.");
 			ur.setState("fail");
+			return new ResponseEntity<UserResult>(ur, HttpStatus.OK);
 		} 
 		userService.updatePermission(model);
 		ur.setMsg("성공적으로 회원 권한 수정을 완료했습니다.");
 		ur.setState("success");
-		
 		return new ResponseEntity<UserResult>(ur, HttpStatus.OK);
 	}
 }

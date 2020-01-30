@@ -240,6 +240,7 @@ public class WantedController {
 				|| model.getEndDate().equals("") || model.getProcess() == null || model.getProcess().equals("")) {
 			r.setMsg("필수 입력값이 누락되었습니다.");
 			r.setState("fail");
+			return new ResponseEntity<Result>(r, HttpStatus.OK);
 		}
 		wantedService.createWanted(model);
 		r.setMsg("공고 입력이 성공적으로 완료되었습니다.");
@@ -257,6 +258,7 @@ public class WantedController {
 		if (wid == 0 || wanted == null) {
 			r.setMsg("존재하지 않는 wid값입니다.");
 			r.setState("fail");
+			return new ResponseEntity<Result>(r, HttpStatus.OK);
 		}
 		wantedService.deleteWanted(wid);
 		r.setMsg("공고 삭제가 성공적으로 완료되었습니다.");
@@ -280,10 +282,11 @@ public class WantedController {
 				|| model.getEndDate().equals("") || model.getProcess() == null || model.getProcess().equals("")) {
 			r.setMsg("입력되지 않은 필수값이 있습니다.");
 			r.setState("fail");
+		} else {
+			wantedService.updateWanted(model);
+			r.setMsg("공고 수정이 성공적으로 완료되었습니다.");
+			r.setState("success");
 		}
-		wantedService.updateWanted(model);
-		r.setMsg("공고 수정이 성공적으로 완료되었습니다.");
-		r.setState("success");
 		return new ResponseEntity<Result>(r, HttpStatus.OK);
 	}
 

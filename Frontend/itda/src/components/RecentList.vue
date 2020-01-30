@@ -22,6 +22,7 @@ export default {
 		Carousel,
 		Slide,
 	},
+	
 	data(){
 		return{
 			recentlist:[
@@ -30,15 +31,17 @@ export default {
 	},
 	methods:{
 		getRecentRecruit(){
-			axios.get(`http://192.168.31.54:8197/ssafyvue/api/getWantedByRecent/`)
+			axios.get(`http://192.168.31.54:8197/itda/api/getWantedByRecent/`)
 				.then(response=>{
 					this.recentlist = response.data
+					console.log("hello" + this.recentlist)
 				})
 				.catch(()=>{})
-        }
+		}	
 	},
 	mounted(){
 		this.getRecentRecruit()
+		alert(this.recentlist[0].company)
 	}
 };
 </script>

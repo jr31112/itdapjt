@@ -54,14 +54,13 @@ public class WantedController {
 		logger.info("5-------------getWantedAll-----------------------------" + new Date());
 		Map<String, Object> resultMap = new HashMap<>();
 		String token = req.getHeader("jwt-auth-token");
-		if(token != null) {
+		if (token != null) {
 			resultMap.putAll(jwtService.get(req.getHeader("jwt-auth-token")));
 			int uid = (int) resultMap.get("uid");
 			List<Integer> widList = wantedService.getWantedAll();
 			List<WantedResult> wrlist = getWantedListFunction(widList, uid);
 			return new ResponseEntity<List<WantedResult>>(wrlist, HttpStatus.OK);
-		}
-		else {
+		} else {
 			List<Integer> widList = wantedService.getWantedAll();
 			List<WantedResult> wrlist = getWantedListFunction(widList);
 			return new ResponseEntity<List<WantedResult>>(wrlist, HttpStatus.OK);
@@ -70,20 +69,52 @@ public class WantedController {
 
 	@ApiOperation(value = " 공고 정보를 확인한다.", response = WantedResult.class)
 	@RequestMapping(value = "/getWantedByID/{wid}", method = RequestMethod.GET)
-	public ResponseEntity<WantedResult> getWantedByID(@PathVariable int wid) throws Exception {
+	public ResponseEntity<WantedResult> getWantedByID(@PathVariable int wid, HttpServletRequest req) throws Exception {
 		logger.info("5-------------getWantedByID-----------------------------" + new Date());
-		int cid = wantedService.getCompanyId(wid);
-		Company company = wantedService.getCompanyInfo(cid);
-		Wanted wanted = wantedService.getWantedInfo(wid);
-		List<Job> jobs = wantedService.getJobsInfo(wid);
+		Map<String, Object> resultMap = new HashMap<>();
+		String token = req.getHeader("jwt-auth-token");
 		WantedResult wr = new WantedResult();
-		wr.setCompany(company);
-		wr.setWanted(wanted);
-		wr.setJobs(jobs);
-		
-		//vcnt 조회수 update
+		if (token != null) {
+			resultMap.putAll(jwtService.get(req.getHeader("jwt-auth-token")));
+			int uid = (int) resultMap.get("uid");
+			int cid = wantedService.getCompanyId(wid);
+			Company company = wantedService.getCompanyInfo(cid);
+			Wanted wanted = wantedService.getWantedInfo(wid);
+			List<Job> jobs = wantedService.getJobsInfo(wid);
+			List<Stack> wantedStacks = wantedService.getWantedStackInfo(wid);
+			for (Job j : jobs) {
+				j.setStacks(wantedService.getStackInfo(j.getJid()));
+			}
+			Scrap model = new Scrap();
+			model.setUid(uid);
+			model.setWid(wid);
+			Scrap scrap = wantedService.isScraped(model);
+			wr.setCompany(company);
+			wr.setWanted(wanted);
+			wr.setJobs(jobs);
+			wr.setStacks(wantedStacks);
+			if (scrap == null) {
+				wr.setScrap(false);
+			} else {
+				wr.setScrap(true);
+			}
+		} else {
+			int cid = wantedService.getCompanyId(wid);
+			Company company = wantedService.getCompanyInfo(cid);
+			Wanted wanted = wantedService.getWantedInfo(wid);
+			List<Job> jobs = wantedService.getJobsInfo(wid);
+			List<Stack> wantedStacks = wantedService.getWantedStackInfo(wid);
+			for (Job j : jobs) {
+				j.setStacks(wantedService.getStackInfo(j.getJid()));
+			}
+			wr.setCompany(company);
+			wr.setWanted(wanted);
+			wr.setJobs(jobs);
+			wr.setStacks(wantedStacks);
+		}
+		// vcnt 조회수 update
 		wantedService.updateVcnt(wid);
-		
+
 		return new ResponseEntity<WantedResult>(wr, HttpStatus.OK);
 	}
 
@@ -93,14 +124,13 @@ public class WantedController {
 		logger.info("5-------------getWantedByRecent-----------------------------" + new Date());
 		Map<String, Object> resultMap = new HashMap<>();
 		String token = req.getHeader("jwt-auth-token");
-		if(token != null) {
+		if (token != null) {
 			resultMap.putAll(jwtService.get(req.getHeader("jwt-auth-token")));
 			int uid = (int) resultMap.get("uid");
 			List<Integer> widList = wantedService.getWantedByRecent();
 			List<WantedResult> wrlist = getWantedListFunction(widList, uid);
 			return new ResponseEntity<List<WantedResult>>(wrlist, HttpStatus.OK);
-		}
-		else {
+		} else {
 			List<Integer> widList = wantedService.getWantedByRecent();
 			List<WantedResult> wrlist = getWantedListFunction(widList);
 			return new ResponseEntity<List<WantedResult>>(wrlist, HttpStatus.OK);
@@ -113,14 +143,13 @@ public class WantedController {
 		logger.info("5-------------getWantedByCloseEnd-----------------------------" + new Date());
 		Map<String, Object> resultMap = new HashMap<>();
 		String token = req.getHeader("jwt-auth-token");
-		if(token != null) {
+		if (token != null) {
 			resultMap.putAll(jwtService.get(req.getHeader("jwt-auth-token")));
 			int uid = (int) resultMap.get("uid");
 			List<Integer> widList = wantedService.getWantedByCloseEnd();
 			List<WantedResult> wrlist = getWantedListFunction(widList, uid);
 			return new ResponseEntity<List<WantedResult>>(wrlist, HttpStatus.OK);
-		}
-		else {
+		} else {
 			List<Integer> widList = wantedService.getWantedByCloseEnd();
 			List<WantedResult> wrlist = getWantedListFunction(widList);
 			return new ResponseEntity<List<WantedResult>>(wrlist, HttpStatus.OK);
@@ -133,14 +162,13 @@ public class WantedController {
 		logger.info("5-------------getWantedByView-----------------------------" + new Date());
 		Map<String, Object> resultMap = new HashMap<>();
 		String token = req.getHeader("jwt-auth-token");
-		if(token != null) {
+		if (token != null) {
 			resultMap.putAll(jwtService.get(req.getHeader("jwt-auth-token")));
 			int uid = (int) resultMap.get("uid");
 			List<Integer> widList = wantedService.getWantedByView();
 			List<WantedResult> wrlist = getWantedListFunction(widList, uid);
 			return new ResponseEntity<List<WantedResult>>(wrlist, HttpStatus.OK);
-		}
-		else {
+		} else {
 			List<Integer> widList = wantedService.getWantedByView();
 			List<WantedResult> wrlist = getWantedListFunction(widList);
 			return new ResponseEntity<List<WantedResult>>(wrlist, HttpStatus.OK);
@@ -153,36 +181,34 @@ public class WantedController {
 		logger.info("5-------------getWantedByStack-----------------------------" + new Date());
 		Map<String, Object> resultMap = new HashMap<>();
 		String token = req.getHeader("jwt-auth-token");
-		if(token != null) {
+		if (token != null) {
 			resultMap.putAll(jwtService.get(req.getHeader("jwt-auth-token")));
 			int uid = (int) resultMap.get("uid");
 			List<Integer> widList = wantedService.getWantedByStack(uid);
 			List<WantedResult> wrlist = getWantedListFunction(widList, uid);
 			return new ResponseEntity<List<WantedResult>>(wrlist, HttpStatus.OK);
-		}
-		else {
+		} else {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
 		}
 	}
-	
+
 	@ApiOperation(value = "내 스크랩 공고에 맞는 공고 정보를 확인한다.", response = List.class)
 	@RequestMapping(value = "/getWantedByScrap", method = RequestMethod.GET)
 	public ResponseEntity<List<WantedResult>> getWantedByScrap(HttpServletRequest req) throws Exception {
 		logger.info("5-------------getWantedByScrap-----------------------------" + new Date());
 		Map<String, Object> resultMap = new HashMap<>();
 		String token = req.getHeader("jwt-auth-token");
-		if(token != null) {
+		if (token != null) {
 			resultMap.putAll(jwtService.get(req.getHeader("jwt-auth-token")));
 			int uid = (int) resultMap.get("uid");
 			List<Integer> widList = wantedService.getWantedByScrap(uid);
 			List<WantedResult> wrlist = getWantedListFunction(widList, uid);
 			return new ResponseEntity<List<WantedResult>>(wrlist, HttpStatus.OK);
-		}
-		else {
+		} else {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
 		}
 	}
-	
+
 	@ApiOperation(value = "사용자가 공고를 스크랩한다.", response = Result.class)
 	@RequestMapping(value = "/scrapWanted", method = RequestMethod.POST)
 	public ResponseEntity<Result> scrapWanted(@RequestBody Scrap model) throws Exception {
@@ -290,7 +316,7 @@ public class WantedController {
 		}
 		return wrlist;
 	}
-	
+
 	private List<WantedResult> getWantedListFunction(List<Integer> widList) {
 		List<WantedResult> wrlist = new ArrayList<>();
 		for (int i : widList) {

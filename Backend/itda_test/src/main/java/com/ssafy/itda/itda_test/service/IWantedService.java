@@ -19,4 +19,7 @@ public interface IWantedService {
 	void unScrap(Scrap model);
 	void scrap(Scrap model);
 	List<Integer> getWantedAll();
+	void createWanted(Wanted model);
+	void deleteWanted(Integer wid);
+	void updateWanted(Wanted model);
 }

@@ -1,13 +1,12 @@
 <template>
-  <div class="recruitdetail">
-      <v-container class="py-0" white><v-row class="py-0"><v-col><h1>{{recruit.wanted.wantedTitle}}</h1></v-col></v-row></v-container>
-      <detail-company-info :company="recruit.company"/>
-      <v-container class="py-0" white><v-row><v-col class="pb-0"><h2>직무정보</h2></v-col></v-row></v-container>
-      <detail-jobs :jobs="recruit.jobs"/>
-      <v-container class="py-0" white></v-container>
-      <detail-wanted-info :wanted="recruit.wanted"/>
-      
-      <detail-wanted-comment/>
+  <div class="recruitdetail" v-if="Object.keys(recruit).length">
+    <v-container class="py-0" white><v-row class="py-0"><v-col><h1>{{recruit.wanted.wantedTitle}}</h1></v-col></v-row></v-container>
+    <detail-company-info :company="recruit.company"/>
+    <v-container class="py-0" white><v-row><v-col class="pb-0"><h2>직무정보</h2></v-col></v-row></v-container>
+    <detail-jobs :jobs="recruit.jobs"/>
+    <v-container class="py-0" white></v-container>
+    <detail-wanted-info :wanted="recruit.wanted"/>
+    <detail-wanted-comment/>
   </div>
 </template>
 
@@ -34,12 +33,12 @@ export default {
   },
   methods: {
     getDetailData(){
-      axios.get(`http://192.168.31.54:8197/ssafyvue/api/getWantedByID/${this.$route.params.id}`)
+      axios.get(`http://192.168.31.54:8197/itda/api/getWantedByID/${this.$route.params.id}`)
         .then(response=>{
           this.recruit = response.data
         })
         .catch(()=>{})
-    }
+    },
   },
   mounted(){
     this.getDetailData()

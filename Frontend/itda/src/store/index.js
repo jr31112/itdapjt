@@ -9,6 +9,8 @@ export default new Vuex.Store({
     // selectedUser가 allUsers에 찾은 사람을 객체로 userInfo를 저장한다. 
     isLogin: false,
     isLoginError: false,
+    isRegister: false, 
+    isRegisterError: false, 
     isDialog: true,
   },
   //뮤테이션과 엑션스 차이는? 
@@ -37,10 +39,23 @@ export default new Vuex.Store({
       state.isDialog = true
       state.userInfo = null
       localStorage.clear()
-    }
+    },
   },
   actions:
   {
+    register({email, name ,pw})
+    {
+      //회원가입. 
+      axios
+        .post('http://192.168.31.54:8197/itda/api/signUp', {
+          email, pw, name
+        })
+        .then(res => 
+          {
+              alert(res + "성공입니다.")
+          }
+        )  
+    },
     login({ dispatch }, { email, pw }) {
       axios
         .post('http://192.168.31.54:8197/itda/api/login', {
@@ -49,7 +64,7 @@ export default new Vuex.Store({
         .then(res => {
           if (res.data.state == 'success') {
             let token = res.headers['jwt-auth-token']
-
+            alert(token)
             console.log(res.headers)
             localStorage.setItem("access_token", token)
             localStorage.setItem("uid", res.data.uid)
@@ -95,7 +110,7 @@ export default new Vuex.Store({
           commit('loginSuccess', userInfo)
         })
         .catch(err => {
-          alert("토큰이 만료되었거나 정상적인 접근이 아닙니다.");
+        //  alert("토큰이 만료되었거나 정상적인 접근이 아닙니다.");
           alert(err);
         })
 

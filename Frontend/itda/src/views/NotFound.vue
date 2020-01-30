@@ -1,5 +1,4 @@
 <template>
-  <v-jumbotron color="grey lighten-2">
     <v-container fill-height>
       <v-layout align-center>
         <v-flex>
@@ -16,7 +15,6 @@
         </v-flex>
       </v-layout>
     </v-container>
-  </v-jumbotron>
 </template>
 <script>
 export default {
@@ -33,10 +31,6 @@ export default {
 }
 
 </script>
-
-<style>
-
-</style>
 <style>
 div#wrapper { margin-left: 500px ;}
 

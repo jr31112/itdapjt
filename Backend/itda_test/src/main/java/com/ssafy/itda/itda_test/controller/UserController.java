@@ -136,6 +136,7 @@ public class UserController {
 		resultMap.putAll(jwtService.get(req.getHeader("jwt-auth-token")));
 		int uid = (int) resultMap.get("uid");
 		User user = userService.getUser(uid);
+		// 내 기술스택 list , 내 스크랩 list
 		UserResult ur = new UserResult();
 		if (user == null || user.getEmail() == null || user.getEmail().equals("")) {
 			ur.setMsg("회원정보를 가져오는데 실패했습니다.");

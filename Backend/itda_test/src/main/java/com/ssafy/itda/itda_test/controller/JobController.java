@@ -1,8 +1,6 @@
 package com.ssafy.itda.itda_test.controller;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,21 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ssafy.itda.itda_test.help.CompanyResult;
 import com.ssafy.itda.itda_test.help.Result;
-import com.ssafy.itda.itda_test.help.WantedResult;
-import com.ssafy.itda.itda_test.model.Company;
 import com.ssafy.itda.itda_test.model.Job;
-import com.ssafy.itda.itda_test.model.Scrap;
-import com.ssafy.itda.itda_test.model.Wanted;
 import com.ssafy.itda.itda_test.service.IJobService;
-import com.ssafy.itda.itda_test.service.IWantedService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -46,9 +37,8 @@ public class JobController {
 		logger.info("1-------------createJob-----------------------------" + new Date());
 		logger.info("1-------------createJob-----------------------------" + model);
 		Result r = new Result();
-		if (model.getTo() == null || model.getTo().equals("") || 
-				model.getJname() == null || model.getJname().equals("") || 
-				model.getWid() == 0) {
+		if (model.getTo() == null || model.getTo().equals("") || model.getJname() == null || model.getJname().equals("")
+				|| model.getWid() == 0) {
 			r.setMsg("필수 입력값이 누락되었습니다.");
 			r.setState("fail");
 		}
@@ -57,10 +47,10 @@ public class JobController {
 		r.setState("success");
 		return new ResponseEntity<Result>(r, HttpStatus.OK);
 	}
-	
+
 	@ApiOperation(value = "직무를 삭제한다.", response = Job.class)
 	@RequestMapping(value = "/deleteJob", method = RequestMethod.DELETE)
-	public ResponseEntity<Result> deleteWanted(@RequestBody Integer jid) throws Exception {
+	public ResponseEntity<Result> deleteJob(@RequestBody int jid) throws Exception {
 		logger.info("2-------------deleteJob-----------------------------" + new Date());
 		logger.info("2-------------deleteJob-----------------------------" + jid);
 		Result r = new Result();
@@ -74,12 +64,12 @@ public class JobController {
 		r.setState("success");
 		return new ResponseEntity<Result>(r, HttpStatus.OK);
 	}
-	
+
 	@ApiOperation(value = "직무를 수정한다.", response = Job.class)
-	@RequestMapping(value = "/deleteJob", method = RequestMethod.DELETE)
-	public ResponseEntity<Result> deleteJob(@RequestBody Job model) throws Exception {
-		logger.info("3-------------deleteJob-----------------------------" + new Date());
-		logger.info("3-------------deleteJob-----------------------------" + model);
+	@RequestMapping(value = "/updateJob", method = RequestMethod.PUT)
+	public ResponseEntity<Result> updateJob(@RequestBody Job model) throws Exception {
+		logger.info("3-------------updateJob-----------------------------" + new Date());
+		logger.info("3-------------updateJob-----------------------------" + model);
 		Result r = new Result();
 		int jid = model.getJid();
 		Job job = jobService.getJob(jid);
@@ -87,9 +77,8 @@ public class JobController {
 			r.setMsg("존재하지 않는 jid값입니다.");
 			r.setState("fail");
 		}
-		if (model.getTo() == null || model.getTo().equals("") || 
-				model.getJname() == null || model.getJname().equals("") || 
-				model.getWid() == 0) {
+		if (model.getTo() == null || model.getTo().equals("") || model.getJname() == null || model.getJname().equals("")
+				|| model.getWid() == 0) {
 			r.setMsg("입력되지 않은 필수값이 있습니다.");
 			r.setState("fail");
 		}
@@ -98,5 +87,5 @@ public class JobController {
 		r.setState("success");
 		return new ResponseEntity<Result>(r, HttpStatus.OK);
 	}
-	
+
 }

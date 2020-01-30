@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.ssafy.itda.itda_test.model.Company;
 import com.ssafy.itda.itda_test.model.Job;
+import com.ssafy.itda.itda_test.model.Stack;
 import com.ssafy.itda.itda_test.model.Wanted;
 
 public class WantedResult implements Serializable {
@@ -16,6 +17,9 @@ public class WantedResult implements Serializable {
 
 	// Jobs Info
 	private List<Job> jobs;
+
+	// Stack Info
+	private List<Stack> stacks;
 
 	public WantedResult() {
 		super();
@@ -46,10 +50,17 @@ public class WantedResult implements Serializable {
 	public List<Job> getJobs() {
 		return jobs;
 	}
-	
 
 	public void setJobs(List<Job> jobs) {
 		this.jobs = jobs;
+	}
+
+	public List<Stack> getStacks() {
+		return stacks;
+	}
+
+	public void setStacks(List<Stack> stacks) {
+		this.stacks = stacks;
 	}
 
 }

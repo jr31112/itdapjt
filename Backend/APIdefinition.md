@@ -120,7 +120,7 @@
 
 * `GET /api/getUser/{uid}` : uid에 해당하는 회원의 정보를 반환한다.
 
-  * Parameter : {}
+  * Parameter : Integer
 
   * Return : UserResult
 
@@ -141,6 +141,7 @@
 
     ```json
     {
+      "uid": 0, 
       "auth": 0,
       "cid": 0,
       "email": "string",
@@ -152,7 +153,7 @@
     }
     ```
 
-    - 필수 : `pw`, `uname`
+    - 필수 : `uid`, `pw`, `uname`
     - `uid`, `email`, `auth`는 변경이 불가능하다.
     - `pw`, `major`, `uimg`, `uname` 변경 가능
 
@@ -173,7 +174,9 @@
 
 ## 8. 회원 권한 수정(U)
 
-* `UPDATE /api/updatePermission/{uid}` : uid에 해당하는 회원의 권한을 수정한다.
+> 관리자만 가능
+
+* `UPDATE /api/updatePermission` : uid에 해당하는 회원의 권한을 수정한다.
   * Parameter : User
     * 필수 : `uid`, `auth`
   * return : UserResult
@@ -188,11 +191,58 @@
 
 ## 1. 기업 생성(C)
 
-## 2. 기업 수정(R)
+> 관리자만 가능
+
+* `POST /api/createCompany` : 새로운 기업 정보를 생성한다.
+
+  * Parameter : Company
+
+    ```json
+    {
+      "busiCont": "string",		//주요 사업내용
+      "busiSize": "string",		//기업규모
+      "corpAddr": "string",		//회사 주소
+      "corpNm": "string",		//회사명
+      "homePg": "string",		//회사 홈페이지
+      "logo": "string",			//기업 로고
+      "totPsncnt": "string",	//근로자수
+      "yrSalesAmt": "string"	//연매출액
+    }
+    ```
+
+    * 필수 : `corpNm`
+
+  * Return : Result
+
+## 2. 기업 수정(U)
+
+> 관리자만 가능
+
+* `PUT /api/updateCompany` : 기업 정보를 수정한다.
+
+  * Parameter : Company
+
+    ```json
+    {
+      "cid": 0, 
+      "busiCont": "string",		
+      "busiSize": "string",		
+      "corpAddr": "string",		
+      "corpNm": "string",		
+      "homePg": "string",		
+      "logo": "string",			
+      "totPsncnt": "string",	
+      "yrSalesAmt": "string"	
+    }
+    ```
+
+    * 필수 : `cid`, `corpNm`
+
+  * Return : Result
 
 ## 3. 기업 삭제(D)
 
-
+> 관리자만 가능
 
 # 직무(Job)
 
@@ -202,9 +252,71 @@
 
 ## 1. 직무 생성(C)
 
-## 2. 직무 수정(R)
+> 관리자만 가능
+
+* `POST /api/createJob` 
+
+  * Parameter : Job
+
+    ```json
+    {
+      "extra": "string",	//우대사항
+      "jdetail": "string",	//직무 상세
+      "jname": "string",	//직무명
+      "jtype": "string",	//고용형태(계약직, 정규직, ...)
+      "place": "string",	//근무지
+      "require": "string",	//자격요건
+      "to": "string",		//모집인원
+      "wid": 0				//공고id - FK
+    }
+    ```
+
+    * 필수 : `to`, `jname`, `wid`
+
+  * Return : Result
+
+    ```json
+    {
+      "msg": "string",
+      "state": "string"
+    }
+    ```
+
+    
+
+## 2. 직무 수정(U)
+
+> 관리자만 가능
+
+* `PUT /api/updateJob`
+
+  * Parameter : Job
+
+    ```json
+    {
+      "jid": 0,				//직무 id
+      "extra": "string",	//우대사항
+      "jdetail": "string",	//직무 상세
+      "jname": "string",	//직무명
+      "jtype": "string",	//고용형태(계약직, 정규직, ...)
+      "place": "string",	//근무지
+      "require": "string",	//자격요건
+      "to": "string",		//모집인원
+      "wid": 0				//공고id - FK
+    }
+    ```
+
+    * 필수 : `jid`,  `to`, `jname`
+
+  * Return : Result
 
 ## 3. 직무 삭제(D)
+
+> 관리자만 가능
+
+* `DELETE /api/deleteJob`
+  * Parameter : Integer
+  * Return : Result
 
 # 댓글(Comment)
 
@@ -221,222 +333,327 @@
   * Parameter : Comment
 
     ```json
-    
+    {
+      "content": "string",	//내용
+      "uid": 0,				//글작성자 id
+      "wid": 0				//기업 id
+    }
+    ```
+
+    * 필수 : `content`, `uid`, `wid`
+
+  * Return : Result
+
+    ```json
+    {
+      "msg": "string",
+      "state": "string"
+    }
     ```
 
     
 
-## 2. 댓글 수정(R)
+## 2. 댓글 수정(U)
 
 > 댓글 수정은 글 작성자만 가능하다.
+
+* `PUT /api/updateComment`
+
+  * Parameter : Comment
+
+    ```json
+    {
+      "cmid" : 0,			//댓글 id
+      "content": "string",	//내용
+    }
+    ```
+
+    * 필수 : `cmid`, `content`
+
+  * Return : Result
 
 ## 3. 댓글 삭제(D)
 
 > 댓글 삭제는 글 작성자 + 관리자만 가능하다.
 
-## 공고
+* `DELETE /api/deleteComment` : 해당 cmid인 댓글을 삭제한다.
+  * Parameter : Integer
+  * Return : Result
 
-1. `GET /api/getWantedByRecent` : 최신 공고 목록을 요청 받아 응답한다.
+# 공고
 
-   * Parameter : {}
+## 1. 공고 입력(C)
 
-   * return : 최신 공고 목록 최대 20개 반환
+ 1. `POST /api/createWanted` : 새로운 공고를 DB에 저장하여 추가한다.
 
-     * 기업로고, 기업명, 공고 제목, D-day을 출력한다.
-     * 추후 기술스택 추가 필요 ######
+    - Parameter : Wanted
+
+      ```json
+      {
+        "wantedTitle": "string",	//공고 제목
+        "startDate": "string",	//공고 시작일(timestamp) 2020.01.30 00:00
+        "endDate": "string",		//공고 마감일(timestamp) 2020.02.14 18:00
+        "process": "string",		//채용 과정(이미지링크 or text)
+        "etc": "string",			//기타 유의사항
+        "question": "string",		//문의 사항
+        "cid": 0					//채용 공고 작성 기업(fk)
+      }
+      ```
+
+      - 필수 :  wantedTitle, startDate, endDate, process, cid
+
+    - Return : 공고 입력 성공 유무에 대한 결과를 반환 Result
+
+      ```json
+      {
+          "msg" : "string",		//결과 정보
+          "state" : "string"		//상태 (success / fail)
+      }
+      ```
+
+      
+
+## 2. 공고 삭제(D)
+
+1. `DELETE /api/deleteWanted` : 공고를 삭제한다.
+
+   - Parameter : int
 
      ```json
-     [
-         { "wid" : 1,
-     	  "wantedTitle" : "2020년 IBK기업은행 신입행원 채용공고",
-           "cid" : 100,
-           "corpNm" : "IBK기업은행",
-           "logo" : "",
-           "endDate" : ""
-         },
-         {
-             ...
-         }
-     ]
+     wid : 0			//공고 ID(pk)
      ```
 
-2. `GET /api/getWantedByCloseEnd` :  마감순 공고 목록을 요청 받아 응답한다.
+     - 필수 : wid
 
-   * Parameter : {}
-
-   * return : 마감순 공고 목록 20개 반환
+   - Return : 공고가 삭제 되었는지 성공 유무에 대한 결과를 반환 Result
 
      ```json
-     [
-         { "wid" : 1,
-           "cid" : 100,
-           "corpNm" : "IBK기업은행",
-           "endDate" : "2020-03-21 18:00:00" // 마감일
-         },
-         {
-             ...
-         }
-     ]
-     ```
-
-   조회수*, 스크랩수*, 기술스택
-
-3. `GET /api/getWantedByView` : 조회순 공고 목록을 요청 받아 응답한다.
-
-   * Parameter : {}
-
-   * return : 조회순 공고 목록 20개 반환
-
-     ```json
-     [
-         { "wid" : 1,
-           "cid" : 100,
-           "corpNm" : "IBK기업은행",
-     	  "vcnt" : 14300 // 조회수
-         },
-         {
-             ...
-         }
-     ]
-     ```
-
-     
-
-4. `GET /api/getWantedByScrap` : 스크랩 공고 목록을 요청 받아 응답한다.
-
-   * Parameter : {}
-
-   * return : 스크랩순 공고 목록 20개 반환
-
-     ```json
-     [
-         { "wid" : 1,
-           "cid" : 100,
-           "corpNm" : "IBK기업은행",
-     	  "scrapCnt" : 14300 // 스크랩수
-         },
-         {
-             ...
-         }
-     ]
-     ```
-
-     
-
-5. `GET /api/getWantedByViewAndScrap` : 스크랩 + 마감순 공고 목록을 요청 받아 응답한다.
-
-   * Parameter : {}
-
-   * return : 1)마감순, 2)스크랩순으로 공고 목록 20개 반환.
-
-     ```json
-     [
-         { "wid" : 1,
-           "cid" : 100,
-           "corpNm" : "IBK기업은행",
-           "endDate" : "2020-03-21 18:00:00", // 마감일
-     	  "scrapCnt" : 14300 // 스크랩수
-         },
-         {
-             ...
-         }
-     ]
-     ```
-
-     
-
-6. `GET /api/getWantedByStack` : 기술스택별 공고 목록을 요청 받아 응답한다.
-
-   * Parameter : {}
-   * return : 최신 공고 목록 20개 반환 ################## 
-   * **보류** 추천방식?! 조회순, 스크랩순, 싸피취업인순, 마감일순
-   * **스크랩수 공고테이블에 필드 추가할지 말지???** ###########
-
-7. `GET /api/SearchWantedByCompany/{name}` : 특정 기업명을 포함한 공고 목록을 요청 받아 응답한다.
-
-   * Parameter : String
-
-   * return : 검색된 모든 목록 반환
-
-     로고 / 회사명, 종료일, 직무 / 조회수 / 스크랩수 
-
-     ```json
-     // List<Wanted> active
-     [
-         { "wid" : 1,
-           "cid" : 100,
-           "corpNm" : "IBK기업은행",
-           "endDate" : "2020-03-21 18:00:00", // 마감일
-           "vcnt" : 14300, // 조회수
-     	  "scrapCnt" : 27, // 스크랩수,
-           "logo" : "", // 로고
-           "jobs" : ["IT인프라", "보안"], // 직무
-           "stacks" : ["MySQL", "JAVA"]
-         },
-         {
-             ...
-         }
-     ]
-     
-     // List<Wanted> inactive
-     [
-         ...
-     ]
-     ```
-
-   
-
-8. `GET /api/SearchWantedByStack/{name}` : 기술스택을 포함한 공고 목록을 요청 받아 응답한다.
-
-   * Parameter : String
-   * return : 검색된 모든 목록 반환
-
-9. `GET /api/SearchWantedByID/{wid}` : 특정 공고 상세 정보 반환
-
-   * Parameter : Integer
-
-   * return : 특정 공고 반환. 
-
-     * 추후 기술스택, 자격증, 스크랩 추가 ##############
-     * 댓글 논의 필요 ##############
-
-     ```json
-     { "wid" : 1,
-       "wantedTitle" : "2020년 IBK기업은행 신입행원 채용공고",
-       "active" : 0,
-       "startDate" : "2020-03-06 09:00:00",
-       "endDate" : "2020-03-21 18:00:00",
-       "process" : "",
-       "etc" : "",
-       "question" : "",
-       "vcnt" : 1001,
-       "cid" : 100,
-       "corpNm" : "",
-       "totPsncnt" : 0,
-       "busiSize" : "",
-       "yrSalesAmt" : 0,
-       "corpAddr" : "",
-       "homePg" : "",
-       "busiCont" : "",
-       "logo" : "",
-       "jobs" : [
-           {
-               "jid" : 101,
-               "to" : "00",
-               "jname" : "웹 프론트엔드 개발",
-               "jdetail" : "",
-               "jtype" : "",
-               "require" : "",
-               "extra" : "",
-               "place" : "",
-               
-           },
-           {
-               ...
-           }
-       ]
+     {
+         "msg" : "string",		//결과 정보
+         "state" : "string"		//상태 (success / fail)
      }
-     
+     ```
+
+
+
+## 3. 메인 페이지(R)
+
+1. `GET /api/getWantedAll` : 전체 공고 목록을 반환한다.
+
+   - Parameter : null
+
+   - Return : 전체 공고 목록의 리스트를 반환한다. List<WantedResult>
+
+     ```json
+     [
+       {
+         "company": {					//기업 정보
+           "cid": 0,							//기업 id
+           "corpNm": "string",				//기업명
+           "totPsncnt": "string",			//사원 수
+           "busiSize": "string",				//기업규모
+           "yrSalesAmt": "string",			//연매출
+           "corpAddr": "string",				//기업주소
+           "homePg": "string",				//홈페이지주소
+           "busiCont": "string",				//주요사업내용(업종)
+           "logo": "string"					//기업로고(이미지)
+         },
+         "wanted": {						//공고 정보
+           "wid": 0,
+           "wantedTitle": "string",
+           "active": 0,
+           "startDate": "string",
+           "endDate": "string",
+           "process": "string",
+           "etc": "string",
+           "question": "string",
+           "vcnt": 0,
+           "cid": 0
+         },
+         "jobs": [						//각 공고별 직무정보 리스트
+           {
+             "jid": 0,						//직무id
+             "to": "string",					//모집인원
+             "jname": "string",				//직무명
+             "jdetail": "string",			//주요업무
+             "jtype": "string",				//채용형태
+             "require": "string",			//자격요건
+             "extra": "string",				//우대사항
+             "place": "string",				//근무지
+             "wid": 0,						//공고id(fk)
+             "stacks": [						//직무 별 기술 스택 리스트
+               {
+                 "sid": 0,						//기술스택id
+                 "tname": "string",				//기술스택 명
+                 "cnt": 0						//기술스택 사용수(추후업데이트)
+               },
+               {	...	}
+             ]
+           },
+           {	...	}
+         ],
+         "stacks": [						//공고에서 쓰이는 기술 스택 리스트
+           {
+             "sid": 0,
+             "tname": "string",
+             "cnt": 0
+           },
+           {	...	}
+         ],
+         "scrap": false					//(로그인한 유저의) 스크랩 유무
+       },
+       {	... }
+     ]
      ```
 
      
+
+2. `GET /api/getWantedByCloseEnd` : 공고의 마감일이 빠른 순으로 10개의 공고 목록을 반환한다.
+
+   - Parameter : null
+   - Return : 마감일 순 10개의 공고 목록 반환 List<WantedResult>
+
+3. `GET /api/getWantedByRecent` : 가장 최근에 등록된 24개의 공고 목록을 반환한다.
+
+   - Parameter : null
+   - Return : 가장 최근에 등록된 24개의 공고 목록 반환 List<WantedResult>
+
+4. `GET /api/getWantedByView` : 많은 조회수 순으로 10개의 공고 목록을 반환한다.
+
+   - Parameter : null
+   - Return : 조회수가 높은 순으로 10개의 공고 목록 반환 List<WantedResult>
+
+5. `GET /api/getWantedByStack` : (로그인 한 유저의) 기술 스택에 맞는 10개의 공고 목록을 반환한다.
+
+   - HttpServletRequest : JWT( Http- Header )
+   - Parameter : null
+   - Return : 사용자의 기술 스택에 맞는 10개의 공고 목록 반환 List<WantedResult>
+
+6. `GET /api/getWantedByScrap` : (로그인 한 유저의) 스크랩한 공고 중 마감일이 빠른 순으로 10개의 공고 목록을 반환한다.
+
+   - HttpServletRequest : JWT( Http-Header )
+   - Parameter : null
+   - Return : 사용자가 스크랩한 공고 중 마감일이 빠른 순으로 10개의 공고 목록을 반환한다.
+
+
+
+## 4. 공고 상세보기(RU)
+
+1. `GET /api/getWantedByID/{wid}` : 특정 공고의 상세 정보를 반환한다.
+
+   - Parameter : int
+
+     ```json
+     wid : 0
+     ```
+
+   - Return : wid에 해당하는 공고의 상세 정보를 반환한다. WantedResult
+
+     ```json
+     {
+       "company": {					//기업 정보
+         "cid": 0,						//기업 id
+         "corpNm": "string",				//기업명
+         "totPsncnt": "string",			//사원 수
+         "busiSize": "string",			//기업규모
+         "yrSalesAmt": "string",			//연매출
+         "corpAddr": "string",			//기업주소
+         "homePg": "string",				//홈페이지주소
+         "busiCont": "string",			//주요사업내용(업종)
+         "logo": "string"				//기업로고(이미지)
+       },
+       "wanted": {						//공고 정보
+         "wid": 0,
+         "wantedTitle": "string",
+         "active": 0,
+         "startDate": "string",
+         "endDate": "string",
+         "process": "string",
+         "etc": "string",
+         "question": "string",
+         "vcnt": 0,
+         "cid": 0
+       },
+       "jobs": [						//각 공고별 직무정보 리스트
+         {
+           "jid": 0,						//직무id
+           "to": "string",				//모집인원
+           "jname": "string",			//직무명
+           "jdetail": "string",			//주요업무
+           "jtype": "string",			//채용형태
+           "require": "string",			//자격요건
+           "extra": "string",			//우대사항
+           "place": "string",			//근무지
+           "wid": 0,						//공고id(fk)
+           "stacks": [					//직무 별 기술 스택 리스트
+             {
+               "sid": 0,						//기술스택id
+               "tname": "string",			//기술스택 명
+               "cnt": 0						//기술스택 사용수(추후업데이트)
+              },
+              {	...	}
+            ]
+          },
+          {	...	}
+        ],
+        "stacks": [						//공고에서 쓰이는 기술 스택 리스트
+          {
+            "sid": 0,
+            "tname": "string",
+            "cnt": 0
+          },
+          {	...	}
+        ],
+        "scrap": false					//(로그인한 유저의) 스크랩 유무
+     }
+     ```
+
+2. `POST /api/scrapWanted` : 스크랩 유무에 따라 스크랩 설정/해제 기능을 수행
+
+   - HttpServletRequest : JWT(HTTP-Header)
+
+   - Parameter : null
+
+   - return : 스크랩 유무에 따른 스크랩 설정/해제 결과를 반환 Result
+
+     ```json
+     {
+         "msg" : "string",
+         "state" : "string",
+         "scrap" : false
+     }
+     ```
+
+     
+
+## 5. 공고 수정(U)
+
+1. `PUT /api/updateWanted` : 공고의 정보를 수정한 결과를 반환한다.
+
+   - Parameter : Wanted
+
+     ```json
+     {
+       "active": 0,
+       "cid": 0,
+       "endDate": "string",
+       "etc": "string",
+       "process": "string",
+       "question": "string",
+       "startDate": "string",
+       "wantedTitle": "string",
+       "wid": 0
+     }
+     ```
+
+   - Return :  수정 결과를 반환 Result
+
+     ```json
+     {
+         "msg" : "string",
+         "state" : "string"
+     }
+     ```
+
+     
+

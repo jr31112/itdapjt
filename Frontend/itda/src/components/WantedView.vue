@@ -30,7 +30,7 @@ export default {
   components: {
   },
   methods:{
-		getRecentRecruit(){
+		getWantedList(){
 			axios.get(`http://192.168.31.54:8197/itda/api/getWantedByView/`)
 				.then(response=>{
 					this.wantedlist = response.data
@@ -45,7 +45,7 @@ export default {
     }
 	},
 	mounted(){
-		this.getRecentRecruit()
+		this.getWantedList()
 	},
   data() {
     return {

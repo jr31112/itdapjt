@@ -36,15 +36,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="getWantedByRecent" resultType="java.lang.Integer">
-		SELECT WID FROM WANTED_T WHERE ACTIVE = 1 ORDER BY STARTDATE DESC LIMIT 24
+		SELECT WID FROM WANTED_T WHERE ACTIVE = 0 ORDER BY STARTDATE DESC LIMIT 24
 	</select>
 	
 	<select id="getWantedByCloseEnd" resultType="java.lang.Integer">
-		SELECT WID FROM WANTED_T WHERE ACTIVE = 1 AND ENDDATE >= NOW() ORDER BY ENDDATE ASC LIMIT 10 
+		SELECT WID FROM WANTED_T WHERE ACTIVE = 0 AND ENDDATE >= NOW() ORDER BY ENDDATE ASC LIMIT 10 
 	</select>
 	
 	<select id="getWantedByView" resultType="java.lang.Integer">
-		SELECT WID FROM WANTED_T WHERE ACTIVE = 1 ORDER BY VCNT DESC LIMIT 10
+		SELECT WID FROM WANTED_T WHERE ACTIVE = 0 ORDER BY VCNT DESC LIMIT 10
 	</select>
 	
 	<select id="isScraped" 
@@ -61,4 +61,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		DELETE FROM SCRAP WHERE UID = #{uid} AND WID = #{wid}
 	</delete>
 
+	<insert id="createWanted"
+	parameterType="com.ssafy.itda.itda_test.model.Wanted">
+		INSERT INTO WANTED_T(WANTEDTITLE, STARTDATE, ENDDATE, PROCESS, ETC, QUESTION, CID)
+		VALUES(#{wantedTitle}, #{startDate}, #{endDate}, #{process}, #{etc}, #{question}, #{cid})
+	</insert>
+	
+	<delete id="deleteWanted"
+	parameterType="Integer">
+		DELETE FROM WANTED_T
+		WHERE WID = #{wid}
+	</delete>
+	
+	<insert id="updateWanted"
+	parameterType="com.ssafy.itda.itda_test.model.Wanted">
+		INSERT INTO WANTED_T(WANTEDTITLE, STARTDATE, ENDDATE, PROCESS, ETC, QUESTION, CID)
+		VALUES(#{wantedTitle}, #{startDate}, #{endDate}, #{process}, #{etc}, #{question}, #{cid})
+	</insert>
 </mapper>

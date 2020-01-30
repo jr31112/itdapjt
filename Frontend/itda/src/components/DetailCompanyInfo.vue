@@ -5,15 +5,15 @@
       <v-col cols="2" align-self="center">
         
           <v-card width="150" height="150">
-            <v-img :src="company.logo" :alt="company.corpNm" width="150" aspect-ratio="1" :contain="true">
-            </v-img>
+            <v-img v-if="company.logo" :src="company.logo" :alt="company.corpNm" width="150" aspect-ratio="1" :contain="true"></v-img>
+            <v-img v-else :src="getImgUrl('noimg.png')" alt="noimg" width="150" aspect-ratio="1" :contain="true"></v-img>
           </v-card>
        
       </v-col>
       <v-col cols="10" justify="center">
         <h3>{{company.corpNm}}</h3>
         <br>
-        <p>홈페이지 : <a :href="company.homePg" style="text-decoration: none; color:black;">{{company.homePg}}</a></p>
+        <p>홈페이지 : <a :href="'http://'+company.homePg" style="text-decoration: none; color:black;">{{company.homePg}}</a></p>
         <p>기업주소 : {{company.corpAddr}}</p>
         <p>주요사업 : {{company.busiCont}}</p>
       </v-col>

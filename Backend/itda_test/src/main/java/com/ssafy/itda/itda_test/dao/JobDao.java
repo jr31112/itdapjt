@@ -8,7 +8,7 @@ import com.ssafy.itda.itda_test.model.Job;
 
 @Repository
 public class JobDao {
-	String ns = "ssafy.user.";
+	String ns = "ssafy.job.";
 	
 	@Autowired
 	private SqlSession sqlSession;

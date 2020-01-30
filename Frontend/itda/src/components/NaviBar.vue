@@ -168,7 +168,7 @@
                                 <div class="pa-4" style="max-width: 520px">
                                     <!-- pa는 패딩오토 -->
                                     <v-text-field v-model="email" name = "email" label="email을 입력하세요"></v-text-field>
-                                    <v-text-field  v-model="pw" name = "pw" type="password" label="password를 입력하세요"></v-text-field>
+                                    <v-text-field  v-model="password" name = "pw" type="password" label="password를 입력하세요"></v-text-field>
                                     <v-btn
                                         class="mb-1"
                                         color="primary"
@@ -178,7 +178,7 @@
                                          @click="login(
                                         {
                                             email:email,
-                                            pw:pw
+                                            pw:password
                                         }
                                         )">로그인
                                     </v-btn >
@@ -200,7 +200,8 @@
 	import router from '../router/index.js';
     export default {
         data() {
-            return {email: null, password: null, dialog:false};
+            return {email: null, password: null, dialog:false,
+            token : localStorage.getItem("access_token")};
         },
         computed: {
             ...mapState(["isLogin", "isLoginError","isDialog"])

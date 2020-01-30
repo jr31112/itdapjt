@@ -34,13 +34,17 @@
 
 3. job_t -> Job param
 
-   2번에서 입력한 wid를 사용
+   다수의 값?!
 
+   2번에서 입력한 wid를 사용
+   
    ```sql
    insert into job_t(jname, `to`, jdetail, jtype, `require`, extra, place, wid) values ('','','','','','','',0);
    ```
-
-
+   
+   `createJob`
+   
+   
 
 요까지 필수!
 
@@ -68,6 +72,7 @@
   - `deleteWanted`
 - job이 없어지는 경우 : delete from job_t where jid = #{jid}
 - 직무별 기술스택을 지울 경우 : delte from jobstack_t where jid = #{jid} and sid = #{sid} -> Jobstack 모델 별도
+  - `deleteJob`
 
 
 
@@ -76,6 +81,7 @@
 - 공고 내용만 수정 : wanted 에서 수정하기 -> Wanted 가 param
   * `updateWanted`
 - 직무 내용만 수정 : job_t 수정 -> Job 이 param
+  - `updateJob`
 - 기업 정보 수정 : company_t 수정 -> Company 가 param
   - `updateCompany`
 

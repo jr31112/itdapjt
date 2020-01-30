@@ -13,15 +13,15 @@ public class CompanyDao {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	public void createCompany(Company company) {
-		sqlSession.insert(ns + "createCompany", company);
+	public void createCompany(Company model) {
+		sqlSession.insert(ns + "createCompany", model);
 	}
 	
 	public void deleteCompany(Integer cid) {
 		sqlSession.delete(ns + "deleteCompany", cid);
 	}
 	
-	public void updateCompany(Integer cid) {
-		sqlSession.update(ns + "updateCompany", cid);
+	public void updateCompany(Company model) {
+		sqlSession.update(ns + "updateCompany", model);
 	}
 }

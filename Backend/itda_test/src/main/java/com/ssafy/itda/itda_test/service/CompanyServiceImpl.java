@@ -13,8 +13,8 @@ public class CompanyServiceImpl implements ICompanyService {
 	private CompanyDao companyDao;
 	
 	@Override
-	public void createCompany(Company company) {
-		companyDao.createCompany(company);
+	public void createCompany(Company model) {
+		companyDao.createCompany(model);
 	}
 	
 	@Override
@@ -23,7 +23,7 @@ public class CompanyServiceImpl implements ICompanyService {
 	}
 	
 	@Override
-	public void updateCompany(Integer cid) {
-		companyDao.updateCompany(cid);
+	public void updateCompany(Company model) {
+		companyDao.updateCompany(model);
 	}
 }

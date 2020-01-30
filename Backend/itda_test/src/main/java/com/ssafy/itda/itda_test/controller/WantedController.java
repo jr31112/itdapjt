@@ -160,7 +160,7 @@ public class WantedController {
 		logger.info("6-------------createWanted-----------------------------" + new Date());
 		logger.info("6-------------createWanted-----------------------------" + model);
 		Result r = new Result();
-		if (model.getWantedTitle() == null || model.getWantedTitle().equals("") 
+		if (model.getCid() == 0 || model.getWantedTitle() == null || model.getWantedTitle().equals("") 
 		|| model.getStartDate() == null || model.getStartDate().equals("") || model.getEndDate() == null 
 		|| model.getEndDate().equals("") || model.getProcess() == null || model.getProcess().equals("")) {
 			r.setMsg("필수 입력값이 누락되었습니다.");
@@ -201,7 +201,7 @@ public class WantedController {
 			r.setMsg("존재하지 않는 wid값입니다.");
 			r.setState("fail");
 		}
-		else if (model.getWantedTitle() == null || model.getWantedTitle().equals("") 
+		else if (model.getCid() == 0 ||model.getWantedTitle() == null || model.getWantedTitle().equals("") 
 				|| model.getStartDate() == null || model.getStartDate().equals("") || model.getEndDate() == null 
 				|| model.getEndDate().equals("") || model.getProcess() == null || model.getProcess().equals("")) {
 			r.setMsg("입력되지 않은 필수값이 있습니다.");

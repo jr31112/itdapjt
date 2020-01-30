@@ -40,7 +40,6 @@ export default {
 			axios.get(`http://192.168.31.54:8197/itda/api/getWantedByRecent/`)
 				.then(response=>{
 					this.recentlist = response.data
-					console.log("hello" + this.recentlist)
 				})
 				.catch(()=>{})
 		},

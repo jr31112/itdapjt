@@ -80,6 +80,10 @@ public class WantedController {
 		wr.setCompany(company);
 		wr.setWanted(wanted);
 		wr.setJobs(jobs);
+		
+		//vcnt 조회수 update
+		wantedService.updateVcnt(wid);
+		
 		return new ResponseEntity<WantedResult>(wr, HttpStatus.OK);
 	}
 
@@ -235,7 +239,7 @@ public class WantedController {
 	}
 
 	@ApiOperation(value = "공고를 수정한다.", response = Wanted.class)
-	@RequestMapping(value = "/updateWanted", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/updateWanted", method = RequestMethod.PUT)
 	public ResponseEntity<Result> deleteWanted(@RequestBody Wanted model) throws Exception {
 		logger.info("8-------------updateWanted-----------------------------" + new Date());
 		logger.info("8-------------updateWanted-----------------------------" + model);

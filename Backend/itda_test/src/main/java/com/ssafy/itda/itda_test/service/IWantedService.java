@@ -27,4 +27,5 @@ public interface IWantedService {
 	List<Stack> getWantedStackInfo(int i);
 	List<Integer> getWantedByStack(int uid);
 	List<Integer> getWantedByScrap(int uid);
+	void updateVcnt(int wid);
 }

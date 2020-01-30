@@ -84,4 +84,12 @@ public class WantedDao {
 		return sqlSession.selectList(ns + "getWantedStackInfo", i);
 	}
 
+	public List<Integer> getWantedByStack(int uid) {
+		return sqlSession.selectList(ns + "getWantedByStack", uid);
+	}
+
+	public List<Integer> getWantedByScrap(int uid) {
+		return sqlSession.selectList(ns + "getWantedByScrap", uid);
+	}
+
 }

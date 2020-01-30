@@ -100,4 +100,14 @@ public class WantedServiceImpl implements IWantedService {
 	public List<Stack> getWantedStackInfo(int i) {
 		return wantedDao.getWantedStackInfo(i);
 	}
+
+	@Override
+	public List<Integer> getWantedByStack(int uid) {
+		return wantedDao.getWantedByStack(uid);
+	}
+
+	@Override
+	public List<Integer> getWantedByScrap(int uid) {
+		return wantedDao.getWantedByScrap(uid);
+	}
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import com.ssafy.itda.itda_test.model.Company;
 import com.ssafy.itda.itda_test.model.Job;
 import com.ssafy.itda.itda_test.model.Scrap;
+import com.ssafy.itda.itda_test.model.Stack;
 import com.ssafy.itda.itda_test.model.Wanted;
 
 public interface IWantedService {
@@ -20,6 +21,8 @@ public interface IWantedService {
 	void scrap(Scrap model);
 	List<Integer> getWantedAll();
 	void createWanted(Wanted model);
-	void deleteWanted(Integer wid);
+	void deleteWanted(int wid);
 	void updateWanted(Wanted model);
+	List<Stack> getStackInfo(int jid);
+	List<Stack> getWantedStackInfo(int i);
 }

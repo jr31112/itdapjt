@@ -1,6 +1,7 @@
 package com.ssafy.itda.itda_test.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Job implements Serializable {
 	private int jid;
@@ -12,6 +13,8 @@ public class Job implements Serializable {
 	private String extra;
 	private String place;
 	private int wid;
+
+	private List<Stack> stacks;
 
 	public Job() {
 		super();
@@ -102,6 +105,14 @@ public class Job implements Serializable {
 
 	public void setWid(int wid) {
 		this.wid = wid;
+	}
+
+	public List<Stack> getStacks() {
+		return stacks;
+	}
+
+	public void setStacks(List<Stack> stacks) {
+		this.stacks = stacks;
 	}
 
 	@Override

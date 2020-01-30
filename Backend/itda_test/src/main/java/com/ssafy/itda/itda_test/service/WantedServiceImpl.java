@@ -9,6 +9,7 @@ import com.ssafy.itda.itda_test.dao.WantedDao;
 import com.ssafy.itda.itda_test.model.Company;
 import com.ssafy.itda.itda_test.model.Job;
 import com.ssafy.itda.itda_test.model.Scrap;
+import com.ssafy.itda.itda_test.model.Stack;
 import com.ssafy.itda.itda_test.model.Wanted;
 
 @Service
@@ -79,14 +80,24 @@ public class WantedServiceImpl implements IWantedService {
 	public void createWanted(Wanted model) {
 		wantedDao.createWanted(model);
 	}
-	
+
 	@Override
-	public void deleteWanted(Integer wid) {
+	public void deleteWanted(int wid) {
 		wantedDao.deleteWanted(wid);
 	}
-	
+
 	@Override
 	public void updateWanted(Wanted model) {
 		wantedDao.updateWanted(model);
+	}
+
+	@Override
+	public List<Stack> getStackInfo(int jid) {
+		return wantedDao.getStackInfo(jid);
+	}
+
+	@Override
+	public List<Stack> getWantedStackInfo(int i) {
+		return wantedDao.getWantedStackInfo(i);
 	}
 }

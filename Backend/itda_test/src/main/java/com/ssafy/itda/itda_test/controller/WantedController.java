@@ -16,12 +16,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ssafy.itda.itda_test.help.CompanyResult;
 import com.ssafy.itda.itda_test.help.Result;
 import com.ssafy.itda.itda_test.help.WantedResult;
 import com.ssafy.itda.itda_test.model.Company;
 import com.ssafy.itda.itda_test.model.Job;
 import com.ssafy.itda.itda_test.model.Scrap;
+import com.ssafy.itda.itda_test.model.Stack;
 import com.ssafy.itda.itda_test.model.Wanted;
 import com.ssafy.itda.itda_test.service.IWantedService;
 
@@ -44,18 +44,7 @@ public class WantedController {
 	public ResponseEntity<List<WantedResult>> getWantedAll() throws Exception {
 		logger.info("5-------------getWantedAll-----------------------------" + new Date());
 		List<Integer> widList = wantedService.getWantedAll();
-		List<WantedResult> wrlist = new ArrayList<>();
-		for (int i : widList) {
-			int cid = wantedService.getCompanyId(i);
-			Company company = wantedService.getCompanyInfo(cid);
-			Wanted wanted = wantedService.getWantedInfo(i);
-			List<Job> jobs = wantedService.getJobsInfo(i);
-			WantedResult wr = new WantedResult();
-			wr.setCompany(company);
-			wr.setWanted(wanted);
-			wr.setJobs(jobs);
-			wrlist.add(wr);
-		}
+		List<WantedResult> wrlist = getWantedListFunction(widList);
 		return new ResponseEntity<List<WantedResult>>(wrlist, HttpStatus.OK);
 	}
 
@@ -79,18 +68,8 @@ public class WantedController {
 	public ResponseEntity<List<WantedResult>> getWantedByRecent() throws Exception {
 		logger.info("5-------------getWantedByRecent-----------------------------" + new Date());
 		List<Integer> widList = wantedService.getWantedByRecent();
-		List<WantedResult> wrlist = new ArrayList<>();
-		for (int i : widList) {
-			int cid = wantedService.getCompanyId(i);
-			Company company = wantedService.getCompanyInfo(cid);
-			Wanted wanted = wantedService.getWantedInfo(i);
-			List<Job> jobs = wantedService.getJobsInfo(i);
-			WantedResult wr = new WantedResult();
-			wr.setCompany(company);
-			wr.setWanted(wanted);
-			wr.setJobs(jobs);
-			wrlist.add(wr);
-		}
+		List<WantedResult> wrlist = getWantedListFunction(widList);
+
 		return new ResponseEntity<List<WantedResult>>(wrlist, HttpStatus.OK);
 	}
 
@@ -99,18 +78,8 @@ public class WantedController {
 	public ResponseEntity<List<WantedResult>> getWantedByCloseEnd() throws Exception {
 		logger.info("5-------------getWantedByCloseEnd-----------------------------" + new Date());
 		List<Integer> widList = wantedService.getWantedByCloseEnd();
-		List<WantedResult> wrlist = new ArrayList<>();
-		for (int i : widList) {
-			int cid = wantedService.getCompanyId(i);
-			Company company = wantedService.getCompanyInfo(cid);
-			Wanted wanted = wantedService.getWantedInfo(i);
-			List<Job> jobs = wantedService.getJobsInfo(i);
-			WantedResult wr = new WantedResult();
-			wr.setCompany(company);
-			wr.setWanted(wanted);
-			wr.setJobs(jobs);
-			wrlist.add(wr);
-		}
+		List<WantedResult> wrlist = getWantedListFunction(widList);
+
 		return new ResponseEntity<List<WantedResult>>(wrlist, HttpStatus.OK);
 	}
 
@@ -119,18 +88,8 @@ public class WantedController {
 	public ResponseEntity<List<WantedResult>> getWantedByView() throws Exception {
 		logger.info("5-------------getWantedByView-----------------------------" + new Date());
 		List<Integer> widList = wantedService.getWantedByView();
-		List<WantedResult> wrlist = new ArrayList<>();
-		for (int i : widList) {
-			int cid = wantedService.getCompanyId(i);
-			Company company = wantedService.getCompanyInfo(cid);
-			Wanted wanted = wantedService.getWantedInfo(i);
-			List<Job> jobs = wantedService.getJobsInfo(i);
-			WantedResult wr = new WantedResult();
-			wr.setCompany(company);
-			wr.setWanted(wanted);
-			wr.setJobs(jobs);
-			wrlist.add(wr);
-		}
+		List<WantedResult> wrlist = getWantedListFunction(widList);
+
 		return new ResponseEntity<List<WantedResult>>(wrlist, HttpStatus.OK);
 	}
 
@@ -160,9 +119,9 @@ public class WantedController {
 		logger.info("6-------------createWanted-----------------------------" + new Date());
 		logger.info("6-------------createWanted-----------------------------" + model);
 		Result r = new Result();
-		if (model.getCid() == 0 || model.getWantedTitle() == null || model.getWantedTitle().equals("") 
-		|| model.getStartDate() == null || model.getStartDate().equals("") || model.getEndDate() == null 
-		|| model.getEndDate().equals("") || model.getProcess() == null || model.getProcess().equals("")) {
+		if (model.getCid() == 0 || model.getWantedTitle() == null || model.getWantedTitle().equals("")
+				|| model.getStartDate() == null || model.getStartDate().equals("") || model.getEndDate() == null
+				|| model.getEndDate().equals("") || model.getProcess() == null || model.getProcess().equals("")) {
 			r.setMsg("필수 입력값이 누락되었습니다.");
 			r.setState("fail");
 		}
@@ -171,10 +130,10 @@ public class WantedController {
 		r.setState("success");
 		return new ResponseEntity<Result>(r, HttpStatus.OK);
 	}
-	
+
 	@ApiOperation(value = "공고를 삭제한다.", response = Wanted.class)
 	@RequestMapping(value = "/deleteWanted", method = RequestMethod.DELETE)
-	public ResponseEntity<Result> deleteWanted(@RequestBody Integer wid) throws Exception {
+	public ResponseEntity<Result> deleteWanted(@RequestBody int wid) throws Exception {
 		logger.info("7-------------deleteWanted-----------------------------" + new Date());
 		logger.info("7-------------deleteWanted-----------------------------" + wid);
 		Result r = new Result();
@@ -188,7 +147,7 @@ public class WantedController {
 		r.setState("success");
 		return new ResponseEntity<Result>(r, HttpStatus.OK);
 	}
-	
+
 	@ApiOperation(value = "공고를 수정한다.", response = Wanted.class)
 	@RequestMapping(value = "/updateWanted", method = RequestMethod.DELETE)
 	public ResponseEntity<Result> deleteWanted(@RequestBody Wanted model) throws Exception {
@@ -200,9 +159,8 @@ public class WantedController {
 		if (wid == 0 || wanted == null) {
 			r.setMsg("존재하지 않는 wid값입니다.");
 			r.setState("fail");
-		}
-		else if (model.getCid() == 0 ||model.getWantedTitle() == null || model.getWantedTitle().equals("") 
-				|| model.getStartDate() == null || model.getStartDate().equals("") || model.getEndDate() == null 
+		} else if (model.getCid() == 0 || model.getWantedTitle() == null || model.getWantedTitle().equals("")
+				|| model.getStartDate() == null || model.getStartDate().equals("") || model.getEndDate() == null
 				|| model.getEndDate().equals("") || model.getProcess() == null || model.getProcess().equals("")) {
 			r.setMsg("입력되지 않은 필수값이 있습니다.");
 			r.setState("fail");
@@ -211,5 +169,26 @@ public class WantedController {
 		r.setMsg("공고 수정이 성공적으로 완료되었습니다.");
 		r.setState("success");
 		return new ResponseEntity<Result>(r, HttpStatus.OK);
+	}
+
+	private List<WantedResult> getWantedListFunction(List<Integer> widList) {
+		List<WantedResult> wrlist = new ArrayList<>();
+		for (int i : widList) {
+			int cid = wantedService.getCompanyId(i);
+			Company company = wantedService.getCompanyInfo(cid);
+			Wanted wanted = wantedService.getWantedInfo(i);
+			List<Job> jobs = wantedService.getJobsInfo(i);
+			List<Stack> wantedStacks = wantedService.getWantedStackInfo(i);
+			for (Job j : jobs) {
+				j.setStacks(wantedService.getStackInfo(j.getJid()));
+			}
+			WantedResult wr = new WantedResult();
+			wr.setCompany(company);
+			wr.setWanted(wanted);
+			wr.setJobs(jobs);
+			wr.setStacks(wantedStacks);
+			wrlist.add(wr);
+		}
+		return wrlist;
 	}
 }

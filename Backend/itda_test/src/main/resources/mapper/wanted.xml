@@ -5,77 +5,105 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="ssafy.wanted">
 
 	<select id="getWantedAll" resultType="java.lang.Integer">
-		SELECT WID FROM WANTED_T ORDER BY STARTDATE ASC
+		SELECT WID FROM WANTED_T
+		ORDER BY STARTDATE ASC
 	</select>
 
-	<select id="getCompanyId"
-		parameterType="java.lang.Integer"
+	<select id="getCompanyId" parameterType="java.lang.Integer"
 		resultType="java.lang.Integer">
 		SELECT CID FROM WANTED_T WHERE WID = #{wid}
 	</select>
-	
-	<select id="getWantedInfo"
-		parameterType="java.lang.Integer"
+
+	<select id="getWantedInfo" parameterType="java.lang.Integer"
 		resultType="com.ssafy.itda.itda_test.model.Wanted">
-		SELECT WID, WANTEDTITLE, ACTIVE, STARTDATE, ENDDATE, PROCESS, ETC, QUESTION, VCNT, CID
+		SELECT WID, WANTEDTITLE, ACTIVE, STARTDATE, ENDDATE,
+		PROCESS, ETC, QUESTION, VCNT, CID
 		FROM WANTED_T WHERE WID = #{wid}
 	</select>
-	
-	<select id="getCompanyInfo"
-		parameterType="java.lang.Integer"
+
+	<select id="getCompanyInfo" parameterType="java.lang.Integer"
 		resultType="com.ssafy.itda.itda_test.model.Company">
-		SELECT CID, CORPNM, TOTPSNCNT, BUSISIZE, YRSALESAMT, CORPADDR, HOMEPG, BUSICONT, LOGO
+		SELECT CID, CORPNM, TOTPSNCNT, BUSISIZE, YRSALESAMT,
+		CORPADDR, HOMEPG, BUSICONT, LOGO
 		FROM COMPANY_T WHERE CID = #{cid}
 	</select>
-	
-	<select id="getJobsInfo"
-		parameterType="java.lang.Integer"
+
+	<select id="getJobsInfo" parameterType="java.lang.Integer"
 		resultType="com.ssafy.itda.itda_test.model.Job">
-		SELECT JID, `TO`, JNAME, JDETAIL, JTYPE, `REQUIRE`, EXTRA, PLACE, WID
+		SELECT JID, `TO`, JNAME, JDETAIL, JTYPE, `REQUIRE`, EXTRA,
+		PLACE, WID
 		FROM JOB_T WHERE WID = #{wid}
 	</select>
-	
+
 	<select id="getWantedByRecent" resultType="java.lang.Integer">
-		SELECT WID FROM WANTED_T WHERE ACTIVE = 0 ORDER BY STARTDATE DESC LIMIT 24
+		SELECT WID FROM
+		WANTED_T WHERE ACTIVE = 0 ORDER BY STARTDATE DESC LIMIT 24
 	</select>
-	
+
 	<select id="getWantedByCloseEnd" resultType="java.lang.Integer">
-		SELECT WID FROM WANTED_T WHERE ACTIVE = 0 AND ENDDATE >= NOW() ORDER BY ENDDATE ASC LIMIT 10 
+		SELECT WID FROM
+		WANTED_T WHERE ACTIVE = 0 AND ENDDATE >= NOW() ORDER BY ENDDATE ASC
+		LIMIT 10
 	</select>
-	
+
 	<select id="getWantedByView" resultType="java.lang.Integer">
-		SELECT WID FROM WANTED_T WHERE ACTIVE = 0 ORDER BY VCNT DESC LIMIT 10
+		SELECT WID FROM WANTED_T
+		WHERE ACTIVE = 0 ORDER BY VCNT DESC LIMIT 10
 	</select>
-	
-	<select id="isScraped" 
+
+	<select id="isScraped"
 		parameterType="com.ssafy.itda.itda_test.model.Scrap"
 		resultType="com.ssafy.itda.itda_test.model.Scrap">
-		SELECT UID, WID FROM SCRAP_T WHERE UID= #{uid} AND WID = #{wid}
+		SELECT UID, WID FROM SCRAP_T WHERE UID= #{uid} AND WID =
+		#{wid}
 	</select>
-	
-	<insert id="scrap" parameterType="com.ssafy.itda.itda_test.model.Scrap">
+
+	<insert id="scrap"
+		parameterType="com.ssafy.itda.itda_test.model.Scrap">
 		INSERT INTO SCRAP_T(UID, WID) VALUES(#{uid}, #{wid})
 	</insert>
-	
-	<delete id="unScrap" parameterType="com.ssafy.itda.itda_test.model.Scrap">
+
+	<delete id="unScrap"
+		parameterType="com.ssafy.itda.itda_test.model.Scrap">
 		DELETE FROM SCRAP WHERE UID = #{uid} AND WID = #{wid}
 	</delete>
 
 	<insert id="createWanted"
-	parameterType="com.ssafy.itda.itda_test.model.Wanted">
-		INSERT INTO WANTED_T(WANTEDTITLE, STARTDATE, ENDDATE, PROCESS, ETC, QUESTION, CID)
-		VALUES(#{wantedTitle}, #{startDate}, #{endDate}, #{process}, #{etc}, #{question}, #{cid})
+		parameterType="com.ssafy.itda.itda_test.model.Wanted">
+		INSERT INTO WANTED_T(WANTEDTITLE, STARTDATE, ENDDATE,
+		PROCESS, ETC, QUESTION, CID)
+		VALUES(#{wantedTitle}, #{startDate},
+		#{endDate}, #{process}, #{etc}, #{question}, #{cid})
 	</insert>
-	
-	<delete id="deleteWanted"
-	parameterType="Integer">
+
+	<delete id="deleteWanted" parameterType="Integer">
 		DELETE FROM WANTED_T
 		WHERE WID = #{wid}
 	</delete>
-	
+
 	<insert id="updateWanted"
-	parameterType="com.ssafy.itda.itda_test.model.Wanted">
-		INSERT INTO WANTED_T(WANTEDTITLE, STARTDATE, ENDDATE, PROCESS, ETC, QUESTION, CID)
-		VALUES(#{wantedTitle}, #{startDate}, #{endDate}, #{process}, #{etc}, #{question}, #{cid})
+		parameterType="com.ssafy.itda.itda_test.model.Wanted">
+		INSERT INTO WANTED_T(WANTEDTITLE, STARTDATE, ENDDATE,
+		PROCESS, ETC, QUESTION, CID)
+		VALUES(#{wantedTitle}, #{startDate},
+		#{endDate}, #{process}, #{etc}, #{question}, #{cid})
 	</insert>
+
+	<select id="getStackInfo" parameterType="java.lang.Integer"
+		resultType="com.ssafy.itda.itda_test.model.Stack">
+		SELECT S.SID, S.TNAME
+		FROM JOBSTACK_T AS JS JOIN STACK_T AS
+		S ON JS.SID = S.SID
+		WHERE JS.JID = #{jid}
+	</select>
+
+	<select id="getWantedStackInfo"
+	parameterType="java.lang.Integer"
+	resultType="com.ssafy.itda.itda_test.model.Stack">
+	SELECT DISTINCT S.SID, S.TNAME
+	FROM WANTED_T AS W, JOB_T AS J, JOBSTACK_T AS JS, stack_t AS S
+	WHERE W.WID = J.WID AND J.JID = JS.JID AND JS.SID = S.SID AND W.WID =
+	#{wid};
+
+	</select>
 </mapper>

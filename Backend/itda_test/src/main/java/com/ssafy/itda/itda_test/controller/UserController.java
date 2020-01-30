@@ -243,4 +243,21 @@ public class UserController {
 		return new ResponseEntity<UserResult>(ur, HttpStatus.OK);
 	}
 
+	@ApiOperation(value = "회원의 권한을 수정한다.", response = UserResult.class)
+	@RequestMapping(value = "/updatePermission", method = RequestMethod.PUT)
+	public ResponseEntity<UserResult> updatePermission(@RequestBody User model) throws Exception {
+		logger.info("1-8-------------updatePermission-----------------------------" + new Date());
+		logger.info("1-8-------------updatePermission-----------------------------" + model);
+		User user = userService.getUser(model.getUid());
+		UserResult ur = new UserResult();
+		if (user == null) {
+			ur.setMsg("회원 수정에 실패했습니다.");
+			ur.setState("fail");
+		} 
+		userService.updatePermission(model);
+		ur.setMsg("성공적으로 회원 권한 수정을 완료했습니다.");
+		ur.setState("success");
+		
+		return new ResponseEntity<UserResult>(ur, HttpStatus.OK);
+	}
 }

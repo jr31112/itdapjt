@@ -8,7 +8,7 @@ import com.ssafy.itda.itda_test.model.Company;
 
 @Repository
 public class CompanyDao {
-	String ns = "ssafy.user.";
+	String ns = "ssafy.company.";
 	
 	@Autowired
 	private SqlSession sqlSession;

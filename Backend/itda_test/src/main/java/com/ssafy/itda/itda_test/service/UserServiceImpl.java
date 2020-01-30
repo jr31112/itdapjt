@@ -60,4 +60,9 @@ public class UserServiceImpl implements IUserService {
 	public List<Integer> getMyScrapWanteds(int uid) {
 		return userDao.getMyScrapWanteds(uid);
 	}
+	
+	@Override
+	public void updatePermission(User model) {
+		userDao.updatePermission(model);
+	}
 }

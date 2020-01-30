@@ -5,7 +5,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="ssafy.comment">
 
 	<select id="getComment"
-	parameterType="Integer"
+	parameterType="java.lang.Integer"
 	resultType="com.ssafy.itda.itda_test.model.Comment">
 		SELECT * 
 		FROM COMMENT_T
@@ -14,12 +14,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<insert id="createComment" 
 	parameterType="com.ssafy.itda.itda_test.model.Comment">
-		INSERT INTO JOB_T(UID, WID, WRITER, CONTENT)
+		INSERT INTO COMMENT_T(UID, WID, WRITER, CONTENT)
 		VALUES ( #{uid}, #{wid}, #{writer}, #{content} ) 
 	</insert>
 	
 	<delete id="deleteComment" 
-	parameterType="Integer">
+	parameterType="java.lang.Integer">
 		DELETE FROM COMMENT_T
 		WHERE CMID = #{cmid}
 	</delete>

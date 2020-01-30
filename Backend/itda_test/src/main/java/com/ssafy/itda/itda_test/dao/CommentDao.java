@@ -8,7 +8,7 @@ import com.ssafy.itda.itda_test.model.Comment;
 
 @Repository
 public class CommentDao {
-	String ns = "ssafy.user.";
+	String ns = "ssafy.comment.";
 	
 	@Autowired
 	private SqlSession sqlSession;

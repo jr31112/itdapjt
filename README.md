@@ -51,7 +51,7 @@
 
 * [DB README](./Database/README.md)
 
-* [API 정의](./Backend/APIDefinition.md)
+* [API 정의](./Backend/APIdefinition.md)
 
 # 명세서
 

@@ -19,19 +19,17 @@
        "uname": "string"		//이름
      }
      ```
+     
+     * 필수 :  `email`, `pw`, `uname` 만 입력받아 회원가입 한다.
+     
+   - Return : UserResult
    
-  * 필수 :  `email`, `pw`, `uname` 만 입력받아 회원가입 한다.
-   
-- Return : UserResult
-   
-  ```json
-   {
+     ```json
+     {
        "msg": "string",		//결과 정보
        "state": "string"		//상태 (success / fail)
-     }
+     }  
      ```
-     
-     
    
 2. `GET /api/emailCheck/{email}` : 입력한 email이 사용가능 한지 중복 체크
 

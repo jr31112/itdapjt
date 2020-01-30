@@ -4,7 +4,7 @@
         id="documentation-app-bar"
         data-booted="true"
         style="height: 64px; margin-top: 0px; transform: translateY(0px); left: 0px; right: 0px;">
-        <div class="v-toolbar__content" style="height: 64px;"> 
+        <div class="v-toolbar__content" style="height: 64px;">
             <router-link class="mt-2" :to="{name:'home'}"><v-img :src="getImgUrl('logoo.png')" style="width :6.5rem"/></router-link>
             <div class="spacer"></div>
             <div class="v-responsive mr-0 mr-md-6 hidden-xs-only" style="max-width: 300px;">
@@ -22,11 +22,12 @@
                                     <label
                                         for="search"
                                         class="v-label theme--dark"
-                                        style="left: 0px; right: auto; position: absolute;">기업명을 검색해주세요</label >
+                                        style="left: 0px; right: auto; position: absolute;"></label >
                                     <input
                                         id="search"
                                         type="text"
                                         class="ds-input"
+                                        placeholder="기업명을 검색해주세요"
                                         autocomplete="off"
                                         spellcheck="false"
                                         role="combobox"
@@ -36,6 +37,7 @@
                                         aria-owns="algolia-autocomplete-listbox-0"
                                         dir="auto"
                                         style=""/>
+
                                     <pre
 										aria-hidden="true"
 										style="position: absolute; visibility: hidden; white-space: pre; font-family: Roboto, sans-serif; font-size: 16px; font-style: normal; font-variant: normal; font-weight: 400; word-spacing: 0px; letter-spacing: normal; text-indent: 0px; text-rendering: auto; text-transform: none;"
@@ -124,10 +126,9 @@
                     </span>
                 </span>
             </v-btn>
-
             <v-btn
-                v-else
-				@click.stop="dialog=!dialog"
+                v-else 
+                @click.stop="dialog=!dialog"
                 class="v-btn v-btn--flat v-btn--text theme--dark v-size--default"
                 aria-label="Support"
                 style="min-width: 48px;">
@@ -140,6 +141,7 @@
                     </span>
                 </span>
             </v-btn>
+            <!-------------------------------------- 모달창 ------------------------------------------>
             <v-dialog  
             v-if ="isDialog" 
 			v-model="dialog" 
@@ -147,67 +149,30 @@
 			overlay-opacity="0.4"
 			max-width= "545px"
 			>
-                <v-container > 
-                    <!-- 컨테이너 크기를 500으로해 해주고, fill-heigt를 통해서아래 align center를 이용할 수 있게 됨. -->
-                    <v-layout wrap="no wrap">
-                        <v-flex xs12="xs12">
-                            <v-alert class="mb-1" :value="isLoginError" type="error">
-                                아이디와 비밀번호를 확인해주세요.
-                            </v-alert>
-                            <v-alert class="mb-1" :value="isLogin" type="success">
-                                로그인이 완료되었습니다.
-                            </v-alert>
-                            <v-card>
-                                <v-toolbar flat="flat">
-                                    <!-- flat은 toolbar의 속성이고 아래 그림자 없애주는건가.. 뭐지..? -->
-                                    <v-toolbar-title>Login</v-toolbar-title>
-                                    <v-btn color="green darken-1" text="text" @click="dialog = false">
-                                        Close
-                                    </v-btn>
-                                </v-toolbar>
-                                <div class="pa-4" style="max-width: 520px">
-                                    <!-- pa는 패딩오토 -->
-                                    <v-text-field v-model="email" name = "email" label="email을 입력하세요"></v-text-field>
-                                    <v-text-field  v-model="password" name = "pw" type="password" label="password를 입력하세요"></v-text-field>
-                                    <v-btn
-                                        class="mb-1"
-                                        color="primary"
-                                        depressed="depressed"
-                                        block="block"
-                                        large="large"
-                                         @click="login(
-                                        {
-                                            email:email,
-                                            pw:password
-                                        }
-                                        )">로그인
-                                    </v-btn >
-                                    <v-btn class="mb-1" depressed="depressed" block="block" large="large">회원가입</v-btn>
-                               
-                                </div>
-                            </v-card>
-                        </v-flex>
-                    </v-layout>
-                </v-container>
-            </v-dialog>
+            <Login v-if='isDialog'></Login>
+             <!-- <Register v-else-if=""></Register> -->
+           </v-dialog>
         </div>
     </header>
 </template>
 <script>
 
-	import {mapState, mapActions} from 'vuex';
-	// import axios from "axios"
-	import router from '../router/index.js';
+    import {mapState, mapActions} from 'vuex';
+    // import axios from "axios"
+    import router from '../router/index.js';
+    import Login from './Login.vue';
+    // import Register from './Register.vue';
+    // import Register from './Register.vue'
     export default {
         data() {
-            return {email: null, password: null, dialog:false,
-            token : localStorage.getItem("access_token")};
+            return {email: null, password: null, dialog: false, token: localStorage.getItem("access_token")};
         },
         computed: {
-            ...mapState(["isLogin", "isLoginError","isDialog"])
+            ...mapState(["isLogin", "isLoginError", "isDialog"])
         },
         components: {
-
+            Login,
+            // Register
         },
         methods: {
             getImgUrl(img) {
@@ -217,8 +182,17 @@
                 router
                     .push({name: 'totalwanted'})
                     .catch(() => {});
-			},
-            ...mapActions(["login"])
+            },
+            ...mapActions(["login"]),
+            goLogin() {
+                this
+                    .$store
+                    .dispatch('login', {
+                        email: this.email,
+                        pw: this.password
+                    })
+            },
+
         }
     };
 </script>

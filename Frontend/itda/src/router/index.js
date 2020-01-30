@@ -6,9 +6,10 @@ import RecruitDetail from '../views/RecruitDetail.vue'
 import User from '../views/User.vue'
 import Admin from '../views/Admin.vue'
 import TotalWanted from '../views/TotalWanted.vue'
-import store from '../store/index.js';
+import store from '../store/index.js'
 import NotFound from '../views/NotFound.vue'
-
+import ListHome from '../views/ListHome.vue'
+import Register from '../components/Register.vue'
 Vue.use(VueRouter)
 const rejectAuthUser = (to, from, next)=>
 {
@@ -75,9 +76,19 @@ const routes = [
     beforeEnter: rejectAuthUser, 
     component: ()=>
     import("../views/Home.vue")
+  },
+  {
+      path: '/listhome',
+      name: 'listhome',
+      component: ListHome
   }
-]
-
+ , 
+  {
+    path: '/register',
+    name: 'register',
+    component: Register
+  }
+  ]
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,

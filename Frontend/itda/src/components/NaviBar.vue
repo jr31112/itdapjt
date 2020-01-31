@@ -37,11 +37,10 @@
                                         aria-owns="algolia-autocomplete-listbox-0"
                                         dir="auto"
                                         style=""/>
-
                                     <pre
-										aria-hidden="true"
-										style="position: absolute; visibility: hidden; white-space: pre; font-family: Roboto, sans-serif; font-size: 16px; font-style: normal; font-variant: normal; font-weight: 400; word-spacing: 0px; letter-spacing: normal; text-indent: 0px; text-rendering: auto; text-transform: none;"
-									></pre>
+                                        aria-hidden="true"
+                                        style="position: absolute; visibility: hidden; white-space: pre; font-family: Roboto, sans-serif; font-size: 16px; font-style: normal; font-variant: normal; font-weight: 400; word-spacing: 0px; letter-spacing: normal; text-indent: 0px; text-rendering: auto; text-transform: none;"
+                                    ></pre>
                                 </div>
                             </div>
                         </div>
@@ -98,7 +97,6 @@
                     class="v-menu__content theme--light "
                     style="max-height: calc(100% - 16px); min-width: 0px; top: 12px; left: 12px; transform-origin: left top; z-index: 0; display: none;"></div>
             </div>
-
             <div class="v-menu">
                 <div
                     role="menu"
@@ -108,7 +106,6 @@
             <!--
             +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
             -->
-
             <!-- // v-on:click="goTotalWantedPage()" -->
             <v-btn
                 v-if="isLogin"
@@ -144,20 +141,19 @@
             <!-------------------------------------- 모달창 ------------------------------------------>
             <v-dialog  
             v-if ="isDialog" 
-			v-model="dialog" 
-			z-index="3"
-			overlay-opacity="0.4"
-			max-width= "545px"
-			>
-            <Login v-if='isDialog'></Login>
+            v-model="dialog" 
+            z-index="3"
+            overlay-opacity="0.4"
+            max-width= "545px"
+            >
+            <Login ></Login>
              <!-- <Register v-else-if=""></Register> -->
            </v-dialog>
         </div>
     </header>
 </template>
 <script>
-
-    import {mapState, mapActions} from 'vuex';
+    import {mapState,mapMutations ,mapActions} from 'vuex';
     // import axios from "axios"
     import router from '../router/index.js';
     import Login from './Login.vue';
@@ -165,7 +161,7 @@
     // import Register from './Register.vue'
     export default {
         data() {
-            return {email: null, password: null, dialog: false, token: localStorage.getItem("access_token")};
+            return { chk:true, email: null, password: null, dialog: false, token: localStorage.getItem("access_token")};
         },
         computed: {
             ...mapState(["isLogin", "isLoginError", "isDialog"])
@@ -192,7 +188,13 @@
                         pw: this.password
                     })
             },
-
+            logout() 
+            {
+               mapMutations["logout"]
+               //alert("성공적으로 로그아웃 되었습니다.")
+               
+            }
+    ,
         }
     };
 </script>

@@ -9,7 +9,8 @@
                     attach="attach"
                     chips="chips"
                     label="기간"
-                    multiple="multiple"></v-select>
+                    multiple="multiple"
+                    @change="optionmanager"></v-select>
             </v-col>
             <v-col cols="12" sm="4">
                 <v-select

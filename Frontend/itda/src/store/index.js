@@ -57,7 +57,6 @@ export default new Vuex.Store({
             dispatch("getMemberInfo")
           }
           else {
-            alert("이메일과 비밀번호를 확인하세요.")
             return;
           }
         })

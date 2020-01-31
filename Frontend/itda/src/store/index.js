@@ -97,9 +97,10 @@ export default new Vuex.Store({
           }
           commit('loginSuccess', userInfo)
         })
-        .catch(err => {
-        //  alert("토큰이 만료되었거나 정상적인 접근이 아닙니다.");
-          alert(err);
+        .catch(() => {
+          localStorage.clear();
+          alert("다시 로그인해주세요!")
+          
         })
 
     }

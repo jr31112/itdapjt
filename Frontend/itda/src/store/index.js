@@ -36,26 +36,14 @@ export default new Vuex.Store({
     logout(state) {
       state.isLogin = false
       state.isLoginError = false
-      state.isDialog = true
+      state.isDialog = false
       state.userInfo = null
       localStorage.clear()
     },
   },
   actions:
   {
-    register({email, name ,pw})
-    {
-      //회원가입. 
-      axios
-        .post('http://192.168.31.54:8197/itda/api/signUp', {
-          email, pw, name
-        })
-        .then(res => 
-          {
-              alert(res + "성공입니다.")
-          }
-        )  
-    },
+   
     login({ dispatch }, { email, pw }) {
       axios
         .post('http://192.168.31.54:8197/itda/api/login', {

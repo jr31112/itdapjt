@@ -135,4 +135,46 @@
             }
         }
     };
+  },
+  computed: {
+    ...mapState(["isLogin", "isLoginError", "isDialog"])
+  },
+  components: {},
+  methods: {
+    getImgUrl(img) {
+      return require("../assets/" + img);
+    },
+    goTotalWantedPage() {
+      router.push({ name: "totalwanted" }).catch(() => {});
+    },
+    goRegister() {  
+        //회원가입.
+        axios
+          .post("http://192.168.31.54:8197/itda/api/signUp", {
+            email : this.email,
+            pw : this.password,
+            uname : this.name
+          })
+          .then(res => {
+              alert(res.data.msg);
+            if(res.data.state == 'success' ){
+                this.chk = !this.chk;
+            }else{
+                return;
+            }
+          })
+          .catch(err => {
+            console.log("hi" + err);
+            alert("에러!!!");
+          });
+        },
+    ...mapActions(["login","register"]),
+    goLogin() {
+      this.$store.dispatch("login", {
+        email: this.email,
+        pw: this.password
+      });
+    }
+  }
+};
 </script>

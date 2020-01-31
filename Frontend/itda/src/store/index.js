@@ -36,7 +36,7 @@ export default new Vuex.Store({
     logout(state) {
       state.isLogin = false
       state.isLoginError = false
-      state.isDialog = false
+      state.isDialog = true
       state.userInfo = null
       localStorage.clear()
     },
@@ -52,8 +52,6 @@ export default new Vuex.Store({
         .then(res => {
           if (res.data.state == 'success') {
             let token = res.headers['jwt-auth-token']
-            alert(token)
-            console.log(res.headers)
             localStorage.setItem("access_token", token)
             localStorage.setItem("uid", res.data.uid)
             dispatch("getMemberInfo")

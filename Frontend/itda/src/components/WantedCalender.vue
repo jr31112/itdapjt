@@ -114,9 +114,7 @@
             },
             prev() {
                 this
-                    .$refs
-                    .calendar
-                    .prev()
+                    .$refs.calendar.prev()
             },
             next() {
                 this
@@ -126,6 +124,7 @@
             },
             updateRange({start, end}) {
                 const events = []
+                if (this.companylist.length){
                 for (var i = 0; i < this.wlist.length; i++) {
                     if (this.options.period != 2) {
                         events.push({
@@ -164,6 +163,7 @@
                 this.tmpevents = events
                 this.start = start
                 this.end = end
+            }
             }
         }
     }

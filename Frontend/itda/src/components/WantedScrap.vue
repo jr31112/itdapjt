@@ -10,7 +10,7 @@
       height="400"
     >
       <v-carousel-item v-for="j in wantedlist.length>5?2:wantedlist.length>0?1:0" :key="j">
-        <v-container style="height:400" white>
+        <v-container style="height:400px" white>
           <v-row
             id="wanted"
             v-for="i in wantedlist.length==5*j?5:wantedlist.length-5*(j-1)"
@@ -37,8 +37,24 @@
               ></v-img>
             </v-col>
             <v-col cols="9">
-              <v-row id="corpNm">{{wantedlist[2*(j-1)+i-1].company.corpNm}}</v-row>
-              <v-row id="wantedTitle">{{wantedlist[2*(j-1)+i-1].wanted.wantedTitle}}</v-row>
+              <v-row id="corpNm">{{wantedlist[5*(j-1)+i-1].company.corpNm}}</v-row>
+              <v-row id="wantedTitle">{{wantedlist[5*(j-1)+i-1].wanted.wantedTitle}}</v-row>
+            </v-col>
+          </v-row>
+        </v-container>
+      </v-carousel-item>
+    </v-carousel>
+    <v-carousel
+      v-else
+      hide-delimiters
+      :show-arrows="false"
+      height="400"
+    >
+      <v-carousel-item>
+        <v-container class="d-flex align-center" style="height:400px" white>
+          <v-row justify="center">
+            <v-col class="text-center">
+              스크랩된 정보가 없어요!!
             </v-col>
           </v-row>
         </v-container>
@@ -81,4 +97,21 @@ export default {
 </script>
 
 <style>
+#corpNm{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
+#wantedTitle{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
+#wanted:hover{
+  background-color: #eeeeee;
+}
 </style>

@@ -44,6 +44,22 @@
         </v-container>
       </v-carousel-item>
     </v-carousel>
+    <v-carousel
+      v-else
+      hide-delimiters
+      :show-arrows="false"
+      height="400"
+    >
+      <v-carousel-item>
+        <v-container class="d-flex align-center" style="height:400px" white>
+          <v-row justify="center">
+            <v-col class="text-center">
+              원하는 기술스택을 입력해주세요!!
+            </v-col>
+          </v-row>
+        </v-container>
+      </v-carousel-item>
+    </v-carousel>
   </v-col>
 </template>
 
@@ -81,5 +97,21 @@ export default {
 </script>
 
 <style>
-
+#corpNm{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
+#wantedTitle{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
+#wanted:hover{
+  background-color: #eeeeee;
+}
 </style>

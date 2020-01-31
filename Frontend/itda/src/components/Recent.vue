@@ -7,7 +7,8 @@
 						<v-img v-if="company.logo" :src="company.logo" :alt="company.corpNm" height="60" :contain="true"></v-img>
 						<v-img v-else :src="getImgUrl('noimg.png')" alt="noimg" height="60" :contain="true"></v-img>
 					</v-col>
-					<v-col class="px-0" cols="1"><v-icon color="yellow">star</v-icon></v-col>
+					<v-col v-if="isLogin && scrap" class="px-0" cols="1"><v-icon color="yellow">star</v-icon></v-col>
+					<v-col v-if="isLogin && !scrap" class="px-0" cols="1"><v-icon color="grey lighten-2">star_border</v-icon></v-col>
 				</v-row>
 				<v-divider></v-divider>
 				<v-row>
@@ -25,6 +26,7 @@
 	</v-hover>
 </template>
 <script>
+import { mapState } from 'vuex'
 import router from '../router'
 
 export default {
@@ -32,7 +34,8 @@ export default {
 	props: {
 		company:{type:Object},
 		wanted:{type:Object},
-		stacks:{type:Array}
+		stacks:{type:Array},
+		scrap:{type:Boolean}
 	},
 	data(){
 		return{
@@ -49,6 +52,9 @@ export default {
         router.push({name:'recruitdetail',params:{id:wid}})
 	  },
 	},
+	computed: {
+            ...mapState(["isLogin"])
+	},
 	mounted(){
 		if (this.wanted.endDate.slice(0,4) == "2037"){
 			this.leftDate = "상시"
@@ -57,10 +63,14 @@ export default {
 			var endday = new Date(this.wanted.endDate)
 			var today = new Date()
 			var datediff = parseInt((endday-today)/(24*60*60*1000))
-			if (datediff >= 0)
+			if (datediff > 0)
 				this.leftDate = "D-"+ datediff
+			
 			else
-				this.leftDate = "마감"
+				if (datediff == 0)
+					this.leftDate = "D-day"
+				else
+					this.leftDate = "마감"
 		}
 	}
 }

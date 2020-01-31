@@ -9,8 +9,7 @@
                     attach="attach"
                     chips="chips"
                     label="기간"
-                    multiple="multiple"
-                    @change="optionmanager"></v-select>
+                    multiple="multiple"></v-select>
             </v-col>
             <v-col cols="12" sm="4">
                 <v-select
@@ -93,7 +92,6 @@
                     .get(`http://192.168.31.54:8197/itda/api/getWantedAll/`)
                     .then(response => {
                         this.recentlist = response.data
-                            console.log(this.recentlist)
                     })
                     .catch(error => {
                         console.log(error)

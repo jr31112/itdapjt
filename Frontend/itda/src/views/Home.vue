@@ -8,7 +8,7 @@
         </ImgBanner>
         <v-container>
             <recent-list/>
-            <wanted-login/>
+            <wanted-login v-if="isLogin"/>
             <wanted-default/>
         </v-container>
     </div>
@@ -18,6 +18,7 @@
     import WantedLogin from '../components/WantedLogin.vue'
     import WantedDefault from '../components/WantedDefault.vue'
     import ImgBanner from '../components/ImgBanner.vue'
+import { mapState } from 'vuex'
     
     export default {
         name: 'home',
@@ -36,6 +37,9 @@
             getImgUrl(img) {
                 return require('../assets/' + img)
             },
+        },
+        computed: {
+            ...mapState(["isLogin"])
         },
     }
 </script>

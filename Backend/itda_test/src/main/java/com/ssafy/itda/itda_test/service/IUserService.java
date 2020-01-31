@@ -2,6 +2,7 @@ package com.ssafy.itda.itda_test.service;
 
 import java.util.List;
 
+import com.ssafy.itda.itda_test.model.Stack;
 import com.ssafy.itda.itda_test.model.User;
 
 public interface IUserService {
@@ -12,4 +13,7 @@ public interface IUserService {
 	void deleteUser(Integer uid);
 	List<User> getAllUsers();
 	void updateUser(User u);
+	List<Stack> getMyStacks(int uid);
+	List<Integer> getMyScrapWanteds(int uid);
+	void updatePermission(User model);
 }

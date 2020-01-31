@@ -12,7 +12,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 
 	<select id="emailCheck"
-	parameterType="String"
+	parameterType="java.lang.String"
 	resultType="com.ssafy.itda.itda_test.model.User">
 		SELECT UID, EMAIL
 		FROM USER_T
@@ -28,7 +28,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="getUser"
-	parameterType="Integer"
+	parameterType="java.lang.Integer"
 	resultType="com.ssafy.itda.itda_test.model.User">
 		SELECT UID, EMAIL, UNAME, AUTH, MAJOR, UIMG, CID
 		FROM USER_T
@@ -36,7 +36,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<delete id="deleteUser"
-	parameterType="Integer">
+	parameterType="java.lang.Integer">
 		DELETE FROM USER_T
 		WHERE UID = #{uid}
 	</delete>
@@ -50,7 +50,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="updateUser"
 	parameterType="com.ssafy.itda.itda_test.model.User">
 		UPDATE USER_T
-		SET PW = sha1(#{pw}), EMAIL = #{email}, UIMG = #{uimg}, UNAME = #{uname}
+		SET PW = sha1(#{pw}), MAJOR = #{major}, UIMG = #{uimg}, UNAME = #{uname}
+		WHERE UID = #{uid}
+	</update>
+	
+	<select id="getMyStacks" parameterType="java.lang.Integer" resultType="com.ssafy.itda.itda_test.model.Stack">
+		SELECT S.SID, S.TNAME
+		FROM MYSTACK_T AS MS JOIN STACK_T AS S ON MS.SID = S.SID
+		WHERE MS.UID = #{uid}
+	</select>
+	
+	<select id="getMyScrapWanteds" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+		SELECT WID FROM SCRAP_T WHERE UID = #{uid}
+	</select>
+	
+	<update id="updatePermission"
+	parameterType="com.ssafy.itda.itda_test.model.User">
+		UPDATE USER_T
+		SET AUTH = #{auth}
 		WHERE UID = #{uid}
 	</update>
 </mapper>

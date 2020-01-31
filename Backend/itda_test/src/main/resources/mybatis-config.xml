@@ -28,5 +28,6 @@
         <mapper resource="mapper/wanted.xml"/>
         <mapper resource="mapper/company.xml"/>        
         <mapper resource="mapper/job.xml"/>        
+        <mapper resource="mapper/comment.xml"/> 
     </mappers>
 </configuration>

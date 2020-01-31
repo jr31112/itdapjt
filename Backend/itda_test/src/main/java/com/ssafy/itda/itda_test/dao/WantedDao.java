@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.ssafy.itda.itda_test.model.Company;
 import com.ssafy.itda.itda_test.model.Job;
 import com.ssafy.itda.itda_test.model.Scrap;
+import com.ssafy.itda.itda_test.model.Stack;
 import com.ssafy.itda.itda_test.model.Wanted;
 
 @Repository
@@ -62,17 +63,37 @@ public class WantedDao {
 	public List<Integer> getWantedAll() {
 		return sqlSession.selectList(ns + "getWantedAll");
 	}
-	
+
 	public void createWanted(Wanted model) {
 		sqlSession.insert(ns + "createWanted", model);
 	}
-	
-	public void deleteWanted(Integer wid) {
+
+	public void deleteWanted(int wid) {
 		sqlSession.delete(ns + "deleteWanted", wid);
 	}
-	
+
 	public void updateWanted(Wanted model) {
 		sqlSession.update(ns + "updateWanted", model);
 	}
-	
+
+	public List<Stack> getStackInfo(int jid) {
+		return sqlSession.selectList(ns + "getStackInfo", jid);
+	}
+
+	public List<Stack> getWantedStackInfo(int i) {
+		return sqlSession.selectList(ns + "getWantedStackInfo", i);
+	}
+
+	public List<Integer> getWantedByStack(int uid) {
+		return sqlSession.selectList(ns + "getWantedByStack", uid);
+	}
+
+	public List<Integer> getWantedByScrap(int uid) {
+		return sqlSession.selectList(ns + "getWantedByScrap", uid);
+	}
+
+	public void updateVcnt(int wid) {
+		sqlSession.update(ns + "updateVcnt", wid);
+	}
+
 }

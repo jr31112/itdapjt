@@ -6,10 +6,8 @@
 			<v-carousel-item v-for="k in 2" :key="k">
 				<v-container>
 					<v-row v-for="j in 2" :key="j">
-						<v-col v-for="i in 4" cols="6" lg="3" :key="i" white>
-							<v-hover v-slot:default="{ hover }">
-								<Recent :company="recentlist[8*(k-1)+4*(j-1)+(i-1)].company" :wanted="recentlist[6*(j-1)+(i-1)].wanted"/>
-							</v-hover>
+						<v-col v-for="i in 4" cols="12" sm="6" lg="3" :key="i" white>
+							<Recent :company="recentlist[8*(k-1)+4*(j-1)+(i-1)].company" :wanted="recentlist[8*(k-1)+4*(j-1)+(i-1)].wanted" :stacks="recentlist[8*(k-1)+4*(j-1)+(i-1)].stacks"/>
 						</v-col>
 					</v-row>
 				</v-container>

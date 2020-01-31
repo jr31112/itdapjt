@@ -11,7 +11,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<delete id="deleteCompany" 
-	parameterType="Integer">
+	parameterType="java.lang.Integer">
 		DELETE FROM COMPANY_T
 		WHERE CID = #{cid}
 	</delete>
@@ -19,7 +19,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="updateCompany"
 	parameterType="com.ssafy.itda.itda_test.model.Company">
 		UPDATE COMPANY_T
-		SET CORPNM = #{corpNm}, TOTPSNCNT = #{totPsncnt}, BUSISIZE = #{busiSize}, YRSALESAMT = #{yrSalesAmt}, CORPADDR = #{corpAddr}, HOMEPG = #{homePg}, BUSICONT = #{busiCont}, LOGO = #{logo})
-		WHERE UID = #{cid}
+		SET CORPNM = #{corpNm}, TOTPSNCNT = #{totPsncnt}, BUSISIZE = #{busiSize}, YRSALESAMT = #{yrSalesAmt}, CORPADDR = #{corpAddr}, HOMEPG = #{homePg}, BUSICONT = #{busiCont}, LOGO = #{logo}
+		WHERE CID = #{cid}
 	</update>
 </mapper>

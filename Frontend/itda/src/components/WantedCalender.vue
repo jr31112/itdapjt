@@ -1,6 +1,6 @@
 <template>
     <v-layout class="CalendarSize Center">
-        <v-col >
+        <v-col>
             <v-sheet height="64">
                 <v-toolbar class="Center" flat="flat" color="white">
                     <v-btn outlined="outlined" class="mr-4" color="grey darken-2" @click="setToday">
@@ -13,7 +13,6 @@
                     <v-btn fab="fab" text="text" small="small" color="grey darken-2" @click="next">
                         <v-icon small="small">mdi-chevron-right</v-icon>
                     </v-btn>
-
                     <v-spacer></v-spacer>
                     <v-menu bottom="bottom" right="right">
                         <v-list>
@@ -24,53 +23,44 @@
                     </v-menu>
                 </v-toolbar>
             </v-sheet>
-
             <v-sheet>
                 <v-calendar
                     ref="calendar"
                     v-model="focus"
                     color="primary"
-                    :events="events"
+                    :events="tmpevents"
                     :event-color="getEventColor"
-                    :type="type"
                     @change="updateRange"></v-calendar>
             </v-sheet>
         </v-col>
     </v-layout>
 </template>
-
 <script>
     export default {
         data: () => ({
-            focus: '', type: 'month', start: null, end: null,
-            // 회사 저장
+            focus: '',
+            type: 'month',
+            start: null,
+            end: null,
+            tmpevents: [],
             companylist: [],
-            // 공고 저장
             wantedlist: [],
-            selectedEvent: {},
-            selectedElement: null,
-
-            events: [],
-            // 공고 리스트 저장소
-            colors: [
-                'blue',
-                'indigo',
-                'deep-purple',
-                'cyan',
-                'green',
-                'orange',
-                'grey darken-1'
-            ],
             names: [],
-            propsCperiod : []
-
+            propsCperiod: []
         }),
+        watch:{
+            options:{
+                deep:true,
+                immediate:true,
+                handler:'updateRange'
+            }
+        },
         props: {
             wlist: {
                 type: Array
             },
-            'cperiod': {
-                type: Array
+            options: {
+                type: Object
             }
         },
         computed: {
@@ -80,14 +70,7 @@
                     return ''
                 }
                 const startMonth = this.monthFormatter(start)
-                // const endMonth = this.monthFormatter(end)    const suffixMonth = startMonth
-                // === endMonth ? '' : endMonth
-
                 const startYear = start.year
-                // const endYear = end.year      const suffixYear = startYear === endYear ? '' :
-                // endYear    const startDay = start.day + this.nth(start.day)   const endDay =
-                // end.day + this.nth(end.day)
-
                 switch (this.type) {
                     case 'month':
                         return `${startMonth} ${startYear}`
@@ -99,23 +82,16 @@
                     .$refs
                     .calendar
                     .getFormatter({timeZone: 'UTC', month: 'long'})
-            }
+            },
         },
         created() {
-            this.setValues(),
-            this.propsCperiod = this.cperiod;
-        },
-        mounted() {
-            // 전체 공고를 가져오는 함수( 예상 함수명 : getWantedAll event 객체에 넣는다.) name : 회사명, start : 공고
-            // 시작일, end : 공고 종료일, color : 기술 스택별 색상 Post를 받아오는 함수 서버에서 공고를 받아올 함수
             this.setValues()
-            alert(this.propsCperiod[0])
         },
+        mounted() {},
         methods: {
             setValues() {
                 for (var i = 0; i < this.wlist.length; i++) {
-                    this.companylist[i] = this
-                        .wlist[i]
+                    this.companylist[i] = this.wlist[i]
                         .company
                         this
                         .wantedlist[i] = this
@@ -148,57 +124,50 @@
                     .calendar
                     .next()
             },
-            // 받아온 Post를 event로 처리하는 함수
             updateRange({start, end}) {
                 const events = []
                 for (var i = 0; i < this.wlist.length; i++) {
-                    events.push({
-                        name: this
-                            .companylist[i]
-                            .corpNm,
-                        start: this
-                            .wantedlist[i]
-                            .startDate
-                            .substring(0, 10),
-                        end: this
-                            .wantedlist[i]
-                            .startDate
-                            .substring(0, 10),
-                        color: 'blue'
-                    })
-                    events.push({
-                        name: this
-                            .companylist[i]
-                            .corpNm,
-                        start: this
-                            .wantedlist[i]
-                            .endDate
-                            .substring(0, 10),
-                        end: this
-                            .wantedlist[i]
-                            .endDate
-                            .substring(0, 10),
-                        color: 'red'
-                    })
+                    if (this.options.period != 2) {
+                        events.push({
+                            name: this
+                                .companylist[i]
+                                .corpNm,
+                            start: this
+                                .wantedlist[i]
+                                .startDate
+                                .substring(0, 10),
+                            end: this
+                                .wantedlist[i]
+                                .startDate
+                                .substring(0, 10),
+                            color: 'blue'
+                        })
+                    }
+                    if (this.options.period != 1) {
+                        events.push({
+                            name: this
+                                .companylist[i]
+                                .corpNm,
+                            start: this
+                                .wantedlist[i]
+                                .endDate
+                                .substring(0, 10),
+                            end: this
+                                .wantedlist[i]
+                                .endDate
+                                .substring(0, 10),
+                            color: 'red'
+                        })
+                    }
                 }
-                // events.push({     name: this         .companylist[0]         .corpNm,
-                // start: "2020-01-23",     end: "2020-01-23",     color: 'blue' }),
-                // events.push(     {name: "안녕 정원 python", start: "2020-01-25", end:
-                // "2020-01-25", color: 'blue'} ), events.push(     {name: "안녕 정원", start:
-                // "2020-01-23", end: "2020-01-23", color: 'red'} ), events.push(     {name:
-                // "민규야..힘내자", start: "2020-01-23", end: "2020-01-23", color: 'yellow'} ),
-                // events.push(     {name: "안녕 정원", start: "2020-01-23", end: "2020-01-23",
-                // color: 'green'} )
-
+                // this.$set(this.tmpevents, idx, events)
+                this.tmpevents = events
                 this.start = start
                 this.end = end
-                this.events = events
-
             }
         }
     }
 </script>
-
 <style>
     .Center {
         margin: auto !important;

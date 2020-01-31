@@ -1,4 +1,59 @@
-# Pajama 명세서
+# 프로젝트 개요
+
+* 대상자 : 전지역 SSAFY 교육생
+* 목적
+  * SSAFY 교육생들에게 필요로 하는 IT 관련 채용 공고를 제공함
+  * SSAFY 교육생 간 교류, 나아가 IT 직군에서의 인적 네트워크 활성화
+  * 기술스택 기반 공고 제공
+* 기대효과
+  * **기술 스택 기반 공고 정보를 제공**함으로써 필요한 공고만을 볼 수 있는 편의성 제공
+  * **싸피생 취업 현황 및 기수 간 소통의 장 제공**으로 기존 소통의 부재 문제 해결
+  * **스터디를 모집 공간 제공**으로 스터디를 구하기 어려웠던 점 해결
+
+# PAJAMA Team
+
+| 이름              | 역할   | 개발파트 |
+| ----------------- | :----- | :------: |
+| 성민규 **(팀장)** | 기획   | Frontend |
+| 김대래            | CTO    | Backend  |
+| 김인성            | 배포   | Frontend |
+| 김정원            | 테스트 | Frontend |
+| 박진희            | DB     | Backend  |
+
+# Tools
+
+## Frontend
+
+* 
+
+## Backend
+
+* Java 13.0.2 (JDK)
+  * [Java SE Development Kit 13.0.2 download](https://www.oracle.com/technetwork/java/javase/downloads/jdk13-downloads-5672538.html)
+* [Eclipse Photon (4.8)](https://www.eclipse.org/downloads/packages/release/photon/r)
+  * [Eclipse IDE for Java EE Developers download](https://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/photon/R/eclipse-jee-photon-R-win32-x86_64.zip)
+* MySQL
+  * [MySQL 워크벤치 download](https://dev.mysql.com/downloads/file/?id=492814)
+  * [설치 가이드](https://dog-developers.tistory.com/20)
+
+## Etc
+
+* JIRA
+* GIT
+
+
+
+# README Link
+
+* [Frontend README](./Frontend/README.md)
+
+* [Backend README](./Backend/README.md)
+
+* [DB README](./Database/README.md)
+
+* [API 정의](./Backend/APIdefinition.md)
+
+# 명세서
 
 ## Req 01 개발 설계
 

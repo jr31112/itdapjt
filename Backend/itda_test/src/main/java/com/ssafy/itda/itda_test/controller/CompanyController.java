@@ -56,6 +56,7 @@ public class CompanyController {
 		if (model.getCorpNm() == null || model.getCorpNm().equals("")) {
 			cr.setMsg("기업명이 누락되었습니다.");
 			cr.setState("fail");
+			return new ResponseEntity<CompanyResult>(cr, HttpStatus.OK);
 		}
 		companyService.createCompany(model);
 		cr.setMsg("기업 입력이 성공적으로 완료되었습니다.");
@@ -64,7 +65,7 @@ public class CompanyController {
 	}
 	
 	@ApiOperation(value = "해당 기업 정보를 삭제한다.", response = CompanyResult.class)
-	@RequestMapping(value = "/deleteCompany/{cid}", method = RequestMethod.POST)
+	@RequestMapping(value = "/deleteCompany/{cid}", method = RequestMethod.DELETE)
 	public ResponseEntity<CompanyResult> deleteCompany(@RequestBody Integer cid) throws Exception {
 		logger.info("2-2-------------deleteCompany-----------------------------" + new Date());
 		logger.info("2-2-------------deleteCompany-----------------------------" + cid);
@@ -73,6 +74,7 @@ public class CompanyController {
 		if (cid == 0 || company == null) {
 			cr.setMsg("존재하지 않는 cid값이 입력되었습니다.");
 			cr.setState("fail");
+			return new ResponseEntity<CompanyResult>(cr, HttpStatus.OK);
 		}
 		companyService.deleteCompany(cid);
 		cr.setMsg("기업 삭제가 성공적으로 이루어졌습니다.");
@@ -91,14 +93,14 @@ public class CompanyController {
 		if (cid == 0 || company == null) {
 			cr.setMsg("존재하지 않는 cid값 입니다.");
 			cr.setState("fail");
-		}
-		else if (model.getCorpNm() == null || model.getCorpNm().equals("")) {
+		} else if (model.getCorpNm() == null || model.getCorpNm().equals("")) {
 			cr.setMsg("잘못된 기업명이 입력되었습니다.");
 			cr.setState("fail");
+		} else {
+			companyService.updateCompany(model);
+			cr.setMsg("기업 수정이 성공적으로 이루어졌습니다.");
+			cr.setState("success");
 		}
-		companyService.updateCompany(model);
-		cr.setMsg("기업 수정이 성공적으로 이루어졌습니다.");
-		cr.setState("success");
 		return new ResponseEntity<CompanyResult>(cr, HttpStatus.OK);
 	}
 }

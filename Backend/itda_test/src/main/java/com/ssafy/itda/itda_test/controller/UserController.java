@@ -59,7 +59,9 @@ public class UserController {
 		logger.info("1-1-------------signUp-----------------------------" + model);
 		User user = userService.emailCheck(model.getEmail());
 		UserResult ur = new UserResult();
-		if (model.getEmail() == null || model.getPw() == null || model.getUname() == null) {
+		if (model.getEmail() == null || model.getEmail().equals("") 
+				|| model.getPw() == null || model.getPw().equals("") 
+				|| model.getUname() == null || model.getUname().equals("")) {
 			ur.setMsg("입력되지 않은 필수값이 존재합니다.");
 			ur.setState("fail");
 			return new ResponseEntity<UserResult>(ur, HttpStatus.OK);

@@ -380,6 +380,10 @@
 
 # 공고
 
+* API
+
+  ![api_wanted](./imgs/api_wanted.PNG)
+
 ## 1. 공고 입력(C)
 
  1. `POST /api/createWanted` : 새로운 공고를 DB에 저장하여 추가한다.

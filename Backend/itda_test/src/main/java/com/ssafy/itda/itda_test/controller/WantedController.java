@@ -54,7 +54,7 @@ public class WantedController {
 		logger.info("5-------------getWantedAll-----------------------------" + new Date());
 		Map<String, Object> resultMap = new HashMap<>();
 		String token = req.getHeader("jwt-auth-token");
-		if (token != null) {
+		if (token != null && !token.equals("")) {
 			resultMap.putAll(jwtService.get(req.getHeader("jwt-auth-token")));
 			int uid = (int) resultMap.get("uid");
 			List<Integer> widList = wantedService.getWantedAll();
@@ -74,7 +74,7 @@ public class WantedController {
 		Map<String, Object> resultMap = new HashMap<>();
 		String token = req.getHeader("jwt-auth-token");
 		WantedResult wr = new WantedResult();
-		if (token != null) {
+		if (token != null && !token.equals("")) {
 			resultMap.putAll(jwtService.get(req.getHeader("jwt-auth-token")));
 			int uid = (int) resultMap.get("uid");
 			int cid = wantedService.getCompanyId(wid);
@@ -124,7 +124,7 @@ public class WantedController {
 		logger.info("5-------------getWantedByRecent-----------------------------" + new Date());
 		Map<String, Object> resultMap = new HashMap<>();
 		String token = req.getHeader("jwt-auth-token");
-		if (token != null) {
+		if (token != null && !token.equals("")) {
 			resultMap.putAll(jwtService.get(req.getHeader("jwt-auth-token")));
 			int uid = (int) resultMap.get("uid");
 			List<Integer> widList = wantedService.getWantedByRecent();
@@ -143,7 +143,7 @@ public class WantedController {
 		logger.info("5-------------getWantedByCloseEnd-----------------------------" + new Date());
 		Map<String, Object> resultMap = new HashMap<>();
 		String token = req.getHeader("jwt-auth-token");
-		if (token != null) {
+		if (token != null && !token.equals("")) {
 			resultMap.putAll(jwtService.get(req.getHeader("jwt-auth-token")));
 			int uid = (int) resultMap.get("uid");
 			List<Integer> widList = wantedService.getWantedByCloseEnd();
@@ -162,7 +162,7 @@ public class WantedController {
 		logger.info("5-------------getWantedByView-----------------------------" + new Date());
 		Map<String, Object> resultMap = new HashMap<>();
 		String token = req.getHeader("jwt-auth-token");
-		if (token != null) {
+		if (token != null && !token.equals("")) {
 			resultMap.putAll(jwtService.get(req.getHeader("jwt-auth-token")));
 			int uid = (int) resultMap.get("uid");
 			List<Integer> widList = wantedService.getWantedByView();
@@ -181,7 +181,7 @@ public class WantedController {
 		logger.info("5-------------getWantedByStack-----------------------------" + new Date());
 		Map<String, Object> resultMap = new HashMap<>();
 		String token = req.getHeader("jwt-auth-token");
-		if (token != null) {
+		if (token != null && !token.equals("")) {
 			resultMap.putAll(jwtService.get(req.getHeader("jwt-auth-token")));
 			int uid = (int) resultMap.get("uid");
 			List<Integer> widList = wantedService.getWantedByStack(uid);
@@ -198,7 +198,7 @@ public class WantedController {
 		logger.info("5-------------getWantedByScrap-----------------------------" + new Date());
 		Map<String, Object> resultMap = new HashMap<>();
 		String token = req.getHeader("jwt-auth-token");
-		if (token != null) {
+		if (token != null && !token.equals("")) {
 			resultMap.putAll(jwtService.get(req.getHeader("jwt-auth-token")));
 			int uid = (int) resultMap.get("uid");
 			List<Integer> widList = wantedService.getWantedByScrap(uid);

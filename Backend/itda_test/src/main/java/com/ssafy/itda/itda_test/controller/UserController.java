@@ -61,12 +61,12 @@ public class UserController {
 		UserResult ur = new UserResult();
 		if (model.getEmail() == null || model.getPw() == null || model.getUname() == null) {
 			ur.setMsg("입력되지 않은 필수값이 존재합니다.");
-			ur.setState("fail");
+			ur.setState("formchk");
 			return new ResponseEntity<UserResult>(ur, HttpStatus.OK);
 		}
 		if (user != null) {
 			ur.setMsg("이미 존재하는 회원ID 입니다.");
-			ur.setState("fail");
+			ur.setState("idchk");
 			return new ResponseEntity<UserResult>(ur, HttpStatus.OK);
 		}
 		userService.signUp(model);
@@ -141,7 +141,7 @@ public class UserController {
 		logger.info("1-4-------------getUser------------------------------" + new Date());
 		Map<String, Object> resultMap = new HashMap<>();
 		String token = req.getHeader("jwt-auth-token");
-		if(token!=null) {
+		if (token != null && !token.equals("")) {
 			resultMap.putAll(jwtService.get(token));
 			int uid = (int) resultMap.get("uid");
 			User user = userService.getUser(uid);

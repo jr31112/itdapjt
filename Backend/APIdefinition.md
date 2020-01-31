@@ -38,7 +38,7 @@
    - Return : `email` 중복 유무에 대한 결과를 반환한다.
 
      ```json
-{
+     {
        "msg": "string",		
        "state": "string"		
      }

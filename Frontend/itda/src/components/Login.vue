@@ -9,7 +9,7 @@
                 <v-alert class="mb-1" :value="isLogin" type="success">
                     로그인이 완료되었습니다.
                 </v-alert>
-                <v-card>
+                <v-card v-if="chk">
                     <v-toolbar flat="flat">
                         <v-toolbar-title>Login</v-toolbar-title>
                         <v-btn color="green darken-1" text="text" @click="dialog = false">
@@ -43,10 +43,50 @@
                         depressed="depressed" 
                         block="block" 
                         large="large"
-                        @click="goRegister"
+                        @click="chk = !chk"
                         v-model="ok"
                         >
                             회원가입</v-btn>
+                    </div>
+                </v-card>
+                <v-card v-else>
+                    <v-toolbar flat="flat">
+                        <v-toolbar-title>Register</v-toolbar-title>
+                        <v-btn color="green darken-1" text="text" @click="dialog = false">
+                            Close
+                        </v-btn>
+                    </v-toolbar>
+                    <div class="pa-4" style="max-width: 520px">
+                        <!-- pa는 패딩오토 -->
+                        <v-text-field v-model="email" name="email" label="email을 입력하세요"></v-text-field>
+                        <v-text-field
+                            v-model="password"
+                            name="pw"
+                            type="password"
+                            label="password를 입력하세요"
+                            @keyup.enter="goLogin()"></v-text-field>
+                        <v-btn
+                            class="mb-1"
+                            color="primary"
+                            depressed="depressed"
+                            block="block"
+                            large="large"
+                            @click="login(
+                                {
+                                    email:email,
+                                    pw:password
+                                }
+                                )">회원가입
+                        </v-btn >
+                        <v-btn 
+                        class="mb-1" 
+                        depressed="depressed" 
+                        block="block" 
+                        large="large"
+                        @click="chk = !chk"
+                        v-model="ok"
+                        >
+                            로그인</v-btn>
                     </div>
                 </v-card>
             </v-flex>
@@ -60,7 +100,7 @@
     export default {
         data() {
             return {
-                chk: null,
+                chk: false,
                 email: null, password: null, dialog: false, token: localStorage.getItem("access_token")};
         },
         computed: {

@@ -180,6 +180,13 @@ export default {
     ...mapActions(["login", "register"]),
     goInit()
     {
+      //제출 후 초기화.
+      this.email_lg=null, 
+      this.password_lg= null,
+      this.name =null, 
+      this.email_rg =null,
+      this.password_rg =null,
+      this.password_rg1 =null 
       if(this.isChangeLoginRegi)
       {
         this.reChk = false; 

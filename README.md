@@ -20,6 +20,10 @@
 | 김정원            | 테스트 | Frontend |
 | 박진희            | DB     | Backend  |
 
+# System Architecture
+
+![architectur](./imgs/System_Architecture.PNG)
+
 # Tools
 
 ## Frontend

@@ -30,7 +30,9 @@
                     color="primary"
                     :events="tmpevents"
                     :event-color="getEventColor"
-                    @change="updateRange"></v-calendar>
+                    @change="updateRange"
+                    @click:event="event1"
+                    ></v-calendar>
             </v-sheet>
         </v-col>
     </v-layout>
@@ -90,7 +92,8 @@
         },
         mounted() {},
         methods: {
-            setValues() {
+            setValues() 
+            {
                 for (var i = 0; i < this.wlist.length; i++) {
                     this.companylist[i] = this.wlist[i]
                         .company
@@ -99,6 +102,11 @@
                         .wlist[i]
                         .wanted
                 }
+            },
+            event1(event)
+            {   
+                alert(event.event.name)
+                console.log(event)
             },
             viewDay({date}) {
                 this.focus = date

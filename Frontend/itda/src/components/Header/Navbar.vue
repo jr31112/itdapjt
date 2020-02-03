@@ -1,12 +1,6 @@
 <template>
-  <header
-    class="v-sheet v-sheet--tile theme--dark v-toolbar v-app-bar v-app-bar--clipped v-app-bar--fixed v-app-bar--is-scrolled primary"
-    id="documentation-app-bar"
-    data-booted="true"
-    style="height: 64px; margin-top: 0px; transform: translateY(0px); left: 0px; right: 0px;"
-  >
     <div class="v-toolbar__content" style="height: 64px;">
-      <router-link class="mt-2" :to="{name:'home'}">
+      <router-link class="mt-2" :to="{name:'recruitmain'}">
         <v-img :src="getImgUrl('logoo.png')" style="width :6.5rem" />
       </router-link>
       <div class="spacer"></div>
@@ -158,17 +152,19 @@
         overlay-opacity="0.4"
         max-width="545px"
       >
-        <Login></Login>
-        <!-- <Register v-else-if=""></Register> -->
+        <sign-up-in/>
       </v-dialog>
     </div>
-  </header>
 </template>
 <script>
+import SignUpIn from "./SignUpIn.vue";
 import { mapState } from "vuex";
-import router from "../router/index.js";
-import Login from "./Login.vue";
+import router from "../../router";
 export default {
+  name:'navbar',
+  components: {
+    SignUpIn
+  },
   data() {
     return {
       chk: true,
@@ -181,16 +177,12 @@ export default {
   computed: {
     ...mapState(["isLogin", "isLoginError", "isDialog"])
   },
-  components: {
-    Login
-    // Register
-  },
   methods: {
     getImgUrl(img) {
-      return require("../assets/" + img);
+      return require("../../assets/" + img);
     },
     goTotalWantedPage() {
-      router.push({ name: "totalwanted" }).catch(() => {});
+      router.push({ name: "recruitcalender" }).catch(() => {});
     },
   }
 };

@@ -1,8 +1,8 @@
 <template>
-  <v-container class="detailjobs white py-0" >
+  <v-container class="recruitdetailjobs white py-0" >
       <v-row>
           <v-col v-for="i in jobs.length > len ? len: jobs.length" :key="i" cols="6" md="3">
-            <detail-job-info :job="jobs[i-1]"/>
+            <recruit-detail-job-info :job="jobs[i-1]"/>
           </v-col>
       </v-row>
       <v-row v-if="boolload">
@@ -14,15 +14,15 @@
 </template>
 
 <script>
-import DetailJobInfo from './DetailJobInfo.vue'
+import RecruitDetailJobInfo from './RecruitDetailJobInfo.vue'
 
 export default {
-    name: 'detailjobs',
+    name: 'recruitdetailjobs',
     props:{
         jobs:{type:Array}
     },
     components:{
-        DetailJobInfo
+        RecruitDetailJobInfo
     },
     data(){
         return{

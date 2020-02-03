@@ -18,8 +18,8 @@
 </template>
 
 <script>
-import UserDetail from "../components/UserDetail.vue"
-import UserStudy from "../components/UserStudy.vue"
+import UserDetail from "../components/Mypage/UserDetail.vue"
+import UserStudy from "../components/Mypage/UserStudy.vue"
 
 export default {
   name:"user",

@@ -27,10 +27,10 @@
 </template>
 <script>
 import { mapState } from 'vuex'
-import router from '../router'
+import router from '../../../router'
 
 export default {
-	name: 'Recent',
+	name: 'recruitrecentdetail',
 	props: {
 		company:{type:Object},
 		wanted:{type:Object},
@@ -46,7 +46,7 @@ export default {
 	},
 	methods:{
 	  getImgUrl(img) {
-	    return require('../assets/' + img)
+	    return require('../../../assets/' + img)
 	  },
 	  goDetailPage(wid){
         router.push({name:'recruitdetail',params:{id:wid}})

@@ -132,12 +132,11 @@ export default {
     goRegister() {
       //회원가입.
       if (
-        this.name == "" ||
-        this.email_rg == "" ||
-        this.password_rg == "" ||
-        this.password_rg1 == "" ) 
+        this.name == null ||
+        this.email_rg == null ||
+        this.password_rg == null ||
+        this.password_rg1 == null ) 
       {
-        
         this.isFormError = true;
         this.isResisterError = false;
         this.isPwError =false;
@@ -161,6 +160,7 @@ export default {
               this.isChangeLoginRegi = !this.isChangeLoginRegi;
               this.isFormError = false;
               this.isRegisterError = false;
+              this.isPwError =false;
               this.isCong = !this.isCong;
             } 
             else 

@@ -22,14 +22,16 @@ const rejectAuthUser = (to, from, next)=>
     next() //to=> from으로 간다. 
   }
 }
-// 후에 마이페이지나 관리자를 만들 때 쓰자.
+//마이페이지나 관리자 auth가 1이 들어온다.
 // const onlyAuthUser = (to, from, next)=>
 // {
 //   if(store.state.isLogin === false) 
 //   {
 //     alert("로그인이 필요한 기능입니다.")
 //     next("/") //from에서 / (home,to기능)으로 간다. 
-//   } else {
+//   } 
+//   else 
+//   {
 //     next() //to=> from으로 간다. 
 //   }
 // }

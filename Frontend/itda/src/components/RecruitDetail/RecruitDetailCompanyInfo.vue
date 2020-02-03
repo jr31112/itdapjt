@@ -5,7 +5,7 @@
       <v-col cols="2" align-self="center">
           <v-card width="150" height="150">
             <v-img v-if="company.logo" :src="company.logo" :alt="company.corpNm" width="150" aspect-ratio="1" :contain="true"></v-img>
-            <v-img v-else :src="getImgUrl('noimg.png')" alt="noimg" width="150" aspect-ratio="1" :contain="true"></v-img>
+            <v-img v-else :src="getImgUrl()" alt="noimg" width="150" aspect-ratio="1" :contain="true"></v-img>
           </v-card>
        
       </v-col>
@@ -69,8 +69,8 @@ export default {
       company:{type:Object}
     },
     methods:{
-      getImgUrl(img) {
-        return require('../assets/' + img)
+      getImgUrl() {
+        return require('../../assets/noimg.png')
       },
     },
     data(){

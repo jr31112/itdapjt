@@ -3,7 +3,7 @@
     <v-container>
       <h2>공고 관리</h2>
       <v-row class="mb-4">
-        <v-col><admin-wanted/></v-col>
+        <v-col><admin-recruit/></v-col>
       </v-row>
       <h2>유저 관리</h2>
       <v-row class="mb-4">
@@ -18,14 +18,14 @@
 </template>
 
 <script>
-import AdminWanted from '../components/AdminWanted.vue'
-import AdminUser from '../components/AdminUser.vue'
-import AdminRequest from '../components/AdminRequest.vue'
+import AdminRecruit from '../components/Admin/AdminRecruit.vue' 
+import AdminUser from '../components/Admin/AdminUser.vue'
+import AdminRequest from '../components/Admin/AdminRequest.vue'
 
 export default {
   name:"admin",
   components:{
-    AdminWanted,
+    AdminRecruit,
     AdminUser,
     AdminRequest
   }

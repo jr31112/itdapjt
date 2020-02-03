@@ -22,10 +22,10 @@
 
 <script>
 import axios from 'axios'
-import router from '../router'
+import router from '../../../router'
 
 export default {
-  name: "wanteddeadline",
+  name: "recruitdeadlinelist",
   methods:{
 		getWantedList(){
 			axios.get(`http://192.168.31.54:8197/itda/api/getWantedByRecent/`)
@@ -35,7 +35,7 @@ export default {
 				.catch(()=>{})
     },
     getImgUrl(img) {
-      return require('../assets/' + img)
+      return require('../../../assets/' + img)
     },
     goDetailPage(wid){
       router.push({name:'recruitdetail',params:{id:wid}})

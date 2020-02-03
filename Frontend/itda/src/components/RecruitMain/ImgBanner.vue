@@ -17,7 +17,7 @@
 
 <script>
 export default {
-	name: 'ImgBanner',
+	name: 'imgBanner',
 	props: {
 		imgSrc: {type: String},
 		text: {type: String}

@@ -1,6 +1,6 @@
 <template>
-  <v-col class="wantedstack" cols="12" md="6">
-    <h2 class="mb-3">기술스택</h2>
+  <v-col class="wantedscrap" cols="12" md="6">
+    <h2 class="mb-3">스크랩</h2>
     <v-carousel
       v-if="wantedlist.length"
       hide-delimiters
@@ -9,11 +9,11 @@
       interval="2500"
       height="400"
     >
-      <v-carousel-item v-for="j in 2" :key="j">
-        <v-container white>
+      <v-carousel-item v-for="j in wantedlist.length>5?2:wantedlist.length>0?1:0" :key="j">
+        <v-container style="height:400px" white>
           <v-row
             id="wanted"
-            v-for="i in 5"
+            v-for="i in wantedlist.length==5*j?5:wantedlist.length-5*(j-1)"
             :key="i"
             style="height:78px;"
             @click.prevent="goDetailPage(wantedlist[5*(j-1)+i-1].wanted.wid)"
@@ -54,7 +54,7 @@
         <v-container class="d-flex align-center" style="height:400px" white>
           <v-row justify="center">
             <v-col class="text-center">
-              원하는 기술스택을 입력해주세요!!
+              스크랩된 정보가 없어요!!
             </v-col>
           </v-row>
         </v-container>
@@ -65,21 +65,21 @@
 
 <script>
 import axios from 'axios'
-import router from '../router'
+import router from '../../../router'
 
 export default {
-    name: "wantedstack",
-    methods: {
+  name: "recruitscraplist",
+  methods: {
     getWantedList() {
       axios
-        .get(`http://192.168.31.54:8197/itda/api/getWantedByStack/`, {'headers' : {"jwt-auth-token": localStorage.getItem("access_token")}})
+        .get(`http://192.168.31.54:8197/itda/api/getWantedByScrap/`, {'headers' : {"jwt-auth-token": localStorage.getItem("access_token")}})
         .then(response => {
           this.wantedlist = response.data;
         })
         .catch(() => {});
     },
     getImgUrl(img) {
-      return require("../assets/" + img);
+      return require("../../../assets/" + img);
     },
     goDetailPage(wid) {
       router.push({ name: "recruitdetail", params: { id: wid } });

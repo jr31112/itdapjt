@@ -1,15 +1,16 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
-import Recruit from '../views/Recruit.vue'
-import RecruitDetail from '../views/RecruitDetail.vue'
-import User from '../views/User.vue'
+import Mypage from '../views/Mypage.vue'
 import Admin from '../views/Admin.vue'
-import TotalWanted from '../views/TotalWanted.vue'
-import store from '../store/index.js'
 import NotFound from '../views/NotFound.vue'
-import ListHome from '../views/ListHome.vue'
-import Register from '../components/Register.vue'
+import QnA from '../views/QnA.vue'
+import RecruitMain from '../views/RecruitMain.vue'
+import RecruitDetail from '../views/RecruitDetail.vue'
+import RecruitCalender from '../views/RecruitCalender.vue'
+import StudyMain from '../views/StudyMain.vue'
+import StudyDetail from '../views/StudyDetail.vue'
+import SearchResult from '../views/SearchResult.vue'
+import store from '../store/index.js'
 Vue.use(VueRouter)
 const rejectAuthUser = (to, from, next)=>
 {
@@ -41,13 +42,8 @@ const routes = [
   },
   {
     path: '/',
-    name: 'home',
-    component: Home
-  },
-  {
-    path: '/recruit',
-    name: 'recruit',
-    component: Recruit
+    name: 'recruitmain',
+    component: RecruitMain
   },
   {
     path: '/recruit/detail/:id',
@@ -55,19 +51,39 @@ const routes = [
     component: RecruitDetail
   },
   {
-    path: '/user',
-    name: 'user',
-    component: User
+    path: '/recruitlist',
+    name: 'recruitcalender',
+    component: RecruitCalender
+  },
+  {
+    path: '/mypage',
+    name: 'mypage',
+    component: Mypage
   },
   {
     path: '/admin',
     name: 'admin',
     component: Admin
   },
-  {
-    path: '/totalwanted',
-    name: 'totalwanted',
-    component: TotalWanted
+  { 
+    path: "/qna",
+    name: "QnA",
+    component: QnA
+  },
+  { 
+    path: "/study",
+    name: "studymain",
+    component: StudyMain
+  },
+  { 
+    path: "/study/detail/:id",
+    name: "studydetail",
+    component: StudyDetail
+  },
+  { 
+    path: "/searchresult",
+    name: "searchresult",
+    component: SearchResult
   },
   { 
     path: "/login",
@@ -75,19 +91,9 @@ const routes = [
     // beforeEnter 로그인이 이미 되었는데, 들어갈필요없가 없으니,  라우터 전에 확인하는 것이다. 
     beforeEnter: rejectAuthUser, 
     component: ()=>
-    import("../views/Home.vue")
+    import("../views/RecruitMain.vue")
   },
-  {
-      path: '/listhome',
-      name: 'listhome',
-      component: ListHome
-  }
- , 
-  {
-    path: '/register',
-    name: 'register',
-    component: Register
-  }
+
   ]
 const router = new VueRouter({
   mode: 'history',

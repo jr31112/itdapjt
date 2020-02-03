@@ -31,15 +31,19 @@
                     multiple="multiple"></v-select>
             </v-col>
         </v-row>
-        <WantedCalender v-if="recentlist.length != 0" :wlist="recentlist" :cperiod="period" :options="options"/>
+        <recruit-calender-content v-if="recentlist.length != 0" :wlist="recentlist" :cperiod="period" :options="options"/>
         </v-col>
     </v-layout>
 </template>
 
 <script>
-    import WantedCalender from "./WantedCalender.vue"
+    import RecruitCalenderContent from "./RecruitCalenderContent.vue"
     import axios from 'axios'
     export default {
+        name:"recruitcalenderfilter",
+        components: {
+            RecruitCalenderContent
+        },
         data() {
             return {
                 options: {
@@ -83,9 +87,6 @@
                     }
                 ]
             }
-        },
-        components: {
-            WantedCalender
         },
         methods: {
             getRecentRecruit() {

@@ -31,7 +31,6 @@
                     :events="tmpevents"
                     :event-color="getEventColor"
                     @change="updateRange"
-                    @click:event="event1"
                     ></v-calendar>
             </v-sheet>
         </v-col>
@@ -102,11 +101,6 @@
                         .wlist[i]
                         .wanted
                 }
-            },
-            event1(event)
-            {   
-                alert(event.event.name)
-                console.log(event)
             },
             viewDay({date}) {
                 this.focus = date

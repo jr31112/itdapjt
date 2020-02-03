@@ -22,7 +22,7 @@
 
 # System Architecture
 
-![architectur](./imgs/System_Architecture.PNG)
+![architectur](./imgs/System_Architecture.png)
 
 # Tools
 

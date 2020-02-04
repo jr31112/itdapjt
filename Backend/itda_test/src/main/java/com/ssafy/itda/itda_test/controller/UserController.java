@@ -200,11 +200,11 @@ public class UserController {
 	}
 
 	@ApiOperation(value = "해당 회원의 정보를 삭제한다.", response = UserResult.class)
-	@RequestMapping(value = "/deleteUser/{uid}", method = RequestMethod.POST)
-	public ResponseEntity<UserResult> deleteUser(@RequestBody int uid) throws Exception {
+	@RequestMapping(value = "/deleteUser/{uid}", method = RequestMethod.DELETE)
+	public ResponseEntity<UserResult> deleteUser(@PathVariable int uid) throws Exception {
 		logger.info("1-5-------------deleteUser------------------------------" + new Date());
 		logger.info("1-5-------------deleteUser------------------------------" + uid);
-
+		
 		User user = userService.getUser(uid);
 		UserResult ur = new UserResult();
 		if (user == null || user.getEmail() == null || user.getEmail().equals("")) {

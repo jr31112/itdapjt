@@ -12,6 +12,22 @@ public class StudyGroup implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof StudyGroup) {
+			if (this.stid == ((StudyGroup) obj).getStid() && this.uid == ((StudyGroup) obj).getUid()) {
+				return true;
+			}
+		}
+
+		if (super.equals(obj)) {
+			return true;
+		}
+
+		return false;
+	}
+	
 	public StudyGroup(int sgid, int uid, int stid) {
 		super();
 		this.sgid = sgid;

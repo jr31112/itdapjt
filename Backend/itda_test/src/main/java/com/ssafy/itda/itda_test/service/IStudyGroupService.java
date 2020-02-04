@@ -8,5 +8,5 @@ import com.ssafy.itda.itda_test.model.StudyGroup;
 public interface IStudyGroupService {
 	List<StudyGroup> getStudyGroup(int stid);
 	void createStudyGroup(StudyGroup model);
-	void deleteStudyGroup(int stid);
+	void deleteStudyGroup(StudyGroup sg);
 }

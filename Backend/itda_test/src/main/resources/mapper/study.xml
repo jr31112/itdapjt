@@ -19,9 +19,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<insert id="createStudy" 
 	parameterType="com.ssafy.itda.itda_test.model.Study">
-		INSERT INTO STUDY_T(STNAME, MAXPCNT, PCNT, STYPE, TYPEFK, TYPENAME, SGROUP, CONTENT, CAPTAIN)
-		VALUES ( #{stname}, #{maxPcnt}, #{pcnt}, #{stype}, #{typeNk}, #{typeName}, #{sgroup}, #{content}, #{captain} ) 
+		INSERT INTO STUDY_T(STNAME, MAXPCNT, STYPE, TYPEFK, TYPENAME, SGROUP, CONTENT, CAPTAIN)
+		VALUES ( #{stname}, #{maxPcnt}, #{stype}, #{typeFk}, #{typeName}, #{sgroup}, #{content}, #{captain} ) 
 	</insert>
+	
+	<select id="getStid" parameterType="com.ssafy.itda.itda_test.model.Study"
+		resultType="java.lang.Integer">
+		SELECT STID FROM STUDY_T WHERE STNAME = #{stname} AND CAPTAIN = #{captain} ORDER BY STID DESC LIMIT 1
+	</select>
 	
 	<delete id="deleteStudy" 
 	parameterType="java.lang.Integer">

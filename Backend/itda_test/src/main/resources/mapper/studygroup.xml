@@ -17,10 +17,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		VALUES ( #{uid}, #{stid} ) 
 	</insert>
 	
+	<update id="plusPcnt" parameterType="java.lang.Integer">
+		UPDATE STUDY_T SET PCNT = PCNT + 1 WHERE STID = #{stid}
+	</update>
+	
 	<delete id="deleteStudyGroup" 
-	parameterType="java.lang.Integer">
+	parameterType="com.ssafy.itda.itda_test.model.StudyGroup">
 		DELETE FROM STUDYGROUP_T
-		WHERE SGID = #{sgid}
+		WHERE STID = #{stid} AND UID = #{uid}
 	</delete>
+	
+	<update id="minusPcnt" parameterType="java.lang.Integer">
+		UPDATE STUDY_T SET PCNT = PCNT - 1 WHERE STID = #{stid}
+	</update>
 	
 </mapper>

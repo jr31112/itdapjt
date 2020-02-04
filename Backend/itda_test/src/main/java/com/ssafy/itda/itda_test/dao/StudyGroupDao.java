@@ -21,9 +21,11 @@ public class StudyGroupDao {
 	
 	public void createStudyGroup(StudyGroup model) {
 		sqlSession.insert(ns + "createStudyGroup", model);
+		sqlSession.update(ns + "plusPcnt", model.getStid());
 	}
 	
-	public void deleteStudyGroup(int stid) {
-		sqlSession.delete(ns + "deleteStudyGroup", stid);
+	public void deleteStudyGroup(StudyGroup model) {
+		sqlSession.delete(ns + "deleteStudyGroup", model);
+		sqlSession.update(ns + "minusPcnt", model.getStid());
 	}
 }

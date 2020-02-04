@@ -7,6 +7,6 @@ import com.ssafy.itda.itda_test.model.Study;
 public interface IStudyService {
 	List<Study> getAllStudy();
 	Study getStudy(int stid);
-	void createStudy(Study model);
+	int createStudy(Study model);
 	void deleteStudy(int stid);
 }

@@ -1,5 +1,4 @@
 package com.ssafy.itda.itda_test.controller;
-
 import java.util.Date;
 import java.util.List;
 
@@ -18,8 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ssafy.itda.itda_test.help.Result;
 import com.ssafy.itda.itda_test.help.StudyResult;
 import com.ssafy.itda.itda_test.model.Study;
+import com.ssafy.itda.itda_test.service.IStudyGroupService;
 import com.ssafy.itda.itda_test.service.IStudyService;
-import com.ssafy.itda.itda_test.service.StudyServiceImpl;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -29,12 +28,11 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @RequestMapping("/api")
 @Api(value = "SSAFY", description = "SSAFY Resouces Management 2019")
-public class StudyController {
-	public static final Logger logger = LoggerFactory.getLogger(StudyController.class);
+public class StudyGroupController {
+	public static final Logger logger = LoggerFactory.getLogger(StudyGroupController.class);
 
 	@Autowired
-	private IStudyService studyService;
-
+	private IStudyGroupService studyGroupService;
 	@ApiOperation(value = "모든 스터디를 조회한다.", response = List.class)
 	@RequestMapping(value = "/getAllStudy", method = RequestMethod.GET)
 	public ResponseEntity<List<Study>> getAllStury() throws Exception {
@@ -103,5 +101,4 @@ public class StudyController {
 		r.setState("success");
 		return new ResponseEntity<Result>(r, HttpStatus.OK);
 	}
-
 }

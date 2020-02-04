@@ -7,4 +7,5 @@ public interface IJobService {
 	void createJob(Job job);
 	void deleteJob(Integer jid);
 	void updateJob(Job job);
+	int createJobReturnJid(Job j);
 }

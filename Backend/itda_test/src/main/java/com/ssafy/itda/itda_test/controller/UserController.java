@@ -25,9 +25,11 @@ import com.ssafy.itda.itda_test.help.UserResult;
 import com.ssafy.itda.itda_test.help.WantedResult;
 import com.ssafy.itda.itda_test.model.Company;
 import com.ssafy.itda.itda_test.model.Job;
+import com.ssafy.itda.itda_test.model.MyStack;
 import com.ssafy.itda.itda_test.model.Stack;
 import com.ssafy.itda.itda_test.model.User;
 import com.ssafy.itda.itda_test.model.Wanted;
+import com.ssafy.itda.itda_test.service.IStackService;
 import com.ssafy.itda.itda_test.service.IUserService;
 import com.ssafy.itda.itda_test.service.IWantedService;
 import com.ssafy.itda.itda_test.service.JwtServiceImpl;
@@ -50,6 +52,9 @@ public class UserController {
 	private IWantedService wantedService;
 
 	@Autowired
+	private IStackService stackService;
+
+	@Autowired
 	private JwtServiceImpl jwtService;
 
 	@ApiOperation(value = "새로운 회원의 정보를 입력한다.", response = UserResult.class)
@@ -59,8 +64,7 @@ public class UserController {
 		logger.info("1-1-------------signUp-----------------------------" + model);
 		User user = userService.emailCheck(model.getEmail());
 		UserResult ur = new UserResult();
-		if (model.getEmail() == null || model.getEmail().equals("") 
-				|| model.getPw() == null || model.getPw().equals("") 
+		if (model.getEmail() == null || model.getEmail().equals("") || model.getPw() == null || model.getPw().equals("")
 				|| model.getUname() == null || model.getUname().equals("")) {
 			ur.setMsg("입력되지 않은 필수값이 존재합니다.");
 			ur.setState("formchk");
@@ -167,7 +171,7 @@ public class UserController {
 				wr.setStacks(wantedStacks);
 				wrlist.add(wr);
 			}
-			
+
 			UserResult ur = new UserResult();
 			if (user == null || user.getEmail() == null || user.getEmail().equals("")) {
 				ur.setMsg("회원정보를 가져오는데 실패했습니다.");
@@ -180,8 +184,7 @@ public class UserController {
 				ur.setState("success");
 			}
 			return new ResponseEntity<UserResult>(ur, HttpStatus.OK);
-		}
-		else {
+		} else {
 			UserResult ur = new UserResult();
 			ur.setMsg("회원정보를 가져오는데 실패했습니다.");
 			ur.setState("fail");
@@ -223,26 +226,68 @@ public class UserController {
 
 	@ApiOperation(value = "회원의 정보를 수정한다.", response = UserResult.class)
 	@RequestMapping(value = "/updateUser", method = RequestMethod.PUT)
-	public ResponseEntity<UserResult> updateUser(@RequestBody User model) throws Exception {
+	public ResponseEntity<UserResult> updateUser(@RequestBody UserResult model, HttpServletRequest req)
+			throws Exception {
 		logger.info("1-7-------------updateUser-----------------------------" + new Date());
 		logger.info("1-7-------------updateUser-----------------------------" + model);
-		User user = userService.getUser(model.getUid());
+		Map<String, Object> resultMap = new HashMap<>();
 		UserResult ur = new UserResult();
-		if (user == null || user.getEmail() == null || user.getEmail().equals("")) {
-			ur.setMsg("회원 수정에 실패했습니다.");
-			ur.setState("fail");
-		} else if (model.getUname() == null || model.getUname().equals("") || model.getPw() == null
-				|| model.getPw().equals("")) {
-			ur.setMsg("입력되지 않은 필수값이 있습니다.");
-			ur.setState("fail");
+		String token = req.getHeader("jwt-auth-token");
+		if (token != null && !token.equals("")) {
+			resultMap.putAll(jwtService.get(token));
+			int uid = (int) resultMap.get("uid");
+			User user = userService.getUser(uid);
+			if (user == null || user.getEmail() == null || user.getEmail().equals("")) {
+				ur.setMsg("회원 수정에 실패했습니다.");
+				ur.setState("fail");
+				return new ResponseEntity<UserResult>(ur, HttpStatus.OK);
+			} else {
+				// User Info Update
+				User update_input_user = model.getUser();
+				if (update_input_user.getUname() == null || update_input_user.getUname().equals("")
+						|| update_input_user.getPw() == null || update_input_user.getPw().equals("")) {
+					ur.setMsg("입력되지 않은 필수값이 있습니다.");
+					ur.setState("fail");
+					return new ResponseEntity<UserResult>(ur, HttpStatus.OK);
+				} else {
+					userService.updateUser(update_input_user);
+					ur.setUser(userService.getUser(uid));
+				}
+				// User Tech Stack Update
+				List<Stack> input_stack = model.getMystacks();
+				System.out.println("입력한 스택리스트 : ");
+				System.out.println(input_stack.toString());
+				List<Stack> myStacks = stackService.getMyStacks(uid);
+				System.out.println("기존 나의 스택리스트 : ");
+				System.out.println(myStacks.toString());
+
+				// 새로 입력한 기술스택이 없으면 넣어준다.
+				for (Stack i : input_stack) {
+					if (!myStacks.contains(input_stack)) {
+						MyStack newms = new MyStack();
+						newms.setUid(uid);
+						newms.setSid(i.getSid());
+						stackService.createMyStack(newms);
+					}
+				}
+				// 내 기술스택에서 새로 입력한 기술 스택이 없으면 빼준다.
+				for (Stack s : myStacks) {
+					if (!input_stack.contains(s)) {
+						MyStack newms = new MyStack();
+						newms.setUid(uid);
+						newms.setSid(s.getSid());
+						stackService.deleteMyStack(newms);
+					}
+				}
+				ur.setMsg("성공적으로 회원 정보를 수정했습니다.");
+				ur.setState("success");
+				return new ResponseEntity<UserResult>(ur, HttpStatus.OK);
+			}
 		} else {
-			userService.updateUser(model);
-			user = userService.getUser(model.getUid());
-			ur.setUser(user);
-			ur.setMsg("성공적으로 회원 수정을 완료했습니다.");
-			ur.setState("success");
+			ur.setMsg("회원정보를 가져오는데 실패했습니다.");
+			ur.setState("fail");
+			return new ResponseEntity<UserResult>(ur, HttpStatus.OK);
 		}
-		return new ResponseEntity<UserResult>(ur, HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "회원의 권한을 수정한다.", response = UserResult.class)
@@ -256,7 +301,7 @@ public class UserController {
 			ur.setMsg("회원 수정에 실패했습니다.");
 			ur.setState("fail");
 			return new ResponseEntity<UserResult>(ur, HttpStatus.OK);
-		} 
+		}
 		userService.updatePermission(model);
 		ur.setMsg("성공적으로 회원 권한 수정을 완료했습니다.");
 		ur.setState("success");

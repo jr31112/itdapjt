@@ -1,4 +1,5 @@
 package com.ssafy.itda.itda_test.controller;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -17,8 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ssafy.itda.itda_test.help.Result;
 import com.ssafy.itda.itda_test.help.StudyResult;
 import com.ssafy.itda.itda_test.model.Study;
+import com.ssafy.itda.itda_test.model.StudyGroup;
+import com.ssafy.itda.itda_test.model.User;
 import com.ssafy.itda.itda_test.service.IStudyGroupService;
 import com.ssafy.itda.itda_test.service.IStudyService;
+import com.ssafy.itda.itda_test.service.IUserService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -33,71 +37,62 @@ public class StudyGroupController {
 
 	@Autowired
 	private IStudyGroupService studyGroupService;
-	@ApiOperation(value = "모든 스터디를 조회한다.", response = List.class)
-	@RequestMapping(value = "/getAllStudy", method = RequestMethod.GET)
-	public ResponseEntity<List<Study>> getAllStury() throws Exception {
-		logger.info("1-------------getAllStury-----------------------------" + new Date());
-		logger.info("1-------------getAllStury-----------------------------");
-		List<Study> studys = studyService.getAllStudy();
-		if (studys.isEmpty()) {
-			return new ResponseEntity(HttpStatus.NO_CONTENT);
-		}
-		return new ResponseEntity<List<Study>>(studys, HttpStatus.OK);
-	}
 	
-	@ApiOperation(value = "스터디 상세 내역을 조회한다.", response = StudyResult.class)
-	@RequestMapping(value = "/getStudy/{stid}", method = RequestMethod.GET)
-	public ResponseEntity<StudyResult> getStudy(@PathVariable int stid) throws Exception {
-		logger.info("2-------------getStudy-----------------------------" + new Date());
-		logger.info("2-------------getStudy-----------------------------" + stid);
+	@Autowired
+	private IUserService userService;
+	
+	
+	@ApiOperation(value = "스터디 멤버를 조회한다.", response = List.class)
+	@RequestMapping(value = "/getStudyGroup/{stid}", method = RequestMethod.GET)
+	public ResponseEntity<List<User>> getStudyGroup(@PathVariable int stid) throws Exception {
+		logger.info("1-------------getStudyGroup-----------------------------" + new Date());
+		logger.info("1-------------getStudyGroup-----------------------------" + stid);
 		StudyResult sr = new StudyResult();
-		Study s = studyService.getStudy(stid);
-		if (stid == 0 || s == null || 
-				s.getStname() == null || s.getStname().equals("") || s.getMaxPcnt() == 0 || s.getPcnt() == 0
-				|| s.getStype() == 0 || s.getSgroup() == 0 || s.getContent() == null || s.getContent().equals("") 
-				|| s.getCaptain() == 0) {
-			sr.setMsg("회원 정보를 가져오는데 실패하였습니다.");
-			sr.setState("Fail");
-			return new ResponseEntity<StudyResult>(sr, HttpStatus.OK);
+		List<User> users = new ArrayList<>();
+		List<StudyGroup> sdList = studyGroupService.getStudyGroup(stid);
+		for (StudyGroup sd : sdList) {
+			int uid = sd.getUid();
+			users.add(userService.getUser(uid));
 		}
-		sr.setStudy(s);
-		sr.setMsg("회원 정보를 가져오는데 성공하였습니다.");
-		sr.setState("success");
-		return new ResponseEntity<StudyResult>(sr, HttpStatus.OK);
+		if(users.size() == 0) {
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<List<User>>(users, HttpStatus.OK);
 	}
 
-	@ApiOperation(value = "스터디를 생성한다.", response = Study.class)
-	@RequestMapping(value = "/createStudy", method = RequestMethod.POST)
-	public ResponseEntity<Result> createStudy(@RequestBody Study model) throws Exception {
-		logger.info("3-------------createStudy-----------------------------" + new Date());
-		logger.info("3-------------createStudy-----------------------------" + model);
+	@ApiOperation(value = "스터디에 가입한다.", response = Result.class)
+	@RequestMapping(value = "/createStudyGroup", method = RequestMethod.POST)
+	public ResponseEntity<Result> createStudyGroup(@RequestBody StudyGroup model) throws Exception {
+		logger.info("2-------------createStudyGroup-----------------------------" + new Date());
+		logger.info("2-------------createStudyGroup-----------------------------" + model);
 		Result r = new Result();
-		if (model.getStname() == null || model.getStname().equals("") || model.getMaxPcnt() == 0 || model.getPcnt() == 0
-				|| model.getStype() == 0 || model.getSgroup() == 0 || model.getContent() == null || model.getContent().equals("") || model.getCaptain() == 0) {
+		int uid = model.getUid();
+		int stid = model.getStid();
+		if (uid == 0 || stid == 0) {
 			r.setMsg("필수 입력값이 누락되었습니다.");
 			r.setState("fail");
 			return new ResponseEntity<Result>(r, HttpStatus.OK);
 		}
-		studyService.createStudy(model);
+		studyGroupService.createStudyGroup(model);
 		r.setMsg("스터디 생성이 성공적으로 완료되었습니다.");
 		r.setState("success");
 		return new ResponseEntity<Result>(r, HttpStatus.OK);
 	}
 
-	@ApiOperation(value = "스터디를 삭제한다.", response = Result.class)
-	@RequestMapping(value = "/deleteStudy", method = RequestMethod.DELETE)
-	public ResponseEntity<Result> deleteJob(@RequestBody int stid) throws Exception {
-		logger.info("2-------------deleteJob-----------------------------" + new Date());
-		logger.info("2-------------deleteJob-----------------------------" + stid);
+	@ApiOperation(value = "스터디를 탈퇴한다.", response = Result.class)
+	@RequestMapping(value = "/deleteStudyGroup", method = RequestMethod.DELETE)
+	public ResponseEntity<Result> deleteStudyGroup(@RequestBody StudyGroup model) throws Exception {
+		logger.info("3-------------deleteStudyGroup-----------------------------" + new Date());
+		logger.info("3-------------deleteStudyGroup-----------------------------" + model);
 		Result r = new Result();
-		Study s = studyService.getStudy(stid);
-		if (stid == 0 || s == null) {
-			r.setMsg("존재하지 않는 stid값입니다.");
+		int sgid = model.getSgid();
+		if (sgid == 0) {
+			r.setMsg("존재하지 않는 sgid값입니다.");
 			r.setState("fail");
 			return new ResponseEntity<Result>(r, HttpStatus.OK);
 		}
-		studyService.deleteStudy(stid);
-		r.setMsg("스터디 삭제가 성공적으로 완료되었습니다.");
+		studyGroupService.deleteStudyGroup(sgid);
+		r.setMsg("스터디 탈퇴가 성공적으로 완료되었습니다.");
 		r.setState("success");
 		return new ResponseEntity<Result>(r, HttpStatus.OK);
 	}

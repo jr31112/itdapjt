@@ -5,7 +5,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="ssafy.job">
 
 	<select id="getJob"
-	parameterType="Integer"
+	parameterType="java.lang.Integer"
 	resultType="com.ssafy.itda.itda_test.model.Job">
 		select * 
 		from job_t
@@ -24,7 +24,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<delete id="deleteJob" 
-	parameterType="Integer">
+	parameterType="java.lang.Integer">
 		DELETE FROM JOB_T
 		WHERE JID = #{jid}
 	</delete>

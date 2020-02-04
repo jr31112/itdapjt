@@ -130,6 +130,19 @@
         </span>
       </span>
     </v-btn>
+     <v-btn
+      v-if="isLogin"
+      class="v-btn v-btn--flat v-btn--text theme--dark v-size--default"
+      aria-label="Support"
+      style="min-width: 48px;"
+      @click="goMypage"
+    >
+      <span class="v-btn__content">
+        <span class="subtitle-1 text-capitalize font-weight-light">
+          <div class="v-markdown">Mypage</div>
+        </span>
+      </span>
+    </v-btn>
     <v-btn
       v-else
       @click.stop="dialog=!dialog"
@@ -185,6 +198,9 @@ export default {
     goTotalWantedPage() {
       router.push({ name: "recruitcalender" }).catch(() => {});
     },
+    goMypage(){
+      router.push({name:"mypage",params:{id:1}})
+    }
   }
 };
 </script>

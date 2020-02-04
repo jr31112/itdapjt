@@ -8,7 +8,6 @@ import RecruitMain from '../views/RecruitMain.vue'
 import RecruitDetail from '../views/RecruitDetail.vue'
 import RecruitCalender from '../views/RecruitCalender.vue'
 import StudyMain from '../views/StudyMain.vue'
-import StudyDetail from '../views/StudyDetail.vue'
 import SearchResult from '../views/SearchResult.vue'
 import store from '../store/index.js'
 Vue.use(VueRouter)
@@ -22,16 +21,14 @@ const rejectAuthUser = (to, from, next)=>
     next() //to=> from으로 간다. 
   }
 }
-//마이페이지나 관리자 auth가 1이 들어온다.
+// 후에 마이페이지나 관리자를 만들 때 쓰자.
 // const onlyAuthUser = (to, from, next)=>
 // {
 //   if(store.state.isLogin === false) 
 //   {
 //     alert("로그인이 필요한 기능입니다.")
 //     next("/") //from에서 / (home,to기능)으로 간다. 
-//   } 
-//   else 
-//   {
+//   } else {
 //     next() //to=> from으로 간다. 
 //   }
 // }
@@ -76,11 +73,6 @@ const routes = [
     path: "/study",
     name: "studymain",
     component: StudyMain
-  },
-  { 
-    path: "/study/detail/:id",
-    name: "studydetail",
-    component: StudyDetail
   },
   { 
     path: "/searchresult",

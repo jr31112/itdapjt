@@ -25,7 +25,7 @@
                 <v-col cols="12" sm="4">
                     <v-select
                         v-model="techstack"
-                        :items="techstackmentOptions"
+                        :items="techstackOptions"
                         attach="attach"
                         chips="chips"
                         label="기술 스택"
@@ -76,7 +76,7 @@
                         value: '신입'
                     }
                 ],
-                techstackmentOptions: [
+                techstackOptions: [
                     {
                         text: 'Java',
                         value: 'java'
@@ -100,6 +100,18 @@
                     .catch(error => {
                         console.log(error)
                     })
+                },
+            getTechStack() {
+                axios
+                    .get
+                    .get(`http://192.168.31.54:8197/itda/api/getAllStacks/`)
+                    .then(response => {
+                        console.log(response)
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
+
                 },
             optionmanager() {
                 if (this.period.length == 1) {

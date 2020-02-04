@@ -27,9 +27,8 @@ public class StudyServiceImpl implements IStudyService {
 	}
 
 	@Override
-	public void createStudy(Study model) {
-		// TODO Auto-generated method stub
-		studyDao.createStudy(model);
+	public int createStudy(Study model) {
+		return studyDao.createStudy(model);
 	}
 
 	@Override

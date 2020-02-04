@@ -25,8 +25,9 @@ public class StudyDao {
 		
 	}
 	
-	public void createStudy(Study model) {
+	public int createStudy(Study model) {
 		sqlSession.insert(ns + "createStudy", model);
+		return sqlSession.selectOne(ns + "getStid", model);
 	}
 	
 	public void deleteStudy(int stid) {

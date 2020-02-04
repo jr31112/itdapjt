@@ -1,7 +1,11 @@
 package com.ssafy.itda.itda_test.controller;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,8 +21,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.itda.itda_test.help.Result;
 import com.ssafy.itda.itda_test.help.StudyResult;
+import com.ssafy.itda.itda_test.help.UserResult;
 import com.ssafy.itda.itda_test.model.Study;
+import com.ssafy.itda.itda_test.model.StudyGroup;
+import com.ssafy.itda.itda_test.service.IStudyGroupService;
 import com.ssafy.itda.itda_test.service.IStudyService;
+import com.ssafy.itda.itda_test.service.JwtServiceImpl;
 import com.ssafy.itda.itda_test.service.StudyServiceImpl;
 
 import io.swagger.annotations.Api;
@@ -35,6 +43,12 @@ public class StudyController {
 	@Autowired
 	private IStudyService studyService;
 
+	@Autowired
+	private IStudyGroupService studyGroupService;
+
+	@Autowired
+	private JwtServiceImpl jwtService;
+
 	@ApiOperation(value = "모든 스터디를 조회한다.", response = List.class)
 	@RequestMapping(value = "/getAllStudy", method = RequestMethod.GET)
 	public ResponseEntity<List<Study>> getAllStury() throws Exception {
@@ -46,7 +60,7 @@ public class StudyController {
 		}
 		return new ResponseEntity<List<Study>>(studys, HttpStatus.OK);
 	}
-	
+
 	@ApiOperation(value = "스터디 상세 내역을 조회한다.", response = StudyResult.class)
 	@RequestMapping(value = "/getStudy/{stid}", method = RequestMethod.GET)
 	public ResponseEntity<StudyResult> getStudy(@PathVariable int stid) throws Exception {
@@ -54,10 +68,9 @@ public class StudyController {
 		logger.info("2-------------getStudy-----------------------------" + stid);
 		StudyResult sr = new StudyResult();
 		Study s = studyService.getStudy(stid);
-		if (stid == 0 || s == null || 
-				s.getStname() == null || s.getStname().equals("") || s.getMaxPcnt() == 0 || s.getPcnt() == 0
-				|| s.getStype() == 0 || s.getSgroup() == 0 || s.getContent() == null || s.getContent().equals("") 
-				|| s.getCaptain() == 0) {
+		if (stid == 0 || s == null || s.getStname() == null || s.getStname().equals("") || s.getMaxPcnt() == 0
+				|| s.getPcnt() == 0 || s.getStype() == 0 || s.getSgroup() == 0 || s.getContent() == null
+				|| s.getContent().equals("") || s.getCaptain() == 0) {
 			sr.setMsg("회원 정보를 가져오는데 실패하였습니다.");
 			sr.setState("Fail");
 			return new ResponseEntity<StudyResult>(sr, HttpStatus.OK);
@@ -70,19 +83,34 @@ public class StudyController {
 
 	@ApiOperation(value = "스터디를 생성한다.", response = Result.class)
 	@RequestMapping(value = "/createStudy", method = RequestMethod.POST)
-	public ResponseEntity<Result> createStudy(@RequestBody Study model) throws Exception {
+	public ResponseEntity<Result> createStudy(@RequestBody Study model, HttpServletRequest req) throws Exception {
 		logger.info("3-------------createStudy-----------------------------" + new Date());
 		logger.info("3-------------createStudy-----------------------------" + model);
 		Result r = new Result();
-		if (model.getStname() == null || model.getStname().equals("") || model.getMaxPcnt() == 0 || model.getPcnt() == 0
-				|| model.getStype() == 0 || model.getSgroup() == 0 || model.getContent() == null || model.getContent().equals("") || model.getCaptain() == 0) {
-			r.setMsg("필수 입력값이 누락되었습니다.");
-			r.setState("fail");
-			return new ResponseEntity<Result>(r, HttpStatus.OK);
+		Map<String, Object> resultMap = new HashMap<>();
+		String token = req.getHeader("jwt-auth-token");
+		if (token != null && !token.equals("")) {
+			resultMap.putAll(jwtService.get(token));
+			int captain = (int) resultMap.get("uid");
+			if (model.getStname() == null || model.getStname().equals("") || model.getMaxPcnt() == 0 || model.getPcnt() == 0
+					|| model.getStype() == 0 || model.getSgroup() == 0 || model.getContent() == null
+					|| model.getContent().equals("") || model.getCaptain() == 0) {
+				r.setMsg("필수 입력값이 누락되었습니다.");
+				r.setState("fail");
+				return new ResponseEntity<Result>(r, HttpStatus.OK);
+			}
+			int stid = studyService.createStudy(model);
+			StudyGroup sg = new StudyGroup();
+			sg.setStid(stid);
+			sg.setUid(captain);
+			studyGroupService.createStudyGroup(sg);
+			r.setMsg("스터디 생성이 성공적으로 완료되었습니다.");
+			r.setState("success");
 		}
-		studyService.createStudy(model);
-		r.setMsg("스터디 생성이 성공적으로 완료되었습니다.");
-		r.setState("success");
+		else {
+			r.setMsg("사용자 정보를 읽어올 수 없습니다.");
+			r.setState("fail");
+		}
 		return new ResponseEntity<Result>(r, HttpStatus.OK);
 	}
 

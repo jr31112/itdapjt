@@ -27,9 +27,9 @@ public class StudyGroupServiceImpl implements IStudyGroupService {
 	}
 
 	@Override
-	public void deleteStudyGroup(int stid) {
+	public void deleteStudyGroup(StudyGroup model) {
 		// TODO Auto-generated method stub
-		studyGroupDao.deleteStudyGroup(stid);
+		studyGroupDao.deleteStudyGroup(model);
 	}
 
 }

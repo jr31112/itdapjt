@@ -316,29 +316,71 @@
   * Parameter : Integer
   * Return : Result
 
-# 댓글(Comment)
+# 스터디(Study)
 
 * API
 
-  ![api_comment](./imgs/api_comment.PNG)
+  ######### swagger 추가
 
-## 1. 댓글 생성(C)
+## 1. 스터디 생성(C)
 
-> 댓글 생성은 회원만 가능하다.
+> 스터디 생성은 회원만 가능하다.
 
-* `POST /api/createComment` 
+* `POST /api/createStudy` 
 
-  * Parameter : Comment
+  * Parameter : Study
 
     ```json
-    {
-      "content": "string",	//내용
-      "uid": 0,				//글작성자 id
-      "wid": 0				//기업 id
+    
+    ```
+    
+    * 필수 : `stname`, `maxPcnt`, `pcnt`, `stype`, `sgroup`, `content`, `captain`
+    
+  * Return : Result
+
+    ```json
+  {
+      "msg": "string",
+    "state": "string"
     }
     ```
+  
+    
 
-    * 필수 : `content`, `uid`, `wid`
+## 2. 스터디 조회(R)
+
+> 방문자, 회원, 관리자 모두 가능
+
+* `get /api/getStudy/{stid}`
+* Parameter : Integer
+  
+* Return : Result
+
+## 3. 스터디 삭제(D)
+
+> 스터디 삭제는 스터디장 + 관리자만 가능하다.
+
+* `DELETE /api/deleteStudy/{stid}` : 해당 `stid`인 스터디를 삭제한다.
+  * Parameter : Integer
+  * Return : Result
+
+# 스터디 그룹(StudyGroup)
+
+* API
+
+## 1. 스터디 가입(C)
+
+> 회원만 가입 가능하다.
+
+* `POST /api/createStudyGroup` 
+
+  * Parameter : StudyGroup
+
+    ```json
+    
+    ```
+
+    * 필수 : `stid`, `uid`
 
   * Return : Result
 
@@ -351,32 +393,47 @@
 
     
 
-## 2. 댓글 수정(U)
+  
 
-> 댓글 수정은 글 작성자만 가능하다.
+## 2. 스터디 멤버 보기 (R)
 
-* `PUT /api/updateComment`
+> 방문자, 회원 모두 가능하다.
 
-  * Parameter : Comment
+* `get /api/getStudyGroup/{stid}` :  `stid`에 해당하는 스터디의 멤버를 반환한다.
+
+  * Parameter : stid
+
+  * Return : `List <UserResult>`
 
     ```json
-    {
-      "cmid" : 0,			//댓글 id
-      "content": "string",	//내용
-    }
+    
     ```
 
-    * 필수 : `cmid`, `content`
+    
+
+## 3. 스터디 탈퇴(D)
+
+> 스터디 멤버들만 탈퇴 가능
+>
+> 스터디 장이 탈퇴시 스터디는 없어진다. 
+
+* `DELETE /api/deleteStudyGroup/` : 해당 `stid`인 스터디의 `uid`를 가진 멤버를 삭제한다.
+
+  * Parameter : StudyGroup
+
+    ```json
+    
+    ```
+
+    
 
   * Return : Result
 
-## 3. 댓글 삭제(D)
+    ```json
+    
+    ```
 
-> 댓글 삭제는 글 작성자 + 관리자만 가능하다.
-
-* `DELETE /api/deleteComment` : 해당 cmid인 댓글을 삭제한다.
-  * Parameter : Integer
-  * Return : Result
+    
 
 # 공고
 

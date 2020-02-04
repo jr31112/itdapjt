@@ -7,7 +7,7 @@
                 slot="text">Just Do it! you'll just win.</div>
         </ImgBanner>
         <v-container>
-            <recruit-recent-list/>
+            <recruit-recent-list/>  
             <recruit-login-content v-if="isLogin"/>
             <recruit-default-content />
             <recruit-study-list/>

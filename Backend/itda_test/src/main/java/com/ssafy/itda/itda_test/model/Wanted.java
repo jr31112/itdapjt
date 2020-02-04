@@ -1,6 +1,7 @@
 package com.ssafy.itda.itda_test.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Wanted implements Serializable {
 	private int wid;
@@ -13,6 +14,8 @@ public class Wanted implements Serializable {
 	private String question;
 	private int vcnt;
 	private int cid;
+
+	List<Job> jobs;
 
 	public Wanted() {
 		super();
@@ -112,6 +115,14 @@ public class Wanted implements Serializable {
 
 	public void setCid(int cid) {
 		this.cid = cid;
+	}
+
+	public List<Job> getJobs() {
+		return jobs;
+	}
+
+	public void setJobs(List<Job> jobs) {
+		this.jobs = jobs;
 	}
 
 	@Override

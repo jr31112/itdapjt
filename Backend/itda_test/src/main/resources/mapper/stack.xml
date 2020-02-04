@@ -26,12 +26,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="getMyStacks" parameterType="java.lang.Integer" 
 		resultType="com.ssafy.itda.itda_test.model.Stack">
-		SELECT SID, TNAME, CNT FROM MYSTACK_T WHERE UID = #{uid} ORDER BY SID
+		SELECT S.SID, S.TNAME
+		FROM MYSTACK_T AS MS JOIN STACK_T AS S ON MS.SID = S.SID
+		WHERE MS.UID = #{uid}
 	</select>
 
 	<select id="getJobStacks" parameterType="java.lang.Integer" 
 		resultType="com.ssafy.itda.itda_test.model.Stack">
-		SELECT SID, TNAME, CNT FROM JOBSTACK_T WHERE JID = #{jid} ORDER BY SID
+		SELECT S.SID, S.TNAME
+		FROM JOBSTACK_T AS JS JOIN STACK_T AS S ON JS.SID = S.SID
+		WHERE JS.JID = #{jid}
 	</select>
 
 	<delete id="deleteMyStack" parameterType="com.ssafy.itda.itda_test.model.MyStack">

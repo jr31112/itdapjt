@@ -14,8 +14,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="createJob" 
 	parameterType="com.ssafy.itda.itda_test.model.Job">
 		INSERT INTO JOB_T(JNAME, `TO`, JDETAIL, JTYPE, `REQUIRE`, EXTRA, PLACE, WID)
-		VALUES ( #{jname}, #{`to`}, #{jdetail}, #{jtype}, #{`require`}, #{extra}, #{place}, #{wid} ) 
+		VALUES ( #{jname}, #{to}, #{jdetail}, #{jtype}, #{require}, #{extra}, #{place}, #{wid} ) 
 	</insert>
+	
+	<select id="createJobReturnJid" parameterType="com.ssafy.itda.itda_test.model.Job"
+	resultType="java.lang.Integer">
+		SELECT JID FROM JOB_T WHERE JNAME = #{jname} AND `TO` = #{to} AND REQUIRE = #{require} AND WID = #{wid}
+		ORDER BY JID DESC LIMIT 1
+	</select>
 	
 	<delete id="deleteJob" 
 	parameterType="Integer">

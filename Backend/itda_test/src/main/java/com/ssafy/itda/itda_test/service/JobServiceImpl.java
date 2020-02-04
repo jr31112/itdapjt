@@ -32,4 +32,9 @@ public class JobServiceImpl implements IJobService {
 	public void updateJob(Job model) {
 		jobDao.updateJob(model);
 	}
+
+	@Override
+	public int createJobReturnJid(Job j) {
+		return jobDao.createJobReturnJid(j);
+	}
 }

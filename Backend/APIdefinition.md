@@ -347,7 +347,7 @@
   
     
 
-## 2. 스터디 조회(R)
+## 2. 스터디 상세 조회(R)
 
 > 방문자, 회원, 관리자 모두 가능
 
@@ -363,6 +363,14 @@
 * `DELETE /api/deleteStudy/{stid}` : 해당 `stid`인 스터디를 삭제한다.
   * Parameter : Integer
   * Return : Result
+
+## 4. 스터디 목록(R)
+
+> 목록은 방문자, 회원 모두 가능하다.
+
+* `get /api/getStudyList` : 모든 스터디 리스트를 불러온다.
+  * Parameter : {}
+  * Return : `List <Study>`
 
 # 스터디 그룹(StudyGroup)
 

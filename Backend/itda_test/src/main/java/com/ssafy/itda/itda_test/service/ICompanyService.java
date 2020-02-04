@@ -10,3 +10,7 @@ public interface ICompanyService {
 	void updateCompany(Company model);
 	List<Company> getAllCompanys();		
 }
+
+
+
+

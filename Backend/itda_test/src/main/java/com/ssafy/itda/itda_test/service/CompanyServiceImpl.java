@@ -1,5 +1,7 @@
 package com.ssafy.itda.itda_test.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,5 +27,10 @@ public class CompanyServiceImpl implements ICompanyService {
 	@Override
 	public void updateCompany(Company model) {
 		companyDao.updateCompany(model);
+	}
+
+	@Override
+	public List<Company> getAllCompanys() {
+		return companyDao.getAllCompanys();
 	}
 }

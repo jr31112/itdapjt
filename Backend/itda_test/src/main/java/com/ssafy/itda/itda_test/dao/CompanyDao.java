@@ -1,5 +1,7 @@
 package com.ssafy.itda.itda_test.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -23,5 +25,9 @@ public class CompanyDao {
 	
 	public void updateCompany(Company model) {
 		sqlSession.update(ns + "updateCompany", model);
+	}
+
+	public List<Company> getAllCompanys() {
+		return sqlSession.selectList(ns + "getAllCompanys");
 	}
 }

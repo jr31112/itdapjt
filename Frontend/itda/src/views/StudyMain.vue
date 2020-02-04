@@ -26,14 +26,6 @@ export default {
                 keyword: ""
             },
             studies:[
-                // stid int primary key auto_increment,
-                // stname varchar(100) not null,
-                // maxPcnt int not null,
-                // pcnt int not null default 1,
-                // stype int not null,
-                // typeName varchar(300),(공고명)
-                // sgroup int not null,
-                // content text not null,
                 {stid:1, stname:"스터디1", maxPcnt:5, pcnt:1, stype:1, sgroup:4, context:"내용1", },
                 {stid:2, stname:"스터디2", maxPcnt:8, pcnt:2, stype:2, sgroup:3, context:"내용2", },
                 {stid:3, stname:"스터디3", maxPcnt:3, pcnt:1, stype:3, sgroup:2, context:"내용3", },

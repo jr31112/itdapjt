@@ -368,7 +368,7 @@
 
 > 목록은 방문자, 회원 모두 가능하다.
 
-* `get /api/getStudyList` : 모든 스터디 리스트를 불러온다.
+* `get /api/getAllStudy` : 모든 스터디 리스트를 불러온다.
   * Parameter : {}
   * Return : `List <Study>`
 

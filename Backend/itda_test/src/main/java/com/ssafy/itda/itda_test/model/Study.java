@@ -6,6 +6,7 @@ public class Study implements Serializable {
 	private int stid;
 	private String stname;
 	private int maxPcnt;
+	private int pcnt;
 	private int stype;
 	private int typeFk;
 	private String typeName;
@@ -18,12 +19,13 @@ public class Study implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Study(int stid, String stname, int maxPcnt, int stype, int typeFk, String typeName, int sgroup,
+	public Study(int stid, String stname, int maxPcnt, int pcnt, int stype, int typeFk, String typeName, int sgroup,
 			String content, int captain) {
 		super();
 		this.stid = stid;
 		this.stname = stname;
 		this.maxPcnt = maxPcnt;
+		this.pcnt = pcnt;
 		this.stype = stype;
 		this.typeFk = typeFk;
 		this.typeName = typeName;
@@ -54,6 +56,14 @@ public class Study implements Serializable {
 
 	public void setMaxPcnt(int maxPcnt) {
 		this.maxPcnt = maxPcnt;
+	}
+
+	public int getPcnt() {
+		return pcnt;
+	}
+
+	public void setPcnt(int pcnt) {
+		this.pcnt = pcnt;
 	}
 
 	public int getStype() {
@@ -106,9 +116,9 @@ public class Study implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Study [stid=" + stid + ", stname=" + stname + ", maxPcnt=" + maxPcnt + ", stype=" + stype + ", typeFk="
-				+ typeFk + ", typeName=" + typeName + ", sgroup=" + sgroup + ", content=" + content + ", captain="
-				+ captain + "]";
+		return "Study [stid=" + stid + ", stname=" + stname + ", maxPcnt=" + maxPcnt + ", pcnt=" + pcnt + ", stype="
+				+ stype + ", typeFk=" + typeFk + ", typeName=" + typeName + ", sgroup=" + sgroup + ", content="
+				+ content + ", captain=" + captain + "]";
 	}
 
 }

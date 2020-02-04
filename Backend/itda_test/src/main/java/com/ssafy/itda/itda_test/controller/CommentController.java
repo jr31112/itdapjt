@@ -51,7 +51,7 @@ public class CommentController {
 	@Autowired
 	private IUserService userService;
 
-	@ApiOperation(value = "댓글을 작성한다.", response = Comment.class)
+	@ApiOperation(value = "댓글을 작성한다.", response = Result.class)
 	@RequestMapping(value = "/createComment", method = RequestMethod.POST)
 	public ResponseEntity<Result> createJob(@RequestBody Comment model) throws Exception {
 		logger.info("1-------------createComment-----------------------------" + new Date());
@@ -77,7 +77,7 @@ public class CommentController {
 		return new ResponseEntity<Result>(r, HttpStatus.OK);
 	}
 
-	@ApiOperation(value = "댓글을 삭제한다.", response = Comment.class)
+	@ApiOperation(value = "댓글을 삭제한다.", response = Result.class)
 	@RequestMapping(value = "/deleteComment", method = RequestMethod.DELETE)
 	public ResponseEntity<Result> deleteComment(@RequestBody int cmid) throws Exception {
 		logger.info("2-------------deleteComment-----------------------------" + new Date());
@@ -95,7 +95,7 @@ public class CommentController {
 		return new ResponseEntity<Result>(r, HttpStatus.OK);
 	}
 
-	@ApiOperation(value = "댓글을 수정한다.", response = Comment.class)
+	@ApiOperation(value = "댓글을 수정한다.", response = Result.class)
 	@RequestMapping(value = "/updateComment", method = RequestMethod.PUT)
 	public ResponseEntity<Result> updateComment(@RequestBody Comment model) throws Exception {
 		logger.info("3-------------updateComment-----------------------------" + new Date());

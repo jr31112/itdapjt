@@ -18,7 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<delete id="deleteStudyGroup" 
-	parameterType="Integer">
+	parameterType="java.lang.Integer">
 		DELETE FROM STUDYGROUP_T
 		WHERE SGID = #{sgid}
 	</delete>

@@ -68,7 +68,7 @@ public class StudyController {
 		return new ResponseEntity<StudyResult>(sr, HttpStatus.OK);
 	}
 
-	@ApiOperation(value = "스터디를 생성한다.", response = Study.class)
+	@ApiOperation(value = "스터디를 생성한다.", response = Result.class)
 	@RequestMapping(value = "/createStudy", method = RequestMethod.POST)
 	public ResponseEntity<Result> createStudy(@RequestBody Study model) throws Exception {
 		logger.info("3-------------createStudy-----------------------------" + new Date());
@@ -88,9 +88,9 @@ public class StudyController {
 
 	@ApiOperation(value = "스터디를 삭제한다.", response = Result.class)
 	@RequestMapping(value = "/deleteStudy", method = RequestMethod.DELETE)
-	public ResponseEntity<Result> deleteJob(@RequestBody int stid) throws Exception {
-		logger.info("2-------------deleteJob-----------------------------" + new Date());
-		logger.info("2-------------deleteJob-----------------------------" + stid);
+	public ResponseEntity<Result> deleteStudy(@RequestBody int stid) throws Exception {
+		logger.info("2-------------deleteStudy-----------------------------" + new Date());
+		logger.info("2-------------deleteStudy-----------------------------" + stid);
 		Result r = new Result();
 		Study s = studyService.getStudy(stid);
 		if (stid == 0 || s == null) {

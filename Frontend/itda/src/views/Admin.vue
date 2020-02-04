@@ -1,11 +1,11 @@
 <template>
   <div class="admin">
-    <v-container pt-9>
+    <v-container>
       <h2>공고 관리</h2>
       <v-row class="mb-4">
         <v-col><admin-recruit/></v-col>
       </v-row>
-      <h2>유저 관리 </h2>
+      <h2>유저 관리</h2>
       <v-row class="mb-4">
         <v-col><admin-user/></v-col>
       </v-row>

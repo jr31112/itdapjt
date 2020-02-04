@@ -30,8 +30,7 @@
                     color="primary"
                     :events="tmpevents"
                     :event-color="getEventColor"
-                    @change="updateRange"
-                    ></v-calendar>
+                    @change="updateRange"></v-calendar>
             </v-sheet>
         </v-col>
     </v-layout>
@@ -91,8 +90,7 @@
         },
         mounted() {},
         methods: {
-            setValues() 
-            {
+            setValues() {
                 for (var i = 0; i < this.wlist.length; i++) {
                     this.companylist[i] = this.wlist[i]
                         .company

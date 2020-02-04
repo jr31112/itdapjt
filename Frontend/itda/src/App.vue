@@ -1,22 +1,22 @@
 <template>
     <v-app>
-        <Header/>
+        <page-top/>
         <v-content>
         <router-view path="/"></router-view>
         </v-content>
-        <Footer/>
+        <page-bottom/>
     </v-app>
 </template>
 
 <script>
-    import Header from "./components/Header.vue"
-    import Footer from "./components/Footer.vue"
+    import PageTop from "./components/PageTop.vue"
+    import PageBottom from "./components/PageBottom.vue"
     import { mapState } from "vuex"
     export default {
         name: 'App',
         components: {
-            Header,
-            Footer
+            PageTop,
+            PageBottom
         },
         computed: {
 		...mapState(["isLogin"])

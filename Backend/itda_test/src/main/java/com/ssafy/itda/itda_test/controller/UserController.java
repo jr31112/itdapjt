@@ -155,6 +155,7 @@ public class UserController {
 			List<Stack> mystacks = userService.getMyStacks(uid);
 			List<Integer> myScrapWanteds = userService.getMyScrapWanteds(uid);
 			List<WantedResult> wrlist = new ArrayList<>();
+			List<WantedResult> ewrlist = new ArrayList<>();
 			for (int i : myScrapWanteds) {
 				int cid = wantedService.getCompanyId(i);
 				Company company = wantedService.getCompanyInfo(cid);
@@ -169,7 +170,11 @@ public class UserController {
 				wr.setWanted(wanted);
 				wr.setJobs(jobs);
 				wr.setStacks(wantedStacks);
-				wrlist.add(wr);
+				if (wanted.getActive() == 1) {
+					ewrlist.add(wr);
+				} else {
+					wrlist.add(wr);
+				}
 			}
 
 			UserResult ur = new UserResult();
@@ -181,6 +186,7 @@ public class UserController {
 				ur.setUser(user);
 				ur.setMystacks(mystacks);
 				ur.setMyScrapWanteds(wrlist);
+				ur.setMyEndedScrapWanteds(ewrlist);
 				ur.setState("success");
 			}
 			return new ResponseEntity<UserResult>(ur, HttpStatus.OK);

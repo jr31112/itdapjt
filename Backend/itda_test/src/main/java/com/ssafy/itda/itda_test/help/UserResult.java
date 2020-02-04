@@ -16,8 +16,8 @@ public class UserResult implements Serializable {
 	private List<Stack> mystacks;
 
 	// Scrap Model
-	private List<Scrap> myScraps;
 	private List<WantedResult> myScrapWanteds;
+	private List<WantedResult> myEndedScrapWanteds;
 
 	// Response result
 	private String msg;
@@ -44,12 +44,12 @@ public class UserResult implements Serializable {
 		this.mystacks = mystacks;
 	}
 
-	public List<Scrap> getMyScraps() {
-		return myScraps;
+	public List<WantedResult> getMyEndedScrapWanteds() {
+		return myEndedScrapWanteds;
 	}
 
-	public void setMyScraps(List<Scrap> myScraps) {
-		this.myScraps = myScraps;
+	public void setMyEndedScrapWanteds(List<WantedResult> myEndedScrapWanteds) {
+		this.myEndedScrapWanteds = myEndedScrapWanteds;
 	}
 
 	public String getMsg() {
@@ -78,8 +78,8 @@ public class UserResult implements Serializable {
 
 	@Override
 	public String toString() {
-		return "UserResult [user=" + user + ", mystacks=" + mystacks + ", myScraps=" + myScraps + ", msg=" + msg
-				+ ", state=" + state + "]";
+		return "UserResult [user=" + user + ", mystacks=" + mystacks + ", myScrapWanteds=" + myScrapWanteds
+				+ ", myEndedScrapWanteds=" + myEndedScrapWanteds + ", msg=" + msg + ", state=" + state + "]";
 	}
 
 }

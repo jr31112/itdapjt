@@ -4,7 +4,7 @@
     <v-layout wrap="no wrap">
       <v-flex xs12="xs12">
         <v-alert class="mb-1" :value="reChk" type="error">아이디와 비밀번호를 확인해주세요.</v-alert>
-        <v-alert class="mb-1" v-model="isPwError" :value="isPwError" type="error">비밀번호를 확인해주세요.</v-alert>
+        <v-alert class="mb-1" v-model="isPwError" :value="isPwError" type="error">이메일 형식, 비밀번호를 확인해주세요.</v-alert>
         <v-alert class="mb-1" v-model="isFormError" :value="isFormError" type="error">입력 값을 모두 넣어주세요.</v-alert>
         <v-alert class="mb-1" v-model="isRegisterError" :value="isRegisterError" type="error">이미 존재하는 회원의 ID 입니다.</v-alert>
         <v-alert class="mb-1" :value="isCong" type="success">회원가입을 축하합니다! 로그인 해주세요.</v-alert>
@@ -71,7 +71,7 @@
               v-model="password_lg"
               
               type="password"
-              label="password를 입력하세요"
+              label="password를 입력  하세요"
               @keyup.enter="goLogin()"
             ></v-text-field>
             <v-btn
@@ -86,7 +86,6 @@
                   pw: password_lg
               }, reChk = !reChk ,
                  isCong= false
-
               )"
             >Login</v-btn>
             <v-btn
@@ -132,23 +131,27 @@ export default {
     goRegister() {
       //회원가입.
       if (
-        this.name == "" ||
-        this.email_rg == "" ||
-        this.password_rg == "" ||
-        this.password_rg1 == "" ) 
+        this.name == null ||
+        this.email_rg == null ||
+        this.password_rg == null ||
+        this.password_rg1 == null ) 
       {
         
         this.isFormError = true;
         this.isResisterError = false;
         this.isPwError =false;
       }
-      ////////////////이부분의 처리 필요.
-      else if (this.password_rg !== this.password_rg1) 
+      else if(this.email_rg.indexOf("@")== -1 ||
+      this.email_rg.indexOf("@")== 0 ||
+      this.email_rg.length === this.email_rg.indexOf("@")+1 ||
+      this.password_rg !== this.password_rg1
+      ) 
       {
          this.isFormError = false;
          this.isResisterError = false;
          this.isPwError =true;
-      } 
+      }
+      ////////////////이부분의 처리 필요
       else {
         axios
           .post("http://192.168.31.54:8197/itda/api/signUp", {
@@ -161,6 +164,8 @@ export default {
               this.isChangeLoginRegi = !this.isChangeLoginRegi;
               this.isFormError = false;
               this.isRegisterError = false;
+              this.isPwError =false;
+              
               this.isCong = !this.isCong;
             } 
             else 

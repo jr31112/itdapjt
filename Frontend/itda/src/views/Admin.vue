@@ -9,7 +9,7 @@
       <v-row class="mb-4">
         <v-col><admin-user/></v-col>
       </v-row>
-      <h2>요청 관리</h2>
+      <h2>스터디 관리</h2>
       <v-row class="mb-4">
         <v-col><admin-request/></v-col>
       </v-row>

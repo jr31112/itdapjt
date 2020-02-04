@@ -110,10 +110,7 @@
         style="max-height: calc(100% - 16px); min-width: 0px; top: 12px; left: 12px; transform-origin: left top; z-index: 0; display: none;"
       ></div>
     </div>
-    <!--
-          +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    -->
-    <!-- // v-on:click="goTotalWantedPage()" -->
+   
     <v-btn
       v-if="isLogin"
       @click="$store.dispatch('logout')"
@@ -150,7 +147,7 @@
       aria-label="Support"
       style="min-width: 48px;"
     >
-      <!-- v-else router :to="{name: 'login'}" -->
+  
       <span class="v-btn__content">
         <span class="subtitle-1 text-capitalize font-weight-light">
           <div class="v-markdown">Login | SignUp</div>

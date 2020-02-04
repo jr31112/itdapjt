@@ -7,9 +7,23 @@ public class Stack implements Serializable {
 	private String tname;
 	private int cnt;
 
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Stack) {
+			if (this.sid == ((Stack) obj).getSid()) {
+				return true;
+			}
+		}
+
+		if (super.equals(obj)) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public Stack() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public int getSid() {

@@ -76,6 +76,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		#{endDate}, #{process}, #{etc}, #{question}, #{cid})
 	</insert>
 
+	<select id="getInputWanted" parameterType="com.ssafy.itda.itda_test.model.Wanted"
+		resultType="java.lang.Integer"
+	>
+		SELECT WID FROM WANTED_T WHERE WANTEDTITLE = #{wantedTitle} AND STARTDATE = #{startDate}
+		AND ENDDATE = #{endDate} AND CID = #{cid} ORDER BY WID DESC LIMIT 1
+	</select>
+
 	<delete id="deleteWanted" parameterType="java.lang.Integer">
 		DELETE FROM WANTED_T
 		WHERE WID = #{wid}

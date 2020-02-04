@@ -77,8 +77,8 @@ public class WantedServiceImpl implements IWantedService {
 	}
 
 	@Override
-	public void createWanted(Wanted model) {
-		wantedDao.createWanted(model);
+	public int createWanted(Wanted model) {
+		return wantedDao.createWanted(model);
 	}
 
 	@Override

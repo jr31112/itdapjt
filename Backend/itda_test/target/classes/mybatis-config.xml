@@ -30,6 +30,7 @@
         <mapper resource="mapper/job.xml"/>        
         <mapper resource="mapper/comment.xml"/> 
         <mapper resource="mapper/study.xml"/>
-        <mapper resource="mapper/studygroup.xml"/> 
+        <mapper resource="mapper/studygroup.xml"/>
+        <mapper resource="mapper/stack.xml"/>         
     </mappers>
 </configuration>

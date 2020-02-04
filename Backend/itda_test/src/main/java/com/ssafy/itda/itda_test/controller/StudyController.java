@@ -92,13 +92,14 @@ public class StudyController {
 		if (token != null && !token.equals("")) {
 			resultMap.putAll(jwtService.get(token));
 			int captain = (int) resultMap.get("uid");
-			if (model.getStname() == null || model.getStname().equals("") || model.getMaxPcnt() == 0 || model.getPcnt() == 0
-					|| model.getStype() == 0 || model.getSgroup() == 0 || model.getContent() == null
-					|| model.getContent().equals("") || model.getCaptain() == 0) {
+			if (model.getStname() == null || model.getStname().equals("") || model.getMaxPcnt() == 0
+					|| model.getStype() == 0 || model.getSgroup() == 0
+					|| model.getContent() == null || model.getContent().equals("")) {
 				r.setMsg("필수 입력값이 누락되었습니다.");
 				r.setState("fail");
 				return new ResponseEntity<Result>(r, HttpStatus.OK);
 			}
+			model.setCaptain(captain);
 			int stid = studyService.createStudy(model);
 			StudyGroup sg = new StudyGroup();
 			sg.setStid(stid);
@@ -106,8 +107,7 @@ public class StudyController {
 			studyGroupService.createStudyGroup(sg);
 			r.setMsg("스터디 생성이 성공적으로 완료되었습니다.");
 			r.setState("success");
-		}
-		else {
+		} else {
 			r.setMsg("사용자 정보를 읽어올 수 없습니다.");
 			r.setState("fail");
 		}

@@ -64,17 +64,6 @@
   | vcnt        | integer | **(필수)** 공고 조회수                  |
   | cid         | integer | **(필수)** company_t의 Primary Key(cid) |
   
-* 댓글 정보 테이블 `comment_t`
-
-  
-  | 필드명  | 자료형  | 설명                                   |
-  | ------- | ------- | -------------------------------------- |
-  | cmid    | integer | Primary Key                            |
-  | uid     | integer | **(필수)** user_t의 Primary Key(uid)   |
-  | wid     | integer | **(필수)** wanted_t의 Primary Key(wid) |
-  | writer  | string  | **(필수)** 작성자 = uname              |
-  | content | text    | **(필수)** 댓글 내용                   |
-
 * 스크랩 정보 테이블 `scrap_t`
 
   
@@ -131,11 +120,45 @@
   | tname  | string  | **(필수) ** 기술 스택 명             |
   | uid    | integer | **(필수) **user_t의 Primary Key(uid) |
 
+- 스터디 테이블 `study_t`
 
+  | 필드명   | 자료형            | 설명                                                   |
+  | -------- | ----------------- | ------------------------------------------------------ |
+  | stid     | Integer           | Primary Key                                            |
+  | stname   | string            | **(필수)** 스터디 명                                   |
+  | maxPcnt  | Integer           | **(필수)** 최대 인원                                   |
+  | pcnt     | Integer           | **(필수, default 1)** 현재 인원                        |
+  | stype    | Integer           | **(필수)** 스터디 종류(공고/기업/기술스택/기타)        |
+  | typeFk   | Integer(nullable) | 공고/기업/기술스택 선택 시 선택한 id(FK는 아니지만 FK) |
+  | typeName | string            | 공고/기업/기술스택/기타 선택한 name                    |
+  | sgroup   | Integer           | **(필수)** 스터디 내용(자소서/필기/면접/기타)          |
+  | content  | text              | **(필수)** 스터디 상세내용                             |
+  | captain  | Integer           | **(필수)** 스터디 장(fk - uid)                         |
+
+- 스터디 그룹 테이블 `studyGroup_t`
+
+  | 필드명 | 자료형  | 설명                              |
+  | ------ | ------- | --------------------------------- |
+  | sgid   | Integer | Primary Key                       |
+  | uid    | Integer | **(필수)** 가입한 회원uid(fk)     |
+  | stid   | Integer | **(필수)** 스터디 테이블 stid(fk) |
+
+  
 
 ## sql
 
 ```sql
+drop table if exists mystack_t ;
+drop table if exists jobstack_t;
+drop table if exists comment_t;
+drop table if exists stack_t;
+drop table if exists scrap_t;
+drop table if exists job_t;
+drop table if exists reqstack_t;
+drop table if exists user_t;
+drop table if exists wanted_t;
+drop table if exists company_t;
+
 -- 기업 정보 테이블 정의
 create table company_t(
 	cid int primary key auto_increment,
@@ -182,19 +205,6 @@ create table wanted_t(
 );
 -- wantedTitle : 공고 제목, active : 공고 진행 상태, startDate : 공고 시작일, endDate : 공고 마감일
 -- process : 채용 과정, etc : 기타 요구사항, question : 문의, vcnt : 공고 조회수
-
--- 댓글 정보 테이블 정의
-create table comment_t(
-	cmid int primary key auto_increment,
-    uid int not null,
-    wid int not null,
-    writer varchar(10) not null,
-    content text not null,
-    foreign key(uid) references user_t(uid) on delete cascade on update cascade,
-    foreign key(wid) references wanted_t(wid) on delete cascade on update cascade
-);
--- 회원이나 공고가 변경되면 댓글도 해당 댓글도 변경되도록 on delete cascade, on update cascade 설정
--- uid : fk user_t, wid : fk wanted_t, writer : 작성자 = uname, content : 댓글 내용
 
 -- 스크랩 정보 테이블 정의
 create table scrap_t(
@@ -258,5 +268,30 @@ create table reqStack_t(
     foreign key(uid) references user_t(uid)
 );
 -- 사용자가 탈퇴하고 나가도 요청한건 유지할 의미가 있을 순 있기 때문에 얘는 on delete No action
+
+-- 스터디 테이블 정의
+create table study_t(
+	stid int primary key auto_increment,
+    stname varchar(100) not null,
+    maxPcnt int not null,
+    pcnt int not null default 1,
+    stype int not null,
+    typeFk int,
+    typeName varchar(300),
+    sgroup int not null,
+    content text not null,
+    captain int not null,
+    foreign key(captain) references user_t(uid) on update cascade on delete cascade
+);
+
+-- 스터디 그룹 테이블 정의
+create table studyGroup_t(
+	sgid integer primary key auto_increment,
+    uid integer not null,
+    stid integer not null,
+	foreign key(uid) references user_t(uid) on update cascade on delete cascade,
+    foreign key(stid) references study_t(stid) on update cascade on delete cascade
+);
+
 ```
 

@@ -67,7 +67,7 @@
               })
               .catch((err) => 
               {
-                  alert("오류1")
+                  alert(err)
                   console.log(err)
               })
            }

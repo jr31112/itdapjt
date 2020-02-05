@@ -75,6 +75,7 @@ export default new Vuex.Store({
       if(!token){
         return;
       }
+      
       let config =
       {
         headers:
@@ -86,6 +87,7 @@ export default new Vuex.Store({
         .get("http://192.168.31.54:8197/itda/api/getUser", config)
         .then(res => {
           let userInfo = {
+            isLogin : true,
             email : res.data.email,
             uname : res.data.uname,
             auth : res.data.auth,

@@ -169,11 +169,12 @@ export default {
       email: null,
       password: null,
       dialog: false,
-      token: localStorage.getItem("access_token")
+      token: localStorage.getItem("access_token"),
+      isLoginFlag: false
     };
   },
   computed: {
-    ...mapState(["isLogin", "isLoginError", "isDialog"])
+    ...mapState(["isLogin","isLoginError", "isDialog"])
   },
   methods: {
     getImgUrl(img) {

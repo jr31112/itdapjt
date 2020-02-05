@@ -94,7 +94,7 @@ export default {
         },
         openPopup(type){
             let routeData = this.$router.resolve({name: 'searchdata', params: {type: type}})
-            window.open(routeData.href, '_blank', 'width=100,height=200')
+            window.open(routeData.href, '_blank', 'width=500,height=700,menubar=no,toolbar=no,location=no,status=no,resizable=no')
         },
     },
     data(){

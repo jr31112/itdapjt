@@ -7,14 +7,14 @@
             label="스터디 종류">
             </v-select>
       </v-col>
-      <v-col cols="12" md="3">
+      <v-col class="pb-0" cols="12" md="3">
           <v-select
             v-model="options.category2"
             :items="category2Options"
             label="스터디 내용"
             ></v-select>
       </v-col>
-      <v-col cols="12" md="6">
+      <v-col class="pb-0" cols="12" md="6">
           <v-text-field
             v-model="options.keyword"
             label="키워드"

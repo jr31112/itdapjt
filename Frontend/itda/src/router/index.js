@@ -9,7 +9,8 @@ import RecruitDetail from '../views/RecruitDetail.vue'
 import RecruitCalender from '../views/RecruitCalender.vue'
 import StudyMain from '../views/StudyMain.vue'
 import SearchResult from '../views/SearchResult.vue'
-import SearchData from '../views/SearchData.vue'
+import UserModify from "../components/Mypage/UserModify.vue"
+
 import store from '../store/index.js'
 Vue.use(VueRouter)
 // 관리자가 0 , 기본 1
@@ -103,6 +104,13 @@ const routes = [
     component: ()=>
     import("../views/RecruitMain.vue")
   },
+  {
+    path: "/usermodify",
+    name: "usermodify",
+    component: UserModify
+
+  }
+
   ]
 const router = new VueRouter({
   mode: 'history',

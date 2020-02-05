@@ -1,5 +1,5 @@
 <template>
-    <v-layout style="padding: 80px 0px 0px 0px">
+    <v-layout>
         <v-col>
             <v-row justify="center">
                 <v-col cols="12" sm="4">

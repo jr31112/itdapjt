@@ -1,5 +1,7 @@
 <template>
+    <v-container>
     <recruit-calender-filter/>
+    </v-container>
 </template>
 
 <script>

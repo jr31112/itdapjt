@@ -1,8 +1,8 @@
 <template>
-    <v-layout class="CalendarSize Center">
+    <v-layout>
         <v-col>
             <v-sheet height="64">
-                <v-toolbar class="Center" flat="flat" color="white">
+                <v-toolbar flat="flat" color="white">
                     <v-btn outlined="outlined" class="mr-4" color="grey darken-2" @click="setToday">
                         Today
                     </v-btn>
@@ -14,15 +14,9 @@
                         <v-icon small="small">mdi-chevron-right</v-icon>
                     </v-btn>
                     <v-spacer></v-spacer>
-                    <v-menu bottom="bottom" right="right">
-                        <v-list>
-                            <v-list-item @click="type = 'month'">
-                                <v-list-item-title>Month</v-list-item-title>
-                            </v-list-item>
-                        </v-list>
-                    </v-menu>
                 </v-toolbar>
             </v-sheet>
+
             <v-sheet>
                 <v-calendar
                     ref="calendar"
@@ -33,6 +27,7 @@
                     @change="updateRange"
                     @click:event="goDetailPage"></v-calendar>
             </v-sheet>
+
         </v-col>
     </v-layout>
 </template>
@@ -57,6 +52,7 @@
                 immediate: true,
                 handler: 'updateRange'
             }
+           
         },
         props: {
             wlist: {
@@ -137,8 +133,8 @@
                 if (this.companylist.length) {
                     // 신입이나 인턴이 포함되어 있는 인덱스를 value로 하는 list 반환
                     idxlist = this.searchOfJtype(this.options.recruit)
-                    for(var i = 0; i< idxlist.length;i++){
-                        if (this.options.period != 2) { 
+                    for (var i = 0; i < idxlist.length; i++) {
+                        if (this.options.period != 2) {
                             events.push({
                                 name: this
                                     .companylist[i]
@@ -186,17 +182,17 @@
                 var tidx = []
                 if (jtype == 1) {
                     // 인턴
-                        for (var idx = 0; idx < this.wlist.length; idx++) {
-                            for (var jobsidx = 0; jobsidx < this.wlist[idx].jobs.length; jobsidx++) {
-                                if (!this.wlist[idx].jobs[jobsidx].jtype) {
-                                    continue
-                                }
-                                if (this.wlist[idx].jobs[jobsidx].jtype.includes("인턴")) {
-                                    tidx.push(idx)
-                                    break
-                                }
+                    for (var idx = 0; idx < this.wlist.length; idx++) {
+                        for (var jobsidx = 0; jobsidx < this.wlist[idx].jobs.length; jobsidx++) {
+                            if (!this.wlist[idx].jobs[jobsidx].jtype) {
+                                continue
                             }
-                        
+                            if (this.wlist[idx].jobs[jobsidx].jtype.includes("인턴")) {
+                                tidx.push(idx)
+                                break
+                            }
+                        }
+
                     }
                 } else if (jtype == 2) {
                     for (var num = 0; num < this.wlist.length; num++) {
@@ -210,8 +206,8 @@
                             }
                         }
                     }
-                } else{
-                    for(var k = 0; k < this.wlist.length;k++){
+                } else {
+                    for (var k = 0; k < this.wlist.length; k++) {
                         tidx.push(k)
                     }
                 }
@@ -226,6 +222,6 @@
     }
     .CalendarSize {
         height: 80%;
-        width: 70%;
+        width: 100%;
     }
 </style>

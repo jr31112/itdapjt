@@ -9,9 +9,8 @@ export default new Vuex.Store({
     // selectedUser가 allUsers에 찾은 사람을 객체로 userInfo를 저장한다. 
     isLogin: false,
     isLoginError: false,
-    isRegister: false, 
-    isRegisterError: false, 
     isDialog: true,
+    isManager: false, 
   },
   //뮤테이션과 엑션스 차이는? 
   //뮤테이션 : state 값 변경. 
@@ -24,8 +23,6 @@ export default new Vuex.Store({
       state.isLoginError = false
       state.isDialog = false
       state.userInfo = payload
-      // localStorage.setItem('user_info', payload)
-
     },
     //로그인이 실패했을 때.
     loginError(state) {
@@ -38,12 +35,16 @@ export default new Vuex.Store({
       state.isLoginError = false
       state.isDialog = true
       state.userInfo = null
+      state.isManager = false;
       localStorage.clear()
+    },
+    managerlogin(state)
+    {
+      state.isManager = true;
     },
   },
   actions:
   {
-   
     login({ dispatch }, { email, pw }) {
       axios
         .post('http://192.168.31.54:8197/itda/api/login', {
@@ -67,6 +68,7 @@ export default new Vuex.Store({
     },
     logout({ commit }) {
       alert("성공적으로 로그아웃 되었습니다.")
+
       commit("logout")
     }
     ,
@@ -86,27 +88,23 @@ export default new Vuex.Store({
         .get("http://192.168.31.54:8197/itda/api/getUser", config)
         .then(res => {
           let userInfo = {
-            email : res.data.email,
-            uname : res.data.uname,
-            auth : res.data.auth,
-            major : res.data.major,
-            uimg : res.data.uimg
+            email : res.data.user.email,
+            uname : res.data.user.uname,
+            auth : res.data.user.auth,
+            major : res.data.user.major,
+            uimg : res.data.user.uimg
           }
+          
           commit('loginSuccess', userInfo)
+          if( userInfo.auth === 0 )
+          {
+            commit("managerlogin")
+          }
         })
         .catch(() => {
           localStorage.clear();
           alert("다시 로그인해주세요!")
-          
         })
-
     }
   },
-  modules:
-  {
-  }
 })
-//
-// 
-// console.log(user1);
-// 관리자가 0 , 기본 1

@@ -1,10 +1,10 @@
 <template>
     <v-app>
-        <page-top/>
+        <page-top v-if="isnotResult"/>
         <v-content>
         <router-view path="/"></router-view>
         </v-content>
-        <page-bottom/>
+        <page-bottom v-if="isnotResult"/>
     </v-app>
 </template>
 
@@ -19,7 +19,7 @@
             PageBottom
         },
         computed: {
-		...mapState(["isLogin"])
+		...mapState(["isLogin","isManager"])
         }
         
     };

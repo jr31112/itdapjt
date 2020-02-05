@@ -1,5 +1,5 @@
 <template>
-    <v-footer>
+    <v-footer app>
         <v-spacer></v-spacer>
         <v-btn @click="onMove('https://www.jobplanet.co.kr/')"  target="_blank" text="text">
             <v-avatar size="25px" class="mx-1">

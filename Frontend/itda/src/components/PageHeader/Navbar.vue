@@ -48,40 +48,19 @@
         </div>
       </div>
     </div>
-    <a
-      href="https://www.naver.com"
-      target="_blank"
-      class="hidden-xs-only v-btn v-btn--flat v-btn--text theme--dark v-size--default"
-      aria-label="Store"
-      rel="noopener"
+    <v-btn
+      v-if="isManager"
+      class="v-btn v-btn--flat v-btn--text theme--dark v-size--default"
+      aria-label="Support"
       style="min-width: 48px;"
+      @click="GoManagePage"
     >
       <span class="v-btn__content">
-        <span class="v-badge v-badge--left theme--dark">
-          <span class="subtitle-1 text-capitalize font-weight-light">
-            <div class="v-markdown">
-              <span class="mr">JoB Korea</span>
-            </div>
-          </span>
-          <span class="v-badge__wrapper">
-            <span
-              aria-atomic="true"
-              aria-label="Badge"
-              aria-live="polite"
-              role="status"
-              class="v-badge__badge red"
-              style="bottom: calc(100% - 4px); left: auto; right: calc(100% - 4px); top: auto; display: none;"
-            >
-              <i aria-hidden="true" class="v-icon notranslate mdi mdi-tag-text theme--dark"></i>
-            </span>
-          </span>
+        <span class="subtitle-1 text-capitalize font-weight-light">
+          <div class="v-markdown">Manager Page</div>
         </span>
-        <i
-          aria-hidden="true"
-          class="v-icon notranslate v-icon--right mdi mdi-open-in-new theme--dark"
-        ></i>
       </span>
-    </a>
+    </v-btn>
     <v-btn
       v-on:click="goTotalWantedPage()"
       class="hidden-sm-and-down v-btn v-btn--flat v-btn--router v-btn--text theme--dark v-size--default"
@@ -110,24 +89,7 @@
         style="max-height: calc(100% - 16px); min-width: 0px; top: 12px; left: 12px; transform-origin: left top; z-index: 0; display: none;"
       ></div>
     </div>
-   
     <v-btn
-      v-if="isLogin"
-      @click="$store.dispatch('logout')"
-      @click.stop="dialog =!dialog"
-      class="v-btn v-btn--flat v-btn--text theme--dark v-size--default"
-      aria-label="Support"
-      style="min-width: 48px;"
-    >
-      <span class="v-btn__content">
-        <span class="subtitle-1 text-capitalize font-weight-light">
-          <div class="v-markdown">Log Out</div>
-          <!-- 디스패치는 스토어에서 엑션스 내에 함수를 실행가능 -->
-          <!--만약에 $store.commit('logout')으로 뮤테이션에서 바로 접근할 수도 있다. -->
-        </span>
-      </span>
-    </v-btn>
-     <v-btn
       v-if="isLogin"
       class="v-btn v-btn--flat v-btn--text theme--dark v-size--default"
       aria-label="Support"
@@ -140,6 +102,21 @@
         </span>
       </span>
     </v-btn>
+    <v-btn
+      v-if="isLogin"
+      @click="goLogout"
+      @click.stop="dialog =!dialog"
+      class="v-btn v-btn--flat v-btn--text theme--dark v-size--default"
+      aria-label="Support"
+      style="min-width: 48px;"
+    >
+      <span class="v-btn__content">
+        <span class="subtitle-1 text-capitalize font-weight-light">
+          <div class="v-markdown">Log Out</div>
+        </span>
+      </span>
+    </v-btn>
+     
     <v-btn
       v-else
       @click.stop="dialog=!dialog"
@@ -182,11 +159,12 @@ export default {
       email: null,
       password: null,
       dialog: false,
-      token: localStorage.getItem("access_token")
+      token: localStorage.getItem("access_token"),
+      isLoginFlag: false
     };
   },
   computed: {
-    ...mapState(["isLogin", "isLoginError", "isDialog"])
+    ...mapState(["isManager", "isLogin", "isLoginError", "isDialog"])
   },
   methods: {
     getImgUrl(img) {
@@ -195,9 +173,21 @@ export default {
     goTotalWantedPage() {
       router.push({ name: "recruitcalender" }).catch(() => {});
     },
+    goLogout()
+    {
+      this.$store.dispatch('logout')
+      router.push({name:"recruitmain"}).catch(() => {});
+      //일단은 홈페이지로 돌아가게하자. 
+    }
+    ,
     goMypage(){
       router.push({name:"mypage",params:{id:1}})
+    },
+    GoManagePage()
+    {
+      router.push({name:"admin"}).catch(() => {});
     }
+  
   }
 };
 </script>

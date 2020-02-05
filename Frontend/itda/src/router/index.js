@@ -13,16 +13,23 @@ import UserModify from "../components/Mypage/UserModify.vue"
 
 import store from '../store/index.js'
 Vue.use(VueRouter)
+// 관리자가 0 , 기본 1
 const rejectAuthUser = (to, from, next)=>
 {
-  if(store.state.isLogin ===true) 
-  {
-    alert("이미 로그인을 하셨습니다.")
+  //새로운 페이지로 들어올 때 오류가 있구나, 
+  // this.$store.dispatch("getMemberInfo");
+  if(store.state.isManager === false)   
+  { 
+    alert("관리자페이지입니다.")
     next("/") //from에서 / (home,to기능)으로 간다. 
-  } else {
+  } 
+  else 
+  {
     next() //to=> from으로 간다. 
   }
 }
+
+
 //후에 마이페이지나 관리자를 만들 때 쓰자.
 // const onlyAuthUser = (to, from, next)=>
 // {
@@ -65,6 +72,8 @@ const routes = [
   {
     path: '/admin',
     name: 'admin',
+    // 로그인이 이미 되었는데, 들어갈필요없가 없으니,  라우터 전에 확인하는 것이다. 
+    beforeEnter : rejectAuthUser, 
     component: Admin
   },
   { 
@@ -81,6 +90,11 @@ const routes = [
     path: "/searchresult",
     name: "searchresult",
     component: SearchResult
+  },
+  {
+    path: "/searchdata/:type",
+    name: "searchdata",
+    component: SearchData
   },
   { 
     path: "/login",

@@ -52,6 +52,7 @@ export default new Vuex.Store({
         .then(res => {
           if (res.data.state == 'success') {
             let token = res.headers['jwt-auth-token']
+            console.log(token)
             localStorage.setItem("access_token", token)
             localStorage.setItem("uid", res.data.uid)
             dispatch("getMemberInfo")

@@ -1,6 +1,6 @@
 <template>
-  <v-row class="studyfilter">
-      <v-col cols="12" md="3">
+  <v-row class="studyfilter mx-auto">
+      <v-col class="pb-0" cols="12" md="3">
         <v-select
             v-model="options.category1"
             :items="category1Options"
@@ -35,10 +35,10 @@ export default {
         return{
             category1Options:[
                 {text: '전체보기', value: 0},
-                {text: '공고별', value: 1},
-                {text: '기업별', value: 2},
-                {text: '기술별', value: 3},
-                {text: '기  타', value: 4}
+                {text: '공고대비', value: 1},
+                {text: '기업대비', value: 2},
+                {text: '기술대비', value: 3},
+                {text: '기타대비', value: 4}
             ],
             category2Options:[
                 {text: '전체보기', value: 0},
@@ -48,7 +48,7 @@ export default {
                 {text: '기타 등등', value: 4}
             ],
         }
-    }
+    },
 }
 </script>
 

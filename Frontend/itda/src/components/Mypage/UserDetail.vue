@@ -37,7 +37,8 @@
                             <v-list-item-title>기술 스택</v-list-item-title>
                             <v-list-item-subtitle>
                                 <tr>
-                                    <td v-for="item in userInfo.mystacks" :key="item">{{item.tname}}</td>
+                                    
+                                    <td v-for="k in userInfo.mystacks" :key="k.tmp">{{k.tname}}</td>
                                 </tr>
                             </v-list-item-subtitle>
                         </v-list-item-content>
@@ -65,7 +66,7 @@
         },
         props: {
             userInfo:{
-                type: Array
+                type: Object
             }
         },
         mounted() {

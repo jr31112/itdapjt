@@ -9,6 +9,7 @@ import RecruitDetail from '../views/RecruitDetail.vue'
 import RecruitCalender from '../views/RecruitCalender.vue'
 import StudyMain from '../views/StudyMain.vue'
 import SearchResult from '../views/SearchResult.vue'
+import SearchData from '../views/SearchData.vue'
 import UserModify from "../components/Mypage/UserModify.vue"
 
 import store from '../store/index.js'

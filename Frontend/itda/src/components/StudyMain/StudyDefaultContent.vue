@@ -7,6 +7,7 @@
                         <tr>
                             <th class="text-center">번호</th>
                             <th class="text-center">스터디 종류</th>
+                            <th class="text-center">스터디 주제</th>
                             <th class="text-center">스터디 내용</th>
                             <th class="text-left" style="width:40vw">스터디 이름</th>
                             <th class="text-center">인원</th>
@@ -16,6 +17,7 @@
                         <tr v-for="study in studies.slice(10*(page-1), 10*(page-1) + 10)" :key="study.stid">
                             <td class="text-center">{{study.stid}}</td>
                             <td class="text-center">{{category1[study.stype-1]}}</td>
+                            <td class="text-center">{{study.typeName}}</td>
                             <td class="text-center">{{category2[study.sgroup-1]}}</td>
                             <td class="text-left">{{study.stname}}</td>
                             <td class="text-center">{{study.pcnt}}/{{study.maxPcnt}}</td>

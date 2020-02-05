@@ -14,6 +14,7 @@
                                 <v-text-field v-model="formData.stname" :rules="[v => !!v || '스터디 이름을 입력해주세요']" label="스터디명" required></v-text-field>
                                 <v-text-field v-model.number="formData.maxPcnt" type="number" :rules="[v => !!v || '인원수를 입력해주세요']" label="인원수" required></v-text-field>
                                 <v-select v-model="formData.stype" :items="formCategory.category1" :rules="[v => !!v || '스터디 종류를 선택해주세요']" label="스터디 종류" required></v-select>
+                                <v-btn v-if="formData.stype" @click="openPopup(formData.stype)">스터디 주제 입력</v-btn>
                                 <v-select v-model="formData.sgroup" :items="formCategory.category2" :rules="[v => !!v || '스터디 내용를 선택해주세요']" label="스터디 내용" required></v-select>
                                 <v-textarea v-model="formData.content" solo :rules="[v => !!v || '스터디 정보를 입력해주세요']" label="스터디 정보를 입력해주세요"></v-textarea>
                             </v-form>
@@ -22,7 +23,7 @@
                             <v-spacer></v-spacer>
                             <v-btn color="success" text :disabled="!valid" @click="validate">submit</v-btn>
                             <v-btn color="blue darken-1" text @click="reset">Reset</v-btn>
-                            <v-btn color="blue darken-1" text @click="overlay = false">Close</v-btn>
+                            <v-btn color="blue darken-1" text @click="close">Close</v-btn>
                         </v-card-actions>
                     </v-card>
                 </v-dialog>
@@ -32,8 +33,9 @@
 </template>
 
 <script>
-import StudyFilter from '../components/StudyMain/StudyFilter'
-import StudyDefaultContent from '../components/StudyMain/StudyDefaultContent'
+import StudyFilter from '../components/StudyMain/StudyFilter.vue'
+import StudyDefaultContent from '../components/StudyMain/StudyDefaultContent.vue'
+
 import axios from 'axios'
 
 export default {
@@ -50,29 +52,49 @@ export default {
             })
         },
         validate () {
-        if (this.$refs.form.validate()) {
-            this.snackbar = true
-            axios.post('http://192.168.31.54:8197/itda/api/createStudy', this.formData, {'headers' : {"jwt-auth-token": localStorage.getItem("access_token")}})
-            .then(()=>{
-                alert('스터디를 생성하였습니다.')
-                this.$refs.form.reset()
-                this.overlay = false
-                this.$emit("child")
-                this.getStudies()
-                // this.formData = {
-                //     stname:'',
-                //     content:'',
-                //     maxPcnt:null,
-                //     stype:null,
-                //     sgroup:null,
-                //     typeFk:1,
-                //     typeName:'쿠팡',}
-            })
-            .catch()
-            }
+        var select = JSON.parse(localStorage.getItem('select'))
+        if (!select){
+            alert('스터디 주제를 확인해주세요')
+        }
+        else{
+            this.formData.typeFk = select.id
+            this.formData.typeName = select.Nm
+            if (this.$refs.form.validate()) {
+                this.snackbar = true
+                axios.post('http://192.168.31.54:8197/itda/api/createStudy', this.formData, {'headers' : {"jwt-auth-token": localStorage.getItem("access_token")}})
+                .then(()=>{
+                    alert('스터디를 생성하였습니다.')
+                    this.$refs.form.reset()
+                    this.overlay = false
+                    localStorage.removeItem('select')
+                    this.$emit("child")
+                    this.getStudies()
+                    // this.formData = {
+                    //     stname:'',
+                    //     content:'',
+                    //     maxPcnt:null,
+                    //     stype:null,
+                    //     sgroup:null,
+                    //     typeFk:1,
+                    //     typeName:'쿠팡',}
+                })
+                .catch()
+                }
+        }
         },
         reset () {
             this.$refs.form.reset()
+            localStorage.removeItem('select')
+        },
+        close() {
+            this.formData = {stname:'',content:'',maxPcnt:null,stype:null,sgroup:null,typeFk:null,typeName:''},
+            this.$refs.form.reset()
+            localStorage.removeItem('select')
+            this.overlay = false
+        },
+        openPopup(type){
+            let routeData = this.$router.resolve({name: 'searchdata', params: {type: type}})
+            window.open(routeData.href, '_blank', 'width=100,height=200')
         },
     },
     data(){
@@ -89,8 +111,8 @@ export default {
                 maxPcnt:null,
                 stype:null,
                 sgroup:null,
-                typeFk:1,
-                typeName:'쿠팡',
+                typeFk:null,
+                typeName:'',
             },
             formCategory:{
                 category1:[
@@ -113,7 +135,7 @@ export default {
     },
     mounted(){
         this.getStudies()
-    }
+    },
 }
 </script>
 

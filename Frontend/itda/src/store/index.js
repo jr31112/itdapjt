@@ -12,6 +12,7 @@ export default new Vuex.Store({
     isRegister: false, 
     isRegisterError: false, 
     isDialog: true,
+    selection:null,
   },
   //뮤테이션과 엑션스 차이는? 
   //뮤테이션 : state 값 변경. 
@@ -40,10 +41,15 @@ export default new Vuex.Store({
       state.userInfo = null
       localStorage.clear()
     },
+    select(state, id){
+      state.selection = id
+    }
   },
   actions:
-  {
-   
+  { 
+    select({commit}, id ){
+      commit('select', id)
+    },
     login({ dispatch }, { email, pw }) {
       axios
         .post('http://192.168.31.54:8197/itda/api/login', {
@@ -103,9 +109,6 @@ export default new Vuex.Store({
 
     }
   },
-  modules:
-  {
-  }
 })
 //
 // 

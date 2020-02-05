@@ -9,6 +9,7 @@ import RecruitDetail from '../views/RecruitDetail.vue'
 import RecruitCalender from '../views/RecruitCalender.vue'
 import StudyMain from '../views/StudyMain.vue'
 import SearchResult from '../views/SearchResult.vue'
+import SearchData from '../views/SearchData.vue'
 import store from '../store/index.js'
 Vue.use(VueRouter)
 const rejectAuthUser = (to, from, next)=>
@@ -80,6 +81,11 @@ const routes = [
     name: "searchresult",
     component: SearchResult
   },
+  {
+    path: "/searchdata/:type",
+    name: "searchdata",
+    component: SearchData
+  },
   { 
     path: "/login",
     name: "login",
@@ -88,7 +94,6 @@ const routes = [
     component: ()=>
     import("../views/RecruitMain.vue")
   },
-
   ]
 const router = new VueRouter({
   mode: 'history',

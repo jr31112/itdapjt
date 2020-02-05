@@ -9,8 +9,6 @@ export default new Vuex.Store({
     // selectedUser가 allUsers에 찾은 사람을 객체로 userInfo를 저장한다. 
     isLogin: false,
     isLoginError: false,
-    isRegister: false, 
-    isRegisterError: false, 
     isDialog: true,
   },
   //뮤테이션과 엑션스 차이는? 
@@ -24,6 +22,7 @@ export default new Vuex.Store({
       state.isLoginError = false
       state.isDialog = false
       state.userInfo = payload
+      // console.log(state.userInfo)
       // localStorage.setItem('user_info', payload)
 
     },
@@ -87,12 +86,14 @@ export default new Vuex.Store({
         .get("http://192.168.31.54:8197/itda/api/getUser", config)
         .then(res => {
           let userInfo = {
-            email : res.data.email,
-            uname : res.data.uname,
-            auth : res.data.auth,
-            major : res.data.major,
-            uimg : res.data.uimg
+            isLogin : true,
+            email : res.data.user.email,
+            uname : res.data.user.uname,
+            auth : res.data.user.auth,
+            major : res.data.user.major,
+            uimg : res.data.user.uimg
           }
+
           commit('loginSuccess', userInfo)
         })
         .catch(() => {

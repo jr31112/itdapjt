@@ -110,7 +110,6 @@
                     })
                     .catch((err) => 
                     {
-                        alert("오류1")
                         console.log(err)
                     })
    
@@ -126,7 +125,7 @@
         },
         data() {
             return {
-                search: ' ',
+                search:'',
                 headers: [
                     {
                         text: 'UserImg',

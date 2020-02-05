@@ -19,13 +19,8 @@
             PageBottom
         },
         computed: {
-            ...mapState(["isLogin"]),
-            isnotResult(){
-                if (this.$route.name=="searchdata")
-                    return false
-                else
-                    return true
-            }
-        },
+		...mapState(["isLogin","isManager"])
+        }
+        
     };
 </script>

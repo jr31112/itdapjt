@@ -55,10 +55,6 @@
         },
         mounted() {
             this.getAllData();
-            console.log("정보 확인")
-            console.log(this.userInfo.user)
-            console.log("스택 확인")
-            console.log(this.userInfo.mystacks)
         },
         methods: {
             getAllData() {

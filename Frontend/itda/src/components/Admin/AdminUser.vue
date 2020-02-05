@@ -18,9 +18,16 @@
             :items-per-page="5"
             :items="allusers"
             :search="search">
+            <template v-slot:item.major="{item}">
+            <span v-if="item.major === null">X</span>
+            <span v-else>{{item.major}}</span>
+             
+            </template>  
             <template v-slot:item.auth="{ item }">
-            {{item.auth}} 
-            <v-icon small="small" class="mx-2" @click="ChangeItem(item)">
+            <span v-if="item.auth ===0 && item.uname ==='관리자'">관리자</span>
+            <span v-else-if="item.auth === 0">매니저</span>
+            <span v-else>유저</span>
+            <v-icon v-if="item.uname !=='관리자'" small="small" class="mx-2" @click="ChangeItem(item)">
                     edit
             </v-icon>
             </template>  
@@ -44,13 +51,13 @@
                 axios
                     .get('http://192.168.31.54:8197/itda/api/getAllUsers/')
                     .then(res => {
+                        console.log(res)
                         this.allusers =res.data
                     })
                     .catch(() => {})
             },
             deleteItem(item)
             {
-                alert(item.auth)
                 if( item.auth === 0)
                 {
                     alert("권한이 관리자, 매니저일 경우 삭제할 수 없습니다.")
@@ -60,14 +67,13 @@
                     axios
                     .delete('http://192.168.31.54:8197/itda/api/deleteUser/'+ item.uid)
                     .then(res => {
-                        alert(res.data.msg)
                         if(res.data.state == 'success'){
                             this.getAllUsers();
                         }
                     })
                     .catch((err) => 
                     {
-                        alert("오류1")
+                        alert(err)
                         console.log(err)
                     })
 
@@ -139,6 +145,7 @@
                     },
                     {
                         text: 'Major',
+                        align: 'center',
                         value: 'major',
                 
                     },

@@ -19,7 +19,7 @@
             PageBottom
         },
         computed: {
-		...mapState(["isLogin"])
+		...mapState(["isLogin","isManager"])
         }
         
     };

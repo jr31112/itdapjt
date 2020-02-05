@@ -65,10 +65,8 @@
                       this.getAllStudys();
                   }
               })
-              .catch((err) => 
+              .catch(() => 
               {
-                  alert(err)
-                  console.log(err)
               })
            }
         },

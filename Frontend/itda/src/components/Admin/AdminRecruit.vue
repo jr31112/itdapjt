@@ -111,7 +111,6 @@
                 axios
                     .get('http://192.168.31.54:8197/itda/api/getWantedAll/')
                     .then(res => {
-                        console.log(res.data)
                         this.allwanteds = res.data
 
                     })

@@ -9,20 +9,20 @@ import RecruitDetail from '../views/RecruitDetail.vue'
 import RecruitCalender from '../views/RecruitCalender.vue'
 import StudyMain from '../views/StudyMain.vue'
 import SearchResult from '../views/SearchResult.vue'
-import store from '../store/index.js'
+import store from '@/store/index.js'
 Vue.use(VueRouter)
 // 관리자가 0 , 기본 1
 const rejectAuthUser = (to, from, next)=>
 {
-  alert("관리자")
-  alert(this.store.state.userInfo)
-//  console.log(this.store.state.userInfo)
-  if(store.state.userInfo.auth === 0) 
+  //새로운 페이지로 들어올 때 오류가 있구나, 
+  // this.$store.dispatch("getMemberInfo");
+  if(store.state.isManager === false)   
   { 
     alert("관리자페이지입니다.")
-    next("./recruitmain") //from에서 / (home,to기능)으로 간다. 
+    next("/") //from에서 / (home,to기능)으로 간다. 
   } 
-  else {
+  else 
+  {
     next() //to=> from으로 간다. 
   }
 }
@@ -70,8 +70,8 @@ const routes = [
   {
     path: '/admin',
     name: 'admin',
-       // beforeEnter 로그인이 이미 되었는데, 들어갈필요없가 없으니,  라우터 전에 확인하는 것이다. 
-    beforeEnter: rejectAuthUser, 
+    // 로그인이 이미 되었는데, 들어갈필요없가 없으니,  라우터 전에 확인하는 것이다. 
+    beforeEnter : rejectAuthUser, 
     component: Admin
   },
   { 

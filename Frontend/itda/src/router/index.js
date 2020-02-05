@@ -9,6 +9,7 @@ import RecruitDetail from '../views/RecruitDetail.vue'
 import RecruitCalender from '../views/RecruitCalender.vue'
 import StudyMain from '../views/StudyMain.vue'
 import SearchResult from '../views/SearchResult.vue'
+import SearchData from '../views/SearchData.vue'
 import store from '../store/index.js'
 Vue.use(VueRouter)
 // 관리자가 0 , 기본 1
@@ -89,7 +90,19 @@ const routes = [
     name: "searchresult",
     component: SearchResult
   },
-
+  {
+    path: "/searchdata/:type",
+    name: "searchdata",
+    component: SearchData
+  },
+  { 
+    path: "/login",
+    name: "login",
+    // beforeEnter 로그인이 이미 되었는데, 들어갈필요없가 없으니,  라우터 전에 확인하는 것이다. 
+    beforeEnter: rejectAuthUser, 
+    component: ()=>
+    import("../views/RecruitMain.vue")
+  },
   ]
 const router = new VueRouter({
   mode: 'history',

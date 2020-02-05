@@ -6,6 +6,7 @@ import vuetify from './plugins/vuetify';
 
 Vue.use(require('vue-moment'))
 Vue.config.productionTip = false
+
 new Vue({
   router,
   store,
@@ -16,3 +17,4 @@ new Vue({
   vuetify,
   render: h => h(App)
 }).$mount('#app')
+

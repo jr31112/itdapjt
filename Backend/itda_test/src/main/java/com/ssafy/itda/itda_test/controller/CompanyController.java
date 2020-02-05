@@ -23,6 +23,7 @@ import com.ssafy.itda.itda_test.help.WantedResult;
 import com.ssafy.itda.itda_test.model.Company;
 import com.ssafy.itda.itda_test.model.Job;
 import com.ssafy.itda.itda_test.model.Scrap;
+import com.ssafy.itda.itda_test.model.Stack;
 import com.ssafy.itda.itda_test.model.User;
 import com.ssafy.itda.itda_test.model.Wanted;
 import com.ssafy.itda.itda_test.service.ICompanyService;
@@ -102,5 +103,13 @@ public class CompanyController {
 			cr.setState("success");
 		}
 		return new ResponseEntity<CompanyResult>(cr, HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "전체 기업리스트를 확인한다.", response = List.class)
+	@RequestMapping(value = "/getAllCompanys", method = RequestMethod.GET)
+	public ResponseEntity<List<Company>> getAllCompanys() throws Exception {
+		logger.info("5-------------getAllCompanys-----------------------------" + new Date());
+		List<Company> companyList = companyService.getAllCompanys();
+		return new ResponseEntity<List<Company>>(companyList, HttpStatus.OK);
 	}
 }

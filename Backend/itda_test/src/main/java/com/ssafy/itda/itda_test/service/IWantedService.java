@@ -20,7 +20,7 @@ public interface IWantedService {
 	void unScrap(Scrap model);
 	void scrap(Scrap model);
 	List<Integer> getWantedAll();
-	void createWanted(Wanted model);
+	int createWanted(Wanted model);
 	void deleteWanted(int wid);
 	void updateWanted(Wanted model);
 	List<Stack> getStackInfo(int jid);

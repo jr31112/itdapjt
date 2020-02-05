@@ -110,10 +110,7 @@
         style="max-height: calc(100% - 16px); min-width: 0px; top: 12px; left: 12px; transform-origin: left top; z-index: 0; display: none;"
       ></div>
     </div>
-    <!--
-          +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    -->
-    <!-- // v-on:click="goTotalWantedPage()" -->
+   
     <v-btn
       v-if="isLogin"
       @click="$store.dispatch('logout')"
@@ -130,6 +127,19 @@
         </span>
       </span>
     </v-btn>
+     <v-btn
+      v-if="isLogin"
+      class="v-btn v-btn--flat v-btn--text theme--dark v-size--default"
+      aria-label="Support"
+      style="min-width: 48px;"
+      @click="goMypage"
+    >
+      <span class="v-btn__content">
+        <span class="subtitle-1 text-capitalize font-weight-light">
+          <div class="v-markdown">Mypage</div>
+        </span>
+      </span>
+    </v-btn>
     <v-btn
       v-else
       @click.stop="dialog=!dialog"
@@ -137,7 +147,7 @@
       aria-label="Support"
       style="min-width: 48px;"
     >
-      <!-- v-else router :to="{name: 'login'}" -->
+  
       <span class="v-btn__content">
         <span class="subtitle-1 text-capitalize font-weight-light">
           <div class="v-markdown">Login | SignUp</div>
@@ -185,6 +195,9 @@ export default {
     goTotalWantedPage() {
       router.push({ name: "recruitcalender" }).catch(() => {});
     },
+    goMypage(){
+      router.push({name:"mypage",params:{id:1}})
+    }
   }
 };
 </script>

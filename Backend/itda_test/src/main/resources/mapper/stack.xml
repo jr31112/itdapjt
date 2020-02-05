@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ssafy.stack">
+
+	<insert id="createStack" parameterType="java.lang.String">
+		INSERT INTO STACK_T(TNAME) VALUES(#{tname})
+	</insert>
+	
+	<update id="updateStackCnt" parameterType="java.lang.Integer">
+		UPDATE STACK_T SET CNT = CNT + 1 WHERE SID = #{sid}
+	</update>
+	
+	<insert id="createMyStack" parameterType="com.ssafy.itda.itda_test.model.MyStack">
+		INSERT INTO MYSTACK_T(UID, SID) VALUES(#{uid}, #{sid})
+	</insert>
+	
+	<insert id="createJobStack" parameterType="com.ssafy.itda.itda_test.model.JobStack">
+		INSERT INTO JOBSTACK_T(JID, SID) VALUES(#{jid}, #{sid})
+	</insert>
+	
+	<select id="getAllStacks" resultType="com.ssafy.itda.itda_test.model.Stack">
+		SELECT SID, TNAME, CNT FROM STACK_T ORDER BY SID
+	</select>
+	
+	<select id="getMyStacks" parameterType="java.lang.Integer" 
+		resultType="com.ssafy.itda.itda_test.model.Stack">
+		SELECT S.SID, S.TNAME
+		FROM MYSTACK_T AS MS JOIN STACK_T AS S ON MS.SID = S.SID
+		WHERE MS.UID = #{uid}
+	</select>
+
+	<select id="getJobStacks" parameterType="java.lang.Integer" 
+		resultType="com.ssafy.itda.itda_test.model.Stack">
+		SELECT S.SID, S.TNAME
+		FROM JOBSTACK_T AS JS JOIN STACK_T AS S ON JS.SID = S.SID
+		WHERE JS.JID = #{jid}
+	</select>
+
+	<delete id="deleteMyStack" parameterType="com.ssafy.itda.itda_test.model.MyStack">
+		DELETE FROM MYSTACK_T WHERE UID = #{uid} AND SID = #{sid}
+	</delete>
+	
+	
+</mapper>

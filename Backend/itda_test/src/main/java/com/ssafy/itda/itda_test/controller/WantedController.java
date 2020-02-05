@@ -24,10 +24,13 @@ import com.ssafy.itda.itda_test.help.Result;
 import com.ssafy.itda.itda_test.help.WantedResult;
 import com.ssafy.itda.itda_test.model.Company;
 import com.ssafy.itda.itda_test.model.Job;
+import com.ssafy.itda.itda_test.model.JobStack;
 import com.ssafy.itda.itda_test.model.Scrap;
 import com.ssafy.itda.itda_test.model.Stack;
 import com.ssafy.itda.itda_test.model.User;
 import com.ssafy.itda.itda_test.model.Wanted;
+import com.ssafy.itda.itda_test.service.IJobService;
+import com.ssafy.itda.itda_test.service.IStackService;
 import com.ssafy.itda.itda_test.service.IWantedService;
 import com.ssafy.itda.itda_test.service.JwtServiceImpl;
 
@@ -45,6 +48,12 @@ public class WantedController {
 	@Autowired
 	private IWantedService wantedService;
 
+	@Autowired
+	private IJobService jobService;
+
+	@Autowired
+	private IStackService stackService;
+	
 	@Autowired
 	private JwtServiceImpl jwtService;
 
@@ -235,14 +244,38 @@ public class WantedController {
 		logger.info("6-------------createWanted-----------------------------" + new Date());
 		logger.info("6-------------createWanted-----------------------------" + model);
 		Result r = new Result();
+		// Wanted Input Condition
 		if (model.getCid() == 0 || model.getWantedTitle() == null || model.getWantedTitle().equals("")
 				|| model.getStartDate() == null || model.getStartDate().equals("") || model.getEndDate() == null
 				|| model.getEndDate().equals("") || model.getProcess() == null || model.getProcess().equals("")) {
-			r.setMsg("필수 입력값이 누락되었습니다.");
+			r.setMsg("공고 필수 입력값이 누락되었습니다.");
 			r.setState("fail");
 			return new ResponseEntity<Result>(r, HttpStatus.OK);
 		}
-		wantedService.createWanted(model);
+		// Job Input Condition
+		for (Job j : model.getJobs()) {
+			if (j.getTo() == null || j.getTo().equals("") || j.getJname() == null || j.getJname().equals("")) {
+				r.setMsg("직무 필수 입력값이 누락되었습니다.");
+				r.setState("fail");
+				return new ResponseEntity<Result>(r, HttpStatus.OK);
+			}
+		}
+
+		int wid = wantedService.createWanted(model);
+		for (Job j : model.getJobs()) {
+			if (j.getTo().contains("명")) {
+				j.setTo(j.getTo().substring(0, j.getTo().length() - 1));
+			}
+			j.setWid(wid);
+			int jid = jobService.createJobReturnJid(j);
+			for(Stack s : j.getStacks()) {
+				JobStack js = new JobStack();
+				js.setJid(jid);
+				js.setSid(s.getSid());
+				stackService.createJobStack(js);
+			}
+		}
+
 		r.setMsg("공고 입력이 성공적으로 완료되었습니다.");
 		r.setState("success");
 		return new ResponseEntity<Result>(r, HttpStatus.OK);

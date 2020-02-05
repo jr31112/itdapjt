@@ -31,7 +31,7 @@ public class JobController {
 	@Autowired
 	private IJobService jobService;
 
-	@ApiOperation(value = "직무를 추가한다.", response = Job.class)
+	@ApiOperation(value = "직무를 추가한다.", response = Result.class)
 	@RequestMapping(value = "/createJob", method = RequestMethod.POST)
 	public ResponseEntity<Result> createJob(@RequestBody Job model) throws Exception {
 		logger.info("1-------------createJob-----------------------------" + new Date());
@@ -49,7 +49,7 @@ public class JobController {
 		return new ResponseEntity<Result>(r, HttpStatus.OK);
 	}
 
-	@ApiOperation(value = "직무를 삭제한다.", response = Job.class)
+	@ApiOperation(value = "직무를 삭제한다.", response = Result.class)
 	@RequestMapping(value = "/deleteJob", method = RequestMethod.DELETE)
 	public ResponseEntity<Result> deleteJob(@RequestBody int jid) throws Exception {
 		logger.info("2-------------deleteJob-----------------------------" + new Date());
@@ -67,7 +67,7 @@ public class JobController {
 		return new ResponseEntity<Result>(r, HttpStatus.OK);
 	}
 
-	@ApiOperation(value = "직무를 수정한다.", response = Job.class)
+	@ApiOperation(value = "직무를 수정한다.", response = Result.class)
 	@RequestMapping(value = "/updateJob", method = RequestMethod.PUT)
 	public ResponseEntity<Result> updateJob(@RequestBody Job model) throws Exception {
 		logger.info("3-------------updateJob-----------------------------" + new Date());

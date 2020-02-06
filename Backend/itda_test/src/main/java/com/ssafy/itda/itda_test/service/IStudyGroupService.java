@@ -9,4 +9,5 @@ public interface IStudyGroupService {
 	List<StudyGroup> getStudyGroup(int stid);
 	void createStudyGroup(StudyGroup model);
 	void deleteStudyGroup(StudyGroup sg);
+	StudyGroup getStudyGroupRel(StudyGroup model);
 }

@@ -31,4 +31,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		UPDATE STUDY_T SET PCNT = PCNT - 1 WHERE STID = #{stid}
 	</update>
 	
+	<select id="getStudyGroupRel"
+	parameterType="com.ssafy.itda.itda_test.model.StudyGroup"
+	resultType="com.ssafy.itda.itda_test.model.StudyGroup">
+		SELECT *
+		FROM STUDYGROUP_T
+		WHERE UID = #{uid}, STID = #{stid}
+	</select>
 </mapper>

@@ -49,6 +49,9 @@ public class StudyGroupController {
 	private IUserService userService;
 
 	@Autowired
+	private IStudyService studyService;
+	
+	@Autowired
 	private JwtServiceImpl jwtService;
 
 	@ApiOperation(value = "스터디 멤버를 조회한다.", response = List.class)
@@ -87,6 +90,12 @@ public class StudyGroupController {
 				r.setState("fail");
 				return new ResponseEntity<Result>(r, HttpStatus.OK);
 			}
+			Study study = studyService.getStudy(stid);
+			if(study.getPcnt() >= study.getMaxPcnt()) {
+				r.setMsg("더 이상 가입할 수 없는 스터디 입니다.");
+				r.setState("fail");
+				return new ResponseEntity<Result>(r, HttpStatus.OK);
+			}
 			StudyGroup sg = new StudyGroup();
 			sg.setStid(stid);
 			sg.setUid(uid);
@@ -101,8 +110,8 @@ public class StudyGroupController {
 	}
 
 	@ApiOperation(value = "스터디를 탈퇴한다.", response = Result.class)
-	@RequestMapping(value = "/deleteStudyGroup", method = RequestMethod.DELETE)
-	public ResponseEntity<Result> deleteStudyGroup(@RequestBody int stid, HttpServletRequest req) throws Exception {
+	@RequestMapping(value = "/deleteStudyGroup/{stid}", method = RequestMethod.DELETE)
+	public ResponseEntity<Result> deleteStudyGroup(@PathVariable int stid, HttpServletRequest req) throws Exception {
 		logger.info("3-------------deleteStudyGroup-----------------------------" + new Date());
 		logger.info("3-------------deleteStudyGroup-----------------------------" + stid);
 		Result r = new Result();

@@ -11,7 +11,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="getStudy"
-	resultType="com.ssafy.itda.itda_test.model.Study">>
+	parameterType="java.lang.Integer"
+	resultType="com.ssafy.itda.itda_test.model.Study">
 		SELECT * 
 		FROM STUDY_T
 		WHERE STID = #{stid}

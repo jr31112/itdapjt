@@ -32,4 +32,8 @@ public class StudyGroupServiceImpl implements IStudyGroupService {
 		studyGroupDao.deleteStudyGroup(model);
 	}
 
+	@Override
+	public StudyGroup getStudyGroupRel(StudyGroup model) {
+		return studyGroupDao.getStudyGroupRel(model);
+	}
 }

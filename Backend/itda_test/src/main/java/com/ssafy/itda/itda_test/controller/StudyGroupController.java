@@ -90,6 +90,11 @@ public class StudyGroupController {
 			StudyGroup sg = new StudyGroup();
 			sg.setStid(stid);
 			sg.setUid(uid);
+			if (studyGroupService.getStudyGroupRel(sg) != null) {
+				r.setMsg("이미 가입된 스터디입니다.");
+				r.setState("fail");
+				return new ResponseEntity<Result>(r, HttpStatus.OK);
+			}
 			studyGroupService.createStudyGroup(sg);
 			r.setMsg("스터디 가입 성공적으로 완료되었습니다.");
 			r.setState("success");

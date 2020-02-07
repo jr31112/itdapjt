@@ -28,4 +28,8 @@ public class StudyGroupDao {
 		sqlSession.delete(ns + "deleteStudyGroup", model);
 		sqlSession.update(ns + "minusPcnt", model.getStid());
 	}
+	
+	public StudyGroup getStudyGroupRel(StudyGroup model) {
+		return sqlSession.selectOne(ns + "getStudyGroupRel", model);
+	}
 }

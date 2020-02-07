@@ -11,7 +11,7 @@
             </v-row>
             <h2>스터디 관리</h2>
             <v-row class="mb-4">
-                <v-col><admin-request/></v-col>
+                <v-col><admin-study/></v-col>
             </v-row>
         </v-container>
     </div>
@@ -20,14 +20,14 @@
 <script>
     import AdminRecruit from '../components/Admin/AdminRecruit.vue'
     import AdminUser from '../components/Admin/AdminUser.vue'
-    import AdminRequest from '../components/Admin/AdminRequest.vue'
+    import AdminStudy from '../components/Admin/AdminStudy.vue'
     import {mapState} from 'vuex'
     export default {
         name: "admin",
         components: {
             AdminRecruit,
             AdminUser,
-            AdminRequest
+            AdminStudy
         },
         computed: {
             ...mapState(["isManager"])

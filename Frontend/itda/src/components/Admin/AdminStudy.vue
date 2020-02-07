@@ -36,7 +36,7 @@
 <script>
     import axios from 'axios'
     export default {
-        name: "adminrequest",
+        name: "adminstudy",
         mounted() {
             this.getAllStudys()
         },

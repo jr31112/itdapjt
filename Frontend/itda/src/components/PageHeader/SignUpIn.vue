@@ -71,7 +71,7 @@
               v-model="password_lg"
               
               type="password"
-              label="password를 입력  하세요"
+              label="password를 입력하세요"
               @keyup.enter="goLogin()"
             ></v-text-field>
             <v-btn
@@ -178,7 +178,6 @@ export default {
           })
           .catch(err => {
             console.log("hi" + err);
-            alert("에러!!!");
           });
       }
     },

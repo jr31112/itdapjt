@@ -124,13 +124,11 @@
       aria-label="Support"
       style="min-width: 48px;"
     >
-  
       <span class="v-btn__content">
         <span class="subtitle-1 text-capitalize font-weight-light">
           <div class="v-markdown">Login | SignUp</div>
         </span>
       </span>
-      <!--먼가 여기서 IsDialog를 살려주면 될것같다 , 처음 로그인이라면 ~ , -->
     </v-btn>
     <!-------------------------------------- 모달창 ------------------------------------------>
     <v-dialog

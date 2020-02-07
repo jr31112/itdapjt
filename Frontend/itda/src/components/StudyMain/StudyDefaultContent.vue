@@ -1,6 +1,6 @@
 <template>
     <v-row class="mx-auto">
-        <v-data-iterator :items="studies" :page="page" hide-default-footer class="mx-auto">
+        <v-data-iterator :items="studies" :page="page" hide-default-footer class="mx-auto" v-if="studies.length">
             <v-row>
                 <v-simple-table class="mx-auto" fixed-header>
                     <thead class="px-auto">
@@ -14,16 +14,10 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="study in studies.slice(10*(page-1), 10*(page-1) + 10)" :key="study.stid">
-                            <td class="text-center">{{study.stid}}</td>
-                            <td class="text-center">{{category1[study.stype-1]}}</td>
-                            <td class="text-center">{{study.typeName}}</td>
-                            <td class="text-center">{{category2[study.sgroup-1]}}</td>
-                            <td class="text-left">{{study.stname}}</td>
-                            <td class="text-center">{{study.pcnt}}/{{study.maxPcnt}}</td>
-                        </tr>
+                        <study-detail v-for="study in studies.slice(10*(page-1), 10*(page-1) + 10)" :key="study.stid" :study="study" v-on:update="update"/>
                     </tbody>
                 </v-simple-table>
+                
             </v-row>
             <v-row class="mt-2" align="center" justify="center">
                 <v-btn color="blue lighten-1" class="mr-1" @click="formerPage">
@@ -37,22 +31,30 @@
                 </v-btn>
             </v-row>
         </v-data-iterator>
+        <v-row v-else>
+            <v-col style="text-align:center">
+                찾는 데이터가 없어요...ㅠ
+            </v-col>
+        </v-row>
     </v-row>
 </template>
 
 <script>
+import StudyDetail from './StudyDefaultContent/StudyDetail.vue'
 export default {
     name:"studydefaultContent",
     props:{
         options:{type:Object},
-        allstudy:{type:Array}
+        allstudy:{type:Array},
+    },
+    components:{
+        StudyDetail,
     },
     data(){
         return{
-            category1:['공고 대비','기업 대비','기술 대비','기타 등등',],
-            category2:['자소서 준비', '필기 준비', '면접 준비', '기타 등등',],
             page:1,
-            studies:[]
+            overlay:true,
+            studies:[],
         }
     },
     watch:{
@@ -65,25 +67,29 @@ export default {
             deep:true,
             immediate:true,
             handler:'updateOptions'
-        }
+        },
     },
     methods:{
+        update(){
+            console.log("2")
+            this.$emit('update')
+        },
         updateOptions(){
             const tmp = []
             for (var i=0; i<this.allstudy.length;i++){
                 if(this.options.category1 == 0){
                     if (this.options.category2 == 0){
-                        if(this.allstudy[i].stname.includes(this.options.keyword))
+                        if(this.allstudy[i].stname.includes(this.options.keyword)||this.allstudy[i].typeName.includes(this.options.keyword))
                             tmp.push(this.allstudy[i])
                     }
                     else{
-                        if(this.allstudy[i].sgroup == this.options.category2 && this.allstudy[i].stname.includes(this.options.keyword))
+                        if(this.allstudy[i].sgroup == this.options.category2 && (this.allstudy[i].stname.includes(this.options.keyword)||this.allstudy[i].typeName.includes(this.options.keyword)))
                             tmp.push(this.allstudy[i])
                     }
                 }
                 else{
                     if (this.options.category2 == 0){
-                        if(this.allstudy[i].stype == this.options.category1 && this.allstudy[i].stname.includes(this.options.keyword))
+                        if(this.allstudy[i].stype == this.options.category1 && (this.allstudy[i].stname.includes(this.options.keyword)||this.allstudy[i].typeName.includes(this.options.keyword)))
                             tmp.push(this.allstudy[i])
                     }
                     else{

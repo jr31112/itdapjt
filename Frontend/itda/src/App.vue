@@ -1,10 +1,10 @@
 <template>
     <v-app>
-        <page-top v-if="isnotResult"/>
+        <page-top v-if="!ispopup"/>
         <v-content>
         <router-view path="/"></router-view>
         </v-content>
-        <page-bottom v-if="isnotResult"/>
+        <page-bottom v-if="!ispopup"/>
     </v-app>
 </template>
 
@@ -19,6 +19,12 @@
             PageBottom
         },
         computed: {
+            ispopup(){
+                if(this.$route.name == "searchdata")
+                    return true
+                else
+                    return false
+            },
 		...mapState(["isLogin","isManager"])
         }
         

@@ -1,11 +1,8 @@
 <template>
   <div class="studymain">
-      <v-container class="my-0" white>
-          <h1>스터디 전체 보기</h1>
-          <study-filter :options="this.options" style="max-width:930px"/>
-          <study-default-content :options="this.options" :allstudy="this.studies"/>
+      <v-container class="my-0" white >
           <v-row>
-                <v-btn class="ml-auto" @click.stop="overlay = !overlay">스터디 새로등록</v-btn>
+            <v-btn class="ml-auto" @click.stop="overlay = !overlay">스터디 새로등록</v-btn>
                 <v-dialog v-model="overlay" scrollable max-width="500px">
                     <v-card>
                         <v-card-title>스터디 등록</v-card-title>
@@ -27,20 +24,33 @@
                         </v-card-actions>
                     </v-card>
                 </v-dialog>
-            </v-row>
+          </v-row>
+      </v-container>
+      
+      <v-container class="my-0" white v-if="isLogin">
+          <study-login-content/>
+      </v-container>
+      <v-container class="my-0" white>
+          <v-row><h1>스터디 전체 보기</h1></v-row>
+          <study-filter :options="this.options" style="max-width:930px"/>
+          <study-default-content :options="this.options" :allstudy="this.studies" :islogin="isLogin" v-on:update="update"/>
+                
       </v-container>
  </div>
 </template>
 
 <script>
+import StudyLoginContent from '../components/StudyMain/StudyLoginContent.vue'
 import StudyFilter from '../components/StudyMain/StudyFilter.vue'
 import StudyDefaultContent from '../components/StudyMain/StudyDefaultContent.vue'
 
 import axios from 'axios'
+import { mapState } from 'vuex'
 
 export default {
     name:"studymain",
     components:{
+        StudyLoginContent,
         StudyFilter,
         StudyDefaultContent,
     },
@@ -50,6 +60,9 @@ export default {
             .then(response=>{
                 this.studies = response.data
             })
+        },
+        update(){
+            this.getStudies()
         },
         validate () {
         var select = JSON.parse(localStorage.getItem('select'))
@@ -69,18 +82,10 @@ export default {
                     localStorage.removeItem('select')
                     this.$emit("child")
                     this.getStudies()
-                    // this.formData = {
-                    //     stname:'',
-                    //     content:'',
-                    //     maxPcnt:null,
-                    //     stype:null,
-                    //     sgroup:null,
-                    //     typeFk:1,
-                    //     typeName:'쿠팡',}
                 })
                 .catch()
                 }
-        }
+            }
         },
         reset () {
             this.$refs.form.reset()
@@ -135,6 +140,9 @@ export default {
     },
     mounted(){
         this.getStudies()
+    },
+    computed: {
+        ...mapState(["isLogin"])
     },
 }
 </script>

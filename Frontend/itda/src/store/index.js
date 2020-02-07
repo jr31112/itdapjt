@@ -87,13 +87,7 @@ export default new Vuex.Store({
       axios
         .get("http://192.168.31.54:8197/itda/api/getUser", config)
         .then(res => {
-          let userInfo = {
-            email : res.data.user.email,
-            uname : res.data.user.uname,
-            auth : res.data.user.auth,
-            major : res.data.user.major,
-            uimg : res.data.user.uimg
-          }
+          let userInfo = res.data
           
           commit('loginSuccess', userInfo)
           if( userInfo.auth === 0 )

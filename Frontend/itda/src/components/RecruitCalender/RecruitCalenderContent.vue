@@ -9,7 +9,7 @@
                     <v-btn fab="fab" text="text" small="small" color="grey darken-2" @click="prev">
                         <v-icon small="small">mdi-chevron-left</v-icon>
                     </v-btn>
-                    <v-toolbar-title>{{ title }}</v-toolbar-title>
+                    <v-toolbar-title>{{ calendartitle }}</v-toolbar-title>
                     <v-btn fab="fab" text="text" small="small" color="grey darken-2" @click="next">
                         <v-icon small="small">mdi-chevron-right</v-icon>
                     </v-btn>
@@ -37,22 +37,22 @@
         name: 'recruitcalendercontent',
         data: () => ({
             focus: '',
-            type: 'month',
+
             start: null,
             end: null,
             tmpevents: [],
             companylist: [],
             wantedlist: [],
-            names: [],
-            propsCperiod: []
+            calendartitle: ""
+
         }),
         watch: {
             options: {
                 deep: true,
                 immediate: true,
                 handler: 'updateRange'
-            }
-           
+            },
+            calendartitle: {}
         },
         props: {
             wlist: {
@@ -64,18 +64,20 @@
         },
         computed: {
             title() {
-                const {start, end} = this
+                var {
+                    start,
+                    end
+                } = this
                 if (!start || !end) {
                     return ''
                 }
-                const startMonth = this.monthFormatter(start)
-                const startYear = start.year
-                switch (this.type) {
-                    case 'month':
-                        return `${startMonth} ${startYear}`
-                }
-                return ''
+                var startYear = start.year
+                var startMonth = this.monthFormatter(this.start)
+                // const startYear = start.year
+                return startMonth + startYear
+                // return `${startMonth} ${startYear}`
             },
+            //오늘 날짜를 계산해 주는 함수
             monthFormatter() {
                 return this
                     .$refs
@@ -86,7 +88,6 @@
         created() {
             this.setValues()
         },
-        mounted() {},
         methods: {
             goDetailPage(event) {
                 console.log(event.event.name)
@@ -102,15 +103,8 @@
                         .wanted
                 }
             },
-            viewDay({date}) {
-                this.focus = date
-                this.type = 'day'
-            },
             getEventColor(event) {
                 return event.color
-            },
-            getText(event) {
-                return event.text
             },
             setToday() {
                 this.focus = this.today
@@ -130,6 +124,7 @@
             updateRange({start, end}) {
                 const events = []
                 var idxlist = []
+
                 if (this.companylist.length) {
                     // 신입이나 인턴이 포함되어 있는 인덱스를 value로 하는 list 반환
                     idxlist = this.searchOfJtype(this.options.recruit)
@@ -174,6 +169,9 @@
                     this.tmpevents = events
                     this.start = start
                     this.end = end
+                    var startYear = start.year
+                    var startMonth = this.monthFormatter(this.start)
+                    this.calendartitle = startYear +"년   "+ startMonth
                 } else {
                     return;
                 }

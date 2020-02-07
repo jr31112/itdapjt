@@ -1,10 +1,10 @@
 <template>
     <v-app>
-        <page-top v-if="isnotResult"/>
+        <page-top />
         <v-content>
         <router-view path="/"></router-view>
         </v-content>
-        <page-bottom v-if="isnotResult"/>
+        <page-bottom />
     </v-app>
 </template>
 

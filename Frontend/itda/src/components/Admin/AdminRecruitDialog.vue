@@ -10,7 +10,7 @@
                         <v-text-field 
                          v-model="editedItem.company" 
                          label="회사명"
-                         @click:
+                         @click="searchCompanyItem()"
                          ></v-text-field>
                     </v-col>
                     <v-col cols="6" >
@@ -87,6 +87,10 @@
             }
         },
         methods: {
+            searchCompanyItem()
+            {
+
+            },
             editItem(item) {
                 this.editedIndex = this
                     .allwanteds

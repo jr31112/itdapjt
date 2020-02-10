@@ -3,6 +3,7 @@ package com.ssafy.itda.itda_test.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.itda.itda_test.dao.WantedDao;
@@ -114,5 +115,12 @@ public class WantedServiceImpl implements IWantedService {
 	@Override
 	public void updateVcnt(int wid) {
 		wantedDao.updateVcnt(wid);
+	}
+	
+	@Scheduled(cron="0 0 0/1 * * *")
+	public void schedulerCheckDate() {
+		System.out.println("Scheduler Check Expire!!");
+		wantedDao.updateCheckOpen();
+		wantedDao.updateCheckExpire();
 	}
 }

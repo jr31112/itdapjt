@@ -34,11 +34,9 @@
 
 * 사용자 정의 테이블 `user_t`
 
-   Genre의 Primary Key(id 값)##############
    
-   
-  | 필드명 | 자료형  | 설명                            |
-  | ------ | ------- | ------------------------------- |
+   | 필드명 | 자료형  | 설명                            |
+   | ------ | ------- | ------------------------------- |
   | uid    | integer | Primary Key                     |
   | email  | string  | **(필수)** id 겸 이메일         |
   | pw     | string  | **(필수)** 패스워드             |
@@ -47,7 +45,7 @@
   | auth   | integer | **(필수, default 1)** 회원 권한 |
   | uimg   | string  | 회원 사진                       |
   | cid    | integer | company_t의 Primary Key(cid)    |
-
+  
 * 채용 공고 테이블 `wanted_t`
   
 
@@ -58,11 +56,9 @@
   | active      | integer | **(필수, default 0)** 공고 진행 상태    |
   | startDate   | date    | **(필수)** 공고 시작일                  |
   | endDate     | date    | **(필수)** 공고 마감일                  |
-  | process     | text    | **(필수) **채용 과정                    |
-  | etc         | text    | 기타 요구사항                           |
-  | question    | text    | 문의                                    |
   | vcnt        | integer | **(필수)** 공고 조회수                  |
   | cid         | integer | **(필수)** company_t의 Primary Key(cid) |
+  | detail      | string  | **(필수)** iframe 주소                  |
   
 * 스크랩 정보 테이블 `scrap_t`
 
@@ -90,27 +86,13 @@
   | uid      | integer | **(필수) **user_t의 Primary Key (uid) |
   | sid      | integer | **(필수)** stack_t의 Primary Key(sid) |
   
-* 직무 정보 테이블 `job_t`
+* 공고 별 기술 스택 정보 테이블 `wantedstack_t`
 
-  | 필드명  | 자료형  | 설명                                   |
-  | ------- | ------- | -------------------------------------- |
-  | jid     | integer | Primary Key                            |
-  | to      | string  | **(필수)** 모집인원                    |
-  | jname   | string  | **(필수)** 직무 명                     |
-  | jdetail | text    | 직무 상세                              |
-  | jtype   | string  | 고용형태 (계약직, 정규직, ...)         |
-  | require | text    | 자격요건                               |
-  | extra   | text    | 우대사항                               |
-  | place   | string  | 근무지                                 |
-  | wid     | integer | **(필수) **wanted_t의 Primary Key(wid) |
-
-* 직무 별 기술 스택 정보 테이블 `jobstack_t`
-
-  | 필드명   | 자료형  | 설명                                  |
-  | -------- | ------- | ------------------------------------- |
-  | jid, sid |         | Primary Key                           |
-  | jid      | integer | **(필수) **job_t의 Primary Key(jid)   |
-  | sid      | integer | **(필수) **stack_t의 Primary Key(sid) |
+  | 필드명   | 자료형  | 설명                                   |
+  | -------- | ------- | -------------------------------------- |
+  | wid, sid |         | Primary Key                            |
+  | wid      | integer | **(필수) **wanted_t의 Primary Key(wid) |
+  | sid      | integer | **(필수) **stack_t의 Primary Key(sid)  |
 
 * 기술 스택 추가 요청 테이블 `reqStack_t`
 

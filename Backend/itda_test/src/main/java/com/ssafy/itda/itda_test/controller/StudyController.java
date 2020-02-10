@@ -115,8 +115,8 @@ public class StudyController {
 	}
 
 	@ApiOperation(value = "스터디를 삭제한다.", response = Result.class)
-	@RequestMapping(value = "/deleteStudy", method = RequestMethod.DELETE)
-	public ResponseEntity<Result> deleteStudy(@RequestBody int stid) throws Exception {
+	@RequestMapping(value = "/deleteStudy/{stid}", method = RequestMethod.DELETE)
+	public ResponseEntity<Result> deleteStudy(@PathVariable int stid) throws Exception {
 		logger.info("2-------------deleteStudy-----------------------------" + new Date());
 		logger.info("2-------------deleteStudy-----------------------------" + stid);
 		Result r = new Result();

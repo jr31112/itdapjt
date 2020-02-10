@@ -1,10 +1,10 @@
 <template>
     <v-app>
-        <page-top />
+        <page-top v-if="!ispopup"/>
         <v-content>
         <router-view path="/"></router-view>
         </v-content>
-        <page-bottom />
+        <page-bottom v-if="!ispopup"/>
     </v-app>
 </template>
 
@@ -19,8 +19,19 @@
             PageBottom
         },
         computed: {
+            ispopup(){
+                if(this.$route.name == "searchdata")
+                    return true
+                else
+                    return false
+            },
 		...mapState(["isLogin","isManager"])
         }
         
     };
 </script>
+
+<style lang="scss">
+  // Import Main styles for this application
+  @import 'assets/scss/style';
+</style>

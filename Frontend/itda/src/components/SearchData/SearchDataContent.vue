@@ -93,6 +93,7 @@ export default {
             
             localStorage.setItem('select', JSON.stringify(content))
             window.close()
+            
         }
     },
     computed:{

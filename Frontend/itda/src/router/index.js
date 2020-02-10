@@ -11,6 +11,7 @@ import StudyMain from '../views/StudyMain.vue'
 import SearchResult from '../views/SearchResult.vue'
 import SearchData from '../views/SearchData.vue'
 import UserModify from "../components/Mypage/UserModify.vue"
+import AboutUs from '../components/Aboutus/AboutUs.vue'
 
 import store from '../store/index.js'
 Vue.use(VueRouter)
@@ -110,6 +111,11 @@ const routes = [
     name: "usermodify",
     component: UserModify
 
+  },
+  {
+    path: "/aboutus",
+    name: "aboutus",
+    component: AboutUs
   }
 
   ]

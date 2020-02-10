@@ -97,4 +97,12 @@ public class WantedDao {
 		sqlSession.update(ns + "updateVcnt", wid);
 	}
 
+	public void updateCheckExpire() {
+		sqlSession.update(ns + "updateCheckExpire");
+	}
+
+	public void updateCheckOpen() {
+		sqlSession.update(ns + "updateCheckOpen");
+	}
+
 }

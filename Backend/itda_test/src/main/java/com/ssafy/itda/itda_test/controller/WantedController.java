@@ -27,7 +27,6 @@ import com.ssafy.itda.itda_test.model.Job;
 import com.ssafy.itda.itda_test.model.JobStack;
 import com.ssafy.itda.itda_test.model.Scrap;
 import com.ssafy.itda.itda_test.model.Stack;
-import com.ssafy.itda.itda_test.model.User;
 import com.ssafy.itda.itda_test.model.Wanted;
 import com.ssafy.itda.itda_test.service.IJobService;
 import com.ssafy.itda.itda_test.service.IStackService;
@@ -53,7 +52,7 @@ public class WantedController {
 
 	@Autowired
 	private IStackService stackService;
-	
+
 	@Autowired
 	private JwtServiceImpl jwtService;
 
@@ -220,20 +219,30 @@ public class WantedController {
 
 	@ApiOperation(value = "사용자가 공고를 스크랩한다.", response = Result.class)
 	@RequestMapping(value = "/scrapWanted", method = RequestMethod.POST)
-	public ResponseEntity<Result> scrapWanted(@RequestBody Scrap model) throws Exception {
+	public ResponseEntity<Result> scrapWanted(@RequestBody Scrap input, HttpServletRequest req) throws Exception {
 		logger.info("5-------------scrapWanted-----------------------------" + new Date());
-		Scrap scrap = wantedService.isScraped(model);
+		System.out.println(input.getWid());
+		Map<String, Object> resultMap = new HashMap<>();
+		String token = req.getHeader("jwt-auth-token");
 		Result r = new Result();
-		if (scrap != null) {
-			wantedService.unScrap(model);
-			r.setMsg("스크랩 해지");
-			r.setState("success");
-			r.setScrap(false);
-		} else {
-			wantedService.scrap(model);
-			r.setMsg("스크랩 성공");
-			r.setState("success");
-			r.setScrap(true);
+		if (token != null && !token.equals("")) {
+			resultMap.putAll(jwtService.get(req.getHeader("jwt-auth-token")));
+			int uid = (int) resultMap.get("uid");
+			Scrap model = new Scrap();
+			model.setUid(uid);
+			model.setWid(input.getWid());
+			Scrap scrap = wantedService.isScraped(model);
+			if (scrap != null) {
+				wantedService.unScrap(model);
+				r.setMsg("스크랩 해지");
+				r.setState("success");
+				r.setScrap(false);
+			} else {
+				wantedService.scrap(model);
+				r.setMsg("스크랩 성공");
+				r.setState("success");
+				r.setScrap(true);
+			}
 		}
 		return new ResponseEntity<Result>(r, HttpStatus.OK);
 	}
@@ -268,7 +277,7 @@ public class WantedController {
 			}
 			j.setWid(wid);
 			int jid = jobService.createJobReturnJid(j);
-			for(Stack s : j.getStacks()) {
+			for (Stack s : j.getStacks()) {
 				JobStack js = new JobStack();
 				js.setJid(jid);
 				js.setSid(s.getSid());

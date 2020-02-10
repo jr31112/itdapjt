@@ -37,18 +37,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="getWantedByRecent" resultType="java.lang.Integer">
 		SELECT WID FROM
-		WANTED_T WHERE ACTIVE = 0 ORDER BY STARTDATE DESC LIMIT 24
+		WANTED_T WHERE ACTIVE = 1 ORDER BY STARTDATE DESC LIMIT 24
 	</select>
 
 	<select id="getWantedByCloseEnd" resultType="java.lang.Integer">
 		SELECT WID FROM
-		WANTED_T WHERE ACTIVE = 0 AND ENDDATE >= NOW() ORDER BY ENDDATE ASC
+		WANTED_T WHERE ACTIVE = 1 AND ENDDATE >= NOW() ORDER BY ENDDATE ASC
 		LIMIT 10
 	</select>
 
 	<select id="getWantedByView" resultType="java.lang.Integer">
 		SELECT WID FROM WANTED_T
-		WHERE ACTIVE = 0 ORDER BY VCNT DESC LIMIT 10
+		WHERE ACTIVE = 1 ORDER BY VCNT DESC LIMIT 10
 	</select>
 
 	<select id="isScraped"
@@ -126,4 +126,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="updateVcnt" parameterType="java.lang.Integer">
 		UPDATE WANTED_T SET VCNT = VCNT + 1 WHERE WID = #{wid}
 	</update>
+	
+	<update id="updateCheckExpire">
+		UPDATE WANTED_T SET ACTIVE = 0 WHERE ENDDATE &lt; NOW()
+	</update>
+	
+	<update id="updateCheckOpen">
+		UPDATE WANTED_T SET ACTIVE = 1 WHERE STARTDATE &gt; NOW()
+	</update>
+	
 </mapper>

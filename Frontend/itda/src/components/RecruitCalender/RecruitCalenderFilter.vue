@@ -106,7 +106,7 @@
         methods: {
             getRecentRecruit() {
                 axios
-                    .get(`http://192.168.31.54:8197/itda/api/getWantedAll/`)
+                    .get(`https://192.168.31.54:8197/itda/api/getWantedAll/`)
                     .then(response => {
                         this.recentlist = response.data
                     })
@@ -116,7 +116,7 @@
                 },
             getTechStack() {
                 axios
-                    .get(`http://192.168.31.54:8197/itda/api/getAllStacks/`)
+                    .get(`https://192.168.31.54:8197/itda/api/getAllStacks/`)
                     .then(response => {
                         for (var i = 0; i < response.data.length; i++) {
                             var sid = response

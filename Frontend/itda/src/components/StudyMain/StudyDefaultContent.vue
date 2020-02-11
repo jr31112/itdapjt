@@ -6,9 +6,9 @@
                     <thead class="px-auto">
                         <tr>
                             <th class="text-center">번호</th>
-                            <th class="text-center">스터디 종류</th>
+                            <th class="text-center" id="response">스터디 종류</th>
                             <th class="text-center">스터디 주제</th>
-                            <th class="text-center">스터디 내용</th>
+                            <th class="text-center" id="response">스터디 내용</th>
                             <th class="text-left" style="width:40vw">스터디 이름</th>
                             <th class="text-center">인원</th>
                         </tr>
@@ -120,5 +120,9 @@ export default {
 </script>
 
 <style>
-
+@media only screen and (max-width: 1030px){
+    #response{
+        display: none;
+    }
+}
 </style>

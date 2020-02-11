@@ -57,7 +57,7 @@
         display: inline;
     }
 
-    @media only screen and (max-width: 400px) {
+    @media only screen and (max-width: 767px) {
         .jw{
             display: none;
         }

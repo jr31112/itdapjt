@@ -17,7 +17,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getWantedInfo" parameterType="java.lang.String"
 		resultType="com.ssafy.itda.itda_test.model.Wanted">
 		SELECT WID, WANTEDTITLE, ACTIVE, STARTDATE, ENDDATE,
-		VCNT, CID, DETAIL
+		VCNT,
+		CID, DETAIL
 		FROM WANTED_T WHERE WID = #{wid}
 	</select>
 
@@ -63,16 +64,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<insert id="createWanted"
 		parameterType="com.ssafy.itda.itda_test.model.Wanted">
-		INSERT INTO WANTED_T(WID, WANTEDTITLE, ACTIVE, STARTDATE, ENDDATE, CID, DETAIL)
-		VALUES(#{wid}, #{wantedTitle}, #{active}, FROM_UNIXTIME(#{startDate}),
-		FROM_UNIXTIME(#{endDate}), #{cid}, #{detail})
+		INSERT INTO WANTED_T(WID, WANTEDTITLE, ACTIVE,
+		STARTDATE, ENDDATE, CID, DETAIL)
+		VALUES(#{wid}, #{wantedTitle},
+		#{active}, FROM_UNIXTIME(#{startDate}),
+		FROM_UNIXTIME(#{endDate}),
+		#{cid}, #{detail})
 	</insert>
 
-	<select id="getInputWanted" parameterType="com.ssafy.itda.itda_test.model.Wanted"
-		resultType="java.lang.String">
-		SELECT WID FROM WANTED_T WHERE WANTEDTITLE = #{wantedTitle} AND STARTDATE = #{startDate}
-		AND ENDDATE = #{endDate} AND CID = #{cid} ORDER BY WID DESC LIMIT 1
-	</select>
+	<!-- <select id="getInputWanted" parameterType="com.ssafy.itda.itda_test.model.Wanted" -->
+	<!-- resultType="java.lang.String"> -->
+	<!-- SELECT WID FROM WANTED_T WHERE WANTEDTITLE = #{wantedTitle} AND STARTDATE 
+		= #{startDate} -->
+	<!-- AND ENDDATE = #{endDate} AND CID = #{cid} ORDER BY WID DESC LIMIT 1 -->
+	<!-- </select> -->
 
 	<delete id="deleteWanted" parameterType="java.lang.String">
 		DELETE FROM WANTED_T
@@ -81,46 +86,56 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<insert id="updateWanted"
 		parameterType="com.ssafy.itda.itda_test.model.Wanted">
-		INSERT INTO WANTED_T(WANTEDTITLE, STARTDATE, ENDDATE, CID, DETAIL)
-		VALUES(#{wantedTitle}, #{startDate}, #{endDate}, #{cid}, #{detail})
+		UPDATE WANTED_T SET WANTEDTITLE = #{wantedTitle},
+		STARTDATE = #{startDate}, ENDDATE = #{endDate},
+		DETAIL = #{detail}, CID
+		= #{cid} WHERE WID = #{wid}
 	</insert>
 
 	<select id="getStackInfo" parameterType="java.lang.String"
 		resultType="com.ssafy.itda.itda_test.model.Stack">
 		SELECT S.SID, S.TNAME
-		FROM WANTEDSTACK_T AS WS JOIN STACK_T AS
+		FROM WANTEDSTACK_T AS WS JOIN STACK_T
+		AS
 		S ON WS.SID = S.SID
 		WHERE WS.WID = #{wid}
 	</select>
 
-	<select id="getWantedStackInfo"
-	parameterType="java.lang.String"
-	resultType="com.ssafy.itda.itda_test.model.Stack">
-	SELECT DISTINCT S.SID, S.TNAME
-	FROM WANTED_T AS W, WANTEDSTACK_T AS WS, STACK_T AS S
-	WHERE W.WID = WS.WID AND WS.SID = S.SID AND W.WID = #{wid}
+	<select id="getWantedStackInfo" parameterType="java.lang.String"
+		resultType="com.ssafy.itda.itda_test.model.Stack">
+		SELECT DISTINCT S.SID, S.TNAME
+		FROM WANTED_T AS W, WANTEDSTACK_T AS WS, STACK_T AS S
+		WHERE W.WID = WS.WID AND WS.SID = S.SID AND W.WID = #{wid}
 	</select>
-	
-	<select id="getWantedByStack" parameterType="java.lang.Integer" resultType="java.lang.String">
-		SELECT DISTINCT W.WID FROM MYSTACK_T AS MS, WANTEDSTACK_T AS WS, WANTED_T AS W
-		WHERE MS.UID = #{uid} AND MS.SID = WS.SID ORDER BY ENDDATE LIMIT 10;
+
+	<select id="getWantedByStack" parameterType="java.lang.Integer"
+		resultType="java.lang.String">
+		SELECT DISTINCT W.WID FROM MYSTACK_T AS MS, WANTEDSTACK_T
+		AS WS, WANTED_T AS W
+		WHERE MS.UID = #{uid} AND MS.SID = WS.SID ORDER BY
+		ENDDATE LIMIT 10;
 	</select>
-	
-	<select id="getWantedByScrap" parameterType="java.lang.Integer" resultType="java.lang.String">
+
+	<select id="getWantedByScrap" parameterType="java.lang.Integer"
+		resultType="java.lang.String">
 		SELECT W.WID FROM SCRAP_T AS S, WANTED_T AS W
-		WHERE S.UID = #{uid} AND S.WID = W.WID ORDER BY ENDDATE LIMIT 10;
+		WHERE S.UID =
+		#{uid} AND S.WID = W.WID ORDER BY ENDDATE LIMIT 10;
 	</select>
-	
+
 	<update id="updateVcnt" parameterType="java.lang.String">
-		UPDATE WANTED_T SET VCNT = VCNT + 1 WHERE WID = #{wid}
+		UPDATE WANTED_T SET VCNT =
+		VCNT + 1 WHERE WID = #{wid}
 	</update>
-	
+
 	<update id="updateCheckExpire">
-		UPDATE WANTED_T SET ACTIVE = 0 WHERE ENDDATE &lt; NOW()
+		UPDATE WANTED_T SET ACTIVE = 0 WHERE ENDDATE &lt;
+		NOW()
 	</update>
-	
+
 	<update id="updateCheckOpen">
-		UPDATE WANTED_T SET ACTIVE = 1 WHERE STARTDATE &gt; NOW()
+		UPDATE WANTED_T SET ACTIVE = 1 WHERE STARTDATE &gt;
+		NOW()
 	</update>
-	
+
 </mapper>

@@ -90,7 +90,7 @@ export default new Vuex.Store({
           let userInfo = res.data
           
           commit('loginSuccess', userInfo)
-          if( userInfo.auth === 0 )
+          if( userInfo.user.auth === 0 )
           {
             commit("managerlogin")
           }

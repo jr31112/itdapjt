@@ -37,19 +37,22 @@
         name: 'recruitcalendercontent',
         data: () => ({
             focus: '',
-
             start: null,
             end: null,
             tmpevents: [],
             companylist: [],
             wantedlist: [],
             calendartitle: ""
-
+            
         }),
         watch: {
             options: {
                 deep: true,
                 immediate: true,
+                handler: 'updateRange'
+            },
+            selectstacklist: {
+                deep: true,
                 handler: 'updateRange'
             },
             calendartitle: {}
@@ -60,6 +63,9 @@
             },
             options: {
                 type: Object
+            },
+            selectstacklist: {
+                type: Array
             }
         },
         computed: {
@@ -124,10 +130,10 @@
             updateRange({start, end}) {
                 const events = []
                 var idxlist = []
-
                 if (this.companylist.length) {
                     // 신입이나 인턴이 포함되어 있는 인덱스를 value로 하는 list 반환
                     idxlist = this.searchOfJtype(this.options.recruit)
+                    idxlist = this.searchOfStack(idxlist)
                     for (var i = 0; i < idxlist.length; i++) {
                         if (this.options.period != 2) {
                             events.push({
@@ -171,7 +177,7 @@
                     this.end = end
                     var startYear = start.year
                     var startMonth = this.monthFormatter(this.start)
-                    this.calendartitle = startYear +"년   "+ startMonth
+                    this.calendartitle = startYear + "년   " + startMonth
                 } else {
                     return;
                 }
@@ -209,9 +215,35 @@
                         tidx.push(k)
                     }
                 }
+
                 return tidx
+            },
+            searchOfStack(idxlist) {
+                var tidxlist = []
+                if(idxlist.length == 0 && this.selectstacklist.length ==0){
+                    return idxlist
+                }
+                for (var i = 0; i < idxlist.length; i++) {
+                    outplace : for (var j = 0; j < this.wlist[idxlist[i]].jobs.length; j++) {
+                        for (var k = 0; k < this.wlist[idxlist[i]].jobs[j].stack.length; k++) {
+                            for (var z = 0; z < this.selectstacklist.length; z++) {
+                                if (this.wlist[idxlist[i]].jobs[j].stacks[k].sid == this.selectstacklist[z].sid) {
+                                    tidxlist.push(idxlist[i])
+                                    break outplace
+                                }
+                            }
+                        }
+                    }
+                }
+                return tidxlist
+            },
+            isEmpty(str) {
+                if (typeof str == "undefined" || str == null || str == "" || str.length == 0) 
+                    return true;
+                else 
+                    return false;
+                }
             }
-        }
     }
 </script>
 <style>

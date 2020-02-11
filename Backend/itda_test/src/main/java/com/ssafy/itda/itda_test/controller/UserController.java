@@ -168,7 +168,7 @@ public class UserController {
 			List<WantedResult> wrlist = new ArrayList<>();
 			List<WantedResult> ewrlist = new ArrayList<>();
 			for (int i : myScrapWanteds) {
-				int cid = wantedService.getCompanyId(i);
+				String cid = wantedService.getCompanyId(i);
 				Company company = wantedService.getCompanyInfo(cid);
 				Wanted wanted = wantedService.getWantedInfo(i);
 				List<Job> jobs = wantedService.getJobsInfo(i);

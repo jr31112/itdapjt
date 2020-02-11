@@ -85,7 +85,7 @@ public class WantedController {
 		if (token != null && !token.equals("")) {
 			resultMap.putAll(jwtService.get(req.getHeader("jwt-auth-token")));
 			int uid = (int) resultMap.get("uid");
-			int cid = wantedService.getCompanyId(wid);
+			String cid = wantedService.getCompanyId(wid);
 			Company company = wantedService.getCompanyInfo(cid);
 			Wanted wanted = wantedService.getWantedInfo(wid);
 			List<Job> jobs = wantedService.getJobsInfo(wid);
@@ -107,7 +107,7 @@ public class WantedController {
 				wr.setScrap(true);
 			}
 		} else {
-			int cid = wantedService.getCompanyId(wid);
+			String cid = wantedService.getCompanyId(wid);
 			Company company = wantedService.getCompanyInfo(cid);
 			Wanted wanted = wantedService.getWantedInfo(wid);
 			List<Job> jobs = wantedService.getJobsInfo(wid);
@@ -253,7 +253,7 @@ public class WantedController {
 		logger.info("6-------------createWanted-----------------------------" + model);
 		Result r = new Result();
 		// Wanted Input Condition
-		if (model.getCid() == 0 || model.getWantedTitle() == null || model.getWantedTitle().equals("")
+		if (model.getCid() == null || model.getCid().equals("") || model.getWantedTitle() == null || model.getWantedTitle().equals("")
 				|| model.getStartDate() == null || model.getStartDate().equals("") || model.getEndDate() == null
 				|| model.getEndDate().equals("") || model.getProcess() == null || model.getProcess().equals("")) {
 			r.setMsg("공고 필수 입력값이 누락되었습니다.");
@@ -318,7 +318,7 @@ public class WantedController {
 		if (wid == 0 || wanted == null) {
 			r.setMsg("존재하지 않는 wid값입니다.");
 			r.setState("fail");
-		} else if (model.getCid() == 0 || model.getWantedTitle() == null || model.getWantedTitle().equals("")
+		} else if (model.getCid() == null || model.getCid().equals("") || model.getWantedTitle() == null || model.getWantedTitle().equals("")
 				|| model.getStartDate() == null || model.getStartDate().equals("") || model.getEndDate() == null
 				|| model.getEndDate().equals("") || model.getProcess() == null || model.getProcess().equals("")) {
 			r.setMsg("입력되지 않은 필수값이 있습니다.");
@@ -334,7 +334,7 @@ public class WantedController {
 	private List<WantedResult> getWantedListFunction(List<Integer> widList, int uid) {
 		List<WantedResult> wrlist = new ArrayList<>();
 		for (int i : widList) {
-			int cid = wantedService.getCompanyId(i);
+			String cid = wantedService.getCompanyId(i);
 			Company company = wantedService.getCompanyInfo(cid);
 			Wanted wanted = wantedService.getWantedInfo(i);
 			List<Job> jobs = wantedService.getJobsInfo(i);
@@ -364,7 +364,7 @@ public class WantedController {
 	private List<WantedResult> getWantedListFunction(List<Integer> widList) {
 		List<WantedResult> wrlist = new ArrayList<>();
 		for (int i : widList) {
-			int cid = wantedService.getCompanyId(i);
+			String cid = wantedService.getCompanyId(i);
 			Company company = wantedService.getCompanyInfo(cid);
 			Wanted wanted = wantedService.getWantedInfo(i);
 			List<Job> jobs = wantedService.getJobsInfo(i);

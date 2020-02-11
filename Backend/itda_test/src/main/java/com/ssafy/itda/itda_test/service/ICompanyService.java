@@ -6,7 +6,7 @@ import com.ssafy.itda.itda_test.model.Company;
 
 public interface ICompanyService {
 	void createCompany(Company model);
-	void deleteCompany(Integer cid);
+	void deleteCompany(String cid);
 	void updateCompany(Company model);
 	List<Company> getAllCompanys();		
 }

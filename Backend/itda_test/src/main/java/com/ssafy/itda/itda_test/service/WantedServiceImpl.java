@@ -46,7 +46,7 @@ public class WantedServiceImpl implements IWantedService {
 	}
 
 	@Override
-	public Company getCompanyInfo(int cid) {
+	public Company getCompanyInfo(String cid) {
 		// TODO Auto-generated method stub
 		return wantedDao.getCompanyInfo(cid);
 	}
@@ -58,7 +58,7 @@ public class WantedServiceImpl implements IWantedService {
 	}
 
 	@Override
-	public int getCompanyId(int wid) {
+	public String getCompanyId(int wid) {
 		return wantedDao.getCompanyId(wid);
 	}
 

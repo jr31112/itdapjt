@@ -13,7 +13,7 @@ public class Wanted implements Serializable {
 	private String etc;
 	private String question;
 	private int vcnt;
-	private int cid;
+	private String cid;
 
 	List<Job> jobs;
 
@@ -23,7 +23,7 @@ public class Wanted implements Serializable {
 	}
 
 	public Wanted(int wid, String wantedTitle, int active, String startDate, String endDate, String process, String etc,
-			String question, int vcnt, int cid) {
+			String question, int vcnt, String cid, List<Job> jobs) {
 		super();
 		this.wid = wid;
 		this.wantedTitle = wantedTitle;
@@ -35,6 +35,7 @@ public class Wanted implements Serializable {
 		this.question = question;
 		this.vcnt = vcnt;
 		this.cid = cid;
+		this.jobs = jobs;
 	}
 
 	public int getWid() {
@@ -109,11 +110,11 @@ public class Wanted implements Serializable {
 		this.vcnt = vcnt;
 	}
 
-	public int getCid() {
+	public String getCid() {
 		return cid;
 	}
 
-	public void setCid(int cid) {
+	public void setCid(String cid) {
 		this.cid = cid;
 	}
 
@@ -129,7 +130,7 @@ public class Wanted implements Serializable {
 	public String toString() {
 		return "Wanted [wid=" + wid + ", wantedTitle=" + wantedTitle + ", active=" + active + ", startDate=" + startDate
 				+ ", endDate=" + endDate + ", process=" + process + ", etc=" + etc + ", question=" + question
-				+ ", vcnt=" + vcnt + ", cid=" + cid + "]";
+				+ ", vcnt=" + vcnt + ", cid=" + cid + ", jobs=" + jobs + "]";
 	}
 
 }

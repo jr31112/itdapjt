@@ -10,7 +10,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<select id="getCompanyId" parameterType="java.lang.Integer"
-		resultType="java.lang.Integer">
+		resultType="java.lang.String">
 		SELECT CID FROM WANTED_T WHERE WID = #{wid}
 	</select>
 

@@ -10,14 +10,14 @@ public class User implements Serializable {
 	private int auth;
 	private String major;
 	private String uimg;
-	private int cid;
+	private String cid;
 
 	public User() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public User(int uid, String email, String pw, String uname, int auth, String major, String uimg, int cid) {
+	public User(int uid, String email, String pw, String uname, int auth, String major, String uimg, String cid) {
 		super();
 		this.uid = uid;
 		this.email = email;
@@ -85,11 +85,11 @@ public class User implements Serializable {
 		this.uimg = uimg;
 	}
 
-	public int getCid() {
+	public String getCid() {
 		return cid;
 	}
 
-	public void setCid(int cid) {
+	public void setCid(String cid) {
 		this.cid = cid;
 	}
 
@@ -98,5 +98,4 @@ public class User implements Serializable {
 		return "User [uid=" + uid + ", email=" + email + ", pw=" + pw + ", uname=" + uname + ", auth=" + auth
 				+ ", major=" + major + ", uimg=" + uimg + ", cid=" + cid + "]";
 	}
-
 }

@@ -6,7 +6,7 @@
                 <user-current-recruit :UserScrapWanteds="UserScrapWanteds"/>
             </v-flex>
             <v-flex xs6="xs6" pa-2="pa-2">
-                <user-end-recruit/>
+                <user-end-recruit :UserScrapWanteds="UserScrapWanteds"/>
             </v-flex>
 
         </v-layout>
@@ -29,7 +29,14 @@
             UserScrapWanteds:{
                 type: Array
             }
+        },
+        mounted(){
+
+        },
+        methods:{
+            
         }
+
     }
 </script>
 

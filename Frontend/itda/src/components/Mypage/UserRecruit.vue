@@ -3,10 +3,10 @@
         <v-layout>
 
             <v-flex xs6="xs6" pa-2="pa-2">
-                <user-current-recruit :UserScrapWanteds="UserScrapWanteds"/>
+                <user-current-recruit :currentRecrutis="currentRecrutis"/>
             </v-flex>
             <v-flex xs6="xs6" pa-2="pa-2">
-                <user-end-recruit :UserScrapWanteds="UserScrapWanteds"/>
+                <user-end-recruit :endRecruits="endRecruits"/>
             </v-flex>
 
         </v-layout>
@@ -22,6 +22,11 @@
             UserCurrentRecruit,
             UserEndRecruit
         },
+        data(){return {
+            endRecruits:[],
+            currentRecrutis:[]
+        }
+        },
         props:{
             UserEndedScrapWanteds:{
                 type: Array
@@ -31,10 +36,13 @@
             }
         },
         mounted(){
-
+            this.setRecruit()
         },
         methods:{
-            
+            setRecruit(){
+                this.endRecruits=this.UserEndedScrapWanteds
+                this.currentRecrutis=this.UserScrapWanteds
+            }
         }
 
     }

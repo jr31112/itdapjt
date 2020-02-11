@@ -1,5 +1,4 @@
 <template>
-
     <v-container>
         <p>현재 진행 중인 공고</p>
         <v-card>
@@ -27,12 +26,10 @@
     export default {
         name: "userscraplist",
         data() {
-            return {currentRecruits: [
-                    {}
-                ], pagenum: 1, pagesize: 5}
+            return { pagenum: 1, pagesize: 5}
         },
         props: {
-            UserScrapWanteds: {
+            currentRecruits: {
                 type: Array
             }
         },
@@ -51,15 +48,6 @@
                     .slice(start, end);
             }
 
-        },
-        created() {
-            this.setRecruit()
-
-        },
-        methods: {
-            setRecruit() {
-                this.currentRecruits = this.UserScrapWanteds
-            }
         },
         nextPage() {
             this.pagenum += 1;

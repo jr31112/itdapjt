@@ -113,7 +113,7 @@ const routes = [
     import("../views/RecruitMain.vue")
   },
   {
-    path: "/usermodify",
+    path: "/usermodify/:userInfo",
     name: "usermodify",
     component: UserModify
 

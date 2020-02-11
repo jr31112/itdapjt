@@ -1,17 +1,18 @@
 drop table if exists mystack_t ;
-drop table if exists jobstack_t;
-drop table if exists comment_t;
+drop table if exists wantedstack_t;
 drop table if exists stack_t;
 drop table if exists scrap_t;
 drop table if exists job_t;
 drop table if exists reqstack_t;
+drop table if exists studygroup_t;
+drop table if exists study_t;
 drop table if exists user_t;
 drop table if exists wanted_t;
 drop table if exists company_t;
 
 -- 기업 정보 테이블 정의
 create table company_t(
-	cid int primary key auto_increment,
+	cid varchar(10) primary key,
     corpNm varchar(100) not null,
     totPsncnt varchar(20),
     busiSize varchar(30),
@@ -33,7 +34,7 @@ create table user_t(
     major varchar(20),
     auth int not null default 1, -- 1: user, 0: admin
     uimg varchar(100),
-    cid int,
+    cid varchar(10),
     foreign key(cid) references company_t(cid)
 );
 -- email : id 겸 이메일, pw : 패스워드 (sha1로 변환하여 저장)
@@ -41,23 +42,22 @@ create table user_t(
 
 -- 채용 공고 테이블 정의
 create table wanted_t(
-	wid int primary key auto_increment,
+	wid varchar(10) primary key ,
     wantedTitle varchar(300) not null,
-    active int not null default 1,	-- 0 : 마감, 1 : 진행 중, 2: 오늘 마감, 3: 내일 마감
+    active int not null default 0,	-- 0 : 마감, 1 : 진행 중, 2: 오늘 마감, 3: 내일 마감
     startDate timestamp not null,
     endDate timestamp not null,
     detail varchar(300) not null,
     vcnt int not null default 0,
-    cid int not null,
+    cid varchar(10) not null,
     foreign key(cid) references company_t(cid) on delete cascade
 );
--- wantedTitle : 공고 제목, active : 공고 진행 상태, startDate : 공고 시작일, endDate : 공고 마감일
--- process : 채용 과정, etc : 기타 요구사항, question : 문의, vcnt : 공고 조회수
+-- wantedTitle : 공고 제목, active : 공고 진행 상태, startDate : 공고 시작일, endDate : 공고 마감일 vcnt : 공고 조회수
 
 -- 스크랩 정보 테이블 정의
 create table scrap_t(
 	uid int not null,
-    wid int not null,
+    wid varchar(10) not null,
     primary key(uid, wid),
     foreign key(uid) references user_t(uid) on delete cascade on update cascade,
     foreign key(wid) references wanted_t(wid) on delete cascade on update cascade
@@ -83,9 +83,11 @@ create table myStack_t(
 );
 -- on delete cascade, on update cascade  / or  No action
 
+-- 직무 정보 테이블 삭제되었음
+
 -- 공고 별 기술 스택 정보 테이블 정의
-create table wnatedStack_t(
-	wid int not null,
+create table wantedStack_t(
+	wid varchar(10) not null,
     sid int not null,
     primary key(wid, sid),
     foreign key(wid) references wanted_t(wid) on delete cascade on update cascade,

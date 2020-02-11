@@ -95,8 +95,8 @@ public class WantedServiceImpl implements IWantedService {
 	}
 
 	@Override
-	public String createWanted(Wanted model) {
-		return wantedDao.createWanted(model);
+	public void createWanted(Wanted model) {
+		wantedDao.createWanted(model);
 	}
 
 	@Override
@@ -146,8 +146,8 @@ public class WantedServiceImpl implements IWantedService {
 		schedulerSaraminAPI();
 	}
 
-//	@Scheduled(cron = "0 0 0/1 * * *")
-	@Scheduled(fixedDelay = 180000)
+	@Scheduled(cron = "0 0 0/3 * * *")
+//	@Scheduled(fixedDelay = 180000)
 	public void schedulerSaraminAPI() throws IOException {
 		System.out.println("Scheduler Saramin API!!");
 		String access_key = "0Q5ESrsPZNoxQPN98JpXKSFYmIHImsAyLfHbS2hUMGQUlxZ5O";
@@ -180,21 +180,24 @@ public class WantedServiceImpl implements IWantedService {
 			String now = st.nextToken();
 			if (now.charAt(0) == 'c') {
 				cid = now.substring(4);
-//				Company company = companyDao.getCompany(cid);
-//				if(company == null) {
-				if (!inputCompany(cid)) {
+				Company company = companyDao.getCompany(cid);
+				if (company == null) {
+					if (!inputCompany(cid)) {
+						return;
+					}
+				}
+				String wid = job.path("id").textValue();
+				if (wantedDao.getWantedInfo(wid) != null) {
 					return;
 				}
-//				}
-				String wid = job.path("id").toString();
-				String wantedTitle = job.path("position").path("title").toString();
+				String wantedTitle = job.path("position").path("title").textValue();
 				int active = job.path("active").intValue();
-				String startDate = job.path("opening-timestamp").toString();
-				String endDate = job.path("expiration-timestamp").toString();
+				String startDate = job.path("opening-timestamp").textValue();
+				String endDate = job.path("expiration-timestamp").textValue();
 				String detail = "http://www.saramin.co.kr/zf_user/jobs/relay/view-detail?rec_idx=" + wid + "&rec_seq=0";
-				checkStack(detail, wid);
 				Wanted wanted = new Wanted(wid, wantedTitle, active, startDate, endDate, 0, cid, detail);
 				wantedDao.createWanted(wanted);
+				checkStack(detail, wid);
 			}
 		}
 
@@ -215,10 +218,10 @@ public class WantedServiceImpl implements IWantedService {
 	}
 
 	private boolean inputCompany(String cid) throws IOException {
-		System.out.println(cid);
 		String base_url = "http://www.saramin.co.kr/zf_user/company-info/view?csn=";
 		Document doc = Jsoup.connect(base_url + cid).get();
 		Company company = new Company();
+		company.setCid(cid);
 		if (!doc.getElementsByClass("result_txt").isEmpty()) {
 			System.out.println("No Company Info");
 			return false;
@@ -233,13 +236,10 @@ public class WantedServiceImpl implements IWantedService {
 		Elements list_items = list_intro.get(0).getElementsByClass("box");
 		for (int i = 0; i < list_items.size(); i++) {
 			if (list_items.get(i).text().contains("사원수")) {
-				System.out.println("사원 수 : " + list_items.get(i).getElementsByClass("desc").text());
 				company.setTotPsncnt(list_items.get(i).getElementsByClass("desc").text());
 			} else if (list_items.get(i).text().contains("기업형태")) {
-				System.out.println("기업형태 : " + list_items.get(i).getElementsByClass("desc").text());
 				company.setBusiSize(list_items.get(i).getElementsByClass("desc").text());
 			} else if (list_items.get(i).text().contains("매출액")) {
-				System.out.println("매출액 : " + list_items.get(i).getElementsByClass("desc").text());
 				company.setYrSalesAmt(list_items.get(i).getElementsByClass("desc").text());
 			}
 		}
@@ -250,17 +250,23 @@ public class WantedServiceImpl implements IWantedService {
 		company.setCorpAddr(txt_address.text());
 
 		Elements list_info = doc.getElementsByClass("list_info");
-		Elements dts = list_info.get(1).getElementsByTag("dt");
-		Elements dds = list_info.get(1).getElementsByTag("dd");
+		Elements dts = null;
+		Elements dds = null;
+
+		if (list_info.size() > 1) {
+			dts = list_info.get(1).getElementsByTag("dt");
+			dds = list_info.get(1).getElementsByTag("dd");
+		} else {
+			dts = list_info.get(0).getElementsByTag("dt");
+			dds = list_info.get(0).getElementsByTag("dd");
+		}
 		for (int i = 0; i < dts.size(); i++) {
 			if (dts.get(i).text().contains("업종")) {
 				company.setBusiCont(dds.get(i).text());
 				break;
 			}
 		}
-
 		companyDao.createCompany(company);
-
 		return true;
 	}
 

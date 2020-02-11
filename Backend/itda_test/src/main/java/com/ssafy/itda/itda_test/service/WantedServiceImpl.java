@@ -25,7 +25,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssafy.itda.itda_test.dao.CompanyDao;
 import com.ssafy.itda.itda_test.dao.WantedDao;
 import com.ssafy.itda.itda_test.model.Company;
-import com.ssafy.itda.itda_test.model.Job;
 import com.ssafy.itda.itda_test.model.Scrap;
 import com.ssafy.itda.itda_test.model.Stack;
 import com.ssafy.itda.itda_test.model.Wanted;
@@ -40,7 +39,7 @@ public class WantedServiceImpl implements IWantedService {
 	private CompanyDao companyDao;
 
 	@Override
-	public Wanted getWantedInfo(int wid) {
+	public Wanted getWantedInfo(String wid) {
 		// TODO Auto-generated method stub
 		return wantedDao.getWantedInfo(wid);
 	}
@@ -52,28 +51,22 @@ public class WantedServiceImpl implements IWantedService {
 	}
 
 	@Override
-	public List<Job> getJobsInfo(int wid) {
-		// TODO Auto-generated method stub
-		return wantedDao.getJobsInfo(wid);
-	}
-
-	@Override
-	public String getCompanyId(int wid) {
+	public String getCompanyId(String wid) {
 		return wantedDao.getCompanyId(wid);
 	}
 
 	@Override
-	public List<Integer> getWantedByRecent() {
+	public List<String> getWantedByRecent() {
 		return wantedDao.getWantedByRecent();
 	}
 
 	@Override
-	public List<Integer> getWantedByCloseEnd() {
+	public List<String> getWantedByCloseEnd() {
 		return wantedDao.getWantedByCloseEnd();
 	}
 
 	@Override
-	public List<Integer> getWantedByView() {
+	public List<String> getWantedByView() {
 		return wantedDao.getWantedByView();
 	}
 
@@ -93,17 +86,17 @@ public class WantedServiceImpl implements IWantedService {
 	}
 
 	@Override
-	public List<Integer> getWantedAll() {
+	public List<String> getWantedAll() {
 		return wantedDao.getWantedAll();
 	}
 
 	@Override
-	public int createWanted(Wanted model) {
+	public String createWanted(Wanted model) {
 		return wantedDao.createWanted(model);
 	}
 
 	@Override
-	public void deleteWanted(int wid) {
+	public void deleteWanted(String wid) {
 		wantedDao.deleteWanted(wid);
 	}
 
@@ -113,27 +106,27 @@ public class WantedServiceImpl implements IWantedService {
 	}
 
 	@Override
-	public List<Stack> getStackInfo(int jid) {
-		return wantedDao.getStackInfo(jid);
+	public List<Stack> getStackInfo(String wid) {
+		return wantedDao.getStackInfo(wid);
 	}
 
 	@Override
-	public List<Stack> getWantedStackInfo(int i) {
+	public List<Stack> getWantedStackInfo(String i) {
 		return wantedDao.getWantedStackInfo(i);
 	}
 
 	@Override
-	public List<Integer> getWantedByStack(int uid) {
+	public List<String> getWantedByStack(int uid) {
 		return wantedDao.getWantedByStack(uid);
 	}
 
 	@Override
-	public List<Integer> getWantedByScrap(int uid) {
+	public List<String> getWantedByScrap(int uid) {
 		return wantedDao.getWantedByScrap(uid);
 	}
 
 	@Override
-	public void updateVcnt(int wid) {
+	public void updateVcnt(String wid) {
 		wantedDao.updateVcnt(wid);
 	}
 

@@ -48,7 +48,7 @@ public class UserDao {
 		return sqlSession.selectList(ns + "getMyStacks", uid);
 	}
 	
-	public List<Integer> getMyScrapWanteds(int uid){
+	public List<String> getMyScrapWanteds(int uid){
 		return sqlSession.selectList(ns + "getMyScrapWanteds", uid);
 	}
 	

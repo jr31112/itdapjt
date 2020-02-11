@@ -16,8 +16,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		INSERT INTO MYSTACK_T(UID, SID) VALUES(#{uid}, #{sid})
 	</insert>
 	
-	<insert id="createJobStack" parameterType="com.ssafy.itda.itda_test.model.JobStack">
-		INSERT INTO JOBSTACK_T(JID, SID) VALUES(#{jid}, #{sid})
+	<insert id="createWantedStack" parameterType="com.ssafy.itda.itda_test.model.WantedStack">
+		INSERT INTO WANTEDSTACK_T(WID, SID) VALUES(#{wid}, #{sid})
 	</insert>
 	
 	<select id="getAllStacks" resultType="com.ssafy.itda.itda_test.model.Stack">
@@ -31,11 +31,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE MS.UID = #{uid}
 	</select>
 
-	<select id="getJobStacks" parameterType="java.lang.Integer" 
+	<select id="getWantedStacks" parameterType="java.lang.String" 
 		resultType="com.ssafy.itda.itda_test.model.Stack">
 		SELECT S.SID, S.TNAME
-		FROM JOBSTACK_T AS JS JOIN STACK_T AS S ON JS.SID = S.SID
-		WHERE JS.JID = #{jid}
+		FROM WANTEDSTACK AS WS JOIN STACK_T AS S ON WS.SID = S.SID
+		WHERE WS.WID = #{wid}
 	</select>
 
 	<delete id="deleteMyStack" parameterType="com.ssafy.itda.itda_test.model.MyStack">

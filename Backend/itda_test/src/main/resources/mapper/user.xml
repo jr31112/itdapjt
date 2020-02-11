@@ -60,7 +60,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE MS.UID = #{uid}
 	</select>
 	
-	<select id="getMyScrapWanteds" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+	<select id="getMyScrapWanteds" parameterType="java.lang.Integer" resultType="java.lang.String">
 		SELECT WID FROM SCRAP_T WHERE UID = #{uid}
 	</select>
 	

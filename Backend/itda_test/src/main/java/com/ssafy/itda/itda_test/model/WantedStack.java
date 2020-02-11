@@ -3,22 +3,29 @@ package com.ssafy.itda.itda_test.model;
 import java.io.Serializable;
 import java.util.List;
 
-public class JobStack implements Serializable {
-	private int jid;
+public class WantedStack implements Serializable {
+	private String wid;
 	private int sid;
 	private List<Integer> stacks;
 
-	public JobStack() {
+	public WantedStack() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public int getJid() {
-		return jid;
+	public WantedStack(String wid, int sid, List<Integer> stacks) {
+		super();
+		this.wid = wid;
+		this.sid = sid;
+		this.stacks = stacks;
 	}
 
-	public void setJid(int jid) {
-		this.jid = jid;
+	public String getWid() {
+		return wid;
+	}
+
+	public void setWid(String wid) {
+		this.wid = wid;
 	}
 
 	public int getSid() {
@@ -39,7 +46,7 @@ public class JobStack implements Serializable {
 
 	@Override
 	public String toString() {
-		return "JobStack [jid=" + jid + ", sid=" + sid + ", stacks=" + stacks + "]";
+		return "WantedStack [wid=" + wid + ", sid=" + sid + ", stacks=" + stacks + "]";
 	}
-
+	
 }

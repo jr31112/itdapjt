@@ -17,7 +17,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getWantedInfo" parameterType="java.lang.String"
 		resultType="com.ssafy.itda.itda_test.model.Wanted">
 		SELECT WID, WANTEDTITLE, ACTIVE, STARTDATE, ENDDATE,
-		PROCESS, ETC, QUESTION, VCNT, CID
+		VCNT, CID, DETAIL
 		FROM WANTED_T WHERE WID = #{wid}
 	</select>
 
@@ -63,10 +63,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<insert id="createWanted"
 		parameterType="com.ssafy.itda.itda_test.model.Wanted">
-		INSERT INTO WANTED_T(WANTEDTITLE, STARTDATE, ENDDATE,
-		PROCESS, ETC, QUESTION, CID)
-		VALUES(#{wantedTitle}, #{startDate},
-		#{endDate}, #{process}, #{etc}, #{question}, #{cid})
+		INSERT INTO WANTED_T(WID, WANTEDTITLE, STARTDATE, ENDDATE, CID, DETAIL)
+		VALUES(#{wid}, #{wantedTitle}, FROM_UNIXTIME(#{startDate}),
+		FROM_UNIXTIME(#{endDate}), #{cid}, #{detail})
 	</insert>
 
 	<select id="getInputWanted" parameterType="com.ssafy.itda.itda_test.model.Wanted"
@@ -82,10 +81,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<insert id="updateWanted"
 		parameterType="com.ssafy.itda.itda_test.model.Wanted">
-		INSERT INTO WANTED_T(WANTEDTITLE, STARTDATE, ENDDATE,
-		PROCESS, ETC, QUESTION, CID)
-		VALUES(#{wantedTitle}, #{startDate},
-		#{endDate}, #{process}, #{etc}, #{question}, #{cid})
+		INSERT INTO WANTED_T(WANTEDTITLE, STARTDATE, ENDDATE, CID, DETAIL)
+		VALUES(#{wantedTitle}, #{startDate}, #{endDate}, #{cid}, #{detail})
 	</insert>
 
 	<select id="getStackInfo" parameterType="java.lang.String"

@@ -2,7 +2,7 @@ package com.ssafy.itda.itda_test.help;
 
 import java.io.Serializable;
 
-public class CompanyResult implements Serializable{
+public class CompanyResult implements Serializable {
 	private int cid;
 	private String corpNm;
 	private String totPsncnt;
@@ -12,10 +12,10 @@ public class CompanyResult implements Serializable{
 	private String homePg;
 	private String busiCont;
 	private String logo;
-	
+
 	private String msg;
 	private String state;
-	
+
 	public CompanyResult() {
 		super();
 		// TODO Auto-generated constructor stub

@@ -36,4 +36,9 @@ public class StudyGroupServiceImpl implements IStudyGroupService {
 	public StudyGroup getStudyGroupRel(StudyGroup model) {
 		return studyGroupDao.getStudyGroupRel(model);
 	}
+
+	@Override
+	public List<Integer> getMyStudyGroup(int uid) {
+		return studyGroupDao.getMyStudyGroup(uid);
+	}
 }

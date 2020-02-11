@@ -27,4 +27,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT CID, CORPNM, TOTPSNCNT, BUSISIZE, YRSALESAMT, CORPADDR, HOMEPG, BUSICONT, LOGO
 		FROM COMPANY_T
 	</select>
+	
+	<select id="getCompany" parameterType="java.lang.String" resultType="com.ssafy.itda.itda_test.model.Company">
+		SELECT CID, CORPNM, TOTPSNCNT, BUSISIZE, YRSALESAMT, CORPADDR, HOMEPG, BUSICONT, LOGO
+		FROM COMPANY_T WHERE CID = #{cid} 
+	</select>
 </mapper>

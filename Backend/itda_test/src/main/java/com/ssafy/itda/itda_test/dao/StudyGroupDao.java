@@ -32,4 +32,8 @@ public class StudyGroupDao {
 	public StudyGroup getStudyGroupRel(StudyGroup model) {
 		return sqlSession.selectOne(ns + "getStudyGroupRel", model);
 	}
+
+	public List<Integer> getMyStudyGroup(int uid) {
+		return sqlSession.selectList(ns + "getMyStudyGroup", uid);
+	}
 }

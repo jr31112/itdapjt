@@ -221,7 +221,6 @@ public class WantedController {
 	@RequestMapping(value = "/scrapWanted", method = RequestMethod.POST)
 	public ResponseEntity<Result> scrapWanted(@RequestBody Scrap input, HttpServletRequest req) throws Exception {
 		logger.info("5-------------scrapWanted-----------------------------" + new Date());
-		System.out.println(input.getWid());
 		Map<String, Object> resultMap = new HashMap<>();
 		String token = req.getHeader("jwt-auth-token");
 		Result r = new Result();

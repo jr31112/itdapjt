@@ -3,8 +3,8 @@ package com.ssafy.itda.itda_test.help;
 import java.io.Serializable;
 import java.util.List;
 
-import com.ssafy.itda.itda_test.model.Scrap;
 import com.ssafy.itda.itda_test.model.Stack;
+import com.ssafy.itda.itda_test.model.Study;
 import com.ssafy.itda.itda_test.model.User;
 
 public class UserResult implements Serializable {
@@ -18,6 +18,9 @@ public class UserResult implements Serializable {
 	// Scrap Model
 	private List<WantedResult> myScrapWanteds;
 	private List<WantedResult> myEndedScrapWanteds;
+
+	// Study Model
+	private List<Study> myStudies;
 
 	// Response result
 	private String msg;
@@ -76,10 +79,19 @@ public class UserResult implements Serializable {
 		this.myScrapWanteds = myScrapWanteds;
 	}
 
+	public List<Study> getMyStudies() {
+		return myStudies;
+	}
+
+	public void setMyStudies(List<Study> myStudies) {
+		this.myStudies = myStudies;
+	}
+
 	@Override
 	public String toString() {
 		return "UserResult [user=" + user + ", mystacks=" + mystacks + ", myScrapWanteds=" + myScrapWanteds
-				+ ", myEndedScrapWanteds=" + myEndedScrapWanteds + ", msg=" + msg + ", state=" + state + "]";
+				+ ", myEndedScrapWanteds=" + myEndedScrapWanteds + ", myStudies=" + myStudies + ", msg=" + msg
+				+ ", state=" + state + "]";
 	}
 
 }

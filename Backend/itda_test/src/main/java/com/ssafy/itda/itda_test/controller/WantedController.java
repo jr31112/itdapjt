@@ -234,34 +234,10 @@ public class WantedController {
 
 	@ApiOperation(value = "공고를 추가한다.", response = Wanted.class)
 	@RequestMapping(value = "/createWanted", method = RequestMethod.POST)
-	public ResponseEntity<Result> createWanted(@RequestBody Wanted model) throws Exception {
+	public ResponseEntity<Result> createWanted() throws Exception {
 		logger.info("6-------------createWanted-----------------------------" + new Date());
-		logger.info("6-------------createWanted-----------------------------" + model);
 		Result r = new Result();
-		// Wanted Input Condition
-		if (model.getCid() == null || model.getCid().equals("") || model.getWantedTitle() == null || model.getWantedTitle().equals("")
-				|| model.getStartDate() == null || model.getStartDate().equals("") || model.getEndDate() == null
-				|| model.getEndDate().equals("") || model.getDetail() == null || model.getDetail().equals("")) {
-			r.setMsg("공고 필수 입력값이 누락되었습니다.");
-			r.setState("fail");
-			return new ResponseEntity<Result>(r, HttpStatus.OK);
-		}
-
-		String wid = wantedService.createWanted(model);
-		for (Wanted w: model.) {
-			if (j.getTo().contains("명")) {
-				j.setTo(j.getTo().substring(0, j.getTo().length() - 1));
-			}
-			w.setWid(wid);
-			int jid = jobService.createJobReturnJid(j);
-			for (Stack s : j.getStacks()) {
-				WantedStack js = new WantedStack();
-				js.setJid(jid);
-				js.setSid(s.getSid());
-				stackService.createJobStack(js);
-			}
-		}
-
+		wantedService.callSaramin();
 		r.setMsg("공고 입력이 성공적으로 완료되었습니다.");
 		r.setState("success");
 		return new ResponseEntity<Result>(r, HttpStatus.OK);

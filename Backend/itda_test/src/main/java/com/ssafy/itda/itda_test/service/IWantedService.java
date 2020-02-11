@@ -1,5 +1,6 @@
 package com.ssafy.itda.itda_test.service;
 
+import java.io.IOException;
 import java.util.List;
 
 import com.ssafy.itda.itda_test.model.Company;
@@ -26,4 +27,5 @@ public interface IWantedService {
 	List<String> getWantedByStack(int uid);
 	List<String> getWantedByScrap(int uid);
 	void updateVcnt(String wid);
+	void callSaramin() throws IOException;
 }

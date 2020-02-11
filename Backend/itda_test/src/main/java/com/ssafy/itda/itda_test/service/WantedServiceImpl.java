@@ -148,8 +148,7 @@ public class WantedServiceImpl implements IWantedService {
 		schedulerSaraminAPI();
 	}
 
-	@Scheduled(cron = "0 0 0/3 * * *")
-//	@Scheduled(fixedDelay = 180000)
+	@Scheduled(cron = "0 0 0/5 * * *")
 	public void schedulerSaraminAPI() throws IOException {
 		System.out.println("Scheduler Saramin API!!");
 		String access_key = "0Q5ESrsPZNoxQPN98JpXKSFYmIHImsAyLfHbS2hUMGQUlxZ5O";
@@ -196,7 +195,7 @@ public class WantedServiceImpl implements IWantedService {
 				int active = job.path("active").intValue();
 				String startDate = job.path("opening-timestamp").textValue();
 				String endDate = job.path("expiration-timestamp").textValue();
-				String detail = "http://www.saramin.co.kr/zf_user/jobs/relay/view-detail?rec_idx=" + wid + "&rec_seq=0";
+				String detail = "https://www.saramin.co.kr/zf_user/jobs/relay/view-detail?rec_idx=" + wid + "&rec_seq=0";
 				Wanted wanted = new Wanted(wid, wantedTitle, active, startDate, endDate, 0, cid, detail);
 				wantedDao.createWanted(wanted);
 				checkStack(detail, wid);

@@ -37,4 +37,4 @@ public class SSAFYApplication implements WebMvcConfigurer {
 				.exposedHeaders("jwt-auth-token");
 	}
 }
-//http://localhost:8197/itda/swagger-ui.html
+//https://localhost:8197/itda/swagger-ui.html

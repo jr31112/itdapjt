@@ -10,7 +10,7 @@
 
 1. `POST /api/signUp` : 새로운 회원의 정보를 DB에 저장한다.
 
-   - Parameter : User
+   - Parameter : User 
 
      ```json
      {
@@ -104,7 +104,7 @@
         "auth": 0,
         "major": null,
         "uimg": null,
-        "cid": 0				//취업한 기업id
+        "cid": "string"@@				//취업한 기업id
       },
       {
     	...
@@ -141,7 +141,7 @@
     {
       "uid": 0, 
       "auth": 0,
-      "cid": 0,
+      "cid": "stirng", //@@
       "email": "string",
       "major": "string",
       "pw": "string",
@@ -222,7 +222,7 @@
 
     ```json
     {
-      "cid": 0, 
+      "cid": "string", //@@ 
       "busiCont": "string",		
       "busiSize": "string",		
       "corpAddr": "string",		
@@ -265,7 +265,7 @@
       "place": "string",	//근무지
       "require": "string",	//자격요건
       "to": "string",		//모집인원
-      "wid": 0				//공고id - FK
+      "wid": "string"				//공고id - FK
     }
     ```
 
@@ -300,7 +300,7 @@
       "place": "string",	//근무지
       "require": "string",	//자격요건
       "to": "string",		//모집인원
-      "wid": 0				//공고id - FK
+      "wid": "string" //@@				//공고id - FK
     }
     ```
 
@@ -467,7 +467,7 @@
         "process": "string",		//채용 과정(이미지링크 or text)
         "etc": "string",			//기타 유의사항
         "question": "string",		//문의 사항
-        "cid": 0					//채용 공고 작성 기업(fk)
+        "cid": "string" //@@					//채용 공고 작성 기업(fk)
       }
       ```
 
@@ -488,10 +488,10 @@
 
 1. `DELETE /api/deleteWanted` : 공고를 삭제한다.
 
-   - Parameter : int
+   - Parameter : string
 
      ```json
-     wid : 0			//공고 ID(pk)
+     wid : string@@		//공고 ID(pk)
      ```
 
      - 필수 : wid
@@ -519,7 +519,7 @@
      [
        {
          "company": {					//기업 정보
-           "cid": 0,							//기업 id
+           "cid": "string" @@,							//기업 id
            "corpNm": "string",				//기업명
            "totPsncnt": "string",			//사원 수
            "busiSize": "string",				//기업규모
@@ -530,7 +530,7 @@
            "logo": "string"					//기업로고(이미지)
          },
          "wanted": {						//공고 정보
-           "wid": 0,
+           "wid": "string",
            "wantedTitle": "string",
            "active": 0,
            "startDate": "string",
@@ -539,7 +539,7 @@
            "etc": "string",
            "question": "string",
            "vcnt": 0,
-           "cid": 0
+           "cid": "stirng" //@@
          },
          "jobs": [						//각 공고별 직무정보 리스트
            {
@@ -551,7 +551,7 @@
              "require": "string",			//자격요건
              "extra": "string",				//우대사항
              "place": "string",				//근무지
-             "wid": 0,						//공고id(fk)
+             "wid": "string", //@@						//공고id(fk)
              "stacks": [						//직무 별 기술 스택 리스트
                {
                  "sid": 0,						//기술스택id
@@ -612,10 +612,10 @@
 
 1. `GET /api/getWantedByID/{wid}` : 특정 공고의 상세 정보를 반환한다.
 
-   - Parameter : int
+   - Parameter : string
 
      ```json
-     wid : 0
+     wid : "string" //@@
      ```
 
    - Return : wid에 해당하는 공고의 상세 정보를 반환한다. WantedResult
@@ -623,7 +623,7 @@
      ```json
      {
        "company": {					//기업 정보
-         "cid": 0,						//기업 id
+         "cid": "string", //@@						//기업 id
          "corpNm": "string",				//기업명
          "totPsncnt": "string",			//사원 수
          "busiSize": "string",			//기업규모
@@ -634,7 +634,7 @@
          "logo": "string"				//기업로고(이미지)
        },
        "wanted": {						//공고 정보
-         "wid": 0,
+         "wid": "string",
          "wantedTitle": "string",
          "active": 0,
          "startDate": "string",
@@ -643,7 +643,7 @@
          "etc": "string",
          "question": "string",
          "vcnt": 0,
-         "cid": 0
+         "cid": "string" //@@
        },
        "jobs": [						//각 공고별 직무정보 리스트
          {
@@ -655,7 +655,7 @@
            "require": "string",			//자격요건
            "extra": "string",			//우대사항
            "place": "string",			//근무지
-           "wid": 0,						//공고id(fk)
+           "wid": "string", //@@						//공고id(fk)
            "stacks": [					//직무 별 기술 스택 리스트
              {
                "sid": 0,						//기술스택id
@@ -706,7 +706,7 @@
      ```json
      {
        "active": 0,
-       "cid": 0,
+       "cid": "string", //@@
        "endDate": "string",
        "etc": "string",
        "process": "string",

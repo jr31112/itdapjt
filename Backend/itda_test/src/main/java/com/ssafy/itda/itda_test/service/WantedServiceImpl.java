@@ -8,6 +8,7 @@ import java.util.StringTokenizer;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -143,7 +144,8 @@ public class WantedServiceImpl implements IWantedService {
 		wantedDao.updateCheckExpire();
 	}
 
-	@Scheduled(cron = "0 0/5 * * * *")
+//	@Scheduled(cron = "0 0/1 * * * *")
+	@Scheduled(fixedDelay = 180000)
 	public void schedulerSaraminAPI() throws IOException {
 		System.out.println("Scheduler Saramin API!!");
 		String access_key = "0Q5ESrsPZNoxQPN98JpXKSFYmIHImsAyLfHbS2hUMGQUlxZ5O";
@@ -180,12 +182,12 @@ public class WantedServiceImpl implements IWantedService {
 			String now = st.nextToken();
 			if(now.charAt(0) == 'c') {
 				cid = now.substring(4);
-				Company company = companyDao.getCompany(cid);
-				if(company == null) {
+//				Company company = companyDao.getCompany(cid);
+//				if(company == null) {
 					if(!inputCompany(cid)) {
 						return;
 					}
-				}
+//				}
 			}
 		}
 		
@@ -193,12 +195,12 @@ public class WantedServiceImpl implements IWantedService {
 
 	private boolean inputCompany(String cid) throws IOException {
 		String base_url = "http://www.saramin.co.kr/zf_user/company-info/view?csn=";
-		String back_url = "&utm_source=job-search-api&utm_medium=api&utm_campaign=saramin-job-search-api";
-		Document doc = Jsoup.connect(base_url + cid + back_url).get();
-		if(doc.getElementsByClass("result_txt").size() == 0) {
+		Document doc = Jsoup.connect(base_url + cid).get();
+		if(!doc.getElementsByClass("result_txt").isEmpty()) {
 			return false;
 		}
-		Elements corpNmElem = doc.getElementsByClass("info_company");
+		Elements info_company = doc.getElementsByClass("info_company");
+		System.out.println(info_company);
 		return true;
 	}
 	

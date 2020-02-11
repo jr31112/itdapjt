@@ -1,5 +1,4 @@
 <template>
-    <v-container>
         <v-card>
             <v-layout>
                 <v-flex xs12="xs12">
@@ -30,7 +29,6 @@
 
             </v-data-table>
         </v-card>
-    </v-container>
 </template>
 
 <script>

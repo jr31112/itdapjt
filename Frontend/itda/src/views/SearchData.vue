@@ -20,7 +20,7 @@ export default {
     data(){
         return{
             options:{
-                keyword : "",
+                keyword : null,
             },
             searchresults:[],
         }
@@ -54,6 +54,9 @@ export default {
     },
     mounted(){
         this.getData()
+        this.options.keyword = localStorage.getItem('pre')
+        console.log(this.options.keyword)
+        // localStorage.removeItem('pre')
     },
 }
 </script>

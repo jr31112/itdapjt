@@ -12,7 +12,7 @@ import SearchResult from '../views/SearchResult.vue'
 import SearchData from '../views/SearchData.vue'
 import UserModify from "../components/Mypage/UserModify.vue"
 import AboutUs from '../components/Aboutus/AboutUs.vue'
-
+import SearchCompany from '../views/SearchCompany.vue'
 import store from '../store/index.js'
 Vue.use(VueRouter)
 // 관리자가 0 , 기본 1
@@ -98,6 +98,12 @@ const routes = [
     name: "searchdata",
     component: SearchData
   },
+  {
+    path: "/searchCompany",
+    name: "searchCompany",
+    component: SearchCompany
+  }
+  ,
   { 
     path: "/login",
     name: "login",

@@ -16,6 +16,7 @@
                     <i aria-hidden="true" class="v-icon notranslate mdi mdi-magnify theme--dark"></i>
                   </div>
                 </div>
+                
                 <div class="v-text-field__slot">
                   <label
                     for="search"
@@ -35,7 +36,7 @@
                     aria-label="search input"
                     aria-owns="algolia-autocomplete-listbox-0"
                     dir="auto"
-                    style
+                    @keyup.enter="goSearch()"
                   />
                   <pre
                     aria-hidden="true"
@@ -176,6 +177,11 @@ export default {
       this.$store.dispatch('logout')
       router.push({name:"recruitmain"}).catch(() => {});
       //일단은 홈페이지로 돌아가게하자. 
+    }
+    ,
+    goSearch()
+    { 
+        router.push({ name: "searchCompany" }).catch(() => {});
     }
     ,
     goMypage(){

@@ -1,73 +1,47 @@
 <template>
     <v-card>
-        <v-card-title class="justify-center">
-        <h4>기업 리스트</h4>
-        </v-card-title>
+        <v-card-title>기업 등록</v-card-title>
         <v-card-text>
-            <v-container  v-scroll:#scroll-target="onScroll">
-                <v-row >
-                    <v-col cols="6">
-                        <v-text-field 
-                         v-model="editedItem.company" 
-                         label="회사명"
-                         @click="searchCompanyItem()"
-                         ></v-text-field>
-                    </v-col>
-                    <v-col cols="6" >
-                        <v-text-field v-model="editedItem.stack" label="필요기술"></v-text-field>
-                    </v-col>
-                    <v-col cols="6" sm="6" md="4">
-                        <v-text-field v-model="editedItem.s_date" label="시작일"></v-text-field>
-                    </v-col>
-                    <v-col cols="6" sm="6" md="4">
-                        <v-text-field v-model="editedItem.f_date" label="마감일"></v-text-field>
-                    </v-col>
-                    <v-col cols="6" sm="6" md="4">
-                        <v-text-field v-model="editedItem.rate" label="싸피인취업현황"></v-text-field>
-                    </v-col>
-                </v-row>
-                <v-col>
-                    <v-text-field v-model="editedItem.rate" label="싸피인취업현황"></v-text-field>
-                </v-col>
-            </v-container>
+            <v-form ref="form" v-model="valid">
+                <v-text-field
+                    v-model="formData.stname"
+                    :rules="[v => !!v || '스터디 이름을 입력해주세요']"
+                    label="스터디명"
+                    required="required"></v-text-field>
+                <v-text-field
+                    v-model.number="formData.maxPcnt"
+                    type="number"
+                    :rules="[v => !!v || '인원수를 입력해주세요']"
+                    label="인원수"
+                    required="required"></v-text-field>
+                <v-select
+                    v-model="formData.stype"
+                    :items="formCategory.category1"
+                    :rules="[v => !!v || '스터디 종류를 선택해주세요']"
+                    label="스터디 종류"
+                    required="required"></v-select>
+                <v-btn v-if="formData.stype" @click="openPopup(formData.stype)">스터디 주제 입력</v-btn>
+                <v-select
+                    v-model="formData.sgroup"
+                    :items="formCategory.category2"
+                    :rules="[v => !!v || '스터디 내용를 선택해주세요']"
+                    label="스터디 내용"
+                    required="required"></v-select>
+                <v-textarea
+                    v-model="formData.content"
+                    solo="solo"
+                    :rules="[v => !!v || '스터디 정보를 입력해주세요']"
+                    label="스터디 정보를 입력해주세요"></v-textarea>
+            </v-form>
         </v-card-text>
-         <v-card-title class="justify-center">
-            <h4>공고 동록</h4>
-        </v-card-title>
-        <v-card-text>
-            <v-container>
-                <v-row >
-                    <v-col cols="12" sm="6" md="4">
-                        <v-text-field v-model="editedItem.company" label="회사명"></v-text-field>
-                    </v-col>
-                    <v-col cols="12" sm="6" md="4">
-                        <v-text-field v-model="editedItem.stack" label="필요기술"></v-text-field>
-                    </v-col>
-                    <v-col cols="12" sm="6" md="4">
-                        <v-text-field v-model="editedItem.s_date" label="시작일"></v-text-field>
-                    </v-col>
-                    <v-col cols="12" sm="6" md="4">
-                        <v-text-field v-model="editedItem.f_date" label="마감일"></v-text-field>
-                    </v-col>
-                    <v-col cols="12" sm="6" md="4">
-                        <v-text-field v-model="editedItem.rate" label="싸피인취업현황"></v-text-field>
-                    </v-col>
-                </v-row>
-                <v-col>
-                    <v-text-field v-model="editedItem.rate" label="싸피인취업현황"></v-text-field>
-                </v-col>
-            </v-container>
-        </v-card-text>
-        <v-card-actions class="justify-center" >
-            <v-layout >
-                <v-flex>
-                    <v-btn color="blue darken-1" text="text" @click="save">Save</v-btn>
-                    <v-btn color="blue darken-1" text="text" @click="close">Cancel</v-btn>
-                </v-flex >
-            </v-layout>
+        <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="success" text="text" :disabled="!valid" @click="validate">submit</v-btn>
+            <v-btn color="blue darken-1" text="text" @click="reset">Reset</v-btn>
+            <v-btn color="blue darken-1" text="text" @click="close">Close</v-btn>
         </v-card-actions>
     </v-card>
-    
+
 </template>
 
 <script>
@@ -77,8 +51,7 @@
             return {
                 onScroll: false,
                 editedIndex: -1,
-                editedItem: 
-                {
+                editedItem: {
                     company: '',
                     s_date: 0,
                     f_date: 0,
@@ -87,10 +60,7 @@
             }
         },
         methods: {
-            searchCompanyItem()
-            {
-
-            },
+            searchCompanyItem() {},
             editItem(item) {
                 this.editedIndex = this
                     .allwanteds

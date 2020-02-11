@@ -1,4 +1,5 @@
 <template>
+  
   <v-data-iterator :items="searchresults" :page="page" hide-default-footer class="mx-auto">
     <v-row>
         <v-simple-table class="mx-auto" fixed-header>
@@ -18,8 +19,9 @@
                 <tr v-for="part in searchresults.slice(10*(page-1), 10*(page-1) + 10)" :key="part.cid" @click="dataTr({id:part.cid, Nm:part.corpNm})">
                     <td class="text-center">{{part.cid}}</td>
                     <td class="text-center">{{part.corpNm}}</td>
-                </tr>
+                </tr>    
             </tbody>
+            
             <tbody v-if="this.$route.params.type == 3 && this.searchresults.length">
                 <tr v-for="part in searchresults.slice(10*(page-1), 10*(page-1) + 10)" :key="part.cid" @click="dataTr({id:part.sid, Nm:part.tname})">
                     <td class="text-center">{{part.sid}}</td>
@@ -39,7 +41,9 @@
             <v-icon>mdi-chevron-right</v-icon>
         </v-btn>
     </v-row>
+    
   </v-data-iterator>
+
 </template>
 
 <script>

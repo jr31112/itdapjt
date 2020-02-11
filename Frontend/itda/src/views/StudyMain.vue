@@ -43,7 +43,6 @@
 import StudyLoginContent from '../components/StudyMain/StudyLoginContent.vue'
 import StudyFilter from '../components/StudyMain/StudyFilter.vue'
 import StudyDefaultContent from '../components/StudyMain/StudyDefaultContent.vue'
-
 import axios from 'axios'
 import { mapState } from 'vuex'
 

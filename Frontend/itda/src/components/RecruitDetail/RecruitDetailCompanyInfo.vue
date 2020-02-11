@@ -65,7 +65,8 @@
 <script>
 export default {
     name: "detailcompanyinfo",
-    props:{
+    props:
+    {
       company:{type:Object}
     },
     methods:{

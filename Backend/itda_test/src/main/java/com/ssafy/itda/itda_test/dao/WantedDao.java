@@ -24,7 +24,7 @@ public class WantedDao {
 		return sqlSession.selectOne(ns + "getWantedInfo", wid);
 	}
 
-	public Company getCompanyInfo(int cid) {
+	public Company getCompanyInfo(String cid) {
 		return sqlSession.selectOne(ns + "getCompanyInfo", cid);
 	}
 
@@ -32,7 +32,7 @@ public class WantedDao {
 		return sqlSession.selectList(ns + "getJobsInfo", wid);
 	}
 
-	public int getCompanyId(int wid) {
+	public String getCompanyId(int wid) {
 		return sqlSession.selectOne(ns + "getCompanyId", wid);
 	}
 

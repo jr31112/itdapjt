@@ -3,7 +3,7 @@ package com.ssafy.itda.itda_test.model;
 import java.io.Serializable;
 
 public class Company implements Serializable {
-	private int cid;
+	private String cid;
 	private String corpNm;
 	private String totPsncnt;
 	private String busiSize;
@@ -18,7 +18,7 @@ public class Company implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Company(int cid, String corpNm, String totPsncnt, String busiSize, String yrSalesAmt, String corpAddr,
+	public Company(String cid, String corpNm, String totPsncnt, String busiSize, String yrSalesAmt, String corpAddr,
 			String homePg, String busiCont, String logo) {
 		super();
 		this.cid = cid;
@@ -32,11 +32,11 @@ public class Company implements Serializable {
 		this.logo = logo;
 	}
 
-	public int getCid() {
+	public String getCid() {
 		return cid;
 	}
 
-	public void setCid(int cid) {
+	public void setCid(String cid) {
 		this.cid = cid;
 	}
 

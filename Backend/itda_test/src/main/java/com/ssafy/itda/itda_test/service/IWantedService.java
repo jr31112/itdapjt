@@ -9,9 +9,9 @@ import com.ssafy.itda.itda_test.model.Stack;
 import com.ssafy.itda.itda_test.model.Wanted;
 
 public interface IWantedService {
-	int getCompanyId(int wid);
+	String getCompanyId(int wid);
 	Wanted getWantedInfo(int wid);
-	Company getCompanyInfo(int cid);
+	Company getCompanyInfo(String cid);
 	List<Job> getJobsInfo(int wid);
 	List<Integer> getWantedByRecent();
 	List<Integer> getWantedByCloseEnd();

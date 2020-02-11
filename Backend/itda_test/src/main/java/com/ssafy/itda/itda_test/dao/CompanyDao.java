@@ -19,7 +19,7 @@ public class CompanyDao {
 		sqlSession.insert(ns + "createCompany", model);
 	}
 	
-	public void deleteCompany(Integer cid) {
+	public void deleteCompany(String cid) {
 		sqlSession.delete(ns + "deleteCompany", cid);
 	}
 	

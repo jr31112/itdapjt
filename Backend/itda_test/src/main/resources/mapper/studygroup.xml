@@ -38,4 +38,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM STUDYGROUP_T
 		WHERE UID = #{uid}, STID = #{stid}
 	</select>
+	
+	<select id="getMyStudyGroup" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+		SELECT STID FROM STUDYGROUP_T WHERE UID = #{uid}
+	</select>
 </mapper>

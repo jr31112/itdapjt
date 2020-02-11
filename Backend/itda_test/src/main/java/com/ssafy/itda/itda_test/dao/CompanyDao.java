@@ -30,4 +30,8 @@ public class CompanyDao {
 	public List<Company> getAllCompanys() {
 		return sqlSession.selectList(ns + "getAllCompanys");
 	}
+	
+	public Company getCompany(String cid) {
+		return sqlSession.selectOne(ns + "getCompany", cid);
+	}
 }

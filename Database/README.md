@@ -34,7 +34,7 @@
 
 * 사용자 정의 테이블 `user_t`
 
-   
+  
    | 필드명 | 자료형  | 설명                            |
    | ------ | ------- | ------------------------------- |
   | uid    | integer | Primary Key                     |
@@ -86,7 +86,7 @@
   | uid      | integer | **(필수) **user_t의 Primary Key (uid) |
   | sid      | integer | **(필수)** stack_t의 Primary Key(sid) |
   
-* 공고 별 기술 스택 정보 테이블 `wantedstack_t`
+* 공고 별 기술 스택 정보 테이블 `wantedStack_t`
 
   | 필드명   | 자료형  | 설명                                   |
   | -------- | ------- | -------------------------------------- |

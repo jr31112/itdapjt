@@ -95,10 +95,8 @@ export default {
             this.searchresults = tmp
         },
         dataTr(content){
-            console.log(content.Nm)
-//            localStorage.setItem('select', JSON.stringify(content))
+            localStorage.setItem('select', JSON.stringify(content))
             window.close()
-            
         }
     },
     computed:{

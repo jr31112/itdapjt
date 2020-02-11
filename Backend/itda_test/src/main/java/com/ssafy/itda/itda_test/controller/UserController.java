@@ -3,6 +3,7 @@ package com.ssafy.itda.itda_test.controller;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -24,12 +25,15 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ssafy.itda.itda_test.help.UserResult;
 import com.ssafy.itda.itda_test.help.WantedResult;
 import com.ssafy.itda.itda_test.model.Company;
-import com.ssafy.itda.itda_test.model.Job;
 import com.ssafy.itda.itda_test.model.MyStack;
 import com.ssafy.itda.itda_test.model.Stack;
+import com.ssafy.itda.itda_test.model.Study;
+import com.ssafy.itda.itda_test.model.StudyGroup;
 import com.ssafy.itda.itda_test.model.User;
 import com.ssafy.itda.itda_test.model.Wanted;
 import com.ssafy.itda.itda_test.service.IStackService;
+import com.ssafy.itda.itda_test.service.IStudyGroupService;
+import com.ssafy.itda.itda_test.service.IStudyService;
 import com.ssafy.itda.itda_test.service.IUserService;
 import com.ssafy.itda.itda_test.service.IWantedService;
 import com.ssafy.itda.itda_test.service.JwtServiceImpl;
@@ -53,6 +57,12 @@ public class UserController {
 
 	@Autowired
 	private IStackService stackService;
+	
+	@Autowired
+	private IStudyService studyService;
+	
+	@Autowired
+	private IStudyGroupService studyGroupService;
 
 	@Autowired
 	private JwtServiceImpl jwtService;
@@ -153,22 +163,17 @@ public class UserController {
 			User user = userService.getUser(uid);
 			// 내 기술스택 list , 내 스크랩 list
 			List<Stack> mystacks = userService.getMyStacks(uid);
-			List<Integer> myScrapWanteds = userService.getMyScrapWanteds(uid);
+			List<String> myScrapWanteds = userService.getMyScrapWanteds(uid);
 			List<WantedResult> wrlist = new ArrayList<>();
 			List<WantedResult> ewrlist = new ArrayList<>();
-			for (int i : myScrapWanteds) {
-				int cid = wantedService.getCompanyId(i);
+			for (String i : myScrapWanteds) {
+				String cid = wantedService.getCompanyId(i);
 				Company company = wantedService.getCompanyInfo(cid);
 				Wanted wanted = wantedService.getWantedInfo(i);
-				List<Job> jobs = wantedService.getJobsInfo(i);
 				List<Stack> wantedStacks = wantedService.getWantedStackInfo(i);
-				for (Job j : jobs) {
-					j.setStacks(wantedService.getStackInfo(j.getJid()));
-				}
 				WantedResult wr = new WantedResult();
 				wr.setCompany(company);
 				wr.setWanted(wanted);
-				wr.setJobs(jobs);
 				wr.setStacks(wantedStacks);
 				if (wanted.getActive() == 1) {
 					ewrlist.add(wr);
@@ -176,7 +181,12 @@ public class UserController {
 					wrlist.add(wr);
 				}
 			}
-
+			List<Integer> my_studyGroup = studyGroupService.getMyStudyGroup(uid);
+			List<Study> my_study = new LinkedList<>();
+			for(int i : my_studyGroup) {
+				Study s = studyService.getStudy(i);
+				my_study.add(s);
+			}
 			UserResult ur = new UserResult();
 			if (user == null || user.getEmail() == null || user.getEmail().equals("")) {
 				ur.setMsg("회원정보를 가져오는데 실패했습니다.");
@@ -187,6 +197,7 @@ public class UserController {
 				ur.setMystacks(mystacks);
 				ur.setMyScrapWanteds(wrlist);
 				ur.setMyEndedScrapWanteds(ewrlist);
+				ur.setMyStudies(my_study);
 				ur.setState("success");
 			}
 			return new ResponseEntity<UserResult>(ur, HttpStatus.OK);

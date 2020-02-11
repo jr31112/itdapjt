@@ -1,9 +1,9 @@
 <template>
   <tr @click="openRead">
     <td class="text-center">{{study.stid}}</td>
-    <td class="text-center">{{category1[study.stype-1]}}</td>
+    <td class="text-center" id="response">{{category1[study.stype-1]}}</td>
     <td class="text-center">{{study.typeName}}</td>
-    <td class="text-center">{{category2[study.sgroup-1]}}</td>
+    <td class="text-center" id="response">{{category2[study.sgroup-1]}}</td>
     <td class="text-left">{{study.stname}}</td>
     <td class="text-center">{{study.pcnt}}/{{study.maxPcnt}}</td>
     <v-dialog v-model="overlayRead" scrollable max-width="500px" white>
@@ -55,7 +55,7 @@ export default {
             this.overlayRead = false
         },
         enter() {
-            axios.post('http://54.180.140.163/itda/api/createStudyGroup',{"stid":this.study.stid},{'headers' : {"jwt-auth-token": localStorage.getItem("access_token")}})
+            axios.post('https://192.168.31.54:8197/itda/api/createStudyGroup',{"stid":this.study.stid},{'headers' : {"jwt-auth-token": localStorage.getItem("access_token")}})
             .then(
                 ()=>{
                     alert('스터디 가입이 완료되었습니다.')
@@ -64,7 +64,7 @@ export default {
             })
         },
         exit() {
-            axios.delete('http://54.180.140.163/itda/api/deleteStudyGroup/' + this.study.stid ,{'headers' : {"jwt-auth-token": localStorage.getItem("access_token")}})
+            axios.delete('https://192.168.31.54:8197/itda/api/deleteStudyGroup/' + this.study.stid ,{'headers' : {"jwt-auth-token": localStorage.getItem("access_token")}})
             .then(
                 ()=>{
                     alert('스터디 탈퇴가 완료되었습니다.')
@@ -73,7 +73,7 @@ export default {
             })
         },
         del() {
-            axios.delete('http://54.180.140.163/itda/api/deleteStudy/' + this.study.stid ,{'headers' : {"jwt-auth-token": localStorage.getItem("access_token")}})
+            axios.delete('https://192.168.31.54:8197/itda/api/deleteStudy/' + this.study.stid ,{'headers' : {"jwt-auth-token": localStorage.getItem("access_token")}})
             .then(
                 ()=>{
                     alert('스터디 삭제가 완료되었습니다.')
@@ -82,7 +82,7 @@ export default {
             })
         },
         getStudyDetail(id){
-            axios.get('http://54.180.140.163/itda/api/getStudyGroup/'+id)
+            axios.get('https://192.168.31.54:8197/itda/api/getStudyGroup/'+id)
                 .then(response => {
                     this.person = response.data
                 })
@@ -105,5 +105,9 @@ export default {
 </script>
 
 <style>
-
+@media only screen and (max-width: 1030px){
+    #response{
+        display: none;
+    }
+}
 </style>

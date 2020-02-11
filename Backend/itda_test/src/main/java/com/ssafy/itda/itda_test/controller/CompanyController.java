@@ -21,7 +21,6 @@ import com.ssafy.itda.itda_test.help.Result;
 import com.ssafy.itda.itda_test.help.UserResult;
 import com.ssafy.itda.itda_test.help.WantedResult;
 import com.ssafy.itda.itda_test.model.Company;
-import com.ssafy.itda.itda_test.model.Job;
 import com.ssafy.itda.itda_test.model.Scrap;
 import com.ssafy.itda.itda_test.model.Stack;
 import com.ssafy.itda.itda_test.model.User;
@@ -67,12 +66,12 @@ public class CompanyController {
 	
 	@ApiOperation(value = "해당 기업 정보를 삭제한다.", response = CompanyResult.class)
 	@RequestMapping(value = "/deleteCompany/{cid}", method = RequestMethod.DELETE)
-	public ResponseEntity<CompanyResult> deleteCompany(@RequestBody Integer cid) throws Exception {
+	public ResponseEntity<CompanyResult> deleteCompany(@RequestBody String cid) throws Exception {
 		logger.info("2-2-------------deleteCompany-----------------------------" + new Date());
 		logger.info("2-2-------------deleteCompany-----------------------------" + cid);
 		CompanyResult cr = new CompanyResult();
 		Company company = wantedService.getCompanyInfo(cid);
-		if (cid == 0 || company == null) {
+		if (cid == null || cid.equals("") || company == null) {
 			cr.setMsg("존재하지 않는 cid값이 입력되었습니다.");
 			cr.setState("fail");
 			return new ResponseEntity<CompanyResult>(cr, HttpStatus.OK);
@@ -89,9 +88,9 @@ public class CompanyController {
 		logger.info("2-3-------------updateCompany-----------------------------" + new Date());
 		logger.info("2-3-------------updateCompany-----------------------------" + model);
 		CompanyResult cr = new CompanyResult();
-		int cid = model.getCid();
+		String cid = model.getCid();
 		Company company = wantedService.getCompanyInfo(cid);
-		if (cid == 0 || company == null) {
+		if (cid == null || cid.equals("") || company == null) {
 			cr.setMsg("존재하지 않는 cid값 입니다.");
 			cr.setState("fail");
 		} else if (model.getCorpNm() == null || model.getCorpNm().equals("")) {

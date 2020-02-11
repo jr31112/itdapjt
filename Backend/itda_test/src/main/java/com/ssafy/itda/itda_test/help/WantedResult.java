@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.List;
 
 import com.ssafy.itda.itda_test.model.Company;
-import com.ssafy.itda.itda_test.model.Job;
 import com.ssafy.itda.itda_test.model.Stack;
 import com.ssafy.itda.itda_test.model.Wanted;
 
@@ -14,9 +13,6 @@ public class WantedResult implements Serializable {
 
 	// Wanted Info
 	private Wanted wanted;
-
-	// Jobs Info
-	private List<Job> jobs;
 
 	// Stack Info
 	private List<Stack> stacks;
@@ -37,25 +33,12 @@ public class WantedResult implements Serializable {
 		this.company = company;
 	}
 
-	@Override
-	public String toString() {
-		return "WantedResult [company=" + company + ", wanted=" + wanted + ", jobs=" + jobs + "]";
-	}
-
 	public Wanted getWanted() {
 		return wanted;
 	}
 
 	public void setWanted(Wanted wanted) {
 		this.wanted = wanted;
-	}
-
-	public List<Job> getJobs() {
-		return jobs;
-	}
-
-	public void setJobs(List<Job> jobs) {
-		this.jobs = jobs;
 	}
 
 	public List<Stack> getStacks() {
@@ -73,5 +56,12 @@ public class WantedResult implements Serializable {
 	public void setScrap(boolean isScrap) {
 		this.isScrap = isScrap;
 	}
+
+	@Override
+	public String toString() {
+		return "WantedResult [company=" + company + ", wanted=" + wanted + ", stacks=" + stacks + ", isScrap=" + isScrap
+				+ "]";
+	}
+	
 
 }

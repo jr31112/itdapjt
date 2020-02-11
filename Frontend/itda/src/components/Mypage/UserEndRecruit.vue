@@ -1,7 +1,6 @@
 <template>
     <v-container>
         <p>지난 공고</p>
-
         <v-card>
             <v-list-item v-for="recruit in pageData" :key="recruit.no">
                 <v-list-item-content>
@@ -23,20 +22,22 @@
 </template>
 
 <script>
-    import axios from 'axios'
     export default {
         name: "userendrecruit",
         data() {
-            return {endRecruits: [
-                    {}
-                ], pagenum: 1, pagesize: 5}
+            return {pagenum: 1, pagesize: 5}
+        },
+        props: {
+            endRecruits: {
+                type: Array
+            }
         },
         computed: {
             pagecount() {
                 let len = this.endRecruits.length
                 let listsize = this.pagesize
                 let page = Math.floor(len / listsize)
-                
+
                 return page
             },
             pageData() {
@@ -47,39 +48,16 @@
                     .endRecruits
                     .slice(start, end);
             }
-
-        },
-        created() {
-            this.setRecruit()
-
         },
         methods: {
-            setRecruit() {
-                axios
-                    .get(`http://54.180.140.163/itda/api/getWantedByCloseEnd/`)
-                    .then(response => {
-                        for (var idx = 0; idx < response.data.length; idx++) {
-                            var wid = response
-                                .data[idx]
-                                .wanted
-                                .wid
-                            var wantedTitle = response
-                                .data[idx]
-                                .wanted
-                                .wantedTitle
-                            //this.currentRecruits.push({wid, wantedTitle})
-                            this
-                                .endRecruits
-                                .splice(idx, 0, {wid, wantedTitle})
-                        }
-
-                    })
-                    .catch((error) => {
-                        console.log(error)
-                    })
-
+            nextPage() {
+                this.pagenum += 1;
+            },
+            prevPage() {
+                this.pagenum -= 1;
             }
         }
+
     }
 </script>
 

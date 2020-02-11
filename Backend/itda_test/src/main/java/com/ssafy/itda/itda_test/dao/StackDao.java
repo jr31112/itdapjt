@@ -6,7 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.ssafy.itda.itda_test.model.JobStack;
+import com.ssafy.itda.itda_test.model.WantedStack;
 import com.ssafy.itda.itda_test.model.MyStack;
 import com.ssafy.itda.itda_test.model.Stack;
 
@@ -26,17 +26,17 @@ public class StackDao {
 		sqlSession.insert(ns + "createMyStack", ms);
 	}
 
-	public void createJobStack(JobStack js) {
-		sqlSession.insert(ns + "createJobStack", js);
-		sqlSession.update(ns + "updateStackCnt", js.getSid());
+	public void createWantedStack(WantedStack ws) {
+		sqlSession.insert(ns + "createWantedStack", ws);
+		sqlSession.update(ns + "updateStackCnt", ws.getSid());
 	}
 
 	public List<Stack> getAllStacks() {
 		return sqlSession.selectList(ns + "getAllStacks");
 	}
 
-	public List<Stack> getJobStacks(int jid) {
-		return sqlSession.selectList(ns + "getJobStacks", jid);
+	public List<Stack> getWantedStacks(String wid) {
+		return sqlSession.selectList(ns + "getWantedStacks", wid);
 	}
 
 	public List<Stack> getMyStacks(int uid) {

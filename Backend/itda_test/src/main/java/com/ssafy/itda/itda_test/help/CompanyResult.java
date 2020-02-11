@@ -2,8 +2,8 @@ package com.ssafy.itda.itda_test.help;
 
 import java.io.Serializable;
 
-public class CompanyResult implements Serializable{
-	private int cid;
+public class CompanyResult implements Serializable {
+	private String cid;
 	private String corpNm;
 	private String totPsncnt;
 	private String busiSize;
@@ -12,17 +12,17 @@ public class CompanyResult implements Serializable{
 	private String homePg;
 	private String busiCont;
 	private String logo;
-	
+
 	private String msg;
 	private String state;
-	
+
 	public CompanyResult() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public CompanyResult(int cid, String corpNm, String totPsncnt, String busiSize, String yrSalesAmt, String corpAddr,
-			String homePg, String busiCont, String logo, String msg, String state) {
+	public CompanyResult(String cid, String corpNm, String totPsncnt, String busiSize, String yrSalesAmt,
+			String corpAddr, String homePg, String busiCont, String logo, String msg, String state) {
 		super();
 		this.cid = cid;
 		this.corpNm = corpNm;
@@ -37,11 +37,11 @@ public class CompanyResult implements Serializable{
 		this.state = state;
 	}
 
-	public int getCid() {
+	public String getCid() {
 		return cid;
 	}
 
-	public void setCid(int cid) {
+	public void setCid(String cid) {
 		this.cid = cid;
 	}
 
@@ -131,5 +131,4 @@ public class CompanyResult implements Serializable{
 				+ busiSize + ", yrSalesAmt=" + yrSalesAmt + ", corpAddr=" + corpAddr + ", homePg=" + homePg
 				+ ", busiCont=" + busiCont + ", logo=" + logo + ", msg=" + msg + ", state=" + state + "]";
 	}
-
 }

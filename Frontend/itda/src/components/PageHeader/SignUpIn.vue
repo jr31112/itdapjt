@@ -154,7 +154,7 @@ export default {
       ////////////////이부분의 처리 필요
       else {
         axios
-          .post("http://54.180.140.163/itda/api/signUp", {
+          .post("https://192.168.31.54:8197/itda/api/signUp", {
             email: this.email_rg,
             pw: this.password_rg,
             uname: this.name

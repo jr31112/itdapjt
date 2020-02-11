@@ -20,15 +20,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mysql.cj.protocol.a.NativeConstants.StringLengthDataType;
 import com.ssafy.itda.itda_test.help.Result;
 import com.ssafy.itda.itda_test.help.WantedResult;
 import com.ssafy.itda.itda_test.model.Company;
-import com.ssafy.itda.itda_test.model.Job;
-import com.ssafy.itda.itda_test.model.JobStack;
+import com.ssafy.itda.itda_test.model.WantedStack;
 import com.ssafy.itda.itda_test.model.Scrap;
 import com.ssafy.itda.itda_test.model.Stack;
 import com.ssafy.itda.itda_test.model.Wanted;
-import com.ssafy.itda.itda_test.service.IJobService;
 import com.ssafy.itda.itda_test.service.IStackService;
 import com.ssafy.itda.itda_test.service.IWantedService;
 import com.ssafy.itda.itda_test.service.JwtServiceImpl;
@@ -48,9 +47,6 @@ public class WantedController {
 	private IWantedService wantedService;
 
 	@Autowired
-	private IJobService jobService;
-
-	@Autowired
 	private IStackService stackService;
 
 	@Autowired
@@ -65,11 +61,11 @@ public class WantedController {
 		if (token != null && !token.equals("")) {
 			resultMap.putAll(jwtService.get(req.getHeader("jwt-auth-token")));
 			int uid = (int) resultMap.get("uid");
-			List<Integer> widList = wantedService.getWantedAll();
+			List<String> widList = wantedService.getWantedAll();
 			List<WantedResult> wrlist = getWantedListFunction(widList, uid);
 			return new ResponseEntity<List<WantedResult>>(wrlist, HttpStatus.OK);
 		} else {
-			List<Integer> widList = wantedService.getWantedAll();
+			List<String> widList = wantedService.getWantedAll();
 			List<WantedResult> wrlist = getWantedListFunction(widList);
 			return new ResponseEntity<List<WantedResult>>(wrlist, HttpStatus.OK);
 		}
@@ -77,7 +73,7 @@ public class WantedController {
 
 	@ApiOperation(value = " 공고 정보를 확인한다.", response = WantedResult.class)
 	@RequestMapping(value = "/getWantedByID/{wid}", method = RequestMethod.GET)
-	public ResponseEntity<WantedResult> getWantedByID(@PathVariable int wid, HttpServletRequest req) throws Exception {
+	public ResponseEntity<WantedResult> getWantedByID(@PathVariable String wid, HttpServletRequest req) throws Exception {
 		logger.info("5-------------getWantedByID-----------------------------" + new Date());
 		Map<String, Object> resultMap = new HashMap<>();
 		String token = req.getHeader("jwt-auth-token");
@@ -85,21 +81,16 @@ public class WantedController {
 		if (token != null && !token.equals("")) {
 			resultMap.putAll(jwtService.get(req.getHeader("jwt-auth-token")));
 			int uid = (int) resultMap.get("uid");
-			int cid = wantedService.getCompanyId(wid);
+			String cid = wantedService.getCompanyId(wid);
 			Company company = wantedService.getCompanyInfo(cid);
 			Wanted wanted = wantedService.getWantedInfo(wid);
-			List<Job> jobs = wantedService.getJobsInfo(wid);
 			List<Stack> wantedStacks = wantedService.getWantedStackInfo(wid);
-			for (Job j : jobs) {
-				j.setStacks(wantedService.getStackInfo(j.getJid()));
-			}
 			Scrap model = new Scrap();
 			model.setUid(uid);
 			model.setWid(wid);
 			Scrap scrap = wantedService.isScraped(model);
 			wr.setCompany(company);
 			wr.setWanted(wanted);
-			wr.setJobs(jobs);
 			wr.setStacks(wantedStacks);
 			if (scrap == null) {
 				wr.setScrap(false);
@@ -107,17 +98,12 @@ public class WantedController {
 				wr.setScrap(true);
 			}
 		} else {
-			int cid = wantedService.getCompanyId(wid);
+			String cid = wantedService.getCompanyId(wid);
 			Company company = wantedService.getCompanyInfo(cid);
 			Wanted wanted = wantedService.getWantedInfo(wid);
-			List<Job> jobs = wantedService.getJobsInfo(wid);
 			List<Stack> wantedStacks = wantedService.getWantedStackInfo(wid);
-			for (Job j : jobs) {
-				j.setStacks(wantedService.getStackInfo(j.getJid()));
-			}
 			wr.setCompany(company);
 			wr.setWanted(wanted);
-			wr.setJobs(jobs);
 			wr.setStacks(wantedStacks);
 		}
 		// vcnt 조회수 update
@@ -135,11 +121,11 @@ public class WantedController {
 		if (token != null && !token.equals("")) {
 			resultMap.putAll(jwtService.get(req.getHeader("jwt-auth-token")));
 			int uid = (int) resultMap.get("uid");
-			List<Integer> widList = wantedService.getWantedByRecent();
+			List<String> widList = wantedService.getWantedByRecent();
 			List<WantedResult> wrlist = getWantedListFunction(widList, uid);
 			return new ResponseEntity<List<WantedResult>>(wrlist, HttpStatus.OK);
 		} else {
-			List<Integer> widList = wantedService.getWantedByRecent();
+			List<String> widList = wantedService.getWantedByRecent();
 			List<WantedResult> wrlist = getWantedListFunction(widList);
 			return new ResponseEntity<List<WantedResult>>(wrlist, HttpStatus.OK);
 		}
@@ -154,11 +140,11 @@ public class WantedController {
 		if (token != null && !token.equals("")) {
 			resultMap.putAll(jwtService.get(req.getHeader("jwt-auth-token")));
 			int uid = (int) resultMap.get("uid");
-			List<Integer> widList = wantedService.getWantedByCloseEnd();
+			List<String> widList = wantedService.getWantedByCloseEnd();
 			List<WantedResult> wrlist = getWantedListFunction(widList, uid);
 			return new ResponseEntity<List<WantedResult>>(wrlist, HttpStatus.OK);
 		} else {
-			List<Integer> widList = wantedService.getWantedByCloseEnd();
+			List<String> widList = wantedService.getWantedByCloseEnd();
 			List<WantedResult> wrlist = getWantedListFunction(widList);
 			return new ResponseEntity<List<WantedResult>>(wrlist, HttpStatus.OK);
 		}
@@ -173,11 +159,11 @@ public class WantedController {
 		if (token != null && !token.equals("")) {
 			resultMap.putAll(jwtService.get(req.getHeader("jwt-auth-token")));
 			int uid = (int) resultMap.get("uid");
-			List<Integer> widList = wantedService.getWantedByView();
+			List<String> widList = wantedService.getWantedByView();
 			List<WantedResult> wrlist = getWantedListFunction(widList, uid);
 			return new ResponseEntity<List<WantedResult>>(wrlist, HttpStatus.OK);
 		} else {
-			List<Integer> widList = wantedService.getWantedByView();
+			List<String> widList = wantedService.getWantedByView();
 			List<WantedResult> wrlist = getWantedListFunction(widList);
 			return new ResponseEntity<List<WantedResult>>(wrlist, HttpStatus.OK);
 		}
@@ -192,7 +178,7 @@ public class WantedController {
 		if (token != null && !token.equals("")) {
 			resultMap.putAll(jwtService.get(req.getHeader("jwt-auth-token")));
 			int uid = (int) resultMap.get("uid");
-			List<Integer> widList = wantedService.getWantedByStack(uid);
+			List<String> widList = wantedService.getWantedByStack(uid);
 			List<WantedResult> wrlist = getWantedListFunction(widList, uid);
 			return new ResponseEntity<List<WantedResult>>(wrlist, HttpStatus.OK);
 		} else {
@@ -209,7 +195,7 @@ public class WantedController {
 		if (token != null && !token.equals("")) {
 			resultMap.putAll(jwtService.get(req.getHeader("jwt-auth-token")));
 			int uid = (int) resultMap.get("uid");
-			List<Integer> widList = wantedService.getWantedByScrap(uid);
+			List<String> widList = wantedService.getWantedByScrap(uid);
 			List<WantedResult> wrlist = getWantedListFunction(widList, uid);
 			return new ResponseEntity<List<WantedResult>>(wrlist, HttpStatus.OK);
 		} else {
@@ -221,7 +207,6 @@ public class WantedController {
 	@RequestMapping(value = "/scrapWanted", method = RequestMethod.POST)
 	public ResponseEntity<Result> scrapWanted(@RequestBody Scrap input, HttpServletRequest req) throws Exception {
 		logger.info("5-------------scrapWanted-----------------------------" + new Date());
-		System.out.println(input.getWid());
 		Map<String, Object> resultMap = new HashMap<>();
 		String token = req.getHeader("jwt-auth-token");
 		Result r = new Result();
@@ -249,42 +234,10 @@ public class WantedController {
 
 	@ApiOperation(value = "공고를 추가한다.", response = Wanted.class)
 	@RequestMapping(value = "/createWanted", method = RequestMethod.POST)
-	public ResponseEntity<Result> createWanted(@RequestBody Wanted model) throws Exception {
+	public ResponseEntity<Result> createWanted() throws Exception {
 		logger.info("6-------------createWanted-----------------------------" + new Date());
-		logger.info("6-------------createWanted-----------------------------" + model);
 		Result r = new Result();
-		// Wanted Input Condition
-		if (model.getCid() == 0 || model.getWantedTitle() == null || model.getWantedTitle().equals("")
-				|| model.getStartDate() == null || model.getStartDate().equals("") || model.getEndDate() == null
-				|| model.getEndDate().equals("") || model.getProcess() == null || model.getProcess().equals("")) {
-			r.setMsg("공고 필수 입력값이 누락되었습니다.");
-			r.setState("fail");
-			return new ResponseEntity<Result>(r, HttpStatus.OK);
-		}
-		// Job Input Condition
-		for (Job j : model.getJobs()) {
-			if (j.getTo() == null || j.getTo().equals("") || j.getJname() == null || j.getJname().equals("")) {
-				r.setMsg("직무 필수 입력값이 누락되었습니다.");
-				r.setState("fail");
-				return new ResponseEntity<Result>(r, HttpStatus.OK);
-			}
-		}
-
-		int wid = wantedService.createWanted(model);
-		for (Job j : model.getJobs()) {
-			if (j.getTo().contains("명")) {
-				j.setTo(j.getTo().substring(0, j.getTo().length() - 1));
-			}
-			j.setWid(wid);
-			int jid = jobService.createJobReturnJid(j);
-			for (Stack s : j.getStacks()) {
-				JobStack js = new JobStack();
-				js.setJid(jid);
-				js.setSid(s.getSid());
-				stackService.createJobStack(js);
-			}
-		}
-
+		wantedService.callSaramin();
 		r.setMsg("공고 입력이 성공적으로 완료되었습니다.");
 		r.setState("success");
 		return new ResponseEntity<Result>(r, HttpStatus.OK);
@@ -292,12 +245,12 @@ public class WantedController {
 
 	@ApiOperation(value = "공고를 삭제한다.", response = Wanted.class)
 	@RequestMapping(value = "/deleteWanted", method = RequestMethod.DELETE)
-	public ResponseEntity<Result> deleteWanted(@RequestBody int wid) throws Exception {
+	public ResponseEntity<Result> deleteWanted(@RequestBody String wid) throws Exception {
 		logger.info("7-------------deleteWanted-----------------------------" + new Date());
 		logger.info("7-------------deleteWanted-----------------------------" + wid);
 		Result r = new Result();
 		Wanted wanted = wantedService.getWantedInfo(wid);
-		if (wid == 0 || wanted == null) {
+		if (wid == null || wid.equals("") || wanted == null) {
 			r.setMsg("존재하지 않는 wid값입니다.");
 			r.setState("fail");
 			return new ResponseEntity<Result>(r, HttpStatus.OK);
@@ -314,14 +267,14 @@ public class WantedController {
 		logger.info("8-------------updateWanted-----------------------------" + new Date());
 		logger.info("8-------------updateWanted-----------------------------" + model);
 		Result r = new Result();
-		int wid = model.getWid();
+		String wid = model.getWid();
 		Wanted wanted = wantedService.getWantedInfo(wid);
-		if (wid == 0 || wanted == null) {
+		if (wid == null || wid.equals("") || wanted == null) {
 			r.setMsg("존재하지 않는 wid값입니다.");
 			r.setState("fail");
-		} else if (model.getCid() == 0 || model.getWantedTitle() == null || model.getWantedTitle().equals("")
+		} else if (model.getCid() == null || model.getCid().equals("") || model.getWantedTitle() == null || model.getWantedTitle().equals("")
 				|| model.getStartDate() == null || model.getStartDate().equals("") || model.getEndDate() == null
-				|| model.getEndDate().equals("") || model.getProcess() == null || model.getProcess().equals("")) {
+				|| model.getEndDate().equals("") || model.getDetail() == null || model.getDetail().equals("")) {
 			r.setMsg("입력되지 않은 필수값이 있습니다.");
 			r.setState("fail");
 		} else {
@@ -332,17 +285,13 @@ public class WantedController {
 		return new ResponseEntity<Result>(r, HttpStatus.OK);
 	}
 
-	private List<WantedResult> getWantedListFunction(List<Integer> widList, int uid) {
+	private List<WantedResult> getWantedListFunction(List<String> widList, int uid) {
 		List<WantedResult> wrlist = new ArrayList<>();
-		for (int i : widList) {
-			int cid = wantedService.getCompanyId(i);
+		for (String i : widList) {
+			String cid = wantedService.getCompanyId(i);
 			Company company = wantedService.getCompanyInfo(cid);
 			Wanted wanted = wantedService.getWantedInfo(i);
-			List<Job> jobs = wantedService.getJobsInfo(i);
 			List<Stack> wantedStacks = wantedService.getWantedStackInfo(i);
-			for (Job j : jobs) {
-				j.setStacks(wantedService.getStackInfo(j.getJid()));
-			}
 			Scrap model = new Scrap();
 			model.setUid(uid);
 			model.setWid(i);
@@ -350,7 +299,6 @@ public class WantedController {
 			WantedResult wr = new WantedResult();
 			wr.setCompany(company);
 			wr.setWanted(wanted);
-			wr.setJobs(jobs);
 			wr.setStacks(wantedStacks);
 			if (scrap == null) {
 				wr.setScrap(false);
@@ -362,21 +310,16 @@ public class WantedController {
 		return wrlist;
 	}
 
-	private List<WantedResult> getWantedListFunction(List<Integer> widList) {
+	private List<WantedResult> getWantedListFunction(List<String> widList) {
 		List<WantedResult> wrlist = new ArrayList<>();
-		for (int i : widList) {
-			int cid = wantedService.getCompanyId(i);
+		for (String i : widList) {
+			String cid = wantedService.getCompanyId(i);
 			Company company = wantedService.getCompanyInfo(cid);
 			Wanted wanted = wantedService.getWantedInfo(i);
-			List<Job> jobs = wantedService.getJobsInfo(i);
 			List<Stack> wantedStacks = wantedService.getWantedStackInfo(i);
-			for (Job j : jobs) {
-				j.setStacks(wantedService.getStackInfo(j.getJid()));
-			}
 			WantedResult wr = new WantedResult();
 			wr.setCompany(company);
 			wr.setWanted(wanted);
-			wr.setJobs(jobs);
 			wr.setStacks(wantedStacks);
 			wrlist.add(wr);
 		}

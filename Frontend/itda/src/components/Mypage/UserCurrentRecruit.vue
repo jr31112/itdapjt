@@ -1,5 +1,4 @@
 <template>
-
     <v-container>
         <p>현재 진행 중인 공고</p>
         <v-card>
@@ -23,13 +22,16 @@
 </template>
 
 <script>
-    import axios from 'axios'
+    
     export default {
         name: "userscraplist",
         data() {
-            return {currentRecruits: [
-                    {}
-                ], pagenum: 1, pagesize: 5}
+            return { pagenum: 1, pagesize: 5}
+        },
+        props: {
+            currentRecruits: {
+                type: Array
+            }
         },
         computed: {
             pagecount() {
@@ -47,42 +49,15 @@
             }
 
         },
-        created() {
-            this.setRecruit()
-
+        nextPage() {
+            this.pagenum += 1;
         },
-        methods: {
-            setRecruit() {
-                axios
-                    .get(`http://54.180.140.163/itda/api/getWantedByRecent/`)
-                    .then(response => {
-                        for (var idx = 0; idx < response.data.length; idx++) {
-                            var wid = response
-                                .data[idx]
-                                .wanted
-                                .wid
-                            var wantedTitle = response
-                                .data[idx]
-                                .wanted
-                                .wantedTitle
-                                this
-                                .currentRecruits
-                                .splice(idx, 0, {wid, wantedTitle})
-                        }
-
-                    })
-                    .catch(() => {})
-
-                },
-            nextPage() {
-                this.pagenum += 1;
-            },
-            prevPage() {
-                this.pagenum -= 1;
-            }
+        prevPage() {
+            this.pagenum -= 1;
         }
-
     }
+
+
 </script>
 
 <style></style>

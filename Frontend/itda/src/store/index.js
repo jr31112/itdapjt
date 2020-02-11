@@ -53,7 +53,7 @@ export default new Vuex.Store({
   {
     login({ dispatch }, { email, pw }) {
       axios
-        .post('http://54.180.140.163/itda/api/login', {
+        .post('https://192.168.31.54:8197/itda/api/login', {
           email, pw
         })
         .then(res => {
@@ -91,7 +91,7 @@ export default new Vuex.Store({
         }
       }
       axios
-        .get("http://54.180.140.163/itda/api/getUser", config)
+        .get("https://192.168.31.54:8197/itda/api/getUser", config)
         .then(res => {
           let userInfo = res.data
           

@@ -20,7 +20,7 @@ public class CompanyServiceImpl implements ICompanyService {
 	}
 	
 	@Override
-	public void deleteCompany(Integer cid) {
+	public void deleteCompany(String cid) {
 		companyDao.deleteCompany(cid);
 	}
 	

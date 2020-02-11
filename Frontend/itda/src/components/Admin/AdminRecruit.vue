@@ -71,7 +71,7 @@
 
             getWantedAll() {
                 axios
-                    .get('http://54.180.140.163/itda/api/getWantedAll/')
+                    .get('https://192.168.31.54:8197/itda/api/getWantedAll/')
                     .then(res => {
                         this.allwanteds = res.data
 
@@ -90,7 +90,7 @@
                     if (this.$refs.form.validate()) {
                         this.snackbar = true
                         axios
-                            .post('http://54.180.140.163/itda/api/createStudy', this.formData, {
+                            .post('https://192.168.31.54:8197/itda/api/createStudy', this.formData, {
                                 'headers': {
                                     "jwt-auth-token": localStorage.getItem("access_token")
                                 }

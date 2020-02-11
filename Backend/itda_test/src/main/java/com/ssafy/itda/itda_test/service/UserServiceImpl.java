@@ -57,7 +57,7 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public List<Integer> getMyScrapWanteds(int uid) {
+	public List<String> getMyScrapWanteds(int uid) {
 		return userDao.getMyScrapWanteds(uid);
 	}
 	

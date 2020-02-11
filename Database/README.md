@@ -20,21 +20,21 @@
 
 * 기업 정보 테이블 `company_t`
 
-  | 필드명     | 자료형  | 설명              |
-  | ---------- | ------- | ----------------- |
-  | cid        | integer | Primary Key       |
-  | corpNm     | string  | **(필수)** 회사명 |
-  | totPsncnt  | string  | 근로자수          |
-  | busiSize   | string  | 기업규모          |
-  | yrSalesAmt | string  | 연매출액          |
-  | corpAddr   | string  | 회사 주소         |
-  | homePg     | string  | 회사 홈페이지     |
-  | busiCont   | string  | 주요 사업내용     |
-  | logo       | string  | 기업 로고         |
+  | 필드명     | 자료형 | 설명              |
+  | ---------- | ------ | ----------------- |
+  | cid        | string | Primary Key       |
+  | corpNm     | string | **(필수)** 회사명 |
+  | totPsncnt  | string | 근로자수          |
+  | busiSize   | string | 기업규모          |
+  | yrSalesAmt | string | 연매출액          |
+  | corpAddr   | string | 회사 주소         |
+  | homePg     | string | 회사 홈페이지     |
+  | busiCont   | string | 주요 사업내용     |
+  | logo       | string | 기업 로고         |
 
 * 사용자 정의 테이블 `user_t`
 
-   
+  
    | 필드명 | 자료형  | 설명                            |
    | ------ | ------- | ------------------------------- |
   | uid    | integer | Primary Key                     |
@@ -44,30 +44,30 @@
   | major  | string  | 전공                            |
   | auth   | integer | **(필수, default 1)** 회원 권한 |
   | uimg   | string  | 회원 사진                       |
-  | cid    | integer | company_t의 Primary Key(cid)    |
+  | cid    | string  | company_t의 Primary Key(cid)    |
   
 * 채용 공고 테이블 `wanted_t`
   
 
   | 필드명      | 자료형  | 설명                                    |
   | ----------- | ------- | --------------------------------------- |
-  | wid         | integer | Primary Key                             |
+  | wid         | string  | Primary Key                             |
   | wantedTitle | string  | **(필수)** 공고 제목                    |
   | active      | integer | **(필수, default 0)** 공고 진행 상태    |
   | startDate   | date    | **(필수)** 공고 시작일                  |
   | endDate     | date    | **(필수)** 공고 마감일                  |
   | vcnt        | integer | **(필수)** 공고 조회수                  |
-  | cid         | integer | **(필수)** company_t의 Primary Key(cid) |
+  | cid         | string  | **(필수)** company_t의 Primary Key(cid) |
   | detail      | string  | **(필수)** iframe 주소                  |
   
 * 스크랩 정보 테이블 `scrap_t`
 
   
-  | 필드명   | 자료형  | 설명                                   |
-  | -------- | ------- | -------------------------------------- |
-  | uid, wid | -       | Primary Key                            |
-  | uid      | integer | **(필수)** user_t의 Primary Key(uid)   |
-  | wid      | integer | **(필수)** wanted_t의 Primary Key(wid) |
+  | 필드명   | 자료형 | 설명                                   |
+  | -------- | ------ | -------------------------------------- |
+  | uid, wid | -      | Primary Key                            |
+  | uid      | int    | **(필수)** user_t의 Primary Key(uid)   |
+  | wid      | string | **(필수)** wanted_t의 Primary Key(wid) |
 
 * 기술 스택 테이블 `stack_t`
 
@@ -86,12 +86,12 @@
   | uid      | integer | **(필수) **user_t의 Primary Key (uid) |
   | sid      | integer | **(필수)** stack_t의 Primary Key(sid) |
   
-* 공고 별 기술 스택 정보 테이블 `wantedstack_t`
+* 공고 별 기술 스택 정보 테이블 `wantedStack_t`
 
   | 필드명   | 자료형  | 설명                                   |
   | -------- | ------- | -------------------------------------- |
   | wid, sid |         | Primary Key                            |
-  | wid      | integer | **(필수) **wanted_t의 Primary Key(wid) |
+  | wid      | string  | **(필수) **wanted_t의 Primary Key(wid) |
   | sid      | integer | **(필수) **stack_t의 Primary Key(sid)  |
 
 * 기술 스택 추가 요청 테이블 `reqStack_t`
@@ -143,7 +143,7 @@ drop table if exists company_t;
 
 -- 기업 정보 테이블 정의
 create table company_t(
-	cid int primary key auto_increment,
+	cid varchar(10) primary key auto_increment,
     corpNm varchar(100) not null,
     totPsncnt varchar(20),
     busiSize varchar(30),
@@ -165,7 +165,7 @@ create table user_t(
     major varchar(20),
     auth int not null default 1, -- 1: user, 0: admin
     uimg varchar(100),
-    cid int,
+    cid varchar(10),
     foreign key(cid) references company_t(cid)
 );
 -- email : id 겸 이메일, pw : 패스워드 (sha1로 변환하여 저장)
@@ -173,7 +173,7 @@ create table user_t(
 
 -- 채용 공고 테이블 정의
 create table wanted_t(
-	wid int primary key auto_increment,
+	wid varchar(10) primary key auto_increment,
     wantedTitle varchar(300) not null,
     active int not null default 0,	-- 0 : 마감, 1 : 진행 중, 2: 오늘 마감, 3: 내일 마감
     startDate timestamp not null,
@@ -182,7 +182,7 @@ create table wanted_t(
     etc text,
     question text,
     vcnt int not null default 0,
-    cid int not null,
+    cid varchar(10) not null,
     foreign key(cid) references company_t(cid) on delete cascade
 );
 -- wantedTitle : 공고 제목, active : 공고 진행 상태, startDate : 공고 시작일, endDate : 공고 마감일
@@ -191,7 +191,7 @@ create table wanted_t(
 -- 스크랩 정보 테이블 정의
 create table scrap_t(
 	uid int not null,
-    wid int not null,
+    wid varchar(10) not null,
     primary key(uid, wid),
     foreign key(uid) references user_t(uid) on delete cascade on update cascade,
     foreign key(wid) references wanted_t(wid) on delete cascade on update cascade
@@ -217,28 +217,14 @@ create table myStack_t(
 );
 -- on delete cascade, on update cascade  / or  No action
 
--- 직무 정보 테이블 정의
-create table job_t(
-	jid int primary key auto_increment,
-    `to` varchar(5) not null, -- 0 , 00, 000명 일 경우 숫자로 인식하면 0으로 나오기 때문에 varchar
-    jname varchar(200) not null,
-    jdetail text,
-    jtype varchar(100),
-    `require` text,
-    extra text,
-    place varchar(100),
-    wid int not null,
-    foreign key(wid) references wanted_t(wid) on delete cascade on update cascade
-);
--- jname : 직무 명, to : 모집인원, jdetail : 직무 상세, jtype : 고용형태 (계약직, 정규직, ...)
--- require : 자격요건, extra : 우대사항, place : 근무지, wid : 공고 번호 fk
+-- 직무 정보 테이블 삭제되었음
 
--- 직무 별 기술 스택 정보 테이블 정의
-create table jobStack_t(
-	jid int not null,
+-- 공고 별 기술 스택 정보 테이블 정의
+create table wantedStack_t(
+	wid varchar(10) not null,
     sid int not null,
-    primary key(jid, sid),
-    foreign key(jid) references job_t(jid) on delete cascade on update cascade,
+    primary key(wid, sid),
+    foreign key(wid) references wanted_t(wid) on delete cascade on update cascade,
     foreign key(sid) references stack_t(sid) on delete cascade on update cascade
 );
 
@@ -256,7 +242,7 @@ create table study_t(
 	stid int primary key auto_increment,
     stname varchar(100) not null,
     maxPcnt int not null,
-    pcnt int not null default 1,
+    pcnt int not null default 0,
     stype int not null,
     typeFk int,
     typeName varchar(300),
@@ -274,6 +260,8 @@ create table studyGroup_t(
 	foreign key(uid) references user_t(uid) on update cascade on delete cascade,
     foreign key(stid) references study_t(stid) on update cascade on delete cascade
 );
+
+commit;
 
 ```
 

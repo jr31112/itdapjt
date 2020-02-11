@@ -14,6 +14,6 @@ public interface IUserService {
 	List<User> getAllUsers();
 	void updateUser(User u);
 	List<Stack> getMyStacks(int uid);
-	List<Integer> getMyScrapWanteds(int uid);
+	List<String> getMyScrapWanteds(int uid);
 	void updatePermission(User model);
 }

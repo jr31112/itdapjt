@@ -41,7 +41,7 @@
         methods: {
             getAllStudys() {
                 axios
-                    .get('http://192.168.31.54:8197/itda/api/getAllStudy/')
+                    .get('http://54.180.140.163/itda/api/getAllStudy/')
                     .then(res => {
                         console.log(res.data)
                         this.allstudys = res.data
@@ -55,7 +55,7 @@
            {
              alert(item.stid)
               axios
-              .delete('http://192.168.31.54:8197/itda/api/deleteStudy/'+item.stid)
+              .delete('http://54.180.140.163/itda/api/deleteStudy/'+item.stid)
               .then(res => {
                   
                   if(res.data.state == 'success'){

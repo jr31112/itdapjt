@@ -61,17 +61,17 @@
 <script>
     import {mapState} from 'vuex'
     import axios from 'axios'
-  
+
     export default {
         name: "adminrecruit",
         mounted() {
             this.getWantedAll()
         },
-                methods: {
+        methods: {
 
             getWantedAll() {
                 axios
-                    .get('http://192.168.31.54:8197/itda/api/getWantedAll/')
+                    .get('http://54.180.140.163/itda/api/getWantedAll/')
                     .then(res => {
                         this.allwanteds = res.data
 
@@ -90,7 +90,7 @@
                     if (this.$refs.form.validate()) {
                         this.snackbar = true
                         axios
-                            .post('http://192.168.31.54:8197/itda/api/createStudy', this.formData, {
+                            .post('http://54.180.140.163/itda/api/createStudy', this.formData, {
                                 'headers': {
                                     "jwt-auth-token": localStorage.getItem("access_token")
                                 }
@@ -162,6 +162,9 @@
             dialog(val) {
                 val || this.close()
             }
+        },
+        created() { 
+          
         },
         data() {
             return {

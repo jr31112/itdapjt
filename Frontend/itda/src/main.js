@@ -9,6 +9,16 @@ import CoreuiVue from '@coreui/vue'
 Vue.use(CoreuiVue)
 Vue.use(require('vue-moment'))
 Vue.config.productionTip = false
+export const eventBus = new Vue({
+  methods:
+  {
+    NavContent(content)
+    {
+      this.$emit('NavContent',{content});
+    }
+  }
+
+})
 
 new Vue({
   router,
@@ -16,6 +26,7 @@ new Vue({
   {
     this.$store.dispatch("getMemberInfo");
   },
+  
   store,
   vuetify,
   icons,

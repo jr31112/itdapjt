@@ -52,7 +52,8 @@ export default {
     data(){
         return{
             page:1,
-            searchresults:[]
+            searchresults:[],
+            compNm: ""
         }
     },
     props:{
@@ -94,8 +95,8 @@ export default {
             this.searchresults = tmp
         },
         dataTr(content){
-            
-            localStorage.setItem('select', JSON.stringify(content))
+            console.log(content.Nm)
+//            localStorage.setItem('select', JSON.stringify(content))
             window.close()
             
         }

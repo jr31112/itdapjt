@@ -11,6 +11,7 @@ export default new Vuex.Store({
     isLoginError: false,
     isDialog: true,
     isManager: false, 
+    isName: ""
   },
   //뮤테이션과 엑션스 차이는? 
   //뮤테이션 : state 값 변경. 
@@ -42,12 +43,17 @@ export default new Vuex.Store({
     {
       state.isManager = true;
     },
+    ////////////추가
+    set_name(state, name)
+    {
+      state.name =name
+    }  
   },
   actions:
   {
     login({ dispatch }, { email, pw }) {
       axios
-        .post('http://192.168.31.54:8197/itda/api/login', {
+        .post('http://54.180.140.163/itda/api/login', {
           email, pw
         })
         .then(res => {
@@ -85,7 +91,7 @@ export default new Vuex.Store({
         }
       }
       axios
-        .get("http://192.168.31.54:8197/itda/api/getUser", config)
+        .get("http://54.180.140.163/itda/api/getUser", config)
         .then(res => {
           let userInfo = res.data
           

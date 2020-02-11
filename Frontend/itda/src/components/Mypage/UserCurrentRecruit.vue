@@ -54,7 +54,7 @@
         methods: {
             setRecruit() {
                 axios
-                    .get(`http://192.168.31.54:8197/itda/api/getWantedByRecent/`)
+                    .get(`http://54.180.140.163/itda/api/getWantedByRecent/`)
                     .then(response => {
                         for (var idx = 0; idx < response.data.length; idx++) {
                             var wid = response

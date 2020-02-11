@@ -63,7 +63,7 @@
         methods: {
             getAllData() {
                 axios
-                    .get(`http://192.168.31.54:8197/itda/api/getUser/`, {
+                    .get(`http://54.180.140.163/itda/api/getUser/`, {
                         headers: {
                             "jwt-auth-token": localStorage.getItem("access_token")
                         }

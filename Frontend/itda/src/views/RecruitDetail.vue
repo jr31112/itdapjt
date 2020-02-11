@@ -33,7 +33,7 @@ export default {
   },
   methods: {
     getDetailData(){
-      axios.get(`http://192.168.31.54:8197/itda/api/getWantedByID/${this.$route.params.id}`)
+      axios.get(`http://54.180.140.163/itda/api/getWantedByID/${this.$route.params.id}`)
         .then(response=>{
           this.recruit = response.data
         })

@@ -8,12 +8,12 @@ import RecruitMain from '../views/RecruitMain.vue'
 import RecruitDetail from '../views/RecruitDetail.vue'
 import RecruitCalender from '../views/RecruitCalender.vue'
 import StudyMain from '../views/StudyMain.vue'
-import SearchResult from '../views/SearchResult.vue'
+import SearchFilter from '../components/SearchResult/SearchFilter.vue'
 import SearchData from '../views/SearchData.vue'
 import UserModify from "../components/Mypage/UserModify.vue"
 import AboutUs from '../components/Aboutus/AboutUs.vue'
-import SearchCompany from '../views/SearchCompany.vue'
 import store from '../store/index.js'
+//import { cilViewStream } from '@coreui/icons'
 Vue.use(VueRouter)
 // 관리자가 0 , 기본 1
 const rejectAuthUser = (to, from, next)=>
@@ -88,22 +88,17 @@ const routes = [
     name: "studymain",
     component: StudyMain
   },
-  { 
-    path: "/searchresult",
-    name: "searchresult",
-    component: SearchResult
-  },
   {
     path: "/searchdata/:type",
     name: "searchdata",
     component: SearchData
   },
+
   {
-    path: "/searchCompany",
-    name: "searchCompany",
-    component: SearchCompany
-  }
-  ,
+    path: "/searchfilter",
+    name: "searchfilter",
+    component: SearchFilter
+  },
   { 
     path: "/login",
     name: "login",

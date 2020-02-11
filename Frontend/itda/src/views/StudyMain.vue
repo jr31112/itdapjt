@@ -65,7 +65,7 @@ export default {
     },
     methods:{
         getStudies(){
-            axios.get('http://192.168.31.54:8197/itda/api/getAllStudy')
+            axios.get('http://54.180.140.163/itda/api/getAllStudy')
             .then(response=>{
                 this.studies = response.data
             })
@@ -83,7 +83,7 @@ export default {
             this.formData.typeName = select.Nm
             if (this.$refs.form.validate()) {
                 this.snackbar = true
-                axios.post('http://192.168.31.54:8197/itda/api/createStudy', this.formData, {'headers' : {"jwt-auth-token": localStorage.getItem("access_token")}})
+                axios.post('http://54.180.140.163/itda/api/createStudy', this.formData, {'headers' : {"jwt-auth-token": localStorage.getItem("access_token")}})
                 .then(()=>{
                     alert('스터디를 생성하였습니다.')
                     this.$refs.form.reset()

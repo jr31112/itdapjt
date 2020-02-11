@@ -2,27 +2,27 @@
   <v-col class="wantedscrap" cols="12" md="6">
     <h2 class="mb-3">스크랩</h2>
     <v-carousel
-      v-if="wantedlist.length"
+      v-if="scrapList.length"
       hide-delimiters
       :show-arrows="false"
       cycle
       interval="2500"
       height="400"
     >
-      <v-carousel-item v-for="j in wantedlist.length>5?2:wantedlist.length>0?1:0" :key="j">
+      <v-carousel-item v-for="j in scrapList.length>5?2:scrapList.length>0?1:0" :key="j">
         <v-container style="height:400px" white>
           <v-row
             id="wanted"
-            v-for="i in wantedlist.length==5*j?5:wantedlist.length-5*(j-1)"
+            v-for="i in scrapList.length==5*j?5:scrapList.length-5*(j-1)"
             :key="i"
             style="height:78px;"
-            @click.prevent="goDetailPage(wantedlist[5*(j-1)+i-1].wanted.wid)"
+            @click.prevent="goDetailPage(scrapList[5*(j-1)+i-1].wanted.wid)"
           >
             <v-col cols="3">
               <v-img
-                v-if="wantedlist[5*(j-1)+i-1].company.logo"
-                :src="wantedlist[5*(j-1)+i-1].company.logo"
-                :alt="wantedlist[5*(j-1)+i-1].company.corpNm"
+                v-if="scrapList[5*(j-1)+i-1].company.logo"
+                :src="scrapList[5*(j-1)+i-1].company.logo"
+                :alt="scrapList[5*(j-1)+i-1].company.corpNm"
                 :contain="true"
                 max-width="150"
                 aspect-ratio="2.67"
@@ -37,8 +37,8 @@
               ></v-img>
             </v-col>
             <v-col cols="9">
-              <v-row id="corpNm">{{wantedlist[5*(j-1)+i-1].company.corpNm}}</v-row>
-              <v-row id="wantedTitle">{{wantedlist[5*(j-1)+i-1].wanted.wantedTitle}}</v-row>
+              <v-row id="corpNm">{{scrapList[5*(j-1)+i-1].company.corpNm}}</v-row>
+              <v-row id="wantedTitle">{{scrapList[5*(j-1)+i-1].wanted.wantedTitle}}</v-row>
             </v-col>
           </v-row>
         </v-container>
@@ -64,20 +64,14 @@
 </template>
 
 <script>
-import axios from 'axios'
 import router from '../../../router'
 
 export default {
   name: "recruitscraplist",
+  props:{
+    scrapList:{type:Array}
+  },
   methods: {
-    getWantedList() {
-      axios
-        .get(`http://192.168.31.54:8197/itda/api/getWantedByScrap/`, {'headers' : {"jwt-auth-token": localStorage.getItem("access_token")}})
-        .then(response => {
-          this.wantedlist = response.data;
-        })
-        .catch(() => {});
-    },
     getImgUrl(img) {
       return require("../../../assets/" + img);
     },
@@ -85,14 +79,6 @@ export default {
       router.push({ name: "recruitdetail", params: { id: wid } });
     }
   },
-  mounted() {
-    this.getWantedList();
-  },
-  data() {
-    return {
-      wantedlist: []
-    }
-  }
 }
 </script>
 

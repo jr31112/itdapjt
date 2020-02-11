@@ -1,7 +1,7 @@
 <template>
   <v-row class="wantedlogin">
-    <recruit-stack-list/>
-    <recruit-scrap-list/>
+    <recruit-stack-list :stackList="loginContent.stackList"/>
+    <recruit-scrap-list :scrapList="loginContent.scrapList"/>
   </v-row>
 </template>
 
@@ -11,6 +11,9 @@ import RecruitScrapList from './RecruitLoginContent/RecruitScrapList.vue'
 
 export default {
     name: "recruitlogincontent",
+    props:{
+      loginContent:{type:Object}
+    },
     components:{
         RecruitStackList,
         RecruitScrapList

@@ -1,21 +1,21 @@
 <template>
 	<v-hover v-slot:default="{ hover }">
-		<v-card @click="goDetailPage(wanted.wid)" light align-center height="230" :elevation="hover ? 16 : 2" class="mx-auto">
+		<v-card light align-center height="260" :elevation="hover ? 16 : 2" class="mx-auto">
 			<v-container>
 				<v-row align="center">
-					<v-col cols="10">
+					<v-col cols="10" @click="goDetailPage(wanted.wid)">
 						<v-img v-if="company.logo" :src="company.logo" :alt="company.corpNm" height="60" :contain="true"></v-img>
 						<v-img v-else :src="getImgUrl('noimg.png')" alt="noimg" height="60" :contain="true"></v-img>
 					</v-col>
-					<v-col v-if="isLogin && scrap" class="px-0" cols="1"><v-icon color="yellow">star</v-icon></v-col>
-					<v-col v-if="isLogin && !scrap" class="px-0" cols="1"><v-icon color="grey lighten-2">star_border</v-icon></v-col>
+					<v-col v-if="isLogin && scrap" class="px-0" cols="1"><v-icon color="yellow" @click.prevent="doScrap(wanted.wid)">star</v-icon></v-col>
+					<v-col v-if="isLogin && !scrap" class="px-0" cols="1"><v-icon color="grey lighten-2" @click.prevent="doScrap(wanted.wid)">star_border</v-icon></v-col>
 				</v-row>
 				<v-divider></v-divider>
-				<v-row>
-					<v-col class="text-left" cols="9" id="headline">{{ company.corpNm }}</v-col>
-					<v-col class="text-right" cols="3">{{ leftDate }}</v-col>
+				<v-row @click="goDetailPage(wanted.wid)">
+					<v-col class="text-left pr-0" cols="9" id="headline">{{ company.corpNm }}</v-col>
+					<v-col class="text-right pl-0" cols="3">{{ leftDate }}</v-col>
 				</v-row>
-				<v-row>
+				<v-row @click="goDetailPage(wanted.wid)">
 					<v-col class="pt-0 text-left grey--text" style="height:48px">{{ wanted.wantedTitle }}</v-col>
 				</v-row>
 				<v-row>
@@ -27,6 +27,7 @@
 </template>
 <script>
 import { mapState } from 'vuex'
+import axios from 'axios'
 import router from '../../../router'
 
 export default {
@@ -50,6 +51,11 @@ export default {
 	  },
 	  goDetailPage(wid){
         router.push({name:'recruitdetail',params:{id:wid}})
+	  },
+	  doScrap(wid){
+		  axios.post('http://192.168.31.54:8197/itda/api/scrapWanted/',{"wid":wid},{'headers' : {"jwt-auth-token": localStorage.getItem("access_token")}})
+            .then(()=>{
+				this.$emit('update')})
 	  },
 	},
 	computed: {

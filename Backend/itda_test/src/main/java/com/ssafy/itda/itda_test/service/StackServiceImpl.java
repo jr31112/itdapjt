@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.itda.itda_test.dao.StackDao;
-import com.ssafy.itda.itda_test.model.JobStack;
+import com.ssafy.itda.itda_test.model.WantedStack;
 import com.ssafy.itda.itda_test.model.MyStack;
 import com.ssafy.itda.itda_test.model.Stack;
 
@@ -27,8 +27,8 @@ public class StackServiceImpl implements IStackService {
 	}
 
 	@Override
-	public void createJobStack(JobStack js) {
-		stackDao.createJobStack(js);
+	public void createWantedStack(WantedStack ws) {
+		stackDao.createWantedStack(ws);
 	}
 
 	@Override
@@ -37,8 +37,8 @@ public class StackServiceImpl implements IStackService {
 	}
 
 	@Override
-	public List<Stack> getJobStacks(int jid) {
-		return stackDao.getJobStacks(jid);
+	public List<Stack> getWantedStacks(String wid) {
+		return stackDao.getWantedStacks(wid);
 	}
 
 	@Override

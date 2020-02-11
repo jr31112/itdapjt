@@ -5,31 +5,30 @@ import java.io.Serializable;
 public class Scrap implements Serializable {
 
 	private int uid;
-	private int wid;
-
+	private String wid;
 	public Scrap() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
-
+	public Scrap(int uid, String wid) {
+		super();
+		this.uid = uid;
+		this.wid = wid;
+	}
 	public int getUid() {
 		return uid;
 	}
-
 	public void setUid(int uid) {
 		this.uid = uid;
 	}
-
-	public int getWid() {
+	public String getWid() {
 		return wid;
 	}
-
-	public void setWid(int wid) {
+	public void setWid(String wid) {
 		this.wid = wid;
 	}
-
 	@Override
 	public String toString() {
 		return "Scrap [uid=" + uid + ", wid=" + wid + "]";
-	}
-
+	}	
 }

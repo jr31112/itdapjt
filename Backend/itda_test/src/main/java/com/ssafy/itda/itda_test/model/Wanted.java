@@ -4,45 +4,38 @@ import java.io.Serializable;
 import java.util.List;
 
 public class Wanted implements Serializable {
-	private int wid;
+	private String wid;
 	private String wantedTitle;
 	private int active;
 	private String startDate;
 	private String endDate;
-	private String process;
-	private String etc;
-	private String question;
 	private int vcnt;
 	private String cid;
-
-	List<Job> jobs;
+	private String detail;
 
 	public Wanted() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Wanted(int wid, String wantedTitle, int active, String startDate, String endDate, String process, String etc,
-			String question, int vcnt, String cid, List<Job> jobs) {
+	public Wanted(String wid, String wantedTitle, int active, String startDate, String endDate, int vcnt, String cid,
+			String detail) {
 		super();
 		this.wid = wid;
 		this.wantedTitle = wantedTitle;
 		this.active = active;
 		this.startDate = startDate;
 		this.endDate = endDate;
-		this.process = process;
-		this.etc = etc;
-		this.question = question;
 		this.vcnt = vcnt;
 		this.cid = cid;
-		this.jobs = jobs;
+		this.detail = detail;
 	}
 
-	public int getWid() {
+	public String getWid() {
 		return wid;
 	}
 
-	public void setWid(int wid) {
+	public void setWid(String wid) {
 		this.wid = wid;
 	}
 
@@ -78,30 +71,6 @@ public class Wanted implements Serializable {
 		this.endDate = endDate;
 	}
 
-	public String getProcess() {
-		return process;
-	}
-
-	public void setProcess(String process) {
-		this.process = process;
-	}
-
-	public String getEtc() {
-		return etc;
-	}
-
-	public void setEtc(String etc) {
-		this.etc = etc;
-	}
-
-	public String getQuestion() {
-		return question;
-	}
-
-	public void setQuestion(String question) {
-		this.question = question;
-	}
-
 	public int getVcnt() {
 		return vcnt;
 	}
@@ -118,19 +87,18 @@ public class Wanted implements Serializable {
 		this.cid = cid;
 	}
 
-	public List<Job> getJobs() {
-		return jobs;
+	public String getDetail() {
+		return detail;
 	}
 
-	public void setJobs(List<Job> jobs) {
-		this.jobs = jobs;
+	public void setDetail(String detail) {
+		this.detail = detail;
 	}
 
 	@Override
 	public String toString() {
 		return "Wanted [wid=" + wid + ", wantedTitle=" + wantedTitle + ", active=" + active + ", startDate=" + startDate
-				+ ", endDate=" + endDate + ", process=" + process + ", etc=" + etc + ", question=" + question
-				+ ", vcnt=" + vcnt + ", cid=" + cid + ", jobs=" + jobs + "]";
+				+ ", endDate=" + endDate + ", vcnt=" + vcnt + ", cid=" + cid + ", detail=" + detail + "]";
 	}
-
+	
 }

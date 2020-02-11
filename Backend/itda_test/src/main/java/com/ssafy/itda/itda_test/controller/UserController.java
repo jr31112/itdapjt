@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ssafy.itda.itda_test.help.UserResult;
 import com.ssafy.itda.itda_test.help.WantedResult;
 import com.ssafy.itda.itda_test.model.Company;
-import com.ssafy.itda.itda_test.model.Job;
 import com.ssafy.itda.itda_test.model.MyStack;
 import com.ssafy.itda.itda_test.model.Stack;
 import com.ssafy.itda.itda_test.model.Study;
@@ -164,22 +163,17 @@ public class UserController {
 			User user = userService.getUser(uid);
 			// 내 기술스택 list , 내 스크랩 list
 			List<Stack> mystacks = userService.getMyStacks(uid);
-			List<Integer> myScrapWanteds = userService.getMyScrapWanteds(uid);
+			List<String> myScrapWanteds = userService.getMyScrapWanteds(uid);
 			List<WantedResult> wrlist = new ArrayList<>();
 			List<WantedResult> ewrlist = new ArrayList<>();
-			for (int i : myScrapWanteds) {
+			for (String i : myScrapWanteds) {
 				String cid = wantedService.getCompanyId(i);
 				Company company = wantedService.getCompanyInfo(cid);
 				Wanted wanted = wantedService.getWantedInfo(i);
-				List<Job> jobs = wantedService.getJobsInfo(i);
 				List<Stack> wantedStacks = wantedService.getWantedStackInfo(i);
-				for (Job j : jobs) {
-					j.setStacks(wantedService.getStackInfo(j.getJid()));
-				}
 				WantedResult wr = new WantedResult();
 				wr.setCompany(company);
 				wr.setWanted(wanted);
-				wr.setJobs(jobs);
 				wr.setStacks(wantedStacks);
 				if (wanted.getActive() == 1) {
 					ewrlist.add(wr);

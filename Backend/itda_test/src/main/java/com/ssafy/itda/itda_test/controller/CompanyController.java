@@ -21,7 +21,6 @@ import com.ssafy.itda.itda_test.help.Result;
 import com.ssafy.itda.itda_test.help.UserResult;
 import com.ssafy.itda.itda_test.help.WantedResult;
 import com.ssafy.itda.itda_test.model.Company;
-import com.ssafy.itda.itda_test.model.Job;
 import com.ssafy.itda.itda_test.model.Scrap;
 import com.ssafy.itda.itda_test.model.Stack;
 import com.ssafy.itda.itda_test.model.User;

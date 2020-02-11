@@ -3,8 +3,7 @@
 	<v-col class="px-0">
 		<v-carousel v-if="recentlist.length" height="auto" hide-delimiters>
 			<h2>앗! 뜨거~ 요즘 최신공고 </h2>
-			데이터 들어오면 k수정
-			<v-carousel-item v-for="k in 1" :key="k">
+			<v-carousel-item v-for="k in 3" :key="k">
 				<v-container>
 					<v-row v-for="j in 2" :key="j">
 						<v-col v-for="i in 4" cols="12" sm="6" lg="3" :key="i" white>
@@ -50,7 +49,7 @@ export default {
 						}
 				}	
 			}
-			axios.get(`http://192.168.31.54:8197/itda/api/getWantedByRecent/`,config)
+			axios.get(`https://192.168.31.54:8197/itda/api/getWantedByRecent/`,config)
 				.then(response=>{
 					this.recentlist = response.data
 				})

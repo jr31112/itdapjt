@@ -94,10 +94,8 @@ export default {
             this.searchresults = tmp
         },
         dataTr(content){
-            
             localStorage.setItem('select', JSON.stringify(content))
             window.close()
-            
         }
     },
     computed:{

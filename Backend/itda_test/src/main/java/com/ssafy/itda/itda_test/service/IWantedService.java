@@ -19,7 +19,7 @@ public interface IWantedService {
 	void unScrap(Scrap model);
 	void scrap(Scrap model);
 	List<String> getWantedAll();
-	String createWanted(Wanted model);
+	void createWanted(Wanted model);
 	void deleteWanted(String wid);
 	void updateWanted(Wanted model);
 	List<Stack> getStackInfo(String wid);

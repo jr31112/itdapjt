@@ -59,9 +59,8 @@ public class WantedDao {
 		return sqlSession.selectList(ns + "getWantedAll");
 	}
 
-	public String createWanted(Wanted model) {
+	public void createWanted(Wanted model) {
 		sqlSession.insert(ns + "createWanted", model);
-		return sqlSession.selectOne(ns + "getInputWanted", model);
 	}
 
 	public void deleteWanted(String wid) {

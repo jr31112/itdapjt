@@ -63,8 +63,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<insert id="createWanted"
 		parameterType="com.ssafy.itda.itda_test.model.Wanted">
-		INSERT INTO WANTED_T(WID, WANTEDTITLE, STARTDATE, ENDDATE, CID, DETAIL)
-		VALUES(#{wid}, #{wantedTitle}, FROM_UNIXTIME(#{startDate}),
+		INSERT INTO WANTED_T(WID, WANTEDTITLE, ACTIVE, STARTDATE, ENDDATE, CID, DETAIL)
+		VALUES(#{wid}, #{wantedTitle}, #{active}, FROM_UNIXTIME(#{startDate}),
 		FROM_UNIXTIME(#{endDate}), #{cid}, #{detail})
 	</insert>
 

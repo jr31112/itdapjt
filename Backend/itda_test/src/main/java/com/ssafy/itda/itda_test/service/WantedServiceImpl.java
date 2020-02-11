@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -230,7 +232,14 @@ public class WantedServiceImpl implements IWantedService {
 		String corpNm = info_company.get(0).getElementsByClass("name").text();
 		company.setCorpNm(corpNm);
 		String homepg = info_company.get(0).getElementsByAttribute("href").attr("href");
-		company.setHomePg(homepg);
+		String regex = "^((http|https)://)?(www.)?([a-zA-Z0-9]+)\\.[a-z]+([a-zA-z0-9.?#]+)?";
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(homepg);
+		if (matcher.find()) {
+			company.setHomePg(homepg);
+		} else {
+			company.setHomePg(null);
+		}
 
 		Elements list_intro = doc.getElementsByClass("list_intro");
 		Elements list_items = list_intro.get(0).getElementsByClass("box");

@@ -2,7 +2,6 @@ drop table if exists mystack_t ;
 drop table if exists wantedstack_t;
 drop table if exists stack_t;
 drop table if exists scrap_t;
-drop table if exists job_t;
 drop table if exists reqstack_t;
 drop table if exists studygroup_t;
 drop table if exists study_t;

@@ -8,7 +8,6 @@ import java.util.StringTokenizer;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -23,20 +22,25 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssafy.itda.itda_test.dao.CompanyDao;
+import com.ssafy.itda.itda_test.dao.StackDao;
 import com.ssafy.itda.itda_test.dao.WantedDao;
 import com.ssafy.itda.itda_test.model.Company;
 import com.ssafy.itda.itda_test.model.Scrap;
 import com.ssafy.itda.itda_test.model.Stack;
 import com.ssafy.itda.itda_test.model.Wanted;
+import com.ssafy.itda.itda_test.model.WantedStack;
 
 @Service
 public class WantedServiceImpl implements IWantedService {
 
 	@Autowired
 	private WantedDao wantedDao;
-	
+
 	@Autowired
 	private CompanyDao companyDao;
+
+	@Autowired
+	private StackDao stackDao;
 
 	@Override
 	public Wanted getWantedInfo(String wid) {
@@ -137,7 +141,12 @@ public class WantedServiceImpl implements IWantedService {
 		wantedDao.updateCheckExpire();
 	}
 
-//	@Scheduled(cron = "0 0/1 * * * *")
+	@Override
+	public void callSaramin() throws IOException {
+		schedulerSaraminAPI();
+	}
+
+//	@Scheduled(cron = "0 0 0/1 * * *")
 	@Scheduled(fixedDelay = 180000)
 	public void schedulerSaraminAPI() throws IOException {
 		System.out.println("Scheduler Saramin API!!");
@@ -155,47 +164,104 @@ public class WantedServiceImpl implements IWantedService {
 		JsonNode root = mapper.readTree(result.getBody());
 		JsonNode job = root.findPath("job");
 		Iterator<JsonNode> it = job.iterator();
-		while(it.hasNext()) {
+		while (it.hasNext()) {
 			inputWanted(it.next());
 		}
-
-//		Document doc = Jsoup.connect(api_url).get();
-//		Elements sri_section = doc.select("div.sri_section");
-//		System.out.println(doc.toString());
 	}
 
 	private void inputWanted(JsonNode job) throws IOException {
 		String href = job.path("company").path("detail").get("href").toString();
-		if(href == null) {
+		if (href == null) {
 			return;
 		}
 		StringTokenizer st = new StringTokenizer(href, "?&");
 		String cid = null;
-		while(st.hasMoreTokens()) {
+		while (st.hasMoreTokens()) {
 			String now = st.nextToken();
-			if(now.charAt(0) == 'c') {
+			if (now.charAt(0) == 'c') {
 				cid = now.substring(4);
 //				Company company = companyDao.getCompany(cid);
 //				if(company == null) {
-					if(!inputCompany(cid)) {
-						return;
-					}
+				if (!inputCompany(cid)) {
+					return;
+				}
 //				}
+				String wid = job.path("id").toString();
+				String wantedTitle = job.path("position").path("title").toString();
+				int active = job.path("active").intValue();
+				String startDate = job.path("opening-timestamp").toString();
+				String endDate = job.path("expiration-timestamp").toString();
+				String detail = "http://www.saramin.co.kr/zf_user/jobs/relay/view-detail?rec_idx=" + wid + "&rec_seq=0";
+				checkStack(detail, wid);
+				Wanted wanted = new Wanted(wid, wantedTitle, active, startDate, endDate, 0, cid, detail);
+				wantedDao.createWanted(wanted);
 			}
 		}
-		
+
+	}
+
+	private void checkStack(String detail, String wid) throws IOException {
+		List<Stack> stacks = stackDao.getAllStacks();
+		Document doc = Jsoup.connect(detail).get();
+		for (Stack s : stacks) {
+			if (doc.text().contains(s.getTname())) {
+				WantedStack ws = new WantedStack();
+				ws.setSid(s.getSid());
+				ws.setWid(wid);
+				stackDao.createWantedStack(ws);
+			}
+		}
+
 	}
 
 	private boolean inputCompany(String cid) throws IOException {
+		System.out.println(cid);
 		String base_url = "http://www.saramin.co.kr/zf_user/company-info/view?csn=";
 		Document doc = Jsoup.connect(base_url + cid).get();
-		if(!doc.getElementsByClass("result_txt").isEmpty()) {
+		Company company = new Company();
+		if (!doc.getElementsByClass("result_txt").isEmpty()) {
+			System.out.println("No Company Info");
 			return false;
 		}
 		Elements info_company = doc.getElementsByClass("info_company");
-		System.out.println(info_company);
+		String corpNm = info_company.get(0).getElementsByClass("name").text();
+		company.setCorpNm(corpNm);
+		String homepg = info_company.get(0).getElementsByAttribute("href").attr("href");
+		company.setHomePg(homepg);
+
+		Elements list_intro = doc.getElementsByClass("list_intro");
+		Elements list_items = list_intro.get(0).getElementsByClass("box");
+		for (int i = 0; i < list_items.size(); i++) {
+			if (list_items.get(i).text().contains("사원수")) {
+				System.out.println("사원 수 : " + list_items.get(i).getElementsByClass("desc").text());
+				company.setTotPsncnt(list_items.get(i).getElementsByClass("desc").text());
+			} else if (list_items.get(i).text().contains("기업형태")) {
+				System.out.println("기업형태 : " + list_items.get(i).getElementsByClass("desc").text());
+				company.setBusiSize(list_items.get(i).getElementsByClass("desc").text());
+			} else if (list_items.get(i).text().contains("매출액")) {
+				System.out.println("매출액 : " + list_items.get(i).getElementsByClass("desc").text());
+				company.setYrSalesAmt(list_items.get(i).getElementsByClass("desc").text());
+			}
+		}
+		Elements thumb_company = doc.getElementsByClass("thumb_company");
+		company.setLogo(thumb_company.get(0).getElementsByTag("img").attr("src"));
+
+		Elements txt_address = doc.getElementsByClass("txt_address");
+		company.setCorpAddr(txt_address.text());
+
+		Elements list_info = doc.getElementsByClass("list_info");
+		Elements dts = list_info.get(1).getElementsByTag("dt");
+		Elements dds = list_info.get(1).getElementsByTag("dd");
+		for (int i = 0; i < dts.size(); i++) {
+			if (dts.get(i).text().contains("업종")) {
+				company.setBusiCont(dds.get(i).text());
+				break;
+			}
+		}
+
+		companyDao.createCompany(company);
+
 		return true;
 	}
-	
-	
+
 }

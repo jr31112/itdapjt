@@ -1,8 +1,24 @@
 <template>
   <div class="studymain">
       <v-container class="my-0" white >
+      </v-container>
+      
+      <v-container class="my-0" white v-if="isLogin">
           <v-row>
-            <v-btn class="ml-auto" @click.stop="overlay = !overlay">스터디 새로등록</v-btn>
+              <v-col>
+                <h1>내가 가입한 스터디 보기</h1>
+              </v-col>
+          </v-row>
+          <study-login-content/>
+      </v-container>
+      <v-container class="my-0" white>
+          <v-row>
+              <v-col cols="4">
+                <h1>스터디 전체 보기</h1>
+              </v-col>
+              <v-spacer></v-spacer>
+              <v-col cols="2">
+                  <v-btn class="ml-auto" @click.stop="overlay = !overlay">스터디 새로등록</v-btn>
                 <v-dialog v-model="overlay" scrollable max-width="500px">
                     <v-card>
                         <v-card-title>스터디 등록</v-card-title>
@@ -24,14 +40,8 @@
                         </v-card-actions>
                     </v-card>
                 </v-dialog>
+              </v-col>
           </v-row>
-      </v-container>
-      
-      <v-container class="my-0" white v-if="isLogin">
-          <study-login-content/>
-      </v-container>
-      <v-container class="my-0" white>
-          <v-row><h1>스터디 전체 보기</h1></v-row>
           <study-filter :options="this.options" style="max-width:930px"/>
           <study-default-content :options="this.options" :allstudy="this.studies" :islogin="isLogin" v-on:update="update"/>
                 

@@ -2,7 +2,14 @@
     <div style="padding: 80px 0px 0px 0px">
         <v-container>
             <h2>내 정보
-                <v-btn class="ma-2" outlined="outlined" large="large" fab="fab" color="indigo">
+                <v-btn
+                    class="ma-2"
+                    outlined="outlined"
+                    large="large"
+                    fab="fab"
+                    color="indigo"
+                    width="40px"
+                    height="40px">
                     <v-icon @click="goUserModifyPage">mdi-pencil</v-icon>
                 </v-btn>
             </h2>
@@ -14,7 +21,7 @@
             <h2>스크랩한 공고</h2>
             <v-row class="mb-4">
                 <v-col>
-                    <user-recruit/>
+                    <user-recruit :UserEndedScrapWanteds="UserEndedScrapWanteds" :UserScrapWanteds="UserScrapWanteds"/>
                 </v-col>
             </v-row>
             <h2>스터디 정보</h2>
@@ -39,8 +46,7 @@
         components: {
             UserDetail,
             UserRecruit,
-            UserStudy,
-            
+            UserStudy
         },
         data() {
             return {
@@ -54,7 +60,11 @@
                         cid: 0
                     },
                     mystacks: [{}]
-                }
+                },
+                UserEndedScrapWanteds: [
+                    
+                ],
+                UserScrapWanteds:[]
             }
         },
         mounted() {
@@ -70,12 +80,19 @@
                     })
                     .then(response => {
                         if (response.data.state == 'success') {
+                            console.log(response)
                             this.userInfo.user.uid = response.data.user.uid
                             this.userInfo.user.email = response.data.user.email
                             this.userInfo.user.uimg = response.data.user.uimg
                             this.userInfo.user.uname = response.data.user.uname
                             this.userInfo.user.major = response.data.user.major
                             this.userInfo.user.cid = response.data.user.cid
+                            for(var ei =0; ei < response.data.myEndedScrapWanteds.length; ei++){
+                                this.UserEndedScrapWanteds.splice(ei, 0, response.data.myEndedScrapWanteds[ei].wanted.wantedTitle)
+                            }
+                            for(var si = 0; si < response.data.myScrapWanteds.length; si++){
+                                this.UserScrapWanteds.splice(si, 0, response.data.myScrapWanteds[si].wanted.wantedTitle)
+                            }
                             for (var i = 0; i < response.data.mystacks.length; i++) {
                                 var sid = response
                                     .data
@@ -100,7 +117,12 @@
 
                 },
             goUserModifyPage() {
-                router.push({name: 'usermodify', params:{userInfo:this.userInfo}})
+                router.push({
+                    name: 'usermodify',
+                    params: {
+                        userInfo: this.userInfo
+                    }
+                })
             }
 
         }

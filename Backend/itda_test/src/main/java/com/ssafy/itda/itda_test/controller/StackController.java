@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.itda.itda_test.help.Result;
-import com.ssafy.itda.itda_test.model.JobStack;
+import com.ssafy.itda.itda_test.model.WantedStack;
 import com.ssafy.itda.itda_test.model.MyStack;
 import com.ssafy.itda.itda_test.model.Stack;
 import com.ssafy.itda.itda_test.service.IStackService;
@@ -102,17 +102,18 @@ public class StackController {
 		return new ResponseEntity<Result>(r, HttpStatus.OK);
 	}
 
-	@ApiOperation(value = "직무별 기술스택을 추가한다.", response = Result.class)
-	@RequestMapping(value = "/createJobStack", method = RequestMethod.POST)
-	public ResponseEntity<Result> createJobStack(@RequestBody JobStack js) throws Exception {
-		logger.info("1-------------createJobStack-----------------------------" + new Date());
-		logger.info("1-------------createJobStack-----------------------------" + js);
+	@ApiOperation(value = "공고별 기술스택을 추가한다.", response = Result.class)
+	@RequestMapping(value = "/createWantedStack", method = RequestMethod.POST)
+	public ResponseEntity<Result> createWantedStack(@RequestBody WantedStack ws) throws Exception {
+		logger.info("1-------------createWantedStack-----------------------------" + new Date());
+		logger.info("1-------------createWantedStack-----------------------------" + ws);
 		Result r = new Result();
-		for (int i : js.getStacks()) {
-			JobStack newjs = new JobStack();
-			newjs.setJid(js.getJid());
-			newjs.setSid(i);
-			stackService.createJobStack(newjs);
+		String wid = ws.getWid();
+		for (int i : ws.getStacks()) {
+			WantedStack newws = new WantedStack();
+			newws.setWid(wid);
+			newws.setSid(i);
+			stackService.createWantedStack(newws);
 		}
 		r.setMsg("기술스택 입력이 성공적으로 완료되었습니다.");
 		r.setState("success");
@@ -143,11 +144,11 @@ public class StackController {
 		}
 	}
 
-	@ApiOperation(value = "직무별 스택리스트를 확인한다.", response = List.class)
-	@RequestMapping(value = "/getJobStacks/{jid}", method = RequestMethod.GET)
-	public ResponseEntity<List<Stack>> getMyStacks(@PathVariable int jid) throws Exception {
+	@ApiOperation(value = "공고별 스택리스트를 확인한다.", response = List.class)
+	@RequestMapping(value = "/getWantedStacks/{wid}", method = RequestMethod.GET)
+	public ResponseEntity<List<Stack>> getMyStacks(@PathVariable String wid) throws Exception {
 		logger.info("5-------------getMyStacks-----------------------------" + new Date());
-		List<Stack> stack_list = stackService.getJobStacks(jid);
+		List<Stack> stack_list = stackService.getWantedStacks(wid);
 		return new ResponseEntity<List<Stack>>(stack_list, HttpStatus.OK);
 	}
 }

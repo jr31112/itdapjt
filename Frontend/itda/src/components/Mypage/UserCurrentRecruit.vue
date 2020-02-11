@@ -23,13 +23,18 @@
 </template>
 
 <script>
-    import axios from 'axios'
+    
     export default {
         name: "userscraplist",
         data() {
             return {currentRecruits: [
                     {}
                 ], pagenum: 1, pagesize: 5}
+        },
+        props: {
+            UserScrapWanteds: {
+                type: Array
+            }
         },
         computed: {
             pagecount() {
@@ -53,36 +58,18 @@
         },
         methods: {
             setRecruit() {
-                axios
-                    .get(`https://192.168.31.54:8197/itda/api/getWantedByRecent/`)
-                    .then(response => {
-                        for (var idx = 0; idx < response.data.length; idx++) {
-                            var wid = response
-                                .data[idx]
-                                .wanted
-                                .wid
-                            var wantedTitle = response
-                                .data[idx]
-                                .wanted
-                                .wantedTitle
-                                this
-                                .currentRecruits
-                                .splice(idx, 0, {wid, wantedTitle})
-                        }
-
-                    })
-                    .catch(() => {})
-
-                },
-            nextPage() {
-                this.pagenum += 1;
-            },
-            prevPage() {
-                this.pagenum -= 1;
+                this.currentRecruits = this.UserScrapWanteds
             }
+        },
+        nextPage() {
+            this.pagenum += 1;
+        },
+        prevPage() {
+            this.pagenum -= 1;
         }
-
     }
+
+
 </script>
 
 <style></style>

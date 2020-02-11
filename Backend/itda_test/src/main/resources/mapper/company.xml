@@ -6,8 +6,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<insert id="createCompany" 
 	parameterType="com.ssafy.itda.itda_test.model.Company">
-		INSERT INTO COMPANY_T(CORPNM, TOTPSNCNT, BUSISIZE, YRSALESAMT, CORPADDR, HOMEPG, BUSICONT, LOGO)
-		VALUES ( #{corpNm}, #{totPsncnt}, #{busiSize}, #{yrSalesAmt}, #{corpAddr}, #{homePg}, #{busiCont}, #{logo} ) 
+		INSERT INTO COMPANY_T(CID, CORPNM, TOTPSNCNT, BUSISIZE, YRSALESAMT, CORPADDR, HOMEPG, BUSICONT, LOGO)
+		VALUES ( #{cid}, #{corpNm}, #{totPsncnt}, #{busiSize}, #{yrSalesAmt}, #{corpAddr}, #{homePg}, #{busiCont}, #{logo} ) 
 	</insert>
 	
 	<delete id="deleteCompany" 

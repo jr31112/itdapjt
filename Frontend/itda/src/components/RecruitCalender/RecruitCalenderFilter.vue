@@ -23,24 +23,17 @@
                         @change="optionrecruit"></v-select>
                 </v-col>
                 <v-col cols="12" sm="4">
-                    <v-btn class="ml-auto" @click.stop="overlay=!overlay">서비스 준비 중입니다.</v-btn>
-                    <!-- <v-dialog v-model="overlay" scrollable="scrollable" max-width="500px">
+                    <!-- <v-btn class="ml-auto" @click.stop="overlay=!overlay">서비스 준비 중입니다.</v-btn> -->
+                    <v-btn class="ma-2" @click.stop="overlay=!overlay" outlined color="gray">기술 스택 선택</v-btn>
+                    
+                    <v-dialog v-model="overlay" scrollable="scrollable" max-width="500px">
                         <v-card>
                             
                             <v-card-title>기술 스택</v-card-title>
                             <v-divider></v-divider>
                             <v-card-text style="height: 300px;">
-                                <v-checkbox-group v-model="selectstacklist">
-                                    <table>
-                                        <tr v-for="i in stacklist.length/4" :key="i.no">
-                                            <td v-for="j in 4" :key=>
-
-                                            </td>
-                                        </tr>                                        
-                                    </table>
-                                 <v-checkbox v-for="stack in stacklist" :key="stack.no" :label="stack.tname" :value="stack.sid"></v-checkbox>
-                                        
-                                    
+                                <v-checkbox-group >
+                                    <v-checkbox v-for="stack in stacklist" :key="stack.no" v-model="selectstacklist" :label="stack.tname" :value="stack.sid"></v-checkbox>
                                 </v-checkbox-group>
 
                             </v-card-text>
@@ -50,13 +43,14 @@
                                 <v-btn color="blue darken-1" text="text" @click="dialog = false">Save</v-btn>
                             </v-card-actions>
                         </v-card>
-                    </v-dialog> -->
+                    </v-dialog>
                 </v-col>
             </v-row>
             <recruit-calender-content
                 v-if="recentlist.length != 0"
                 :wlist="recentlist"
-                :options="options"/>
+                :options="options"
+                :selectstacklist="selectstacklist"/>
         </v-col>
     </v-layout>
 </template>
@@ -77,6 +71,7 @@
                     period: 0,
                     recruit: 0
                 },
+                year:"",        
                 period: [],
                 recentlist: [],
                 techstack: [],
@@ -123,7 +118,6 @@
                 axios
                     .get(`https://192.168.31.54:8197/itda/api/getAllStacks/`)
                     .then(response => {
-                        console.log(response)
                         for (var i = 0; i < response.data.length; i++) {
                             var sid = response
                                 .data[i]
@@ -166,10 +160,7 @@
         },
         mounted() {
             this.getRecentRecruit()
-            console.log("공고 받기 완료")
             this.getTechStack()
-            console.log("기술 스택 리스트 받기 완료")
-            console.log(this.stacklist)
         }
     }
 </script>

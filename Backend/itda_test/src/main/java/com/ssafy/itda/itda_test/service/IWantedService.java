@@ -1,31 +1,31 @@
 package com.ssafy.itda.itda_test.service;
 
+import java.io.IOException;
 import java.util.List;
 
 import com.ssafy.itda.itda_test.model.Company;
-import com.ssafy.itda.itda_test.model.Job;
 import com.ssafy.itda.itda_test.model.Scrap;
 import com.ssafy.itda.itda_test.model.Stack;
 import com.ssafy.itda.itda_test.model.Wanted;
 
 public interface IWantedService {
-	String getCompanyId(int wid);
-	Wanted getWantedInfo(int wid);
+	String getCompanyId(String wid);
+	Wanted getWantedInfo(String wid);
 	Company getCompanyInfo(String cid);
-	List<Job> getJobsInfo(int wid);
-	List<Integer> getWantedByRecent();
-	List<Integer> getWantedByCloseEnd();
-	List<Integer> getWantedByView();
+	List<String> getWantedByRecent();
+	List<String> getWantedByCloseEnd();
+	List<String> getWantedByView();
 	Scrap isScraped(Scrap model);
 	void unScrap(Scrap model);
 	void scrap(Scrap model);
-	List<Integer> getWantedAll();
-	int createWanted(Wanted model);
-	void deleteWanted(int wid);
+	List<String> getWantedAll();
+	void createWanted(Wanted model);
+	void deleteWanted(String wid);
 	void updateWanted(Wanted model);
-	List<Stack> getStackInfo(int jid);
-	List<Stack> getWantedStackInfo(int i);
-	List<Integer> getWantedByStack(int uid);
-	List<Integer> getWantedByScrap(int uid);
-	void updateVcnt(int wid);
+	List<Stack> getStackInfo(String wid);
+	List<Stack> getWantedStackInfo(String i);
+	List<String> getWantedByStack(int uid);
+	List<String> getWantedByScrap(int uid);
+	void updateVcnt(String wid);
+	void callSaramin() throws IOException;
 }

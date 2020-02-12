@@ -20,15 +20,13 @@
    4.  시스템변수 path  새로 만들기 
    5.  `%JAVA_HOME%\bin` 엔터 후 맨위로 올리기
 
-
-
-## Java Spring 기본 흐름
+# Java Spring 기본 흐름
 
 > Java Eclipse 에서 프로젝트 생성부터 Java Spring(WAS) 구축 후 서버 구동까지 범위 포함
 >
 > 이 예제에서는 회원가입을 구현해보았다.
 
-### 프로젝트 생성 및 설정
+## 프로젝트 생성 및 설정
 
 * 프로젝트 생성
 
@@ -75,7 +73,7 @@
 
 * **cf! 프로젝트 삭제시 꼭 체크! 체크안하면 보이는 곳에서만 없어짐**
 
-### 개발 과정
+## 개요
 
 * 프로젝트 기본 개발 설정
 
@@ -120,7 +118,7 @@
   * 요청 => `Client` -> `controller` -> `service` -> `dao` -> `xml` -> `Database Server`
   * 반환 => `dao` -> `service` -> `controller` ->`help` -> `Client` 
 
-#### #Model
+## #Model
 
 * model -> new -> class -> 모델 명 ( 앞에만 대문자, ex. User)
 * ex) 모델명 User -> Interface -> Serializable -> finish
@@ -131,9 +129,7 @@
 4. `Source` -> Generate Getters and Setters -> Select All -> Generate
 5. `Source` -> Generate toString() -> Generate
 
-
-
-#### Controller
+## Controller
 
 * controller -> new -> class -> XxxController -> finish
 
@@ -175,7 +171,7 @@
    * `POST`일 때 `@RequestBody`
    * 주의) `user`는 객체이므로 `if (user)`가 아닌 `if (user != null)`로 써줘야한다.
 
-#### Service
+## Service
 
 * service -> new -> Interface -> 인터페이스명 (IXxxService) -> finish
 
@@ -237,7 +233,7 @@
      * `signUp()`은 반환 결과가 없다. DB에서 insert
      * `emailCheck()`는 반환결과가 User 객체이다. DB에서 select
 
-#### #Dao
+## #Dao
 
 * dao -> new -> class -> 클래스명 (XxxDao) -> finish
 
@@ -280,7 +276,7 @@
 
      
 
-#### XML
+## XML
 
 * src/main/resources/mapper/mybatis-config 수정
 
@@ -330,7 +326,7 @@
 
     * `insert` 문은 리턴이 없다. 
 
-#### Help
+## Help
 
 * 응답 결과를 반환 해줄 클래스
 
@@ -340,3 +336,190 @@
 
 응답 결과에 담을 변수들을 정의
 
+# 유저 인증
+
+> JWT Token
+
+# 소셜 로그인
+
+> Fire base
+
+# Saramin API
+
+> 외부 API 사용 방법(요청, JSON 응답)
+>
+> 검색 조건
+>
+
+* [[링크] 사람인 채용정보 API](https://oapi.saramin.co.kr/)
+
+* 채용 공고 API URL
+
+  * 요청 변수
+
+    * 본 프로젝트에서 사용하는 변수만을 포함한다.
+
+    | 변수명       | 값                                                         | 설명                                            |
+    | ------------ | ---------------------------------------------------------- | ----------------------------------------------- |
+    | access-key   | -                                                          | **(필수)** api key                              |
+    | count        | 110                                                        | 검색 결과 수<br />10 (default)<br />110(최대값) |
+    | job_type     | 1(정규직)<br />4(인턴직)<br />11(인턴직 - 정규직 전환가능) | 근무형태                                        |
+    | job_category | 4(IT·인터넷)                                               | 직종                                            |
+    | sort         | pd                                                         | 게시일 역순(default)                            |
+    | start        | 1, 2, ...                                                  | 검색 결과의 페이지 번호                         |
+
+  * 출력 결과
+
+    | 변수명                | 설명                                                         |
+    | --------------------- | ------------------------------------------------------------ |
+    | count                 | 공고 개수                                                    |
+    | start                 | 검색 결과의 페이지 번호                                      |
+    | id                    | 채용 공고 id                                                 |
+    | active                | 공고 진행 여부<br />1: 진행중, 0: 마감                       |
+    | opening-timestamp     | 접수 시작일 Unix timestamp<br />MySQL에서 Unixtime -> Date 형식으로 변환시 `FROM_UNIXTIME()`사용하여 DB에 저장한다. |
+    | expiration-timestamp  | 마감일 Unix timestamp<br />opening-timesatamp와 마찬가지로 Date 형식으로 변환 후 DB에 저장 |
+    | name                  | 기업명<br />DB에 채용공고를 입력할 때 DB에 해당 기업명이 존재하는 경우 기업ID와 함께 채용공고를 입력<br />만약 기업명이 존재하지 않는 경우 기업을 먼저 입력 후 채용공고 입력 |
+    | name@href             | 기업정보 페이지**(공개되어 있는 경우)**                      |
+    | title                 | 공고 제목                                                    |
+    | experience-level@code | 경력코드<br />1: 신입, 2: 경력, 3: 신입/경력, 0: 경력무관<br />**경력코드가 2인 채용공고는 DB에 넣지 않는다.** |
+
+    
+
+# Spring 자동 실행 scheduler
+
+> 공고 자동 업데이트
+>
+> 공고 시작일, 마감일에 따른 진행중/마감 공고 업데이트
+
+* Spring Scheduler
+
+  * spring에서 주기적인 작업이 있을 때 `Quartz` 또는 `Scheduled` Annotation을 사용해 관리할 수 있다.
+  * 본 프로젝트에서는 `Spring`에서 자체적으로 제공하는  `Scheduled Annotation`을 사용하였다.
+  * 설정 간단
+
+  
+
+* 사용법
+
+  * schedule 기능 켜기
+
+    * 스프링 부트가 실행될 메인 함수 파일(자바 설정 관련 클래스)에 `@EnableScheduling` 추가
+
+    ```java
+    // SSAFYApplication.java
+    import org.springframework.scheduling.annotation.EnableScheduling;
+    
+    @EnableScheduling
+    ```
+
+  * 실행주기
+
+    ```
+    (cron = "* * * * * *")
+    초(0-59) 분(0-59) 시간(0-23) 일(1-31) 월(1-12) 요일(0-7) 
+    ```
+
+    * 만약 `cron="0 0 0/5 * * *"`라면 매일 0시부터 5시간마다 실행한다는 의미이다.
+
+    * [[링크] cron 표현식 쉽게 만들기](http://www.cronmaker.com/)
+
+    * cf) `scheduler` 기본 설정에 `cron`, `fixedDelay`, `fixedRate` 등의 속성이 있다.
+
+      * `fiexedDalay` : milliseconds 단위. 이전 작업 끝난 시점부터 고정된 시간 설정
+
+      * `fixedRate` : milliseconds 단위. 이전 작업이 수행되기 시작한 시점부터 고정된 시간 설정
+
+        
+
+  * `Service` 에 scheduler 구현
+
+    * `API Call`이 왔을 때 실행되는 `Controller`가 아닌 `Service`측에서 구현해야 한다.
+    * `Service`는 `Dao`가 DB에서 받아온 데이터를 전달받아 가공한다.
+    * `Controller`는 시스템에 들어오는 요청, 응답을 담당한다.
+
+    ```java
+    // WantedServiceImpl
+    import org.springframework.scheduling.annotation.Scheduled;
+    //...
+    	@Scheduled(cron="0 0 0/1 * * *")
+    	public void schedulerCheckDate() {
+    		System.out.println("Scheduler Check Expire!!");
+    	}
+    }
+    ```
+
+# 공고 생성
+
+> 원하는 값 추출(공고 제외 조건)
+>
+> Flow chart
+
+* Flow Chart
+* 
+
+# 공고 검색
+
+> 검색어와 일치하는 기업명, 공고명, 기술스택명을 포함하는 공고 리스트 제공
+
+## MySQL - LIke
+
+
+
+## MySQL - Full Text Search
+
+* [[링크] MySQL Document - Full Text Restrictions](https://dev.mysql.com/doc/refman/8.0/en/fulltext-restrictions.html)
+
+* 버전
+
+  * MySQL 5.5 부터 사용 가능하다.
+  * `isam(5.5 이상)` , `innodb(5.6 이상)` 엔진에서 사용 가능하다.
+
+* 사용법
+
+  * full-text index 생성
+
+    ```mysql
+    ALTER TABLE `기존 테이블명` 
+    ADD FULLTEXT INDEX `인덱스명` (`컬럼명`) VISIBLE;
+    ```
+
+  * 최소 검색 글자수 설정 my.cnf ##### 아직!
+
+    * 기본 설정 확인
+
+      ```mysql
+      show variables like '%ft_min%';
+      -- ft_min_word_len = 4
+      -- innodb_ft_min_token_size = 3
+      ```
+
+      * 두글자 이상 검색만 가능하다.
+
+      * 기술스택 `C`를 검색하기 위해 한글자 검색도 허용해야 한다.
+
+    * `my.cnf`  (mysql 위치/etc/my.cnf) 수정
+
+      ```mysql
+      ft_min_word_len = 2
+      innodb_ft_min_token_size = 2
+      ```
+
+    
+
+  * 인덱스 재설정 작업 ###???
+
+    ```mysql
+    -- innodb
+    OPTIMIZE TABLE 테이블명;
+    ```
+
+  * sql
+
+    ```mysql
+    SELECT * FROM 테이블명
+    WHERE MATCH(컬럼명) AGAINST('검색어1 검색어2')
+    ```
+
+    * `or` 검색
+    * 일치하는 검색어가 많은 순으로 정렬된다.
+    * 공백 검색시 검색결과가 없다. ## 

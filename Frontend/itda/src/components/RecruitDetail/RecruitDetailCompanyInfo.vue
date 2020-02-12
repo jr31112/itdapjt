@@ -12,7 +12,7 @@
       <v-col cols="10" justify="center">
         <h3>{{company.corpNm}}</h3>
         <br>
-        <p v-if="company.homePg">홈페이지 : <a :href="'http://'+company.homePg" style="text-decoration: none; color:black;">{{company.homePg}}</a></p>
+        <p v-if="company.homePg">홈페이지 : <a :href="company.homePg" style="text-decoration: none; color:black;">{{company.homePg}}</a></p>
         <p>기업주소 : {{company.corpAddr}}</p>
         <p>주요사업 : {{company.busiCont}}</p>
       </v-col>

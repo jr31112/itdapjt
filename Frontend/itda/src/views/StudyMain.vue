@@ -15,7 +15,7 @@
                         <v-text-field v-model="formData.stname" :rules="[v => !!v || '스터디 이름을 입력해주세요']" label="스터디명" required></v-text-field>
                         <v-text-field v-model.number="formData.maxPcnt" type="number" :rules="[v => !!v || '인원수를 입력해주세요']" label="인원수" required></v-text-field>
                         <v-select v-model="formData.stype" :items="formCategory.category1" :rules="[v => !!v || '스터디 종류를 선택해주세요']" label="스터디 종류" required></v-select>
-                        <v-btn v-if="formData.stype" @click="openPopup(formData.stype)">스터디 주제 입력</v-btn>
+                        <v-btn v-if="formData.stype && formData.stype!=4" @click="openPopup(formData.stype)">스터디 주제 입력</v-btn>
                         <v-select v-model="formData.sgroup" :items="formCategory.category2" :rules="[v => !!v || '스터디 내용를 선택해주세요']" label="스터디 내용" required></v-select>
                         <v-textarea v-model="formData.content" solo :rules="[v => !!v || '스터디 정보를 입력해주세요']" label="스터디 정보를 입력해주세요"></v-textarea>
                     </v-form>
@@ -75,21 +75,26 @@ export default {
         },
         validate () {
         var select = JSON.parse(localStorage.getItem('select'))
-        if (!select){
+        if (!select && this.formData.stype!=4){
             alert('스터디 주제를 확인해주세요')
         }
         else{
-            this.formData.typeFk = select.id
-            this.formData.typeName = select.Nm
+            if (select){
+                this.formData.typeFk = select.id
+                this.formData.typeName = select.Nm
+            }
+            else{
+                this.formData.typeFk = 0
+                this.formData.typeName = '기타'
+            }
             if (this.$refs.form.validate()) {
-                this.snackbar = true
+                console.log(this.formData)
                 axios.post('http://192.168.31.54:8197/itda/api/createStudy', this.formData, {'headers' : {"jwt-auth-token": localStorage.getItem("access_token")}})
                 .then(()=>{
                     alert('스터디를 생성하였습니다.')
                     this.$refs.form.reset()
                     this.overlay = false
                     localStorage.removeItem('select')
-                    this.$emit("child")
                     this.getStudies()
                 })
                 .catch()

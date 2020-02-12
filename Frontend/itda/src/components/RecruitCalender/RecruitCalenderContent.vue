@@ -32,7 +32,7 @@
     </v-layout>
 </template>
 <script>
-    // import router from '../../router/index.js'
+    import router from '../../router/index.js'
     export default {
         name: 'recruitcalendercontent',
         data: () => ({
@@ -42,8 +42,9 @@
             tmpevents: [],
             companylist: [],
             wantedlist: [],
-            calendartitle: ""
-            
+            calendartitle: "",
+            selectedEvent: {},
+            call: ""
         }),
         watch: {
             options: {
@@ -95,8 +96,25 @@
             this.setValues()
         },
         methods: {
-            goDetailPage(event) {
-                console.log(event.event.name)
+            goDetailPage({nativeEvent, event}) {
+                const open = () => {
+                    this.selectedEvent = event
+                    router.push({
+                        name: 'recruitdetail',
+                        params: {
+                            id: this.selectedEvent.wid
+                        }
+                    })
+                }
+                if (this.selectedOpen) {
+                    this.selectedOpen = false
+                    setTimeout(open, 10)
+                } else {
+                    open()
+                }
+                nativeEvent.stopPropagation()
+                // console.log("hello") console.log(event) router.push({     name:
+                // 'recruitdetail', params: {id: this.tmpevents.wid} })
             },
             setValues() {
                 for (var i = 0; i < this.wlist.length; i++) {
@@ -133,22 +151,30 @@
                 if (this.companylist.length) {
                     // 신입이나 인턴이 포함되어 있는 인덱스를 value로 하는 list 반환
                     idxlist = this.searchOfJtype(this.options.recruit)
-                    idxlist = this.searchOfStack(idxlist)
+                    if (this.selectstacklist.length != 0) {
+                        if (this.idxlist.length != 0) {
+                            idxlist = this.filterByStack(this.idxlist)
+                        }
+                    }
                     for (var i = 0; i < idxlist.length; i++) {
                         if (this.options.period != 2) {
                             events.push({
                                 name: this
-                                    .companylist[i]
+                                    .companylist[idxlist[i]]
                                     .corpNm,
                                 start: this
-                                    .wantedlist[i]
+                                    .wantedlist[idxlist[i]]
                                     .startDate
                                     .substring(0, 10),
                                 end: this
-                                    .wantedlist[i]
+                                    .wantedlist[idxlist[i]]
                                     .startDate
                                     .substring(0, 10),
+                                wid: this
+                                    .wantedlist[idxlist[i]]
+                                    .wid,
                                 color: 'blue'
+
                             })
 
                         }
@@ -156,16 +182,19 @@
                         if (this.options.period != 1) {
                             events.push({
                                 name: this
-                                    .companylist[i]
+                                    .companylist[idxlist[i]]
                                     .corpNm,
                                 start: this
-                                    .wantedlist[i]
+                                    .wantedlist[idxlist[i]]
                                     .endDate
                                     .substring(0, 10),
                                 end: this
-                                    .wantedlist[i]
+                                    .wantedlist[idxlist[i]]
                                     .endDate
                                     .substring(0, 10),
+                                wid: this
+                                    .wantedlist[idxlist[i]]
+                                    .wid,
                                 color: 'red'
                             })
 
@@ -218,32 +247,15 @@
 
                 return tidx
             },
-            searchOfStack(idxlist) {
-                var tidxlist = []
-                if(idxlist.length == 0 && this.selectstacklist.length ==0){
-                    return idxlist
-                }
-                for (var i = 0; i < idxlist.length; i++) {
-                    outplace : for (var j = 0; j < this.wlist[idxlist[i]].jobs.length; j++) {
-                        for (var k = 0; k < this.wlist[idxlist[i]].jobs[j].stack.length; k++) {
-                            for (var z = 0; z < this.selectstacklist.length; z++) {
-                                if (this.wlist[idxlist[i]].jobs[j].stacks[k].sid == this.selectstacklist[z].sid) {
-                                    tidxlist.push(idxlist[i])
-                                    break outplace
-                                }
-                            }
-                        }
+            filterByStack(list) {
+                for (var i = 0; i < list.length;i++){
+                    for(var j = 0; j < this.selectstacklist.length;j++){
+
+                        console.log("hello")
                     }
-                }
-                return tidxlist
-            },
-            isEmpty(str) {
-                if (typeof str == "undefined" || str == null || str == "" || str.length == 0) 
-                    return true;
-                else 
-                    return false;
-                }
+                } 
             }
+        }
     }
 </script>
 <style>

@@ -8,7 +8,7 @@
                     </v-col>
                     <v-col class="pb-0" cols="12" md="9">
                         <v-text-field
-                            v-model="conta"
+                            v-model="content"
                             label="키워드"
                             placeholder="키워드를 입력해주세요"
                             outlined="outlined"></v-text-field>
@@ -50,7 +50,7 @@
         data() {
             return {
                 category: null,
-                conta: '',
+                content: null,
                 category1Options: [
                     {
                         text: '전체보기',
@@ -98,9 +98,9 @@
             this.getWantedList()       
         },
         created() {
-            eventBus.$on('NavContent', content => {
-                this.conta = content
-                // console.log(this.conta)
+            eventBus.$on('NavContent', (content) => {
+                this.content = content
+                console.log(this.content)
             })
         },
         methods: {
@@ -112,7 +112,7 @@
                         console.log(this.defaultContent)
                     })
                     .catch(error => {
-                        alert('안돼')
+                        // alert('안돼')
                         console.log(error)
                     })
                 },

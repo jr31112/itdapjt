@@ -158,7 +158,7 @@ export default {
   },
   data() {
     return {
-      content:"",
+      content:null,
       chk: true,
       email: null,
       password: null,

@@ -24,9 +24,9 @@
                 </v-col>
                 <v-col cols="12" sm="4">
                     <!-- <v-btn class="ml-auto" @click.stop="overlay=!overlay">서비스 준비 중입니다.</v-btn> -->
-                    <v-btn class="ma-2" @click.stop="overlay=!overlay" outlined color="gray">기술 스택 선택</v-btn>
+                    <v-btn class="ma-2" @click.stop="dialog=!dialog" outlined color="gray">기술 스택 선택</v-btn>
                     
-                    <v-dialog v-model="overlay" scrollable="scrollable" max-width="500px">
+                    <v-dialog v-model="dialog" scrollable="scrollable" max-width="500px">
                         <v-card>
                             
                             <v-card-title>기술 스택</v-card-title>
@@ -39,8 +39,9 @@
                             </v-card-text>
                             <v-divider></v-divider>
                             <v-card-actions>
-                                <v-btn color="blue darken-1" text="text" @click="dialog = false">Close</v-btn>
-                                <v-btn color="blue darken-1" text="text" @click="dialog = false">Save</v-btn>
+
+                                <v-btn color="blue darken-1" text="text" @click.stop="dialog=!dialog">Close</v-btn>
+                                <v-btn color="blue darken-1" text="text" @click="dialog =!dialog">Save</v-btn>
                             </v-card-actions>
                         </v-card>
                     </v-dialog>
@@ -66,7 +67,6 @@
         data() {
             return {
                 checkedNames: [],
-                overlay: false,
                 options: {
                     period: 0,
                     recruit: 0
@@ -100,7 +100,9 @@
                         tname: ""
                     }
                 ],
-                selectstacklist: []
+                selectstacklist: [],
+                call:"",
+                dialog:false
             }
         },
         methods: {

@@ -10,7 +10,7 @@
       <v-col class="pb-0" cols="12" md="3">
           <v-select
             v-model="options.category2"
-            :itemes="category2Options"
+            :items="category2Options"
             label="스터디 내용"
             ></v-select>
       </v-col>

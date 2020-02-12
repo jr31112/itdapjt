@@ -19,18 +19,10 @@
                 :headers="headers"
                 :items-per-page="5"
                 :items="defaultContent"
-                :search="search">
+                :search="content">
                 <template v-slot:item.pcnt="{ item }">
                 <span>{{item.pcnt}}/{{item.maxPcnt}}</span>
                 </template> 
-
-                <template v-slot:item.auth="{ item }">
-                <span v-if="item.wanted.endDate.slice(0,4) == '2037'">상시</span>
-                <span v-else>
-                    <!-- getDate()-->
-                    {{this.leftDate}}
-                </span>        
-                </template>  
 
                 <template v-slot:item.action="{ item }">
                     <v-icon small="small" @click="deleteItem(item)">
@@ -42,7 +34,6 @@
     </v-container>
 </template>
 <script>
-    import {eventBus} from '../../main.js'
     import axios from 'axios'
     export default {
         name: "searchfilter",
@@ -50,7 +41,8 @@
         data() {
             return {
                 category: null,
-                content: null,
+                content: '',
+                search:'',
                 category1Options: [
                     {
                         text: '전체보기',
@@ -64,7 +56,6 @@
                     }
                 ],
                 defaultContent: [],
-                search: '',
                 headers: [
                     {
                         text: '공고명',
@@ -94,14 +85,12 @@
             }
         },
         mounted()
-        {
-            this.getWantedList()       
+        {   
+            console.log(this.$route)
+            this.getWantedList()     
         },
         created() {
-            eventBus.$on('NavContent', (content) => {
-                this.content = content
-                console.log(this.content)
-            })
+            this.content= this.$route.query.cont
         },
         methods: {
             getWantedList() {
@@ -116,19 +105,6 @@
                         console.log(error)
                     })
                 },
-            getDate()
-            {
-                var endday = new Date(this.wanted.endDate)
-			    var today = new Date()
-			    var datediff = parseInt((endday-today)/(24*60*60*1000))
-			    if (datediff > 0)
-				this.leftDate = "D-"+ datediff
-				else
-				if (datediff == 0)
-					this.leftDate = "D-day"
-				else
-					this.leftDate = "마감"
-            }
         }
 
     }

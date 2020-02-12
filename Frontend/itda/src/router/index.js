@@ -30,8 +30,6 @@ const rejectAuthUser = (to, from, next)=>
     next() //to=> from으로 간다. 
   }
 }
-
-
 //후에 마이페이지나 관리자를 만들 때 쓰자.
 // const onlyAuthUser = (to, from, next)=>
 // {

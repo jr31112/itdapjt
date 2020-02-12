@@ -154,7 +154,7 @@ public class WantedServiceImpl implements IWantedService {
 		System.out.println("Scheduler Saramin API!!");
 		String access_key = "0Q5ESrsPZNoxQPN98JpXKSFYmIHImsAyLfHbS2hUMGQUlxZ5O";
 		String search_option = "&count=110&job_type=1+4+11&job_category=4&sort=pd&start=";
-		for(int i = 0 ; i < 5; i++) {
+		for(int i = 0 ; i < 10; i++) {
 			String api_url = "https://oapi.saramin.co.kr/job-search/?access-key=" + access_key + search_option;
 			
 			
@@ -176,13 +176,13 @@ public class WantedServiceImpl implements IWantedService {
 	}
 
 	private void inputWanted(JsonNode job) throws IOException {
-		String href = job.path("company").path("detail").get("href").toString();
-		if (href == null) {
+		JsonNode hrefNode = job.get("company").get("detail").get("href");
+		if (hrefNode == null) {
 			return;
 		}
-		int experience_level = job.path("position").path("experience-level").path("code").intValue();
-		System.out.println(experience_level);
-		if (experience_level == 1 || experience_level == 3) {
+		String href = job.get("company").get("detail").get("href").toString();
+		int experience_level = job.get("position").get("experience-level").get("code").intValue();
+		if (experience_level != 2) {
 			StringTokenizer st = new StringTokenizer(href, "?&");
 			String cid = null;
 			while (st.hasMoreTokens()) {
@@ -195,14 +195,14 @@ public class WantedServiceImpl implements IWantedService {
 							return;
 						}
 					}
-					String wid = job.path("id").textValue();
+					String wid = job.get("id").textValue();
 					if (wantedDao.getWantedInfo(wid) != null) {
 						return;
 					}
-					String wantedTitle = job.path("position").path("title").textValue();
-					int active = job.path("active").intValue();
-					String startDate = job.path("opening-timestamp").textValue();
-					String endDate = job.path("expiration-timestamp").textValue();
+					String wantedTitle = job.get("position").get("title").textValue();
+					int active = job.get("active").intValue();
+					String startDate = job.get("opening-timestamp").textValue();
+					String endDate = job.get("expiration-timestamp").textValue();
 					String detail_url = "https://www.saramin.co.kr/zf_user/jobs/relay/view-detail?rec_idx=" + wid
 							+ "&rec_seq=0";
 					Document doc = Jsoup.connect(detail_url).get();
@@ -261,6 +261,11 @@ public class WantedServiceImpl implements IWantedService {
 				company.setYrSalesAmt(list_items.get(i).getElementsByClass("desc").text());
 			}
 		}
+		
+		if(company.getBusiSize() == null ||company.getBusiSize().contains("중소")) {
+			return false;
+		}
+
 		Elements thumb_company = doc.getElementsByClass("thumb_company");
 		company.setLogo(thumb_company.get(0).getElementsByTag("img").attr("src"));
 
@@ -285,6 +290,7 @@ public class WantedServiceImpl implements IWantedService {
 				}
 			}
 		}
+		
 		companyDao.createCompany(company);
 		return true;
 	}

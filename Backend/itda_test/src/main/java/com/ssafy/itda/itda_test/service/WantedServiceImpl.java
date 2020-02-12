@@ -149,7 +149,7 @@ public class WantedServiceImpl implements IWantedService {
 	}
 
 	@Scheduled(cron = "0 0 0/5 * * *")
-//	@Scheduled(fixedDelay=1800000)
+//	@Scheduled(fixedDelay=18000000)
 	public void schedulerSaraminAPI() throws IOException {
 		System.out.println("Scheduler Saramin API!!");
 		String access_key = "0Q5ESrsPZNoxQPN98JpXKSFYmIHImsAyLfHbS2hUMGQUlxZ5O";
@@ -218,12 +218,15 @@ public class WantedServiceImpl implements IWantedService {
 	private void checkStack(String detail, String wid) throws IOException {
 		List<Stack> stacks = stackDao.getAllStacks();
 		Document doc = Jsoup.connect(detail).get();
+		String[] docs = doc.text().split(" ,/.");
 		for (Stack s : stacks) {
-			if (doc.text().contains(s.getTname())) {
-				WantedStack ws = new WantedStack();
-				ws.setSid(s.getSid());
-				ws.setWid(wid);
-				stackDao.createWantedStack(ws);
+			for(String comp : docs) {
+				if(s.getTname().equalsIgnoreCase(comp)){
+					WantedStack ws = new WantedStack();
+					ws.setSid(s.getSid());
+					ws.setWid(wid);
+					stackDao.createWantedStack(ws);
+				}
 			}
 		}
 	}

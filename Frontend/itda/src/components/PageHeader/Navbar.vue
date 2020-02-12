@@ -150,7 +150,7 @@
 import SignUpIn from "./SignUpIn.vue";
 import { mapState } from "vuex";
 import router from "../../router";
-import {eventBus} from "../../main.js"
+// import {eventBus} from "../../main.js"
 export default {
   name:'navbar',
   components: {
@@ -185,8 +185,7 @@ export default {
     },
     goSearch(content)
     {
-        eventBus.NavContent(content)
-        router.push({ name: "searchfilter" }).catch(() => {});
+       router.push({ name: "searchfilter", query:{cont: content}}).catch(() => {});
     },
     goMypage(){
       router.push({name:"mypage",params:{id:1}})

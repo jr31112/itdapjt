@@ -20,16 +20,6 @@ Vue.config.warnHandler = function (msg, vm, trace) {
   console.log(vm)
   console.log(trace)
 }
-export const eventBus = new Vue({
-  methods:
-  {
-    NavContent(content)
-    {
-      this.$emit('NavContent',content);
-    }
-  }
-
-})
 new Vue({
   router,
   beforeCreate()

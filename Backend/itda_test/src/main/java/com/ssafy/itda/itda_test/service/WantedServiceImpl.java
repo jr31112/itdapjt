@@ -149,25 +149,30 @@ public class WantedServiceImpl implements IWantedService {
 	}
 
 	@Scheduled(cron = "0 0 0/5 * * *")
+//	@Scheduled(fixedDelay=1800000)
 	public void schedulerSaraminAPI() throws IOException {
 		System.out.println("Scheduler Saramin API!!");
 		String access_key = "0Q5ESrsPZNoxQPN98JpXKSFYmIHImsAyLfHbS2hUMGQUlxZ5O";
-		String search_option = "&count=110&job_type=1+4+11&job_category=4&sort=pd";
-		String api_url = "https://oapi.saramin.co.kr/job-search/?access-key=" + access_key + search_option;
-
-		RestTemplate restTemplate = new RestTemplate();
-		HttpHeaders headers = new HttpHeaders();
-		headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-		HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
-
-		ResponseEntity<String> result = restTemplate.exchange(api_url, HttpMethod.GET, entity, String.class);
-		ObjectMapper mapper = new ObjectMapper();
-		JsonNode root = mapper.readTree(result.getBody());
-		JsonNode job = root.findPath("job");
-		Iterator<JsonNode> it = job.iterator();
-		while (it.hasNext()) {
-			inputWanted(it.next());
+		String search_option = "&count=110&job_type=1+4+11&job_category=4&sort=pd&start=";
+		for(int i = 0 ; i < 5; i++) {
+			String api_url = "https://oapi.saramin.co.kr/job-search/?access-key=" + access_key + search_option;
+			
+			
+			RestTemplate restTemplate = new RestTemplate();
+			HttpHeaders headers = new HttpHeaders();
+			headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+			HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
+			
+			ResponseEntity<String> result = restTemplate.exchange(api_url+i, HttpMethod.GET, entity, String.class);
+			ObjectMapper mapper = new ObjectMapper();
+			JsonNode root = mapper.readTree(result.getBody());
+			JsonNode job = root.findPath("job");
+			Iterator<JsonNode> it = job.iterator();
+			while (it.hasNext()) {
+				inputWanted(it.next());
+			}
 		}
+
 	}
 
 	private void inputWanted(JsonNode job) throws IOException {
@@ -175,33 +180,39 @@ public class WantedServiceImpl implements IWantedService {
 		if (href == null) {
 			return;
 		}
-		StringTokenizer st = new StringTokenizer(href, "?&");
-		String cid = null;
-		while (st.hasMoreTokens()) {
-			String now = st.nextToken();
-			if (now.charAt(0) == 'c') {
-				cid = now.substring(4);
-				Company company = companyDao.getCompany(cid);
-				if (company == null) {
-					if (!inputCompany(cid)) {
+		int experience_level = job.path("position").path("experience-level").path("code").intValue();
+		System.out.println(experience_level);
+		if (experience_level == 1 || experience_level == 3) {
+			StringTokenizer st = new StringTokenizer(href, "?&");
+			String cid = null;
+			while (st.hasMoreTokens()) {
+				String now = st.nextToken();
+				if (now.charAt(0) == 'c') {
+					cid = now.substring(4);
+					Company company = companyDao.getCompany(cid);
+					if (company == null) {
+						if (!inputCompany(cid)) {
+							return;
+						}
+					}
+					String wid = job.path("id").textValue();
+					if (wantedDao.getWantedInfo(wid) != null) {
 						return;
 					}
+					String wantedTitle = job.path("position").path("title").textValue();
+					int active = job.path("active").intValue();
+					String startDate = job.path("opening-timestamp").textValue();
+					String endDate = job.path("expiration-timestamp").textValue();
+					String detail_url = "https://www.saramin.co.kr/zf_user/jobs/relay/view-detail?rec_idx=" + wid
+							+ "&rec_seq=0";
+					Document doc = Jsoup.connect(detail_url).get();
+					String detail = doc.getElementsByClass("user_content").html();
+					Wanted wanted = new Wanted(wid, wantedTitle, active, startDate, endDate, 0, cid, detail);
+					wantedDao.createWanted(wanted);
+					checkStack(detail_url, wid);
 				}
-				String wid = job.path("id").textValue();
-				if (wantedDao.getWantedInfo(wid) != null) {
-					return;
-				}
-				String wantedTitle = job.path("position").path("title").textValue();
-				int active = job.path("active").intValue();
-				String startDate = job.path("opening-timestamp").textValue();
-				String endDate = job.path("expiration-timestamp").textValue();
-				String detail = "https://www.saramin.co.kr/zf_user/jobs/relay/view-detail?rec_idx=" + wid + "&rec_seq=0";
-				Wanted wanted = new Wanted(wid, wantedTitle, active, startDate, endDate, 0, cid, detail);
-				wantedDao.createWanted(wanted);
-				checkStack(detail, wid);
 			}
 		}
-
 	}
 
 	private void checkStack(String detail, String wid) throws IOException {
@@ -215,7 +226,6 @@ public class WantedServiceImpl implements IWantedService {
 				stackDao.createWantedStack(ws);
 			}
 		}
-
 	}
 
 	private boolean inputCompany(String cid) throws IOException {
@@ -260,18 +270,19 @@ public class WantedServiceImpl implements IWantedService {
 		Elements list_info = doc.getElementsByClass("list_info");
 		Elements dts = null;
 		Elements dds = null;
-
-		if (list_info.size() > 1) {
-			dts = list_info.get(1).getElementsByTag("dt");
-			dds = list_info.get(1).getElementsByTag("dd");
-		} else {
-			dts = list_info.get(0).getElementsByTag("dt");
-			dds = list_info.get(0).getElementsByTag("dd");
-		}
-		for (int i = 0; i < dts.size(); i++) {
-			if (dts.get(i).text().contains("업종")) {
-				company.setBusiCont(dds.get(i).text());
-				break;
+		if (list_info.size() != 0) {
+			if (list_info.size() > 1) {
+				dts = list_info.get(1).getElementsByTag("dt");
+				dds = list_info.get(1).getElementsByTag("dd");
+			} else {
+				dts = list_info.get(0).getElementsByTag("dt");
+				dds = list_info.get(0).getElementsByTag("dd");
+			}
+			for (int i = 0; i < dts.size(); i++) {
+				if (dts.get(i).text().contains("업종")) {
+					company.setBusiCont(dds.get(i).text());
+					break;
+				}
 			}
 		}
 		companyDao.createCompany(company);

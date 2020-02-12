@@ -46,7 +46,7 @@ create table wanted_t(
     active int not null default 0,	-- 0 : 마감, 1 : 진행 중, 2: 오늘 마감, 3: 내일 마감
     startDate timestamp not null,
     endDate timestamp not null,
-    detail varchar(300) not null,
+    detail text not null,
     vcnt int not null default 0,
     cid varchar(10) not null,
     foreign key(cid) references company_t(cid) on delete cascade

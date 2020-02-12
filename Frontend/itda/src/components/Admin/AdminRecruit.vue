@@ -61,13 +61,13 @@
 <script>
     import {mapState} from 'vuex'
     import axios from 'axios'
-  
+
     export default {
         name: "adminrecruit",
         mounted() {
             this.getWantedAll()
         },
-                methods: {
+        methods: {
 
             getWantedAll() {
                 axios
@@ -162,6 +162,9 @@
             dialog(val) {
                 val || this.close()
             }
+        },
+        created() { 
+          
         },
         data() {
             return {

@@ -11,6 +11,7 @@ export default new Vuex.Store({
     isLoginError: false,
     isDialog: true,
     isManager: false, 
+    isName: ""
   },
   //뮤테이션과 엑션스 차이는? 
   //뮤테이션 : state 값 변경. 
@@ -42,6 +43,11 @@ export default new Vuex.Store({
     {
       state.isManager = true;
     },
+    ////////////추가
+    set_name(state, name)
+    {
+      state.name =name
+    }  
   },
   actions:
   {

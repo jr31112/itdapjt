@@ -52,7 +52,8 @@ export default {
     data(){
         return{
             page:1,
-            searchresults:[]
+            searchresults:[],
+            compNm: ""
         }
     },
     props:{

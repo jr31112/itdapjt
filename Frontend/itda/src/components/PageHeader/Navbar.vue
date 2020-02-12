@@ -5,7 +5,9 @@
     </router-link>
     <v-spacer></v-spacer>
     <div class="v-toolbar__content" style="height: 64px;">
-      <div class="spacer"></div>
+      
+      <div class="spacer">        
+      </div>
       <div class="v-responsive mr-0 mr-md-6 hidden-xs-only" style="max-width: 300px;">
         <div class="v-responsive__content">
           <div class="v-input v-input--hide-details v-input--dense theme--dark v-text-field v-text-field--single-line v-text-field--solo v-text-field--solo-inverted v-text-field--solo-flat v-text-field--is-booted v-text-field--enclosed v-text-field--rounded">
@@ -16,7 +18,6 @@
                     <i aria-hidden="true" class="v-icon notranslate mdi mdi-magnify theme--dark"></i>
                   </div>
                 </div>
-                
                 <div class="v-text-field__slot">
                   <label
                     for="search"
@@ -25,9 +26,10 @@
                   ></label>
                   <input
                     id="search"
+                    v-model="content"
                     type="text"
                     class="ds-input"
-                    placeholder="기업명을 검색해주세요"
+                    placeholder="통합 검색창"
                     autocomplete="off"
                     spellcheck="false"
                     role="combobox"
@@ -36,7 +38,7 @@
                     aria-label="search input"
                     aria-owns="algolia-autocomplete-listbox-0"
                     dir="auto"
-                    @keyup.enter="goSearch()"
+                    @keyup.enter="goSearch(content)"
                   />
                   <pre
                     aria-hidden="true"
@@ -49,6 +51,8 @@
         </div>
       </div>
     </div>
+                    
+
     <v-btn
       v-if="isManager"
       class="v-btn v-btn--flat v-btn--text theme--dark v-size--default"
@@ -131,7 +135,6 @@
         </span>
       </span>
     </v-btn>
-    <!-------------------------------------- 모달창 ------------------------------------------>
     <v-dialog
       v-if="isDialog"
       v-model="dialog"
@@ -147,6 +150,7 @@
 import SignUpIn from "./SignUpIn.vue";
 import { mapState } from "vuex";
 import router from "../../router";
+import {eventBus} from "../../main.js"
 export default {
   name:'navbar',
   components: {
@@ -154,6 +158,7 @@ export default {
   },
   data() {
     return {
+      content:"",
       chk: true,
       email: null,
       password: null,
@@ -177,13 +182,12 @@ export default {
       this.$store.dispatch('logout')
       router.push({name:"recruitmain"}).catch(() => {});
       //일단은 홈페이지로 돌아가게하자. 
-    }
-    ,
-    goSearch()
-    { 
-        router.push({ name: "searchCompany" }).catch(() => {});
-    }
-    ,
+    },
+    goSearch(content)
+    {
+        eventBus.NavContent(content)
+        router.push({ name: "searchfilter" }).catch(() => {});
+    },
     goMypage(){
       router.push({name:"mypage",params:{id:1}})
     },

@@ -26,6 +26,7 @@ new Vue({
   {
     this.$store.dispatch("getMemberInfo");
   },
+  
   store,
   vuetify,
   icons,

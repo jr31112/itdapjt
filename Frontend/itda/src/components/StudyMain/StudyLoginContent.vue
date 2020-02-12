@@ -30,7 +30,7 @@ export default {
     },
     methods:{
       getStudyList(){
-        axios.get("https://192.168.31.54:8197/itda/api/getUser", {headers:{"jwt-auth-token": localStorage.getItem('token')}})
+        axios.get("http://192.168.31.54:8197/itda/api/getUser", {headers:{"jwt-auth-token": localStorage.getItem('token')}})
         .then(res => {this.myStudyList = res.data.myStudies})
       }
     },

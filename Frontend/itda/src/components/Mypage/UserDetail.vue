@@ -3,7 +3,7 @@
         <v-col>
             <v-card max-hight="500" max-width="375" class="mx-auto">
                 <v-img
-                    src="https://cdn.vuetifyjs.com/images/lists/ali.png"
+                    src="http://cdn.vuetifyjs.com/images/lists/ali.png"
                     height="330px"
                     dark="dark"></v-img>
             </v-card>

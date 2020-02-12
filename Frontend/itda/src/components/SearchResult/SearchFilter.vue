@@ -106,7 +106,7 @@
         methods: {
             getWantedList() {
                 axios
-                    .get('https://192.168.31.54:8197/itda/api/getWantedAll')
+                    .get('http://192.168.31.54:8197/itda/api/getWantedAll')
                     .then(response => {
                         this.defaultContent = response.data
                         console.log(this.defaultContent)

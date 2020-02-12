@@ -2,7 +2,7 @@
     <v-footer app="app">
         <v-spacer></v-spacer>
         <v-btn
-            @click="onMove('https://www.jobplanet.co.kr/')"
+            @click="onMove('http://www.jobplanet.co.kr/')"
             target="_blank"
             text="text">
             <v-avatar size="25px" class="mx-1">
@@ -12,7 +12,7 @@
             <span class="jw">JoB Planet</span>
         </v-btn>    
         <v-btn
-            @click="onMove('https://www.saramin.co.kr/')"
+            @click="onMove('http://www.saramin.co.kr/')"
             target="_blank"
             text="text">
             <v-avatar size="27px" class="mx-1">
@@ -22,7 +22,7 @@
             <span class="jw">SaramIn</span>
         </v-btn>
         <v-btn
-            @click="onMove('https://www.jobkorea.co.kr/')"
+            @click="onMove('http://www.jobkorea.co.kr/')"
             target="_blank"
             text="text">
             <v-avatar size="27px" class="mx-1">

@@ -26,7 +26,7 @@ import router from '../../../router'
 export default {
   name: "recruitdeadlinelist",
   props:{
-    defaultContent:{type:Object}
+    deadlineList:{type:Array}
   },
   methods:{
     getImgUrl(img) {

@@ -23,29 +23,40 @@
                         @change="optionrecruit"></v-select>
                 </v-col>
                 <v-col cols="12" sm="4">
-                    <!-- <v-btn class="ml-auto" @click.stop="overlay=!overlay">서비스 준비 중입니다.</v-btn> -->
-                    <v-btn class="ma-2" @click.stop="dialog=!dialog" outlined color="gray">기술 스택 선택</v-btn>
-                    
-                    <v-dialog v-model="dialog" scrollable="scrollable" max-width="500px">
+                    <v-btn
+                        @click.stop="dialog=!dialog"
+                        aria-label="Support"
+                         class="ml-auto">
+                        <span class="v-btn__content">
+                            <span class="subtitle-1 text-capitalize font-weight-light">
+                                <div>기술 스택 검사</div>
+                            </span>
+                        </span>
+                    </v-btn>
+                    <v-dialog v-model="dialog" max-width="800px" v-if="selectstacklist !== undefined">
                         <v-card>
-                            
-                            <v-card-title>기술 스택</v-card-title>
+                            <v-card-title>기술 스택 리스트</v-card-title>
                             <v-divider></v-divider>
-                            <v-card-text style="height: 300px;">
-                                <v-checkbox-group >
-                                    <v-checkbox v-for="stack in stacklist" :key="stack.no" v-model="selectstacklist" :label="stack.tname" :value="stack.sid"></v-checkbox>
-                                </v-checkbox-group>
-
+                            <v-card-text>
+                             
+                                    <v-row v-for="i in 9" :key="i" >
+                                        <v-col v-for="j in i==9?1:5" :key="j">
+                                            <v-checkbox v-model="selectstacklist"
+                                                :label="stacklist[5*(i-1) + j-1].tname"
+                                                :value="stacklist[5*(i-1) + j-1].sid" ></v-checkbox>
+                                        </v-col>
+                                    </v-row>
+                                
                             </v-card-text>
                             <v-divider></v-divider>
                             <v-card-actions>
-
-                                <v-btn color="blue darken-1" text="text" @click.stop="dialog=!dialog">Close</v-btn>
-                                <v-btn color="blue darken-1" text="text" @click="dialog =!dialog">Save</v-btn>
+                                <v-btn color="blue darken-1" text="text" @click="dialog = false">Close</v-btn>
+                                <v-btn color="blue darken-1" text="text" @click="dialog = false">Save</v-btn>
                             </v-card-actions>
                         </v-card>
                     </v-dialog>
                 </v-col>
+
             </v-row>
             <recruit-calender-content
                 v-if="recentlist.length != 0"
@@ -71,11 +82,12 @@
                     period: 0,
                     recruit: 0
                 },
-                year:"",        
+                year: "",
                 period: [],
                 recentlist: [],
                 techstack: [],
                 recruit: [],
+
                 periodOptions: [
                     {
                         text: '시작',
@@ -94,15 +106,9 @@
                         value: '신입'
                     }
                 ],
-                stacklist: [
-                    {
-                        sid: 0,
-                        tname: ""
-                    }
-                ],
+                stacklist: [],
                 selectstacklist: [],
-                call:"",
-                dialog:false
+                dialog: false
             }
         },
         methods: {
@@ -120,17 +126,7 @@
                 axios
                     .get(`http://192.168.31.54:8197/itda/api/getAllStacks/`)
                     .then(response => {
-                        for (var i = 0; i < response.data.length; i++) {
-                            var sid = response
-                                .data[i]
-                                .sid
-                            var tname = response
-                                .data[i]
-                                .tname
-                                this
-                                .stacklist
-                                .splice(i, 0, {sid, tname})
-                        }
+                        this.stacklist = response.data
                     })
                     .catch(error => {
                         console.log(error)

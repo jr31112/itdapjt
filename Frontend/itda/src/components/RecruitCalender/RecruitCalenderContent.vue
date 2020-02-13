@@ -44,7 +44,7 @@
             wantedlist: [],
             calendartitle: "",
             selectedEvent: {},
-            call: ""
+           
         }),
         watch: {
             options: {
@@ -80,9 +80,7 @@
                 }
                 var startYear = start.year
                 var startMonth = this.monthFormatter(this.start)
-                // const startYear = start.year
                 return startMonth + startYear
-                // return `${startMonth} ${startYear}`
             },
             //오늘 날짜를 계산해 주는 함수
             monthFormatter() {
@@ -113,8 +111,6 @@
                     open()
                 }
                 nativeEvent.stopPropagation()
-                // console.log("hello") console.log(event) router.push({     name:
-                // 'recruitdetail', params: {id: this.tmpevents.wid} })
             },
             setValues() {
                 for (var i = 0; i < this.wlist.length; i++) {
@@ -147,33 +143,37 @@
             },
             updateRange({start, end}) {
                 const events = []
-                var idxlist = []
-                if (this.companylist.length) {
-                    // 신입이나 인턴이 포함되어 있는 인덱스를 value로 하는 list 반환
-                    idxlist = this.searchOfJtype(this.options.recruit)
-                    if (this.selectstacklist.length != 0) {
-                        if (this.idxlist.length != 0) {
-                            idxlist = this.filterByStack(this.idxlist)
+                let recruitIdxList = []
+                let recuritIdxLength = 0;
+                if (this.companylist.length !== 0) {
+                    recruitIdxList = this.searchOfJtype(this.options.recruit)
+                    recuritIdxLength = recruitIdxList.length;
+                    if (this.selectstacklist.length !== 0) {
+                        if (recruitIdxList.length !== 0) {
+                            recruitIdxList = this.filterByStack(recruitIdxList)
                         }
                     }
-                    for (var i = 0; i < idxlist.length; i++) {
-                        if (this.options.period != 2) {
+                    if(recruitIdxList === undefined){
+                        return;
+                    }
+                     recuritIdxLength = recruitIdxList.length;
+                    for (var i = 0; i < recuritIdxLength; i++) {
+                        let corpNm=this.companylist[recruitIdxList[i]].corpNm
+                        if (this.options.period !== 2) {
                             events.push({
-                                name: this
-                                    .companylist[idxlist[i]]
-                                    .corpNm,
+                                name: corpNm,
                                 start: this
-                                    .wantedlist[idxlist[i]]
+                                    .wantedlist[recruitIdxList[i]]
                                     .startDate
                                     .substring(0, 10),
                                 end: this
-                                    .wantedlist[idxlist[i]]
+                                    .wantedlist[recruitIdxList[i]]
                                     .startDate
                                     .substring(0, 10),
                                 wid: this
-                                    .wantedlist[idxlist[i]]
+                                    .wantedlist[recruitIdxList[i]]
                                     .wid,
-                                color: 'blue'
+                                color: 'red'
 
                             })
 
@@ -182,34 +182,37 @@
                         if (this.options.period != 1) {
                             events.push({
                                 name: this
-                                    .companylist[idxlist[i]]
+                                    .companylist[recruitIdxList[i]]
                                     .corpNm,
                                 start: this
-                                    .wantedlist[idxlist[i]]
+                                    .wantedlist[recruitIdxList[i]]
                                     .endDate
                                     .substring(0, 10),
                                 end: this
-                                    .wantedlist[idxlist[i]]
+                                    .wantedlist[recruitIdxList[i]]
                                     .endDate
                                     .substring(0, 10),
                                 wid: this
-                                    .wantedlist[idxlist[i]]
+                                    .wantedlist[recruitIdxList[i]]
                                     .wid,
-                                color: 'red'
+                                color: 'blue'
                             })
 
                         }
                     }
-                    // this.$set(this.tmpevents, idx, events)
                     this.tmpevents = events
                     this.start = start
                     this.end = end
+                    
                     var startYear = start.year
                     var startMonth = this.monthFormatter(this.start)
                     this.calendartitle = startYear + "년   " + startMonth
+                    console.log(this.selectstacklist)
+                    console.log(this.wlist)
                 } else {
                     return;
                 }
+                
             },
             searchOfJtype(jtype) {
                 var tidx = []
@@ -248,12 +251,29 @@
                 return tidx
             },
             filterByStack(list) {
-                for (var i = 0; i < list.length;i++){
-                    for(var j = 0; j < this.selectstacklist.length;j++){
-
-                        console.log("hello")
+                var listLen = list.length
+                var stacklist = []
+                var idx =0
+               for(var i = 0; i< listLen;i++){
+                    var stackLen = this.wlist[list[i]].stacks.length
+                    if(stackLen !== 0){
+                         out: for(var j = 0; j < this.selectstacklist.length; j++){
+                            for(var z = 0; z < stackLen; z++){
+                                 if(this.selectstacklist[j] === this.wlist[list[i]].stacks[z].sid){
+                                     stacklist.splice(idx++,0, i)
+                                     break out
+                                 }
+                            }
+                        }
                     }
-                } 
+                }
+             
+                // console.log(list)
+                // console.log(this.selectstacklist)
+                // console.log(this.wlist)
+                // console.log("result")
+                // console.log(stacklist)
+                return stacklist
             }
         }
     }

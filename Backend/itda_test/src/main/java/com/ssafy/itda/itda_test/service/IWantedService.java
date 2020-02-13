@@ -28,4 +28,5 @@ public interface IWantedService {
 	List<String> getWantedByScrap(int uid);
 	void updateVcnt(String wid);
 	void callSaramin() throws IOException;
+	List<String> getWantedBySearch(String keyword);
 }

@@ -138,4 +138,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		NOW()
 	</update>
 
+	<select id="getWantedBySearch"
+		parameterType="java.lang.String"
+		resultType="java.lang.String">
+		SELECT *
+		FROM STACK_T
+		WHERE MATCH(TNAME) AGAINST(#{keyword})
+	</select>
 </mapper>

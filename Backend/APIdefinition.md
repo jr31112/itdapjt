@@ -726,5 +726,12 @@
      }
      ```
 
-     
+
+## 6. 공고 검색(R)
+
+1. `get /api/getWantedList/{keyword}` : 기업명, 공고명, 기술스택명에 `keyword`를 포함하는 공고 리스트를 반환한다.
+   * Parameter : String
+   * Return : `<List<WantedResult>>`
+
+
 

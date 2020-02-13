@@ -285,6 +285,23 @@ public class WantedController {
 		return new ResponseEntity<Result>(r, HttpStatus.OK);
 	}
 
+	@ApiOperation(value = "키워드에 맞는 공고를 검색한다.", response = List.class)
+	@RequestMapping(value = "/getWantedBySearch/{keyword}", method = RequestMethod.GET)
+	public ResponseEntity<List<WantedResult>> getWantedBySearch(@PathVariable String keyword, HttpServletRequest req) throws Exception {
+		logger.info("-------------getWantedBySearch-----------------------------" + new Date());
+		Map<String, Object> resultMap = new HashMap<>();
+		String token = req.getHeader("jwt-auth-token");
+		if (token != null && !token.equals("")) {
+			resultMap.putAll(jwtService.get(req.getHeader("jwt-auth-token")));
+			int uid = (int) resultMap.get("uid");
+			List<String> widList = wantedService.getWantedBySearch(keyword);
+			List<WantedResult> wrlist = getWantedListFunction(widList, uid);
+			return new ResponseEntity<List<WantedResult>>(wrlist, HttpStatus.OK);
+		} else {
+			return new ResponseEntity(HttpStatus.NO_CONTENT);
+		}
+	}
+	
 	private List<WantedResult> getWantedListFunction(List<String> widList, int uid) {
 		List<WantedResult> wrlist = new ArrayList<>();
 		for (String i : widList) {

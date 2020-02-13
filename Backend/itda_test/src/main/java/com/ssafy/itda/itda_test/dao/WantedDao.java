@@ -98,5 +98,8 @@ public class WantedDao {
 	public void updateCheckOpen() {
 		sqlSession.update(ns + "updateCheckOpen");
 	}
-
+	
+	public List<String> getWantedBySearch(String keyword) {
+		return sqlSession.selectList(ns + "getWantedBySearch", keyword);
+	}
 }

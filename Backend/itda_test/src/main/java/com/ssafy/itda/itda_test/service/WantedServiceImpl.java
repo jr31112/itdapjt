@@ -135,6 +135,11 @@ public class WantedServiceImpl implements IWantedService {
 	public void updateVcnt(String wid) {
 		wantedDao.updateVcnt(wid);
 	}
+	
+	@Override
+	public List<String> getWantedBySearch(String keyword) {
+		return wantedDao.getWantedBySearch(keyword);
+	}
 
 	@Scheduled(cron = "0 0 0/1 * * *")
 	public void schedulerCheckDate() {

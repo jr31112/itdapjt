@@ -10,7 +10,17 @@
             <recruit-recent-list v-on:update="update"/>
             <recruit-login-content v-if="isLogin" :loginContent="wantedlist.loginContent"/>
             <recruit-default-content :defaultContent="wantedlist.defaultContent"/>
-            <recruit-study-list/>
+        </v-container>
+        <v-container v-if="isLogin">
+            <v-row>
+              <v-col>
+                <h2>내가 가입한 스터디 보기</h2>
+              </v-col>
+          </v-row>
+            <study-login-content :myStudyList="loginStudies" v-if="loginStudies.length" v-on:update="update"/>
+            <v-row v-else>
+                <v-col>가입한 스터디가 없어요..</v-col>
+            </v-row>
         </v-container>
     </div>
 </template>
@@ -18,7 +28,7 @@
     import RecruitLoginContent from '../components/RecruitMain/RecruitLoginContent.vue'
     import RecruitDefaultContent from '../components/RecruitMain/RecruitDefaultContent.vue'
     import RecruitRecentList from '../components/RecruitMain/RecruitRecentList.vue'
-    import RecruitStudyList from '../components/RecruitMain/RecruitStudyList.vue'
+    import StudyLoginContent from '../components/StudyMain/StudyLoginContent.vue'
     import ImgBanner from '../components/RecruitMain/ImgBanner.vue'
     import { mapState } from 'vuex'
     import axios from 'axios'
@@ -29,7 +39,7 @@
             RecruitLoginContent,
             RecruitDefaultContent,
             RecruitRecentList,
-            RecruitStudyList,
+            StudyLoginContent,
             ImgBanner,
         },
         data(){
@@ -43,7 +53,8 @@
                         deadlineList:[],
                         popularList:[]
                     }
-                }
+                },
+                loginStudies:[]
             }
         },
         methods: {
@@ -78,7 +89,20 @@
                         this.wantedlist.defaultContent.popularList = response.data
                     })
                     .catch(()=>{})
-            }
+            },
+            getLoginStudies(){
+                if (this.isLogin){
+                    axios.get("http://192.168.31.54:8197/itda/api/getUser", {headers:{"jwt-auth-token": localStorage.getItem("access_token")}})
+                        .then(response => {
+                            this.loginStudies = response.data.myStudies
+                            var len = this.loginStudies.length % 4
+                            if (len){
+                                for (var i=0;i<4-len;i++)
+                                    this.loginStudies.push({})
+                            }
+                    })
+                }
+            },  
         },
         computed: {
             ...mapState(["isLogin"])
@@ -93,7 +117,10 @@
             isLogin:{
                 deep:true,
                 immediate:true,
-                handler:'getLoginContent'
+                handler(){
+                    this.getLoginContent()
+                    this.getLoginStudies()
+                }
             },
         }
     }

@@ -91,7 +91,6 @@
     >
       로그아웃
     </v-btn>
-     
     <v-btn
       v-else
       @click.stop="dialog=!dialog"
@@ -101,14 +100,14 @@
     >
       로그인/회원가입
     </v-btn>
-    <v-dialog
+    <v-dialog 
       v-if="isDialog"
       v-model="dialog"
       z-index="3"
       overlay-opacity="0.4"
       max-width="545px"
     >
-      <sign-up-in/>
+      <sign-up-in @statusControl="dialog =false"/>
     </v-dialog>
   </v-app-bar>
 </template>

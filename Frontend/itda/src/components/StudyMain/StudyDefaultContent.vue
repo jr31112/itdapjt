@@ -71,7 +71,6 @@ export default {
     },
     methods:{
         update(){
-            console.log("2")
             this.$emit('update')
         },
         updateOptions(){

@@ -208,7 +208,6 @@
                     var startYear = start.year
                     var startMonth = this.monthFormatter(this.start)
                     this.calendartitle = startYear + "년   " + startMonth
-
                 } else {
                     return;
                 }
@@ -270,9 +269,7 @@
                         }
                     }
                 }
-
-                // console.log(list) console.log(this.selectstacklist) console.log(this.wlist)
-                // console.log("result") console.log(stacklist)
+     
                 return stacklist
             }
         }

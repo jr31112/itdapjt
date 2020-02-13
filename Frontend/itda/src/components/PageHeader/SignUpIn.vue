@@ -1,7 +1,8 @@
 <template>
-  <v-container>
+
     <!-- 컨테이너 크기를 500으로해 해주고, fill-heigt를 통해서아래 align center를 이용할 수 있게 됨. -->
     <v-layout wrap="no wrap">
+      
       <v-flex xs12="xs12">
         <v-alert class="mb-1" :value="reChk" type="error">아이디와 비밀번호를 확인해주세요.</v-alert>
         <v-alert class="mb-1" v-model="isPwError" :value="isPwError" type="error">이메일 형식, 비밀번호를 확인해주세요.</v-alert>
@@ -9,11 +10,16 @@
         <v-alert class="mb-1" v-model="isRegisterError" :value="isRegisterError" type="error">이미 존재하는 회원의 ID 입니다.</v-alert>
         <v-alert class="mb-1" :value="isCong" type="success">회원가입을 축하합니다! 로그인 해주세요.</v-alert>
         <v-card v-if="isChangeLoginRegi">
+          
           <v-toolbar flat="flat">
             <v-toolbar-title>Register</v-toolbar-title>
+            <v-spacer></v-spacer>
+            <v-btn icon dark @click="$emit('statusControl',false)">
+            <v-icon color="black">mdi-close</v-icon>
+            </v-btn>
             <!-- <v-btn color="green darken-1" text="text" @click="dialog = false">Close</v-btn> -->
           </v-toolbar>
-          <div class="pa-4" style="max-width: 520px" name="regi">
+          <div class="pa-4" style="max-width: 540px" name="regi">
             <v-text-field v-model="name" :value ="name" label="Name*"></v-text-field>
             <v-text-field v-model="email_rg" :value ="email_rg" label="Email*"></v-text-field>
             <v-row>
@@ -35,7 +41,6 @@
                 ></v-text-field>
               </v-col>
             </v-row>
-            <v-container>
               <v-layout>
                 <v-btn
                   class="mb-1"
@@ -56,15 +61,18 @@
 
                 >Cancel</v-btn>
               </v-layout>
-            </v-container>
           </div>
         </v-card>
         <v-card v-else>
           <v-toolbar flat="flat">
             <v-toolbar-title>Login</v-toolbar-title>
+             <v-spacer></v-spacer>
+             <v-btn icon dark @click="$emit('statusControl',false)">
+               <v-icon color="black darken-2">mdi-close</v-icon>
+             </v-btn>
             <!-- <v-btn color="green darken-1" text="text" @click="$emit.dialog = !$emit.dialog">Close</v-btn> -->
           </v-toolbar>
-          <div class="pa-4" style="max-width: 520px">
+          <div class="pa-4" style="max-width: 540px">
             <!-- pa는 패딩오토 -->
             <v-text-field v-model="email_lg"  label="email을 입력하세요"></v-text-field>
             <v-text-field
@@ -99,7 +107,6 @@
         </v-card>
       </v-flex>
     </v-layout>
-  </v-container>
 </template>
 <script>
 import { mapState, mapActions } from "vuex";

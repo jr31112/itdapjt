@@ -99,7 +99,6 @@ export default {
                 this.formData.typeName = '기타'
             }
             if (this.$refs.form.validate()) {
-                console.log(this.formData)
                 axios.post('http://192.168.31.54:8197/itda/api/createStudy', this.formData, {'headers' : {"jwt-auth-token": localStorage.getItem("access_token")}})
                 .then(()=>{
                     alert('스터디를 생성하였습니다.')

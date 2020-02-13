@@ -1,7 +1,7 @@
 <template>
   <div>
-    <v-img :src="imgSrc"
-           aspect-ratio="0.5" style="height:60vh; width:100%">
+    <v-img :src="imgSrc" 
+           aspect-ratio="0.3" style="height:60vh; width:100%">
       <v-layout align-center justify-center row fill-height>
         <v-flex text-xs-center>
           <span class="text-shadow display-2 font-weight-light">

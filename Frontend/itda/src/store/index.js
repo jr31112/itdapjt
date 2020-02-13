@@ -69,7 +69,6 @@ export default new Vuex.Store({
         })
         .catch(err => {
           console.log("hi" + err);
-          alert("에러!!!")
         });
     },
     logout({ commit }) {

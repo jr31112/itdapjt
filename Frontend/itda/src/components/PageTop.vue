@@ -1,5 +1,5 @@
 <template>
-  <div class="pagetop">
+  <div class="pagetop" >
     <navbar/>
     <!-- <sidebar/> -->
   </div>

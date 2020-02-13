@@ -20,21 +20,7 @@
             :items-per-page="5"
             :items="allwanteds"
             :search="search">
-            <template v-slot:item.wanted.wantedTitle="props">
-            <v-edit-dialog
-                :return-value.sync="props.item.wanted.wantedTitle"
-                > {{ props.item.wanted.wantedTitle }}
-                <template v-slot:input>
-                    <v-text-field
-                    v-model="props.item.wanted.wantedTitle"
-                    :rules="[max300chars]"
-                    label="Edit"
-                    single-line
-                    >
-                </v-text-field>
-                </template>
-            </v-edit-dialog>
-            </template>
+          
             <template v-slot:item.wanted.startDate="{ item }">
                 {{item.wanted.startDate.slice(0,10)}}일 
                 {{item.wanted.startDate.slice(11,13)}}시
@@ -77,7 +63,6 @@
                     })
                     .catch((err) => {
                         alert(err)
-                        console.log("실패했습니다.")
                     })
             }
             ,    

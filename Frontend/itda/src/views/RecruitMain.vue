@@ -1,10 +1,10 @@
 <template>
     <div class="recruitmain">
-        <ImgBanner :imgSrc="getImgUrl('333.jpg')">
-            <div
-                class="font-weight-black text-center"
-                style="padding-left :50px; line-height:1.2em; font-size: calc((80vw / 1240) * 40) "
-                slot="text">Just Do it! you'll just win.</div>
+        <ImgBanner :imgSrc="getImgUrl('JWmain.jpg')">
+         <div
+            class="font-weight-black text-center"
+            style="padding-left :50px; line-height:1.2em; font-size: calc((80vw / 1240) * 40) "
+            slot="text">JUST DO IT..da!&nbsp;&nbsp;&nbsp;&nbsp; </div>              
         </ImgBanner>
         <v-container>
             <recruit-recent-list v-on:update="update"/>

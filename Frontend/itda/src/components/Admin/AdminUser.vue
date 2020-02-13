@@ -51,7 +51,6 @@
                 axios
                     .get('http://192.168.31.54:8197/itda/api/getAllUsers/')
                     .then(res => {
-                        console.log(res)
                         this.allusers =res.data
                     })
                     .catch(() => {})
@@ -103,7 +102,6 @@
                     axios
                     .put('http://192.168.31.54:8197/itda/api/updatePermission/', { uid, auth })
                     .then(res => {
-                        alert(res.data.msg)
                         if(res.data.state == 'success'){
                             this.getAllUsers();
                         }

@@ -127,4 +127,7 @@ create table studyGroup_t(
     foreign key(stid) references study_t(stid) on update cascade on delete cascade
 );
 
+alter table stack_t add fulltext index tname (tname) visible;
+alter table wanted_t add fulltext index wantedTitle (wantedTitle) visible;
+alter table company_t add fulltext index corpNm (corpNm) visible;
 commit;

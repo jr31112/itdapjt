@@ -5,41 +5,46 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="ssafy.studygroup">
 
 	<select id="getStudyGroup"
-	resultType="com.ssafy.itda.itda_test.model.StudyGroup">
-		SELECT * 
+		resultType="com.ssafy.itda.itda_test.model.StudyGroup">
+		SELECT *
 		FROM studyGroup_t
 		WHERE stid = #{stid}
 	</select>
-	
-	<insert id="createStudyGroup" 
-	parameterType="com.ssafy.itda.itda_test.model.StudyGroup">
+
+	<insert id="createStudyGroup"
+		parameterType="com.ssafy.itda.itda_test.model.StudyGroup">
 		INSERT INTO studyGroup_t(uid, stid)
-		VALUES ( #{uid}, #{stid} ) 
+		VALUES ( #{uid},
+		#{stid} )
 	</insert>
-	
+
 	<update id="plusPcnt" parameterType="java.lang.Integer">
-		UPDATE study_t SET pcnt = pcnt + 1 WHERE stid = #{stid}
+		UPDATE study_t SET pcnt =
+		pcnt + 1 WHERE stid = #{stid}
 	</update>
-	
-	<delete id="deleteStudyGroup" 
-	parameterType="com.ssafy.itda.itda_test.model.StudyGroup">
+
+	<delete id="deleteStudyGroup"
+		parameterType="com.ssafy.itda.itda_test.model.StudyGroup">
 		DELETE FROM studyGroup_t
-		WHERE stid = #{stid} AND uid = #{uid}
+		WHERE stid = #{stid} AND uid =
+		#{uid}
 	</delete>
-	
+
 	<update id="minusPcnt" parameterType="java.lang.Integer">
-		UPDATE study_t SET pcnt = pcnt - 1 WHERE stid = #{stid}
+		UPDATE study_t SET pcnt =
+		pcnt - 1 WHERE stid = #{stid}
 	</update>
-	
+
 	<select id="getStudyGroupRel"
-	parameterType="com.ssafy.itda.itda_test.model.StudyGroup"
-	resultType="com.ssafy.itda.itda_test.model.StudyGroup">
+		parameterType="com.ssafy.itda.itda_test.model.StudyGroup"
+		resultType="com.ssafy.itda.itda_test.model.StudyGroup">
 		SELECT *
 		FROM studyGroup_t
-		WHERE uid = #{uid}, stid = #{stid}
+		WHERE uid = #{uid} and stid = #{stid}
 	</select>
-	
-	<select id="getMyStudyGroup" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+
+	<select id="getMyStudyGroup" parameterType="java.lang.Integer"
+		resultType="java.lang.Integer">
 		SELECT stid FROM studyGroup_t WHERE uid = #{uid}
 	</select>
 </mapper>

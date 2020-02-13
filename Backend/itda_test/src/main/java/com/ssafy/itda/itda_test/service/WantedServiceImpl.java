@@ -159,7 +159,7 @@ public class WantedServiceImpl implements IWantedService {
 		System.out.println("Scheduler Saramin API!!");
 		String access_key = "0Q5ESrsPZNoxQPN98JpXKSFYmIHImsAyLfHbS2hUMGQUlxZ5O";
 		String search_option = "&count=110&job_type=1+4+11&job_category=4&sort=pd&start=";
-		for(int i = 0 ; i < 10; i++) {
+		for(int i = 0 ; i < 100; i++) {
 			String api_url = "https://oapi.saramin.co.kr/job-search/?access-key=" + access_key + search_option;
 			RestTemplate restTemplate = new RestTemplate();
 			HttpHeaders headers = new HttpHeaders();
@@ -250,7 +250,7 @@ public class WantedServiceImpl implements IWantedService {
 		String[] docs = doc.getElementsByClass("user_content").text().split("\\s\\n ,/.");
 		for (Stack s : stacks) {
 			for(String comp : docs) {
-				if(s.getTname().contains(comp)){
+				if(comp.contains(s.getTname())){
 					WantedStack ws = new WantedStack();
 					ws.setSid(s.getSid());
 					ws.setWid(wid);

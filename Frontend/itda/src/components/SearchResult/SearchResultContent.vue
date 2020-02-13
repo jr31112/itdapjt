@@ -16,7 +16,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="part in recruit.searchResult" :key="part.wanted.cid" @click="goDetailPage(part.wanted.wid)">
+                        <tr v-for="part in recruit.searchResult" :key="part.wanted.wid" @click="goDetailPage(part.wanted.wid)">
                             <td class="text-center">{{part.company.corpNm}}</td>
                             <td class="text-center">{{part.wanted.wantedTitle}}</td>
                             <td class="text-center">{{part.wanted.startDate}}</td>

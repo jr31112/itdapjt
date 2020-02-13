@@ -6,7 +6,7 @@
           </v-tabs>
           <v-tabs-items v-model="tab">
             <v-tab-item v-for="recruit in recruits" :key="recruit.tab">
-                <v-simple-table class="mx-auto" fixed-header>
+                <v-simple-table class="mx-auto" fixed-header v-if="recruit.searchResult.length">
                     <thead class="px-auto">
                         <tr>
                             <th class="text-center">회사명</th>
@@ -24,7 +24,9 @@
                         </tr>
                     </tbody>
                 </v-simple-table>
-                <!-- <infinite-loading @infinite="infiniteHandler"/> -->
+                <div v-else>
+                    데이터가 없어요...ㅠ
+                </div>
             </v-tab-item>
           </v-tabs-items>
       </v-col>
@@ -32,33 +34,25 @@
 </template>
 
 <script>
-// import InfiniteLoading from 'vue-infinite-loading'
-
 export default {
     name:'searchresultcontent',
-    components:{
-        // InfiniteLoading,
-    },
     props:{
         options:{type:Object, required:true},
         allContent:{type:Array, required:true},
     },
     data(){
         return{
-            tab:1,
+            tab:0,
             page:{1:1, 2:1},
             recruits:[
                 {tab:1, title:"진행중인 공고", searchResult:[]},
-                {tab:2, title:"마감된 공고", searchResults:[]}
+                {tab:2, title:"마감된 공고", searchResult:[]}
             ],
-            savedata:{
-                1:[],
-                2:[]
-            }
         }
     },
     methods:{
         updateOptions(){
+            console.log(1)
             const presenttmp = []
             const expiredtmp = []
             var today = new Date()
@@ -123,16 +117,21 @@ export default {
                     }
                 }
             }
-            this.savedata[1] = presenttmp
-            this.savedata[2] = expiredtmp
-        }
+            this.recruits[0].searchResult = presenttmp
+            this.recruits[1].searchResult = expiredtmp
+        },
     },
     watch:{
         options:{
             deep:true,
             immediate:true,
             handler:'updateOptions'
-        }
+        },
+        allContent:{
+            deep:true,
+            immediate:true,
+            handler:'updateOptions'
+        },
     },
     mounted(){
         this.updateOptions()

@@ -60,7 +60,7 @@ export default new Vuex.Store({
           if (res.data.state == 'success') {
             let token = res.headers['jwt-auth-token']
             localStorage.setItem("access_token", token)
-            localStorage.setItem("uid", res.data.uid)
+            localStorage.setItem("uid", res.data.user.uid)
             dispatch("getMemberInfo")
           }
           else {
@@ -83,15 +83,7 @@ export default new Vuex.Store({
       if(!token){
         return;
       }
-      let config =
-      {
-        headers:
-        {
-          "jwt-auth-token": token
-        }
-      }
-      axios
-        .get("http://192.168.31.54:8197/itda/api/getUser", config)
+      axios.get("http://192.168.31.54:8197/itda/api/getUser", {headers:{"jwt-auth-token": token}})
         .then(res => {
           let userInfo = res.data
           

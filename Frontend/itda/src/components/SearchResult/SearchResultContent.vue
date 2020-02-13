@@ -16,7 +16,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="part in recruit.searchResult" :key="part.wanted.cid">
+                        <tr v-for="part in recruit.searchResult" :key="part.wanted.cid" @click="goDetailPage(part.wanted.wid)">
                             <td class="text-center">{{part.company.corpNm}}</td>
                             <td class="text-center">{{part.wanted.wantedTitle}}</td>
                             <td class="text-center">{{part.wanted.startDate}}</td>
@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import router from '../../router'
 export default {
     name:'searchresultcontent',
     props:{
@@ -51,8 +52,10 @@ export default {
         }
     },
     methods:{
+        goDetailPage(wid){
+            router.push({name:'recruitdetail',params:{id:wid}})
+	    },
         updateOptions(){
-            console.log(1)
             const presenttmp = []
             const expiredtmp = []
             var today = new Date()

@@ -17,7 +17,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<insert id="createWantedStack" parameterType="com.ssafy.itda.itda_test.model.WantedStack">
-		INSERT INTO wantedStack_t(wid, sid) VALUES(#{wid}, #{sid})
+		INSERT INTO wantedStack_t(wid, sid) values(#{wid}, #{sid})
 	</insert>
 	
 	<select id="getAllStacks" resultType="com.ssafy.itda.itda_test.model.Stack">

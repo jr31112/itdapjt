@@ -5,15 +5,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="ssafy.stack">
 
 	<insert id="createStack" parameterType="java.lang.String">
-		INSERT INTO STACK_T(TNAME) VALUES(#{tname})
+		INSERT INTO stack_t(tname) VALUES(#{tname})
 	</insert>
 	
 	<update id="updateStackCnt" parameterType="java.lang.Integer">
-		UPDATE STACK_T SET CNT = CNT + 1 WHERE SID = #{sid}
+		UPDATE stack_t SET cnt = cnt + 1 WHERE sid = #{sid}
 	</update>
 	
 	<insert id="createMyStack" parameterType="com.ssafy.itda.itda_test.model.MyStack">
-		INSERT INTO MYSTACK_T(UID, SID) VALUES(#{uid}, #{sid})
+		INSERT INTO myStack_t(uid, sid) VALUES(#{uid}, #{sid})
 	</insert>
 	
 	<insert id="createWantedStack" parameterType="com.ssafy.itda.itda_test.model.WantedStack">
@@ -21,25 +21,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<select id="getAllStacks" resultType="com.ssafy.itda.itda_test.model.Stack">
-		SELECT SID, TNAME, CNT FROM STACK_T ORDER BY SID
+		SELECT sid, tname, cnt FROM stack_t ORDER BY sid
 	</select>
 	
 	<select id="getMyStacks" parameterType="java.lang.Integer" 
 		resultType="com.ssafy.itda.itda_test.model.Stack">
-		SELECT S.SID, S.TNAME
-		FROM MYSTACK_T AS MS JOIN STACK_T AS S ON MS.SID = S.SID
-		WHERE MS.UID = #{uid}
+		SELECT s.sid, s.tname
+		FROM myStack_t AS ms JOIN stack_t AS s ON ms.sid = s.sid
+		WHERE ms.uid = #{uid}
 	</select>
 
 	<select id="getWantedStacks" parameterType="java.lang.String" 
 		resultType="com.ssafy.itda.itda_test.model.Stack">
-		SELECT S.SID, S.TNAME
-		FROM WANTEDSTACK AS WS JOIN STACK_T AS S ON WS.SID = S.SID
-		WHERE WS.WID = #{wid}
+		SELECT s.sid, s.tname
+		FROM wantedStack AS ws JOIN stack_t AS s ON ws.sid = s.sid
+		WHERE ws.wid = #{wid}
 	</select>
 
 	<delete id="deleteMyStack" parameterType="com.ssafy.itda.itda_test.model.MyStack">
-		DELETE FROM MYSTACK_T WHERE UID = #{uid} AND SID = #{sid}
+		DELETE FROM myStack_t WHERE uid = #{uid} AND sid = #{sid}
 	</delete>
 	
 	

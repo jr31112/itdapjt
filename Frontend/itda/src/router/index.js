@@ -8,7 +8,7 @@ import RecruitMain from '../views/RecruitMain.vue'
 import RecruitDetail from '../views/RecruitDetail.vue'
 import RecruitCalender from '../views/RecruitCalender.vue'
 import StudyMain from '../views/StudyMain.vue'
-import SearchFilter from '../components/SearchResult/SearchFilter.vue'
+import SearchResult from '../views/SearchResult.vue'
 import SearchData from '../views/SearchData.vue'
 import UserModify from "../components/Mypage/UserModify.vue"
 import AboutUs from '../components/Aboutus/AboutUs.vue'
@@ -93,9 +93,9 @@ const routes = [
   },
 
   {
-    path: "/searchfilter",
-    name: "searchfilter",
-    component: SearchFilter
+    path: "/searchresult",
+    name: "searchresult",
+    component: SearchResult
   },
   { 
     path: "/login",

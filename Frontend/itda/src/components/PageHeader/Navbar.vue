@@ -3,21 +3,29 @@
     <router-link :to="{name:'recruitmain'}">
       <v-img :src="getImgUrl('logoo.png')" style="width :6.5rem" />
     </router-link>
+    <div class="page-router">
+      <v-btn
+        @click="goRecruitCalanderPage()"
+        class="hidden-sm-and-down v-btn v-btn--flat v-btn--router v-btn--text theme--dark v-size--default"
+        style="min-width: 48px;"
+      >
+        상세보기
+      </v-btn>
+      <v-btn
+        @click="goStudyPage()"
+        class="hidden-sm-and-down v-btn v-btn--flat v-btn--router v-btn--text theme--dark v-size--default"
+        style="min-width: 48px;"
+      >
+        스터디보기
+      </v-btn>
+    </div>
     <v-spacer></v-spacer>
-    <div class="v-toolbar__content" style="height: 64px;">
-      
-      <div class="spacer">        
-      </div>
+    <div class="search">
       <div class="v-responsive mr-0 mr-md-6 hidden-xs-only" style="max-width: 300px;">
         <div class="v-responsive__content">
           <div class="v-input v-input--hide-details v-input--dense theme--dark v-text-field v-text-field--single-line v-text-field--solo v-text-field--solo-inverted v-text-field--solo-flat v-text-field--is-booted v-text-field--enclosed v-text-field--rounded">
             <div class="v-input__control">
               <div class="v-input__slot">
-                <div class="v-input__prepend-inner">
-                  <div class="v-input__icon v-input__icon--prepend-inner">
-                    <i aria-hidden="true" class="v-icon notranslate mdi mdi-magnify theme--dark"></i>
-                  </div>
-                </div>
                 <div class="v-text-field__slot">
                   <label
                     for="search"
@@ -29,7 +37,7 @@
                     v-model="content"
                     type="text"
                     class="ds-input"
-                    placeholder="통합 검색창"
+                    placeholder="공고 통합 검색"
                     autocomplete="off"
                     spellcheck="false"
                     role="combobox"
@@ -40,10 +48,11 @@
                     dir="auto"
                     @keyup.enter="goSearch(content)"
                   />
-                  <pre
-                    aria-hidden="true"
-                    style="position: absolute; visibility: hidden; white-space: pre; font-family: Roboto, sans-serif; font-size: 16px; font-style: normal; font-variant: normal; font-weight: 400; word-spacing: 0px; letter-spacing: normal; text-indent: 0px; text-rendering: auto; text-transform: none;"
-                  ></pre>
+                </div>
+                <div class="v-input__prepend-inner" @click.prevent="goSearch(content)">
+                  <div class="v-input__icon v-input__icon--prepend-inner">
+                    <i aria-hidden="true" class="v-icon notranslate mdi mdi-magnify theme--dark"></i>
+                  </div>
                 </div>
               </div>
             </div>
@@ -51,8 +60,9 @@
         </div>
       </div>
     </div>
-                    
+    <div class="user">
 
+    </div>
     <v-btn
       v-if="isManager"
       class="v-btn v-btn--flat v-btn--text theme--dark v-size--default"
@@ -60,40 +70,8 @@
       style="min-width: 48px;"
       @click="GoManagePage"
     >
-      <span class="v-btn__content">
-        <span class="subtitle-1 text-capitalize font-weight-light">
-          <div class="v-markdown">Manager Page</div>
-        </span>
-      </span>
+      페이지 관리
     </v-btn>
-    <v-btn
-      v-on:click="goTotalWantedPage()"
-      class="hidden-sm-and-down v-btn v-btn--flat v-btn--router v-btn--text theme--dark v-size--default"
-      aria-label="For Enterprise"
-      style="min-width: 48px;"
-    >
-      <span class="v-btn__content">
-        <span class="subtitle-1 text-capitalize font-weight-light">
-          <div class="v-markdown">
-            <span class="mr">상세보기</span>
-          </div>
-        </span>
-      </span>
-    </v-btn>
-    <div class="v-menu">
-      <div
-        role="menu"
-        class="v-menu__content theme--light"
-        style="max-height: calc(100% - 16px); min-width: 0px; top: 12px; left: 12px; transform-origin: left top; z-index: 0; display: none;"
-      ></div>
-    </div>
-    <div class="v-menu">
-      <div
-        role="menu"
-        class="v-menu__content theme--light"
-        style="max-height: calc(100% - 16px); min-width: 0px; top: 12px; left: 12px; transform-origin: left top; z-index: 0; display: none;"
-      ></div>
-    </div>
     <v-btn
       v-if="isLogin"
       class="v-btn v-btn--flat v-btn--text theme--dark v-size--default"
@@ -101,11 +79,7 @@
       style="min-width: 48px;"
       @click="goMypage"
     >
-      <span class="v-btn__content">
-        <span class="subtitle-1 text-capitalize font-weight-light">
-          <div class="v-markdown">Mypage</div>
-        </span>
-      </span>
+      내정보 보기
     </v-btn>
     <v-btn
       v-if="isLogin"
@@ -115,11 +89,7 @@
       aria-label="Support"
       style="min-width: 48px;"
     >
-      <span class="v-btn__content">
-        <span class="subtitle-1 text-capitalize font-weight-light">
-          <div class="v-markdown">Log Out</div>
-        </span>
-      </span>
+      로그아웃
     </v-btn>
      
     <v-btn
@@ -129,11 +99,7 @@
       aria-label="Support"
       style="min-width: 48px;"
     >
-      <span class="v-btn__content">
-        <span class="subtitle-1 text-capitalize font-weight-light">
-          <div class="v-markdown">Login | SignUp</div>
-        </span>
-      </span>
+      로그인/회원가입
     </v-btn>
     <v-dialog
       v-if="isDialog"
@@ -150,7 +116,6 @@
 import SignUpIn from "./SignUpIn.vue";
 import { mapState } from "vuex";
 import router from "../../router";
-// import {eventBus} from "../../main.js"
 export default {
   name:'navbar',
   components: {
@@ -174,18 +139,20 @@ export default {
     getImgUrl(img) {
       return require("../../assets/" + img);
     },
-    goTotalWantedPage() {
+    goRecruitCalanderPage() {
       router.push({ name: "recruitcalender" }).catch(() => {});
+    },
+    goStudyPage() {
+      router.push({ name: "studymain" }).catch(() => {});
     },
     goLogout()
     {
       this.$store.dispatch('logout')
       router.push({name:"recruitmain"}).catch(() => {});
-      //일단은 홈페이지로 돌아가게하자. 
     },
     goSearch(content)
     {
-       router.push({ name: "searchfilter", query:{cont: content}}).catch(() => {});
+       router.push({ name: "searchresult", query:{cont: content}}).catch(() => {});
     },
     goMypage(){
       router.push({name:"mypage",params:{id:1}})

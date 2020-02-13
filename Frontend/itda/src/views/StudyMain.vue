@@ -38,12 +38,15 @@
                 <h2>내가 가입한 스터디 보기</h2>
               </v-col>
           </v-row>
-          <study-login-content :myStudyList="loginStudies"/>
+          <study-login-content :myStudyList="loginStudies" v-if="loginStudies.length" v-on:update="update"/>
+          <v-row v-else>
+              <v-col>가입한 스터디가 없어요..</v-col>
+          </v-row>
       </v-container>
       <v-container class="my-0" white>
           <v-row><v-col><h2>스터디 전체 보기</h2></v-col></v-row>
           <study-filter :options="this.options" style="max-width:930px"/>
-          <study-default-content :options="this.options" :allstudy="this.studies" :islogin="isLogin" v-on:update="update"/>
+          <study-default-content :options="this.options" :allstudy="this.defaultStudies" :islogin="isLogin" v-on:update="update"/>
                 
       </v-container>
  </div>
@@ -71,18 +74,22 @@ export default {
             })
         },
         getLoginStudies(){
-        axios.get("http://192.168.31.54:8197/itda/api/getUser", {headers:{"jwt-auth-token": localStorage.getItem("access_token")}})
-            .then(response => {
-            this.loginStudies = response.data.myStudies
-            var len = this.myStudyList.length
-            for (var i=0;i<len;i++)
-                this.myStudyList.push({})
-            })
+            if (this.isLogin){
+                axios.get("http://192.168.31.54:8197/itda/api/getUser", {headers:{"jwt-auth-token": localStorage.getItem("access_token")}})
+                    .then(response => {
+                        this.loginStudies = response.data.myStudies
+                        var len = this.loginStudies.length % 4
+                        if (len){
+                            for (var i=0;i<4-len;i++)
+                                this.loginStudies.push({})
+                        }
+                })
+            }
         },  
         update(){
+            console.log('main')
             this.getDefaultStudies()
-            if(this.isLogin)
-                this.getLoginStudies()
+            this.getLoginStudies()
         },
         validate () {
         var select = JSON.parse(localStorage.getItem('select'))
@@ -106,6 +113,7 @@ export default {
                     this.overlay = false
                     localStorage.removeItem('select')
                     this.getDefaultStudies()
+                    this.getLoginStudies()
                 })
                 .catch()
                 }
@@ -169,8 +177,14 @@ export default {
     },
     mounted(){
         this.getDefaultStudies()
-        if(this.isLogin)
-            this.getLoginStudies()
+        this.getLoginStudies()
+    },
+    watch:{
+        isLogin:{
+            deep:true,
+            immediate:true,
+            handler:'getLoginStudies'
+        }
     },
     computed: {
         ...mapState(["isLogin"])

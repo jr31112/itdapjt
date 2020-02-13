@@ -1,11 +1,11 @@
 <template>
   <v-row class="studylogincontent">
     <v-col>
-      <v-carousel v-if="myStudyList.length" height="auto" hide-delimiter-background>
+      <v-carousel v-if="myStudyList.length" height="auto" hide-delimiters>
         <v-carousel-item v-for="j in parseInt(myStudyList.length/4)" :key="j">
           <v-container>
             <v-row>
-              <study-detail v-for="i in 4" :key="i" :study="myStudyList[4*j+i-5]"/>
+              <study-detail v-for="i in 4" :key="i" :study="myStudyList[4*j+i-5]" v-on:update="update"/>
             </v-row>
           </v-container>
         </v-carousel-item>
@@ -20,16 +20,16 @@ import StudyDetail from './StudyLoginContent/StudyDetail.vue'
 export default {
     name:"studylogincontent",
     components:{
-      StudyDetail
+      StudyDetail,
     },
     props:{
       myStudyList:{type:Array}
     },
     methods:{
-      
-    },
-    mounted(){
-      this.getStudyList()
+      update(){
+        console.log('detail1')
+        this.$emit('update')
+        },
     }
 }
 </script>

@@ -47,6 +47,7 @@ create table wanted_t(
     startDate timestamp not null,
     endDate timestamp not null,
     detail text not null,
+    jobType int,
     vcnt int not null default 0,
     cid varchar(10) not null,
     foreign key(cid) references company_t(cid) on delete cascade
@@ -109,7 +110,7 @@ create table study_t(
     maxPcnt int not null,
     pcnt int not null default 0,
     stype int not null,
-    typeFk int,
+    typeFk varchar(10),
     typeName varchar(300),
     sgroup int not null,
     content text not null,

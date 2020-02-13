@@ -1,7 +1,6 @@
 package com.ssafy.itda.itda_test.model;
 
 import java.io.Serializable;
-import java.util.List;
 
 public class Wanted implements Serializable {
 	private String wid;
@@ -12,6 +11,7 @@ public class Wanted implements Serializable {
 	private int vcnt;
 	private String cid;
 	private String detail;
+	private int jobType;
 
 	public Wanted() {
 		super();
@@ -29,6 +29,20 @@ public class Wanted implements Serializable {
 		this.vcnt = vcnt;
 		this.cid = cid;
 		this.detail = detail;
+	}
+
+	public Wanted(String wid, String wantedTitle, int active, String startDate, String endDate, int vcnt, String cid,
+			String detail, int jobType) {
+		super();
+		this.wid = wid;
+		this.wantedTitle = wantedTitle;
+		this.active = active;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.vcnt = vcnt;
+		this.cid = cid;
+		this.detail = detail;
+		this.jobType = jobType;
 	}
 
 	public String getWid() {
@@ -95,10 +109,18 @@ public class Wanted implements Serializable {
 		this.detail = detail;
 	}
 
+	public int getJobType() {
+		return jobType;
+	}
+
+	public void setJobType(int jobType) {
+		this.jobType = jobType;
+	}
+
 	@Override
 	public String toString() {
 		return "Wanted [wid=" + wid + ", wantedTitle=" + wantedTitle + ", active=" + active + ", startDate=" + startDate
 				+ ", endDate=" + endDate + ", vcnt=" + vcnt + ", cid=" + cid + ", detail=" + detail + "]";
 	}
-	
+
 }

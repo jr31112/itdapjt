@@ -8,6 +8,7 @@ import CoreuiVue from '@coreui/vue'
 
 Vue.use(CoreuiVue)
 Vue.use(require('vue-moment'))
+
 // Vue.config.productionTip = false
 // const ignoreWarnMessage = 'The .native modifier for v-on is only valid on components but it was used on <div>.';
 // Vue.config.warnHandler = function (msg, vm, trace) {
@@ -16,17 +17,16 @@ Vue.use(require('vue-moment'))
 //     msg = null;
 //     vm = null;
 //     trace = null;
-//   }
-//   console.log(vm)
-//   console.log(trace)
-// }
+//   }else{
+//     console.log(vm + trace)
+//   }  
+// },
 new Vue({
   router,
   beforeCreate()
   {
     this.$store.dispatch("getMemberInfo");
   },
-  
   store,
   vuetify,
   icons,

@@ -7,32 +7,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getAllStudy"
 	resultType="com.ssafy.itda.itda_test.model.Study">
 		SELECT * 
-		FROM STUDY_T
+		FROM study_t
 	</select>
 	
 	<select id="getStudy"
 	parameterType="java.lang.Integer"
 	resultType="com.ssafy.itda.itda_test.model.Study">
 		SELECT * 
-		FROM STUDY_T
-		WHERE STID = #{stid}
+		FROM study_t
+		WHERE stid = #{stid}
 	</select>
 	
 	<insert id="createStudy" 
 	parameterType="com.ssafy.itda.itda_test.model.Study">
-		INSERT INTO STUDY_T(STNAME, MAXPCNT, STYPE, TYPEFK, TYPENAME, SGROUP, CONTENT, CAPTAIN)
+		INSERT INTO study_t(stname, maxPcnt, stype, typeFk, typeName, sgroup, content, captain)
 		VALUES ( #{stname}, #{maxPcnt}, #{stype}, #{typeFk}, #{typeName}, #{sgroup}, #{content}, #{captain} ) 
 	</insert>
 	
 	<select id="getStid" parameterType="com.ssafy.itda.itda_test.model.Study"
 		resultType="java.lang.Integer">
-		SELECT STID FROM STUDY_T WHERE STNAME = #{stname} AND CAPTAIN = #{captain} ORDER BY STID DESC LIMIT 1
+		SELECT stid FROM study_t WHERE stname = #{stname} AND captain = #{captain} ORDER BY stid DESC LIMIT 1
 	</select>
 	
 	<delete id="deleteStudy" 
 	parameterType="java.lang.Integer">
-		DELETE FROM STUDY_T
-		WHERE STID = #{stid}
+		DELETE FROM study_t
+		WHERE stid = #{stid}
 	</delete>
 	
 </mapper>

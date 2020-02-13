@@ -58,7 +58,7 @@
                   block="block"
                   large="large"
                   @click="isChangeLoginRegi = !isChangeLoginRegi; goInit()"
-
+            
                 >Cancel</v-btn>
               </v-layout>
           </div>

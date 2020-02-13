@@ -12,7 +12,6 @@ import SearchResult from '../views/SearchResult.vue'
 import SearchData from '../views/SearchData.vue'
 import UserModify from "../components/Mypage/UserModify.vue"
 import AboutUs from '../components/Aboutus/AboutUs.vue'
-import store from '../store/index.js'
 import Calendar from '../components/RecruitCalender/Calendar.vue'
 //import { cilViewStream } from '@coreui/icons'
 Vue.use(VueRouter)
@@ -20,29 +19,22 @@ Vue.use(VueRouter)
 const rejectAuthUser = (to, from, next)=>
 {
   //새로운 페이지로 들어올 때 오류가 있구나, 
-  // this.$store.dispatch("getMemberInfo");
-  if(store.state.isManager === false)   
+ // this.$store.dispatch("getMemberInfo");
+  // store.dispatch("getMemberInfo");
+  let token = localStorage.getItem("mid")
+  console.log(token+ "TokenS") 
+  if(token === '0')   
   { 
-    alert("관리자페이지입니다.")
-    next("/") //from에서 / (home,to기능)으로 간다. 
+    next() //to=> from으로 간다. 
   } 
   else 
   {
-    next() //to=> from으로 간다. 
+    alert("관리자페이지입니다.")
+    next("/") //from에서 / (home,to기능)으로 간다. 
+
   }
 }
-//후에 마이페이지나 관리자를 만들 때 쓰자.
-// const onlyAuthUser = (to, from, next)=>
-// {
-//   if(store.state.userInfo.auth ==! 1) 
-//   {
-//     alert("관리자 페이지입니다.")
-//     next("/") //from에서 / (home,to기능)으로 간다. 
-//   } 
-//   else {
-//     next() //to=> from으로 간다. 
-//   }
-// }
+
 
 const routes = [
   {

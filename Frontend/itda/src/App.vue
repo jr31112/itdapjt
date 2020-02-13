@@ -25,7 +25,7 @@
                 else
                     return false
             },
-		...mapState(["isLogin","isManager"])
+		...mapState(["isLogin"])
         }
         
     };

@@ -38,7 +38,7 @@
                 <h2>내가 가입한 스터디 보기</h2>
               </v-col>
           </v-row>
-          <study-login-content/>
+          <study-login-content :myStudyList="loginStudies"/>
       </v-container>
       <v-container class="my-0" white>
           <v-row><v-col><h2>스터디 전체 보기</h2></v-col></v-row>
@@ -64,14 +64,25 @@ export default {
         StudyDefaultContent,
     },
     methods:{
-        getStudies(){
+        getDefaultStudies(){
             axios.get('http://192.168.31.54:8197/itda/api/getAllStudy')
             .then(response=>{
-                this.studies = response.data
+                this.defaultStudies = response.data
             })
         },
+        getLoginStudies(){
+        axios.get("http://192.168.31.54:8197/itda/api/getUser", {headers:{"jwt-auth-token": localStorage.getItem("access_token")}})
+            .then(response => {
+            this.loginStudies = response.data.myStudies
+            var len = this.myStudyList.length
+            for (var i=0;i<len;i++)
+                this.myStudyList.push({})
+            })
+        },  
         update(){
-            this.getStudies()
+            this.getDefaultStudies()
+            if(this.isLogin)
+                this.getLoginStudies()
         },
         validate () {
         var select = JSON.parse(localStorage.getItem('select'))
@@ -95,7 +106,7 @@ export default {
                     this.$refs.form.reset()
                     this.overlay = false
                     localStorage.removeItem('select')
-                    this.getStudies()
+                    this.getDefaultStudies()
                 })
                 .catch()
                 }
@@ -149,12 +160,18 @@ export default {
                     ]
             },
             overlay:false,
-            studies:[
+            defaultStudies:[
+
+            ],
+            loginStudies:[
+
             ],
         }
     },
     mounted(){
-        this.getStudies()
+        this.getDefaultStudies()
+        if(this.isLogin)
+            this.getLoginStudies()
     },
     computed: {
         ...mapState(["isLogin"])

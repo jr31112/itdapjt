@@ -6,7 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="getWantedAll" resultType="java.lang.String">
 		select wid from wanted_t
-		order by startdate asc
+		order by startDate asc
 	</select>
 
 	<select id="getCompanyId" parameterType="java.lang.String"
@@ -16,27 +16,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="getWantedInfo" parameterType="java.lang.String"
 		resultType="com.ssafy.itda.itda_test.model.Wanted">
-		select wid, wantedtitle, active, startdate, enddate,
+		select wid, wantedTitle, active, startDate, endDate,
 		vcnt,
-		cid, detail
+		cid, detail, jobType
 		from wanted_t where wid = #{wid}
 	</select>
 
 	<select id="getCompanyInfo" parameterType="java.lang.String"
 		resultType="com.ssafy.itda.itda_test.model.Company">
-		select cid, corpnm, totpsncnt, busisize, yrsalesamt,
-		corpaddr, homepg, busicont, logo
+		select cid, corpNm, totPsncnt, busiSize, yrSalesAmt,
+		corpAddr, homePg, busiCont, logo
 		from company_t where cid = #{cid}
 	</select>
 
 	<select id="getWantedByRecent" resultType="java.lang.String">
 		select wid from
-		wanted_t where active = 1 order by startdate desc limit 24
+		wanted_t where active = 1 order by startDate desc limit 24
 	</select>
 
 	<select id="getWantedByCloseEnd" resultType="java.lang.String">
 		select wid from
-		wanted_t where active = 1 and enddate >= now() order by enddate asc
+		wanted_t where active = 1 and endDate >= now() order by endDate asc
 		limit 10
 	</select>
 
@@ -64,19 +64,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<insert id="createWanted"
 		parameterType="com.ssafy.itda.itda_test.model.Wanted">
-		insert into wanted_t(wid, wantedtitle, active,
-		startdate, enddate, cid, detail, jobType)
-		values(#{wid}, #{wantedtitle},
-		#{active}, from_unixtime(#{startdate}),
-		from_unixtime(#{enddate}),
+		insert into wanted_t(wid, wantedTitle, active,
+		startDate, endDate, cid, detail, jobType)
+		values(#{wid}, #{wantedTitle},
+		#{active}, from_unixtime(#{startDate}),
+		from_unixtime(#{endDate}),
 		#{cid}, #{detail}, #{jobType})
 	</insert>
 
 	<!-- <select id="getInputWanted" parameterType="com.ssafy.itda.itda_test.model.Wanted" -->
 	<!-- resultType="java.lang.String"> -->
-	<!-- SELECT WID FROM WANTED_T WHERE WANTEDTITLE = #{wantedTitle} AND STARTDATE 
+	<!-- SELECT WID FROM WANTED_T WHERE wantedTitle = #{wantedTitle} AND startDate 
 		= #{startDate} -->
-	<!-- AND ENDDATE = #{endDate} AND CID = #{cid} ORDER BY WID DESC LIMIT 1 -->
+	<!-- AND endDate = #{endDate} AND CID = #{cid} ORDER BY WID DESC LIMIT 1 -->
 	<!-- </select> -->
 
 	<delete id="deleteWanted" parameterType="java.lang.String">
@@ -86,16 +86,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<insert id="updateWanted"
 		parameterType="com.ssafy.itda.itda_test.model.Wanted">
-		update wanted_t set wantedtitle = #{wantedtitle},
-		startdate = #{startdate}, enddate = #{enddate},
+		update wanted_t set wantedTitle = #{wantedTitle},
+		startDate = #{startDate}, endDate = #{endDate},
 		detail = #{detail}, cid
-		= #{cid} where wid = #{wid}
+		= #{cid}, jobType = #{jobType} where wid = #{wid}
 	</insert>
 
 	<select id="getStackInfo" parameterType="java.lang.String"
 		resultType="com.ssafy.itda.itda_test.model.Stack">
 		select s.sid, s.tname
-		from wantedstack_t as ws join stack_t
+		from wantedStack_t as ws join stack_t
 		as
 		s on ws.sid = s.sid
 		where ws.wid = #{wid}
@@ -113,28 +113,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select distinct w.wid from mystack_t as ms, wantedstack_t
 		as ws, wanted_t as w
 		where ms.uid = #{uid} and ms.sid = ws.sid order by
-		enddate limit 10
+		endDate limit 10
 	</select>
 
 	<select id="getWantedByScrap" parameterType="java.lang.Integer"
 		resultType="java.lang.String">
-		SELECT W.WID FROM SCRAP_T AS S, WANTED_T AS W
-		WHERE S.UID =
-		#{uid} AND S.WID = W.WID ORDER BY ENDDATE LIMIT 10
+		select w.wid from scrap_t as s, wanted_t as w
+		where s.uid =
+		#{uid} and s.wid = w.wid ORDER BY endDate LIMIT 10
 	</select>
 
 	<update id="updateVcnt" parameterType="java.lang.String">
-		UPDATE WANTED_T SET VCNT =
-		VCNT + 1 WHERE WID = #{wid}
+		update wanted_t set vcnt =
+		vcnt + 1 where wid = #{wid}
 	</update>
 
 	<update id="updateCheckExpire">
-		UPDATE WANTED_T SET ACTIVE = 0 WHERE ENDDATE &lt;
+		UPDATE wanted_t SET active = 0 WHERE endDate &lt;
 		NOW()
 	</update>
 
 	<update id="updateCheckOpen">
-		UPDATE WANTED_T SET ACTIVE = 1 WHERE STARTDATE &gt;
+		UPDATE wanted_t SET active = 1 WHERE startDate &gt;
 		NOW()
 	</update>
 
@@ -142,19 +142,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		parameterType="java.lang.String"
 		resultType="java.lang.String">
 		SELECT 
-		    CORPNM, WANTEDTITLE, TNAME
+		    corpNm, wantedTitle, tname
 		FROM
-		    WANTED_T AS W
+		    wanted_t AS W
 		        LEFT JOIN
-		    WANTEDSTACK_T AS WS ON W.WID = WS.WID
+		    wantedStack_t AS WS ON W.WID = WS.WID
 		        LEFT JOIN
-		    COMPANY_T AS C ON W.CID = C.CID
+		    company_t AS C ON W.CID = C.CID
 		        LEFT JOIN
-		    STACK_T AS S ON WS.SID = S.SID
+		    stack_t AS S ON WS.SID = S.SID
 		WHERE
-		    CORPNM LIKE '%{keyword}%'
-		        OR WANTEDTITLE LIKE '%{keyword}%'
-		        OR MATCH (TNAME) AGAINST ('{keyword}' )
-		        OR MATCH (WANTEDTITLE) AGAINST ('{keyword}' )
+		    corpNm LIKE '%{keyword}%'
+		        OR wantedTitle LIKE '%{keyword}%'
+		        OR MATCH (tname) AGAINST ('{keyword}' )
+		        OR MATCH (wantedTitle) AGAINST ('{keyword}' )
 	</select>
 </mapper>

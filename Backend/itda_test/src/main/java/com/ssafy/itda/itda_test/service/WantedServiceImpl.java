@@ -266,7 +266,6 @@ public class WantedServiceImpl implements IWantedService {
 		Company company = new Company();
 		company.setCid(cid);
 		if (!doc.getElementsByClass("result_txt").isEmpty()) {
-			System.out.println("No Company Info");
 			return false;
 		}
 		Elements info_company = doc.getElementsByClass("info_company");

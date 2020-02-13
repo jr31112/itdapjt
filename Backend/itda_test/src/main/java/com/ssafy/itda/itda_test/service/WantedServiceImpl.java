@@ -153,8 +153,8 @@ public class WantedServiceImpl implements IWantedService {
 		schedulerSaraminAPI();
 	}
 
-//	@Scheduled(cron = "0 0 0/5 * * *")
-	@Scheduled(fixedDelay=18000000)
+//	@Scheduled(fixedDelay=18000000)
+	@Scheduled(cron = "0 0 0/5 * * *")
 	public void schedulerSaraminAPI() throws IOException {
 		System.out.println("Scheduler Saramin API!!");
 		String access_key = "0Q5ESrsPZNoxQPN98JpXKSFYmIHImsAyLfHbS2hUMGQUlxZ5O";

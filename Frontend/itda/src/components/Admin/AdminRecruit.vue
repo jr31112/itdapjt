@@ -55,15 +55,16 @@
             },
             createdWanted()
             {
+                alert("안녕")
                  axios
                     .post('http://192.168.31.54:8197/itda/api/createWanted/')
                     .then(res => {
-                        this.createData = res; 
-                        alert("성공"+ res)
+                        alert(res.data.msg)
                     })
                     .catch((err) => {
                         alert(err)
                     })
+                this.getWantedAll()
             }
             ,    
             getWantedAll() {

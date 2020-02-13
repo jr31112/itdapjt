@@ -64,7 +64,7 @@
 
     </div>
     <v-btn
-      v-if="isManager"
+      v-if="isMr()==='0'"
       class="v-btn v-btn--flat v-btn--text theme--dark v-size--default"
       aria-label="Support"
       style="min-width: 48px;"
@@ -94,6 +94,7 @@
     <v-btn
       v-else
       @click.stop="dialog=!dialog"
+      @click="goLogin()"
       class="v-btn v-btn--flat v-btn--text theme--dark v-size--default"
       aria-label="Support"
       style="min-width: 48px;"
@@ -132,10 +133,16 @@ export default {
     };
   },
   computed: {
-    ...mapState(["isManager", "isLogin", "isLoginError", "isDialog"])
+    ...mapState([ "isLogin", "isLoginError", "isDialog"])
   },
   methods: {
+    isMr()
+    {
+      let token = localStorage.getItem("mid")
+      return token
+    },
     getImgUrl(img) {
+      
       return require("../../assets/" + img);
     },
     goRecruitCalanderPage() {
@@ -144,9 +151,14 @@ export default {
     goStudyPage() {
       router.push({ name: "studymain" }).catch(() => {});
     },
+    goLogin()
+    {
+      this.$store.state.isDialog =true
+    },
     goLogout()
     {
       this.$store.dispatch('logout')
+      this.$store.state.isDialog = false 
       router.push({name:"recruitmain"}).catch(() => {});
     },
     goSearch(content)

@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
-import router from './router'
 import store from './store'
+import router from './router'
 import vuetify from './plugins/vuetify';
 import { iconsSet as icons } from './assets/icons/icons.js'
 import CoreuiVue from '@coreui/vue'
@@ -22,11 +22,11 @@ Vue.use(require('vue-moment'))
 //   }  
 // },
 new Vue({
-  router,
-  beforeCreate()
+  async beforeCreate()
   {
-    this.$store.dispatch("getMemberInfo");
+    await this.$store.dispatch("getMemberInfo");
   },
+  router,
   store,
   vuetify,
   icons,

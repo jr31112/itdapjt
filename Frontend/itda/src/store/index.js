@@ -10,7 +10,6 @@ export default new Vuex.Store({
     isLogin: false,
     isLoginError: false,
     isDialog: true,
-    isManager: false, 
     isName: ""
   },
   //뮤테이션과 엑션스 차이는? 
@@ -36,12 +35,7 @@ export default new Vuex.Store({
       state.isLoginError = false
       state.isDialog = true
       state.userInfo = null
-      state.isManager = false;
       localStorage.clear()
-    },
-    managerlogin(state)
-    {
-      state.isManager = true;
     },
     ////////////추가
     set_name(state, name)
@@ -77,7 +71,7 @@ export default new Vuex.Store({
       commit("logout")
     }
     ,
-    getMemberInfo({ commit }) {
+    getMemberInfo({commit}) {
       let token = localStorage.getItem("access_token")
       if(!token){
         return;
@@ -85,12 +79,9 @@ export default new Vuex.Store({
       axios.get("http://192.168.31.54:8197/itda/api/getUser", {headers:{"jwt-auth-token": token}})
         .then(res => {
           let userInfo = res.data
-          
           commit('loginSuccess', userInfo)
-          if( userInfo.user.auth === 0 )
-          {
-            commit("managerlogin")
-          }
+          localStorage.setItem("mid",userInfo.user.auth)
+          
         })
         .catch(() => {
           localStorage.clear();

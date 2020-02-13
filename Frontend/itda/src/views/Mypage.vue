@@ -79,7 +79,7 @@
                         }
                     })
                     .then(response => {
-                                //  debugger
+                                // 
                         if (response.data.state == 'success') {
                             console.log(response)
                             this.userInfo.user.uid = response.data.user.uid

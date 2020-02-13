@@ -21,16 +21,12 @@
     import AdminRecruit from '../components/Admin/AdminRecruit.vue'
     import AdminUser from '../components/Admin/AdminUser.vue'
     import AdminStudy from '../components/Admin/AdminStudy.vue'
-    import {mapState} from 'vuex'
     export default {
         name: "admin",
         components: {
             AdminRecruit,
             AdminUser,
             AdminStudy
-        },
-        computed: {
-            ...mapState(["isManager"])
         }
     }
 </script>

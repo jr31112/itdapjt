@@ -111,6 +111,8 @@
 <script>
 import { mapState, mapActions } from "vuex";
 import axios from "axios";
+import firebase from 'firebase';
+
 export default {
   data() {
     return {
@@ -215,6 +217,62 @@ export default {
         email: this.email_lg,
         pw: this.password_lg
       });
+    },
+    socialLogin(){
+      const provider = new firebase.auth.GoogleAuthProvider();
+
+      firebase.auth().signInWithPopup(provider)
+        .then(result =>{
+          var social_email = result.user.email;
+          var social_uid = result.user.uid;
+          var social_name = result.user.displayName;
+          console.log(result);
+          console.log(social_email)
+          console.log(social_uid)
+          axios
+            .get('http://192.168.31.54:8197/itda/api/emailCheck/'+ social_email)
+            .then(response => {
+              if(response.data.state == 'fail'){
+                //이미 있는 email이라면?
+                axios
+                  .post('http://192.168.31.54:8197/itda/api/login', {email : social_email, pw: social_uid})
+                  .then(response => {
+                    if(response.data.state == 'fail'){
+                      //로그인 실패면 이미 해당 이메일로 회원가입한 적이 있을 것!
+                      alert('해당 email로 가입한 적이 있습니다!')
+                      return;
+                    }else{
+                      let token = response.headers['jwt-auth-token']
+                      localStorage.setItem("access_token", token)
+                      localStorage.setItem("social", "social")
+                      this.$router.go();
+                    }
+                  })
+              }
+              else{
+                //회원가입 시킨 뒤 로그인 시키자.
+                axios
+                  .post('http://192.168.31.54:8197/itda/api/signUp', {email: social_email, pw:social_uid, uname:social_name})
+                  .then(response =>{
+                    if(response.data.state == 'success'){
+                       axios
+                        .post('http://192.168.31.54:8197/itda/api/login', {email : social_email, pw: social_uid})
+                        .then(response => {
+                          if(response.data.state == 'success'){
+                            let token = response.headers['jwt-auth-token']
+                            localStorage.setItem("access_token", token)
+                            localStorage.setItem("social", "social")
+                            this.$router.go();
+                          }
+                        })
+                    }
+                  })
+              }
+            })
+        })
+        .catch((err)=>{
+          alert("Google Login이 정상적으로 실행되지 않았습니다!" + err.message)
+        });
     }
   }
 };

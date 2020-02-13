@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from "axios"
+import firebase from 'firebase'
+
 //import router from '../router/index.js';
 Vue.use(Vuex)
 export default new Vuex.Store({
@@ -66,9 +68,19 @@ export default new Vuex.Store({
         });
     },
     logout({ commit }) {
-      alert("성공적으로 로그아웃 되었습니다.")
-
       commit("logout")
+      if(localStorage.getItem("social") == 'social'){
+        firebase.auth().signOut()
+          .then(()=>{
+            alert("소셜 로그아웃 성공!")
+          })
+          .catch((err)=>{
+            alert(err.message)
+          })
+      }
+      else{
+        alert("성공적으로 로그아웃 되었습니다.")
+      }
     }
     ,
     getMemberInfo({commit}) {

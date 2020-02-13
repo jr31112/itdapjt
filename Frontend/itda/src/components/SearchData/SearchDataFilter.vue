@@ -19,8 +19,7 @@
         data(){
           return{
           }
-        }
-        ,
+        },
         props: ['options'], 
     }
 </script>

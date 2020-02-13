@@ -5,7 +5,7 @@
             <v-col cols="5"></v-col>
             <v-col cols="2"><h1>Study</h1></v-col>
             <v-spacer></v-spacer>
-            <v-col cols="4">
+            <v-col cols="4" v-if="isLogin">
             <v-btn class="ml-auto" @click.stop="overlay = !overlay">스터디 새로등록</v-btn>
                 <v-dialog v-model="overlay" scrollable max-width="500px">
                 <v-card>

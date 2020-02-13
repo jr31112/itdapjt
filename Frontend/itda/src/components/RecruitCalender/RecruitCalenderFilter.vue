@@ -26,27 +26,27 @@
                     <v-btn
                         @click.stop="dialog=!dialog"
                         aria-label="Support"
-                         class="ml-auto">
+                        class="ml-auto"
+                >
                         <span class="v-btn__content">
                             <span class="subtitle-1 text-capitalize font-weight-light">
                                 <div>기술 스택 검사</div>
                             </span>
                         </span>
                     </v-btn>
-                    <v-dialog v-model="dialog" max-width="800px" v-if="selectstacklist !== undefined">
+                    <v-dialog v-model="dialog" max-width="800px" v-if="stacklist !== undefined">
                         <v-card>
                             <v-card-title>기술 스택 리스트</v-card-title>
                             <v-divider></v-divider>
                             <v-card-text>
-                             
-                                    <v-row v-for="i in 9" :key="i" >
-                                        <v-col v-for="j in i==9?1:5" :key="j">
-                                            <v-checkbox v-model="selectstacklist"
-                                                :label="stacklist[5*(i-1) + j-1].tname"
-                                                :value="stacklist[5*(i-1) + j-1].sid" ></v-checkbox>
-                                        </v-col>
-                                    </v-row>
-                                
+                                <v-row v-for="i in 9" :key="i">
+                                    <v-col v-for="j in i==9?1:5" :key="j">
+                                        <v-checkbox
+                                            v-model="selectstacklist"
+                                            :label="stacklist[5*(i-1) + j-1].tname"
+                                            :value="stacklist[5*(i-1) + j-1].sid"></v-checkbox>
+                                    </v-col>
+                                </v-row>
                             </v-card-text>
                             <v-divider></v-divider>
                             <v-card-actions>
@@ -77,6 +77,7 @@
         },
         data() {
             return {
+
                 checkedNames: [],
                 options: {
                     period: 0,
@@ -106,7 +107,173 @@
                         value: '신입'
                     }
                 ],
-                stacklist: [],
+                stacklist: [
+                    {
+                        sid: 1,
+                        tname: "Java",
+                        cnt: 5
+                    }, {
+                        sid: 2,
+                        tname: "C",
+                        cnt: 23
+                    }, {
+                        sid: 3,
+                        tname: "C++",
+                        cnt: 1
+                    }, {
+                        sid: 4,
+                        tname: "C#",
+                        cnt: 2
+                    }, {
+                        sid: 5,
+                        tname: "Objective-C",
+                        cnt: 1
+                    }, {
+                        sid: 6,
+                        tname: "Python",
+                        cnt: 4
+                    }, {
+                        sid: 7,
+                        tname: "PHP",
+                        cnt: 0
+                    }, {
+                        sid: 8,
+                        tname: "JavaScript",
+                        cnt: 0
+                    }, {
+                        sid: 9,
+                        tname: "Kotlin",
+                        cnt: 0
+                    }, {
+                        sid: 10,
+                        tname: "Unix",
+                        cnt: 0
+                    }, {
+                        sid: 11,
+                        tname: "Linux",
+                        cnt: 3
+                    }, {
+                        sid: 12,
+                        tname: "Windows",
+                        cnt: 1
+                    }, {
+                        sid: 13,
+                        tname: "Android",
+                        cnt: 1
+                    }, {
+                        sid: 14,
+                        tname: "iOS",
+                        cnt: 2
+                    }, {
+                        sid: 15,
+                        tname: "MySQL",
+                        cnt: 3
+                    }, {
+                        sid: 16,
+                        tname: "MS-SQL",
+                        cnt: 1
+                    }, {
+                        sid: 17,
+                        tname: "Oracle",
+                        cnt: 2
+                    }, {
+                        sid: 18,
+                        tname: "MariaDB",
+                        cnt: 1
+                    }, {
+                        sid: 19,
+                        tname: "MongoDB",
+                        cnt: 1
+                    }, {
+                        sid: 20,
+                        tname: "SQLite",
+                        cnt: 0
+                    }, {
+                        sid: 21,
+                        tname: "NoSQL",
+                        cnt: 2
+                    }, {
+                        sid: 22,
+                        tname: "HTML",
+                        cnt: 3
+                    }, {
+                        sid: 23,
+                        tname: "CSS",
+                        cnt: 2
+                    }, {
+                        sid: 24,
+                        tname: "Vue.js",
+                        cnt: 1
+                    }, {
+                        sid: 25,
+                        tname: "jQuery",
+                        cnt: 1
+                    }, {
+                        sid: 26,
+                        tname: "Ajax",
+                        cnt: 0
+                    }, {
+                        sid: 27,
+                        tname: "Spring",
+                        cnt: 3
+                    }, {
+                        sid: 28,
+                        tname: "Django",
+                        cnt: 0
+                    }, {
+                        sid: 29,
+                        tname: "Flask",
+                        cnt: 0
+                    }, {
+                        sid: 30,
+                        tname: "Node.js",
+                        cnt: 1
+                    }, {
+                        sid: 31,
+                        tname: "JSP",
+                        cnt: 1
+                    }, {
+                        sid: 32,
+                        tname: "JPA/Hibernate",
+                        cnt: 0
+                    }, {
+                        sid: 33,
+                        tname: "WAS",
+                        cnt: 2
+                    }, {
+                        sid: 34,
+                        tname: "AWS",
+                        cnt: 5
+                    }, {
+                        sid: 35,
+                        tname: "OOP",
+                        cnt: 0
+                    }, {
+                        sid: 36,
+                        tname: "AI",
+                        cnt: 2
+                    }, {
+                        sid: 37,
+                        tname: "Machine Learning",
+                        cnt: 1
+                    }, {
+                        sid: 38,
+                        tname: "Docker",
+                        cnt: 0
+                    }, {
+                        sid: 39,
+                        tname: "RESTful-API",
+                        cnt: 0
+                    }, {
+                        sid: 40,
+                        tname: "JIRA",
+                        cnt: 0
+                    }, {
+                        sid: 41,
+                        tname: "Git",
+                        cnt: 0
+                    }
+                ],
                 selectstacklist: [],
                 dialog: false
             }
@@ -122,16 +289,10 @@
                         console.log(error)
                     })
                 },
-            getTechStack() {
-                axios
-                    .get(`http://192.168.31.54:8197/itda/api/getAllStacks/`)
-                    .then(response => {
-                        this.stacklist = response.data
-                    })
-                    .catch(error => {
-                        console.log(error)
-                    })
-                },
+            // getTechStack() {     axios
+            // .get(`http://192.168.31.54:8197/itda/api/getAllStacks/`)
+            // .then(response => {             this.stacklist = response.data         })
+            // .catch(() => {             console.log("test")         })     },
             optionmanager() {
                 if (this.period.length == 1) {
                     if (this.period[0] == "시작") {
@@ -156,11 +317,13 @@
             }
 
         },
+
         mounted() {
             this.getRecentRecruit()
-            this.getTechStack()
         }
     }
 </script>
 
-<style></style>
+<style>
+   
+</style>

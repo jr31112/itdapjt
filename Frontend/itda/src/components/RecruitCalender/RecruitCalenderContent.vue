@@ -17,7 +17,7 @@
                 </v-toolbar>
             </v-sheet>
 
-            <v-sheet>
+         
                 <v-calendar
                     ref="calendar"
                     v-model="focus"
@@ -26,7 +26,7 @@
                     :event-color="getEventColor"
                     @change="updateRange"
                     @click:event="goDetailPage"></v-calendar>
-            </v-sheet>
+          
 
         </v-col>
     </v-layout>
@@ -43,8 +43,7 @@
             companylist: [],
             wantedlist: [],
             calendartitle: "",
-            selectedEvent: {},
-           
+            selectedEvent: {}
         }),
         watch: {
             options: {
@@ -153,12 +152,14 @@
                             recruitIdxList = this.filterByStack(recruitIdxList)
                         }
                     }
-                    if(recruitIdxList === undefined){
+                    if (recruitIdxList === undefined) {
                         return;
                     }
-                     recuritIdxLength = recruitIdxList.length;
+                    recuritIdxLength = recruitIdxList.length;
                     for (var i = 0; i < recuritIdxLength; i++) {
-                        let corpNm=this.companylist[recruitIdxList[i]].corpNm
+                        let corpNm = this
+                            .companylist[recruitIdxList[i]]
+                            .corpNm
                         if (this.options.period !== 2) {
                             events.push({
                                 name: corpNm,
@@ -203,16 +204,15 @@
                     this.tmpevents = events
                     this.start = start
                     this.end = end
-                    
+
                     var startYear = start.year
                     var startMonth = this.monthFormatter(this.start)
                     this.calendartitle = startYear + "년   " + startMonth
-                    console.log(this.selectstacklist)
-                    console.log(this.wlist)
+
                 } else {
                     return;
                 }
-                
+
             },
             searchOfJtype(jtype) {
                 var tidx = []
@@ -253,26 +253,26 @@
             filterByStack(list) {
                 var listLen = list.length
                 var stacklist = []
-                var idx =0
-               for(var i = 0; i< listLen;i++){
-                    var stackLen = this.wlist[list[i]].stacks.length
-                    if(stackLen !== 0){
-                         out: for(var j = 0; j < this.selectstacklist.length; j++){
-                            for(var z = 0; z < stackLen; z++){
-                                 if(this.selectstacklist[j] === this.wlist[list[i]].stacks[z].sid){
-                                     stacklist.splice(idx++,0, i)
-                                     break out
-                                 }
+                var idx = 0
+                for (var i = 0; i < listLen; i++) {
+                    var stackLen = this
+                        .wlist[list[i]]
+                        .stacks
+                        .length
+                    if (stackLen !== 0) {
+                        out : for (var j = 0; j < this.selectstacklist.length; j++) {
+                            for (var z = 0; z < stackLen; z++) {
+                                if (this.selectstacklist[j] === this.wlist[list[i]].stacks[z].sid) {
+                                    stacklist.splice(idx++, 0, i)
+                                    break out
+                                }
                             }
                         }
                     }
                 }
-             
-                // console.log(list)
-                // console.log(this.selectstacklist)
-                // console.log(this.wlist)
-                // console.log("result")
-                // console.log(stacklist)
+
+                // console.log(list) console.log(this.selectstacklist) console.log(this.wlist)
+                // console.log("result") console.log(stacklist)
                 return stacklist
             }
         }

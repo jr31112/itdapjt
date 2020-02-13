@@ -5,144 +5,157 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="ssafy.wanted">
 
 	<select id="getWantedAll" resultType="java.lang.String">
-		SELECT WID FROM WANTED_T
-		ORDER BY STARTDATE ASC
+		select wid from wanted_t
+		order by startDate asc
 	</select>
 
 	<select id="getCompanyId" parameterType="java.lang.String"
 		resultType="java.lang.String">
-		SELECT CID FROM WANTED_T WHERE WID = #{wid}
+		select cid from wanted_t where wid = #{wid}
 	</select>
 
 	<select id="getWantedInfo" parameterType="java.lang.String"
 		resultType="com.ssafy.itda.itda_test.model.Wanted">
-		SELECT WID, WANTEDTITLE, ACTIVE, STARTDATE, ENDDATE,
-		VCNT,
-		CID, DETAIL
-		FROM WANTED_T WHERE WID = #{wid}
+		select wid, wantedTitle, active, startDate, endDate,
+		vcnt,
+		cid, detail, jobType
+		from wanted_t where wid = #{wid}
 	</select>
 
 	<select id="getCompanyInfo" parameterType="java.lang.String"
 		resultType="com.ssafy.itda.itda_test.model.Company">
-		SELECT CID, CORPNM, TOTPSNCNT, BUSISIZE, YRSALESAMT,
-		CORPADDR, HOMEPG, BUSICONT, LOGO
-		FROM COMPANY_T WHERE CID = #{cid}
+		select cid, corpNm, totPsncnt, busiSize, yrSalesAmt,
+		corpAddr, homePg, busiCont, logo
+		from company_t where cid = #{cid}
 	</select>
 
 	<select id="getWantedByRecent" resultType="java.lang.String">
-		SELECT WID FROM
-		WANTED_T WHERE ACTIVE = 1 ORDER BY STARTDATE DESC LIMIT 24
+		select wid from
+		wanted_t where active = 1 order by startDate desc limit 24
 	</select>
 
 	<select id="getWantedByCloseEnd" resultType="java.lang.String">
-		SELECT WID FROM
-		WANTED_T WHERE ACTIVE = 1 AND ENDDATE >= NOW() ORDER BY ENDDATE ASC
-		LIMIT 10
+		select wid from
+		wanted_t where active = 1 and endDate >= now() order by endDate asc
+		limit 10
 	</select>
 
 	<select id="getWantedByView" resultType="java.lang.String">
-		SELECT WID FROM WANTED_T
-		WHERE ACTIVE = 1 ORDER BY VCNT DESC LIMIT 10
+		select wid from wanted_t
+		where active = 1 order by vcnt desc limit 10
 	</select>
 
 	<select id="isScraped"
 		parameterType="com.ssafy.itda.itda_test.model.Scrap"
 		resultType="com.ssafy.itda.itda_test.model.Scrap">
-		SELECT UID, WID FROM SCRAP_T WHERE UID= #{uid} AND WID =
+		select uid, wid from scrap_t where uid= #{uid} and wid =
 		#{wid}
 	</select>
 
 	<insert id="scrap"
 		parameterType="com.ssafy.itda.itda_test.model.Scrap">
-		INSERT INTO SCRAP_T(UID, WID) VALUES(#{uid}, #{wid})
+		insert into scrap_t(uid, wid) values(#{uid}, #{wid})
 	</insert>
 
 	<delete id="unScrap"
 		parameterType="com.ssafy.itda.itda_test.model.Scrap">
-		DELETE FROM SCRAP_T WHERE UID = #{uid} AND WID = #{wid}
+		delete from scrap_t where uid = #{uid} and wid = #{wid}
 	</delete>
 
 	<insert id="createWanted"
 		parameterType="com.ssafy.itda.itda_test.model.Wanted">
-		INSERT INTO WANTED_T(WID, WANTEDTITLE, ACTIVE,
-		STARTDATE, ENDDATE, CID, DETAIL)
-		VALUES(#{wid}, #{wantedTitle},
-		#{active}, FROM_UNIXTIME(#{startDate}),
-		FROM_UNIXTIME(#{endDate}),
-		#{cid}, #{detail})
+		insert into wanted_t(wid, wantedTitle, active,
+		startDate, endDate, cid, detail, jobType)
+		values(#{wid},
+		#{wantedTitle},
+		#{active}, from_unixtime(#{startDate}),
+		from_unixtime(#{endDate}),
+		#{cid}, #{detail}, #{jobType})
 	</insert>
 
 	<!-- <select id="getInputWanted" parameterType="com.ssafy.itda.itda_test.model.Wanted" -->
 	<!-- resultType="java.lang.String"> -->
-	<!-- SELECT WID FROM WANTED_T WHERE WANTEDTITLE = #{wantedTitle} AND STARTDATE 
+	<!-- SELECT WID FROM WANTED_T WHERE wantedTitle = #{wantedTitle} AND startDate 
 		= #{startDate} -->
-	<!-- AND ENDDATE = #{endDate} AND CID = #{cid} ORDER BY WID DESC LIMIT 1 -->
+	<!-- AND endDate = #{endDate} AND CID = #{cid} ORDER BY WID DESC LIMIT 1 -->
 	<!-- </select> -->
 
 	<delete id="deleteWanted" parameterType="java.lang.String">
-		DELETE FROM WANTED_T
-		WHERE WID = #{wid}
+		delete from wanted_t
+		where wid = #{wid}
 	</delete>
 
 	<insert id="updateWanted"
 		parameterType="com.ssafy.itda.itda_test.model.Wanted">
-		UPDATE WANTED_T SET WANTEDTITLE = #{wantedTitle},
-		STARTDATE = #{startDate}, ENDDATE = #{endDate},
-		DETAIL = #{detail}, CID
-		= #{cid} WHERE WID = #{wid}
+		update wanted_t set wantedTitle = #{wantedTitle},
+		startDate = #{startDate}, endDate = #{endDate},
+		detail = #{detail}, cid
+		= #{cid}, jobType = #{jobType} where wid = #{wid}
 	</insert>
 
 	<select id="getStackInfo" parameterType="java.lang.String"
 		resultType="com.ssafy.itda.itda_test.model.Stack">
-		SELECT S.SID, S.TNAME
-		FROM WANTEDSTACK_T AS WS JOIN STACK_T
-		AS
-		S ON WS.SID = S.SID
-		WHERE WS.WID = #{wid}
+		select s.sid, s.tname
+		from wantedStack_t as ws join stack_t
+		as
+		s on ws.sid = s.sid
+		where ws.wid = #{wid}
 	</select>
 
 	<select id="getWantedStackInfo" parameterType="java.lang.String"
 		resultType="com.ssafy.itda.itda_test.model.Stack">
-		SELECT DISTINCT S.SID, S.TNAME
-		FROM WANTED_T AS W, WANTEDSTACK_T AS WS, STACK_T AS S
-		WHERE W.WID = WS.WID AND WS.SID = S.SID AND W.WID = #{wid}
+		select distinct s.sid, s.tname
+		from wanted_t as w,
+		wantedstack_t as ws, stack_t as s
+		where w.wid = ws.wid and ws.sid =
+		s.sid and w.wid = #{wid}
 	</select>
 
 	<select id="getWantedByStack" parameterType="java.lang.Integer"
 		resultType="java.lang.String">
-		SELECT DISTINCT W.WID FROM MYSTACK_T AS MS, WANTEDSTACK_T
-		AS WS, WANTED_T AS W
-		WHERE MS.UID = #{uid} AND MS.SID = WS.SID ORDER BY
-		ENDDATE LIMIT 10;
+		select distinct w.wid from mystack_t as ms, wantedstack_t
+		as ws, wanted_t as w
+		where ms.uid = #{uid} and ms.sid = ws.sid order by
+		endDate limit 10
 	</select>
 
 	<select id="getWantedByScrap" parameterType="java.lang.Integer"
 		resultType="java.lang.String">
-		SELECT W.WID FROM SCRAP_T AS S, WANTED_T AS W
-		WHERE S.UID =
-		#{uid} AND S.WID = W.WID ORDER BY ENDDATE LIMIT 10;
+		select w.wid from scrap_t as s, wanted_t as w
+		where s.uid =
+		#{uid} and s.wid = w.wid ORDER BY endDate LIMIT 10
 	</select>
 
 	<update id="updateVcnt" parameterType="java.lang.String">
-		UPDATE WANTED_T SET VCNT =
-		VCNT + 1 WHERE WID = #{wid}
+		update wanted_t set vcnt =
+		vcnt + 1 where wid = #{wid}
 	</update>
 
 	<update id="updateCheckExpire">
-		UPDATE WANTED_T SET ACTIVE = 0 WHERE ENDDATE &lt;
+		UPDATE wanted_t SET active = 0 WHERE endDate &lt;
 		NOW()
 	</update>
 
 	<update id="updateCheckOpen">
-		UPDATE WANTED_T SET ACTIVE = 1 WHERE STARTDATE &gt;
+		UPDATE wanted_t SET active = 1 WHERE startDate &gt;
 		NOW()
 	</update>
 
-	<select id="getWantedBySearch"
-		parameterType="java.lang.String"
+	<select id="getWantedBySearch" parameterType="java.lang.String"
 		resultType="java.lang.String">
-		SELECT *
-		FROM STACK_T
-		WHERE MATCH(TNAME) AGAINST(#{keyword})
+		SELECT DISTINCT wid
+		FROM wanted_t AS w
+			LEFT JOIN
+				wantedStack_t AS ws ON w.wid = ws.wid
+			LEFT JOIN
+				company_t AS c ON w.cid = c.cid
+			LEFT JOIN
+				stack_t AS s ON ws.sid = s.sid
+		WHERE
+			MATCH (tname) AGAINST ('#{keyword}' )
+				OR MATCH (wantedTitle) AGAINST ('#{keyword}' )
+				OR corpNm LIKE '%#{keyword}%'
+				OR wantedTitle LIKE '%#{keyword}%'
+				OR tname LIKE '%#{keyword}%'
 	</select>
 </mapper>

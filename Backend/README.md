@@ -325,6 +325,38 @@
     ```
 
     * `insert` 문은 리턴이 없다. 
+  
+* **주의사항**
+
+  * 윈도우 로컬환경에서는 데이터베이스 쿼리문에서 대소문자 구분을 하지 않는다.
+  * 하지만, **본 프로젝트에서 배포하는 리눅스 서버 환경에서는 대소문자를 구분한다!**
+
+* **MySQL** 대소문자 구분 설정하기
+
+  * 대소문자 구분 여부 확인하기
+
+    ```sql
+    show variables like 'lower_case_table_names';
+    ```
+
+    * 값이 0이면 대소문자 구분함
+    * 1이면 대소문자 구분하지 않음
+
+  * 대소문자 구분하지 않기
+
+    * `./etc/my.cnf` 환경설정 파일을 수정하면 된다.
+
+    ```
+    [mysqld]
+    ...
+    lower_case_table_names = 1
+    ```
+
+    * `lower_case_table_names` 값을 1로 바꾸어준다.
+
+  * 본 프로젝트에서는 `./etc/my.cnf` 에서 대소문자를 구분하도록 설정하고,
+
+    `XML`파일에서도 대소문자를 구분하여 SQL문을 작성하였다.
 
 ## Help
 
@@ -483,7 +515,7 @@
     ADD FULLTEXT INDEX `인덱스명` (`컬럼명`) VISIBLE;
     ```
 
-  * 최소 검색 글자수 설정 my.cnf ##### 아직!
+  * 최소 검색 글자수 설정
 
     * 기본 설정 확인
 
@@ -497,29 +529,70 @@
 
       * 기술스택 `C`를 검색하기 위해 한글자 검색도 허용해야 한다.
 
-    * `my.cnf`  (mysql 위치/etc/my.cnf) 수정
+    * `my.cnf`  설정파일 수정
 
-      ```mysql
-      ft_min_word_len = 2
-      innodb_ft_min_token_size = 2
-      ```
-
+      * `my.cnf` : MySQL설정파일. MySQL 워크벤치 실행파일 경로에 위치해 있다.
+      
+      * 리눅스의 경우 `MySQL 설정파일경로/etc/my.cnf`
+      
+    * 윈도우에선 `my.cnf`가 아닌 `my.ini` 파일이다.
+      
+    * 아래와 같이 위치를 찾을 수 있다.
+      
+      ```sql
+        SHOW VARIABLES WHERE Variable_Name LIKE "%dir";
+        ```
+      
+      * 윈도우의 경우 `Program Files`가 아닌 `Program Data`이다.
     
-
+        ```
+      C:\ProgramData\MySQL\MySQL Server 8.0
+        ```
+      
+      * 아래와 같이 `my.ini` 파일을 수정한다.
+      
+    * 만약 아래 변수가 없다면 아래를 추가해준다.
+      
+        ```
+        ft_min_word_len = 2
+        innodb_ft_min_token_size = 2
+        ```
+      
+    * MySQL 재시작
+  
+      * 윈도우 mysql 워크벤치에서 재시작 할 때 상단 네브바의 Server > StartUp/ShutDown
+      * 만약 재시작이 안될 때 내 PC > 오른쪽 마우스 클릭 > 관리 > 서비스 및 응용프로그램 > 서비스 > MySQL80 > 오른쪽 마우스 클릭 > 시작
+  
+    * 설정 적용 확인
+  
+      ```sql
+      show variables like '%ft_min%';
+      ```
+  
+    
+  
+    ### 여기까지 했는데 적용이 안된다...
+  
   * 인덱스 재설정 작업 ###???
-
+  
     ```mysql
     -- innodb
     OPTIMIZE TABLE 테이블명;
     ```
-
+  
   * sql
-
+  
     ```mysql
     SELECT * FROM 테이블명
     WHERE MATCH(컬럼명) AGAINST('검색어1 검색어2')
     ```
-
+  
     * `or` 검색
     * 일치하는 검색어가 많은 순으로 정렬된다.
-    * 공백 검색시 검색결과가 없다. ## 
+    * 공백 검색시 검색결과가 없다. 
+
+## 검색 sql
+
+* 검색 키워드를 포함하는 기업명
+* 검색 키워드를 포함하는 공고명
+* 2020 상반기

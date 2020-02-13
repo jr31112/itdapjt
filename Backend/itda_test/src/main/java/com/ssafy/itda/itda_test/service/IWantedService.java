@@ -1,6 +1,7 @@
 package com.ssafy.itda.itda_test.service;
 
 import java.io.IOException;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 import com.ssafy.itda.itda_test.model.Company;
@@ -28,5 +29,6 @@ public interface IWantedService {
 	List<String> getWantedByScrap(int uid);
 	void updateVcnt(String wid);
 	void callSaramin() throws IOException;
-	List<String> getWantedBySearch(String keyword);
+	List<String> getWantedBySearchFullText(String keyword);
+	List<String> getWantedBySearchLike(String likeKeyword);
 }

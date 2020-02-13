@@ -1,5 +1,6 @@
 package com.ssafy.itda.itda_test.dao;
 
+import java.util.LinkedHashSet;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -99,7 +100,11 @@ public class WantedDao {
 		sqlSession.update(ns + "updateCheckOpen");
 	}
 	
-	public List<String> getWantedBySearch(String keyword) {
-		return sqlSession.selectList(ns + "getWantedBySearch", keyword);
+	public List<String> getWantedBySearchFullText(String keyword) {
+		return sqlSession.selectList(ns + "getWantedBySearchFullText", keyword);
+	}
+	
+	public List<String> getWantedBySearchLike(String likeKeyword) {
+		return sqlSession.selectList(ns + "getWantedBySearchLike", likeKeyword);
 	}
 }

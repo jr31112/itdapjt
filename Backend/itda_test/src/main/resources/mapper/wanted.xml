@@ -141,7 +141,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		NOW()
 	</update>
 
-	<select id="getWantedBySearch" parameterType="java.lang.String"
+	<select id="getWantedBySearchFullText" parameterType="java.lang.String"
 		resultType="java.lang.String">
 		SELECT DISTINCT wid
 		FROM wanted_t AS w
@@ -154,8 +154,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE
 			MATCH (tname) AGAINST ('#{keyword}' )
 				OR MATCH (wantedTitle) AGAINST ('#{keyword}' )
-				OR corpNm LIKE '%#{keyword}%'
-				OR wantedTitle LIKE '%#{keyword}%'
-				OR tname LIKE '%#{keyword}%'
+	</select>
+	
+	<select id="getWantedBySearchLike" parameterType="java.lang.String"
+		resultType="java.lang.String">
+		SELECT DISTINCT wid
+		FROM wanted_t AS w
+			LEFT JOIN
+				wantedStack_t AS ws ON w.wid = ws.wid
+			LEFT JOIN
+				company_t AS c ON w.cid = c.cid
+			LEFT JOIN
+				stack_t AS s ON ws.sid = s.sid
+		WHERE
+			corpNm LIKE '%#{likeKeyword}%'
+				OR wantedTitle LIKE '%#{likeKeyword}%'
+				OR tname LIKE '%#{likeKeyword}%'
 	</select>
 </mapper>

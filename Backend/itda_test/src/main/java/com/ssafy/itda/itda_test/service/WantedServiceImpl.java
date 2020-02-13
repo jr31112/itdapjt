@@ -3,6 +3,7 @@ package com.ssafy.itda.itda_test.service;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.StringTokenizer;
 import java.util.regex.Matcher;
@@ -137,8 +138,13 @@ public class WantedServiceImpl implements IWantedService {
 	}
 	
 	@Override
-	public List<String> getWantedBySearch(String keyword) {
-		return wantedDao.getWantedBySearch(keyword);
+	public List<String> getWantedBySearchFullText(String keyword) {
+		return wantedDao.getWantedBySearchFullText(keyword);
+	}
+	
+	@Override
+	public List<String> getWantedBySearchLike(String likeKeyword) {
+		return wantedDao.getWantedBySearchLike(likeKeyword);
 	}
 
 	@Scheduled(cron = "0 0 0/1 * * *")

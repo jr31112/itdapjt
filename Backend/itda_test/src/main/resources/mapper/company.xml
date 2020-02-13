@@ -6,30 +6,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<insert id="createCompany" 
 	parameterType="com.ssafy.itda.itda_test.model.Company">
-		INSERT INTO COMPANY_T(CID, CORPNM, TOTPSNCNT, BUSISIZE, YRSALESAMT, CORPADDR, HOMEPG, BUSICONT, LOGO)
+		INSERT INTO company_t(cid, corpNm, totPsncnt, busiSize, yrSalesAmt, corpAddr, homePg, busiCont, logo)
 		VALUES ( #{cid}, #{corpNm}, #{totPsncnt}, #{busiSize}, #{yrSalesAmt}, #{corpAddr}, #{homePg}, #{busiCont}, #{logo} ) 
 	</insert>
 	
 	<delete id="deleteCompany" 
 	parameterType="java.lang.String">
-		DELETE FROM COMPANY_T
-		WHERE CID = #{cid}
+		DELETE FROM company_t
+		WHERE cid = #{cid}
 	</delete>
 	
 	<update id="updateCompany"
 	parameterType="com.ssafy.itda.itda_test.model.Company">
-		UPDATE COMPANY_T
-		SET CORPNM = #{corpNm}, TOTPSNCNT = #{totPsncnt}, BUSISIZE = #{busiSize}, YRSALESAMT = #{yrSalesAmt}, CORPADDR = #{corpAddr}, HOMEPG = #{homePg}, BUSICONT = #{busiCont}, LOGO = #{logo}
-		WHERE CID = #{cid}
+		UPDATE company_t
+		SET corpNm = #{corpNm}, totPsncnt = #{totPsncnt}, busiSize = #{busiSize}, yrSalesAmt = #{yrSalesAmt}, corpAddr = #{corpAddr}, homePg = #{homePg}, busiCont = #{busiCont}, logo = #{logo}
+		WHERE cid = #{cid}
 	</update>
 	
 	<select id="getAllCompanys" resultType="com.ssafy.itda.itda_test.model.Company">
-		SELECT CID, CORPNM, TOTPSNCNT, BUSISIZE, YRSALESAMT, CORPADDR, HOMEPG, BUSICONT, LOGO
-		FROM COMPANY_T
+		SELECT cid, corpNm, totPsncnt, busiSize, yrSalesAmt, corpAddr, homePg, busiCont, logo
+		FROM company_t
 	</select>
 	
 	<select id="getCompany" parameterType="java.lang.String" resultType="com.ssafy.itda.itda_test.model.Company">
-		SELECT CID, CORPNM, TOTPSNCNT, BUSISIZE, YRSALESAMT, CORPADDR, HOMEPG, BUSICONT, LOGO
-		FROM COMPANY_T WHERE CID = #{cid} 
+		SELECT cid, corpNm, totPsncnt, busiSize, yrSalesAmt, corpAddr, homePg, busiCont, logo
+		FROM company_t WHERE cid = #{cid} 
 	</select>
 </mapper>

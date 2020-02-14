@@ -27,7 +27,6 @@ export default {
     },
     methods:{
       update(){
-        console.log('detail1')
         this.$emit('update')
         },
     }

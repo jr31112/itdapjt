@@ -71,11 +71,15 @@ export default {
                                 break
                             }
                         }
-                        if (flag || this.allContent[i].company.corpNm.toLowerCase().includes(this.options.keyword.toLowerCase()))
+                        if (flag || this.allContent[i].company.corpNm.toLowerCase().includes(this.options.keyword.toLowerCase()) || this.allContent[i].wanted.wantedTitle.toLowerCase().includes(this.options.keyword.toLowerCase()))
                             presenttmp.push(this.allContent[i])
                     }
                     else if (this.options.type == 1){
                         if (this.allContent[i].company.corpNm.toLowerCase().includes(this.options.keyword.toLowerCase()))
+                            presenttmp.push(this.allContent[i])
+                    }
+                    else if (this.options.type == 2){
+                        if (this.allContent[i].wanted.wantedTitle.toLowerCase().includes(this.options.keyword.toLowerCase()))
                             presenttmp.push(this.allContent[i])
                     }
                     else{
@@ -100,12 +104,16 @@ export default {
                                 break
                             }
                         }
-                        if (flag || this.allContent[i].company.corpNm.toLowerCase().includes(this.options.keyword.toLowerCase()))
+                        if (flag || this.allContent[i].company.corpNm.toLowerCase().includes(this.options.keyword.toLowerCase()) || this.allContent[i].wanted.wantedTitle.toLowerCase().includes(this.options.keyword.toLowerCase()))
                             expiredtmp.push(this.allContent[i])
                     }
                     else if (this.options.type == 1){
                         if (this.allContent[i].company.corpNm.toLowerCase().includes(this.options.keyword.toLowerCase()))
                             expiredtmp.push(this.allContent[i])
+                    }
+                    else if (this.options.type == 2){
+                        if (this.allContent[i].wanted.wantedTitle.toLowerCase().includes(this.options.keyword.toLowerCase()))
+                            presenttmp.push(this.allContent[i])
                     }
                     else{
                         var flag = false

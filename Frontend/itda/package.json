@@ -15,6 +15,7 @@
     "@coreui/vue-chartjs": "^1.0.2",
     "axios": "^0.19.2",
     "core-js": "^3.4.4",
+    "firebase": "^7.8.1",
     "vue": "^2.6.10",
     "vue-carousel": "^0.18.0",
     "vue-infinite-loading": "^2.4.4",

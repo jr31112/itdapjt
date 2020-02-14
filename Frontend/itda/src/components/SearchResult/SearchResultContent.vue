@@ -16,7 +16,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="part in recruit.searchResult" :key="part.wanted.cid">
+                        <tr v-for="part in recruit.searchResult" :key="part.wanted.wid" @click="goDetailPage(part.wanted.wid)">
                             <td class="text-center">{{part.company.corpNm}}</td>
                             <td class="text-center">{{part.wanted.wantedTitle}}</td>
                             <td class="text-center">{{part.wanted.startDate}}</td>
@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import router from '../../router'
 export default {
     name:'searchresultcontent',
     props:{
@@ -51,8 +52,10 @@ export default {
         }
     },
     methods:{
+        goDetailPage(wid){
+            router.push({name:'recruitdetail',params:{id:wid}})
+	    },
         updateOptions(){
-            console.log(1)
             const presenttmp = []
             const expiredtmp = []
             var today = new Date()
@@ -68,11 +71,15 @@ export default {
                                 break
                             }
                         }
-                        if (flag || this.allContent[i].company.corpNm.toLowerCase().includes(this.options.keyword.toLowerCase()))
+                        if (flag || this.allContent[i].company.corpNm.toLowerCase().includes(this.options.keyword.toLowerCase()) || this.allContent[i].wanted.wantedTitle.toLowerCase().includes(this.options.keyword.toLowerCase()))
                             presenttmp.push(this.allContent[i])
                     }
                     else if (this.options.type == 1){
                         if (this.allContent[i].company.corpNm.toLowerCase().includes(this.options.keyword.toLowerCase()))
+                            presenttmp.push(this.allContent[i])
+                    }
+                    else if (this.options.type == 2){
+                        if (this.allContent[i].wanted.wantedTitle.toLowerCase().includes(this.options.keyword.toLowerCase()))
                             presenttmp.push(this.allContent[i])
                     }
                     else{
@@ -97,12 +104,16 @@ export default {
                                 break
                             }
                         }
-                        if (flag || this.allContent[i].company.corpNm.toLowerCase().includes(this.options.keyword.toLowerCase()))
+                        if (flag || this.allContent[i].company.corpNm.toLowerCase().includes(this.options.keyword.toLowerCase()) || this.allContent[i].wanted.wantedTitle.toLowerCase().includes(this.options.keyword.toLowerCase()))
                             expiredtmp.push(this.allContent[i])
                     }
                     else if (this.options.type == 1){
                         if (this.allContent[i].company.corpNm.toLowerCase().includes(this.options.keyword.toLowerCase()))
                             expiredtmp.push(this.allContent[i])
+                    }
+                    else if (this.options.type == 2){
+                        if (this.allContent[i].wanted.wantedTitle.toLowerCase().includes(this.options.keyword.toLowerCase()))
+                            presenttmp.push(this.allContent[i])
                     }
                     else{
                         var flag = false

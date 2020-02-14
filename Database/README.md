@@ -49,16 +49,17 @@
 * 채용 공고 테이블 `wanted_t`
   
 
-  | 필드명      | 자료형  | 설명                                    |
-  | ----------- | ------- | --------------------------------------- |
-  | wid         | string  | Primary Key                             |
-  | wantedTitle | string  | **(필수)** 공고 제목                    |
-  | active      | integer | **(필수, default 0)** 공고 진행 상태    |
-  | startDate   | date    | **(필수)** 공고 시작일                  |
-  | endDate     | date    | **(필수)** 공고 마감일                  |
-  | vcnt        | integer | **(필수)** 공고 조회수                  |
-  | cid         | string  | **(필수)** company_t의 Primary Key(cid) |
-  | detail      | string  | **(필수)** iframe 주소                  |
+  | 필드명      | 자료형  | 설명                                         |
+  | ----------- | ------- | -------------------------------------------- |
+  | wid         | string  | Primary Key                                  |
+  | wantedTitle | string  | **(필수)** 공고 제목                         |
+  | active      | integer | **(필수, default 0)** 공고 진행 상태         |
+  | startDate   | date    | **(필수)** 공고 시작일                       |
+  | endDate     | date    | **(필수)** 공고 마감일                       |
+  | vcnt        | integer | **(필수)** 공고 조회수                       |
+  | cid         | string  | **(필수)** company_t의 Primary Key(cid)      |
+  | detail      | string  | **(필수)** iframe 주소                       |
+  | jobType     | integer | **(필수)** 채용 형태 (신입, 인턴, 신입/인턴) |
   
 * 스크랩 정보 테이블 `scrap_t`
 
@@ -82,7 +83,7 @@
 
   | 필드명   | 자료형  | 설명                                  |
   | -------- | ------- | ------------------------------------- |
-  | uid, sid |         | Primary Key                           |
+  | uid, sid | -       | Primary Key                           |
   | uid      | integer | **(필수) **user_t의 Primary Key (uid) |
   | sid      | integer | **(필수)** stack_t의 Primary Key(sid) |
   
@@ -90,7 +91,7 @@
 
   | 필드명   | 자료형  | 설명                                   |
   | -------- | ------- | -------------------------------------- |
-  | wid, sid |         | Primary Key                            |
+  | wid, sid | -       | Primary Key                            |
   | wid      | string  | **(필수) **wanted_t의 Primary Key(wid) |
   | sid      | integer | **(필수) **stack_t의 Primary Key(sid)  |
 
@@ -131,19 +132,19 @@
 
 ```sql
 drop table if exists mystack_t ;
-drop table if exists jobstack_t;
-drop table if exists comment_t;
+drop table if exists wantedstack_t;
 drop table if exists stack_t;
 drop table if exists scrap_t;
-drop table if exists job_t;
 drop table if exists reqstack_t;
+drop table if exists studygroup_t;
+drop table if exists study_t;
 drop table if exists user_t;
 drop table if exists wanted_t;
 drop table if exists company_t;
 
 -- 기업 정보 테이블 정의
 create table company_t(
-	cid varchar(10) primary key auto_increment,
+	cid varchar(10) primary key,
     corpNm varchar(100) not null,
     totPsncnt varchar(20),
     busiSize varchar(30),
@@ -173,20 +174,18 @@ create table user_t(
 
 -- 채용 공고 테이블 정의
 create table wanted_t(
-	wid varchar(10) primary key auto_increment,
+	wid varchar(10) primary key ,
     wantedTitle varchar(300) not null,
     active int not null default 0,	-- 0 : 마감, 1 : 진행 중, 2: 오늘 마감, 3: 내일 마감
     startDate timestamp not null,
     endDate timestamp not null,
-    process text not null,
-    etc text,
-    question text,
+    detail text not null,
+    jobType int,
     vcnt int not null default 0,
     cid varchar(10) not null,
     foreign key(cid) references company_t(cid) on delete cascade
 );
--- wantedTitle : 공고 제목, active : 공고 진행 상태, startDate : 공고 시작일, endDate : 공고 마감일
--- process : 채용 과정, etc : 기타 요구사항, question : 문의, vcnt : 공고 조회수
+-- wantedTitle : 공고 제목, active : 공고 진행 상태, startDate : 공고 시작일, endDate : 공고 마감일 vcnt : 공고 조회수
 
 -- 스크랩 정보 테이블 정의
 create table scrap_t(
@@ -244,7 +243,7 @@ create table study_t(
     maxPcnt int not null,
     pcnt int not null default 0,
     stype int not null,
-    typeFk int,
+    typeFk varchar(10),
     typeName varchar(300),
     sgroup int not null,
     content text not null,
@@ -262,6 +261,5 @@ create table studyGroup_t(
 );
 
 commit;
-
 ```
 

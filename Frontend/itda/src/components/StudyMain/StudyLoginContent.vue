@@ -2,10 +2,10 @@
   <v-row class="studylogincontent">
     <v-col>
       <v-carousel v-if="myStudyList.length" height="auto" hide-delimiters>
-        <v-carousel-item v-for="j in parseInt(myStudyList.length/3)" :key="j">
+        <v-carousel-item v-for="j in parseInt(myStudyList.length/4)" :key="j">
           <v-container>
             <v-row>
-              <study-detail v-for="i in 2" :key="i"/>
+              <study-detail v-for="i in 4" :key="i" :study="myStudyList[4*j+i-5]" v-on:update="update"/>
             </v-row>
           </v-container>
         </v-carousel-item>
@@ -16,26 +16,19 @@
 
 <script>
 import StudyDetail from './StudyLoginContent/StudyDetail.vue'
-import axios from 'axios'
 
 export default {
     name:"studylogincontent",
     components:{
-      StudyDetail
+      StudyDetail,
     },
-    data(){
-      return{
-        myStudyList:[]
-      }
+    props:{
+      myStudyList:{type:Array}
     },
     methods:{
-      getStudyList(){
-        axios.get("http://192.168.31.54:8197/itda/api/getUser", {headers:{"jwt-auth-token": localStorage.getItem('token')}})
-        .then(res => {this.myStudyList = res.data.myStudies})
-      }
-    },
-    mounted(){
-      this.getStudyList()
+      update(){
+        this.$emit('update')
+        },
     }
 }
 </script>

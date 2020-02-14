@@ -43,7 +43,6 @@
                 axios
                     .get('http://192.168.31.54:8197/itda/api/getAllStudy/')
                     .then(res => {
-                        console.log(res.data)
                         this.allstudys = res.data
 
                     })
@@ -59,7 +58,6 @@
               .then(res => {
                   
                   if(res.data.state == 'success'){
-                    console.log(res)
                       this.getAllStudys();
                   }
               })

@@ -3,6 +3,8 @@ package com.ssafy.itda.itda_test.controller;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -294,7 +296,22 @@ public class WantedController {
 		if (token != null && !token.equals("")) {
 			resultMap.putAll(jwtService.get(req.getHeader("jwt-auth-token")));
 			int uid = (int) resultMap.get("uid");
-			List<String> widList = wantedService.getWantedBySearch(keyword);
+			keyword = keyword.trim();
+			String likeKeyword = keyword.replace(' ', '%');
+			LinkedHashSet<String> widSet = new LinkedHashSet<>();
+			List<String> tmp = wantedService.getWantedBySearchFullText(keyword);
+			for (String wid : tmp) {
+				widSet.add(wid);
+			}
+			tmp = wantedService.getWantedBySearchLike(likeKeyword);
+			for (String wid : tmp) {
+				widSet.add(wid);
+			}
+			Iterator<String> it = widSet.iterator();
+			List<String> widList = new ArrayList<>();
+			while(it.hasNext()) {
+				widList.add(it.next());
+			}
 			List<WantedResult> wrlist = getWantedListFunction(widList, uid);
 			return new ResponseEntity<List<WantedResult>>(wrlist, HttpStatus.OK);
 		} else {

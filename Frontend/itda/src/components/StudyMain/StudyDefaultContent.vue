@@ -9,7 +9,7 @@
                             <th class="text-center" id="response">스터디 종류</th>
                             <th class="text-center">스터디 주제</th>
                             <th class="text-center" id="response">스터디 내용</th>
-                            <th class="text-left" style="width:40vw">스터디 이름</th>
+                            <th class="text-left" style="width:30vw">스터디 이름</th>
                             <th class="text-center">인원</th>
                         </tr>
                     </thead>
@@ -71,7 +71,6 @@ export default {
     },
     methods:{
         update(){
-            console.log("2")
             this.$emit('update')
         },
         updateOptions(){

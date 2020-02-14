@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from "axios"
+import firebase from 'firebase'
+
 //import router from '../router/index.js';
 Vue.use(Vuex)
 export default new Vuex.Store({
@@ -9,9 +11,7 @@ export default new Vuex.Store({
     // selectedUser가 allUsers에 찾은 사람을 객체로 userInfo를 저장한다. 
     isLogin: false,
     isLoginError: false,
-    isDialog: true,
-    isManager: false, 
-    isName: ""
+    isDialog: true
   },
   //뮤테이션과 엑션스 차이는? 
   //뮤테이션 : state 값 변경. 
@@ -36,12 +36,7 @@ export default new Vuex.Store({
       state.isLoginError = false
       state.isDialog = true
       state.userInfo = null
-      state.isManager = false;
       localStorage.clear()
-    },
-    managerlogin(state)
-    {
-      state.isManager = true;
     },
     ////////////추가
     set_name(state, name)
@@ -60,7 +55,7 @@ export default new Vuex.Store({
           if (res.data.state == 'success') {
             let token = res.headers['jwt-auth-token']
             localStorage.setItem("access_token", token)
-            localStorage.setItem("uid", res.data.uid)
+            localStorage.setItem("uid", res.data.user.uid)
             dispatch("getMemberInfo")
           }
           else {
@@ -69,37 +64,35 @@ export default new Vuex.Store({
         })
         .catch(err => {
           console.log("hi" + err);
-          alert("에러!!!")
         });
     },
     logout({ commit }) {
-      alert("성공적으로 로그아웃 되었습니다.")
-
       commit("logout")
+      if(localStorage.getItem("social") == 'social'){
+        firebase.auth().signOut()
+          .then(()=>{
+            alert("소셜 로그아웃 성공!")
+          })
+          .catch((err)=>{
+            alert(err.message)
+          })
+      }
+      else{
+        alert("성공적으로 로그아웃 되었습니다.")
+      }
     }
     ,
-    getMemberInfo({ commit }) {
+    getMemberInfo({commit}) {
       let token = localStorage.getItem("access_token")
       if(!token){
         return;
       }
-      let config =
-      {
-        headers:
-        {
-          "jwt-auth-token": token
-        }
-      }
-      axios
-        .get("http://192.168.31.54:8197/itda/api/getUser", config)
+      axios.get("http://192.168.31.54:8197/itda/api/getUser", {headers:{"jwt-auth-token": token}})
         .then(res => {
           let userInfo = res.data
-          
           commit('loginSuccess', userInfo)
-          if( userInfo.user.auth === 0 )
-          {
-            commit("managerlogin")
-          }
+          localStorage.setItem("mid",userInfo.user.auth)
+          
         })
         .catch(() => {
           localStorage.clear();

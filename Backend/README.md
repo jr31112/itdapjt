@@ -402,6 +402,8 @@
 
   * 출력 결과
 
+    * 사용하는 변수만을 포함한다.
+    
     | 변수명                | 설명                                                         |
     | --------------------- | ------------------------------------------------------------ |
     | count                 | 공고 개수                                                    |
@@ -412,9 +414,10 @@
     | expiration-timestamp  | 마감일 Unix timestamp<br />opening-timesatamp와 마찬가지로 Date 형식으로 변환 후 DB에 저장 |
     | name                  | 기업명<br />DB에 채용공고를 입력할 때 DB에 해당 기업명이 존재하는 경우 기업ID와 함께 채용공고를 입력<br />만약 기업명이 존재하지 않는 경우 기업을 먼저 입력 후 채용공고 입력 |
     | name@href             | 기업정보 페이지**(공개되어 있는 경우)**                      |
-    | title                 | 공고 제목                                                    |
+| title                 | 공고 제목                                                    |
     | experience-level@code | 경력코드<br />1: 신입, 2: 경력, 3: 신입/경력, 0: 경력무관<br />**경력코드가 2인 채용공고는 DB에 넣지 않는다.** |
-
+    | job-type              | 근무형태<br />1: 정규직, 4: 인턴직, 11: 인턴직(정규직 전환 가능)<br />DB에 들어가는 값<br />- 1: 신입(1)<br />- 2: 인턴(4 or 11, 1이 없을 때)<br />- 3: 신입/인턴(1 and (4 or 11)) |
+    
     
 
 # Spring 자동 실행 scheduler
@@ -541,7 +544,7 @@
       
       ```sql
         SHOW VARIABLES WHERE Variable_Name LIKE "%dir";
-        ```
+      ```
       
       * 윈도우의 경우 `Program Files`가 아닌 `Program Data`이다.
     
@@ -596,3 +599,7 @@
 * 검색 키워드를 포함하는 기업명
 * 검색 키워드를 포함하는 공고명
 * 2020 상반기
+* https://waspro.tistory.com/117
+* https://emessell.tistory.com/14
+* 제이숩에러 https://wonpaper.tistory.com/106
+* 의문 dependency vs 직접 library 등록

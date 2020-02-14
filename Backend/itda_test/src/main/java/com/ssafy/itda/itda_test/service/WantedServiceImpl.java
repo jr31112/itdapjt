@@ -3,6 +3,7 @@ package com.ssafy.itda.itda_test.service;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.StringTokenizer;
 import java.util.regex.Matcher;
@@ -137,8 +138,13 @@ public class WantedServiceImpl implements IWantedService {
 	}
 	
 	@Override
-	public List<String> getWantedBySearch(String keyword) {
-		return wantedDao.getWantedBySearch(keyword);
+	public List<String> getWantedBySearchFullText(String keyword) {
+		return wantedDao.getWantedBySearchFullText(keyword);
+	}
+	
+	@Override
+	public List<String> getWantedBySearchLike(String likeKeyword) {
+		return wantedDao.getWantedBySearchLike(likeKeyword);
 	}
 
 	@Scheduled(cron = "0 0 0/1 * * *")
@@ -153,13 +159,13 @@ public class WantedServiceImpl implements IWantedService {
 		schedulerSaraminAPI();
 	}
 
-//	@Scheduled(cron = "0 0 0/5 * * *")
-	@Scheduled(fixedDelay=18000000)
+//	@Scheduled(fixedDelay=18000000)
+	@Scheduled(cron = "0 0 0/5 * * *")
 	public void schedulerSaraminAPI() throws IOException {
 		System.out.println("Scheduler Saramin API!!");
 		String access_key = "0Q5ESrsPZNoxQPN98JpXKSFYmIHImsAyLfHbS2hUMGQUlxZ5O";
 		String search_option = "&count=110&job_type=1+4+11&job_category=4&sort=pd&start=";
-		for(int i = 0 ; i < 10; i++) {
+		for(int i = 0 ; i < 100; i++) {
 			String api_url = "https://oapi.saramin.co.kr/job-search/?access-key=" + access_key + search_option;
 			RestTemplate restTemplate = new RestTemplate();
 			HttpHeaders headers = new HttpHeaders();
@@ -250,7 +256,7 @@ public class WantedServiceImpl implements IWantedService {
 		String[] docs = doc.getElementsByClass("user_content").text().split("\\s\\n ,/.");
 		for (Stack s : stacks) {
 			for(String comp : docs) {
-				if(s.getTname().contains(comp)){
+				if(comp.contains(s.getTname())){
 					WantedStack ws = new WantedStack();
 					ws.setSid(s.getSid());
 					ws.setWid(wid);
@@ -266,7 +272,6 @@ public class WantedServiceImpl implements IWantedService {
 		Company company = new Company();
 		company.setCid(cid);
 		if (!doc.getElementsByClass("result_txt").isEmpty()) {
-			System.out.println("No Company Info");
 			return false;
 		}
 		Elements info_company = doc.getElementsByClass("info_company");

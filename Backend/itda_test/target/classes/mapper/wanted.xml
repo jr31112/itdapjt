@@ -66,7 +66,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		parameterType="com.ssafy.itda.itda_test.model.Wanted">
 		insert into wanted_t(wid, wantedTitle, active,
 		startDate, endDate, cid, detail, jobType)
-		values(#{wid}, #{wantedTitle},
+		values(#{wid},
+		#{wantedTitle},
 		#{active}, from_unixtime(#{startDate}),
 		from_unixtime(#{endDate}),
 		#{cid}, #{detail}, #{jobType})
@@ -104,8 +105,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getWantedStackInfo" parameterType="java.lang.String"
 		resultType="com.ssafy.itda.itda_test.model.Stack">
 		select distinct s.sid, s.tname
-		from wanted_t as w, wantedstack_t as ws, stack_t as s
-		where w.wid = ws.wid and ws.sid = s.sid and w.wid = #{wid}
+		from wanted_t as w,
+		wantedstack_t as ws, stack_t as s
+		where w.wid = ws.wid and ws.sid =
+		s.sid and w.wid = #{wid}
 	</select>
 
 	<select id="getWantedByStack" parameterType="java.lang.Integer"
@@ -138,23 +141,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		NOW()
 	</update>
 
-	<select id="getWantedBySearch"
-		parameterType="java.lang.String"
+	<select id="getWantedBySearchFullText" parameterType="java.lang.String"
 		resultType="java.lang.String">
-		SELECT 
-		    corpNm, wantedTitle, tname
-		FROM
-		    wanted_t AS W
-		        LEFT JOIN
-		    wantedStack_t AS WS ON W.WID = WS.WID
-		        LEFT JOIN
-		    company_t AS C ON W.CID = C.CID
-		        LEFT JOIN
-		    stack_t AS S ON WS.SID = S.SID
+		SELECT DISTINCT wid
+		FROM wanted_t AS w
+			LEFT JOIN
+				wantedStack_t AS ws ON w.wid = ws.wid
+			LEFT JOIN
+				company_t AS c ON w.cid = c.cid
+			LEFT JOIN
+				stack_t AS s ON ws.sid = s.sid
 		WHERE
-		    corpNm LIKE '%{keyword}%'
-		        OR wantedTitle LIKE '%{keyword}%'
-		        OR MATCH (tname) AGAINST ('{keyword}' )
-		        OR MATCH (wantedTitle) AGAINST ('{keyword}' )
+			MATCH (tname) AGAINST ('#{keyword}' )
+				OR MATCH (wantedTitle) AGAINST ('#{keyword}' )
+	</select>
+	
+	<select id="getWantedBySearchLike" parameterType="java.lang.String"
+		resultType="java.lang.String">
+		SELECT DISTINCT wid
+		FROM wanted_t AS w
+			LEFT JOIN
+				wantedStack_t AS ws ON w.wid = ws.wid
+			LEFT JOIN
+				company_t AS c ON w.cid = c.cid
+			LEFT JOIN
+				stack_t AS s ON ws.sid = s.sid
+		WHERE
+			corpNm LIKE '%#{likeKeyword}%'
+				OR wantedTitle LIKE '%#{likeKeyword}%'
+				OR tname LIKE '%#{likeKeyword}%'
 	</select>
 </mapper>

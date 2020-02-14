@@ -38,12 +38,15 @@
                 <h2>내가 가입한 스터디 보기</h2>
               </v-col>
           </v-row>
-          <study-login-content/>
+          <study-login-content :myStudyList="loginStudies" v-if="loginStudies.length" v-on:update="update"/>
+          <v-row v-else>
+              <v-col>가입한 스터디가 없어요..</v-col>
+          </v-row>
       </v-container>
       <v-container class="my-0" white>
           <v-row><v-col><h2>스터디 전체 보기</h2></v-col></v-row>
           <study-filter :options="this.options" style="max-width:930px"/>
-          <study-default-content :options="this.options" :allstudy="this.studies" :islogin="isLogin" v-on:update="update"/>
+          <study-default-content :options="this.options" :allstudy="this.defaultStudies" :islogin="isLogin" v-on:update="update"/>
                 
       </v-container>
  </div>
@@ -64,14 +67,28 @@ export default {
         StudyDefaultContent,
     },
     methods:{
-        getStudies(){
+        getDefaultStudies(){
             axios.get('http://192.168.31.54:8197/itda/api/getAllStudy')
             .then(response=>{
-                this.studies = response.data
+                this.defaultStudies = response.data
             })
         },
+        getLoginStudies(){
+            if (this.isLogin){
+                axios.get("http://192.168.31.54:8197/itda/api/getUser", {headers:{"jwt-auth-token": localStorage.getItem("access_token")}})
+                    .then(response => {
+                        this.loginStudies = response.data.myStudies
+                        var len = this.loginStudies.length % 4
+                        if (len){
+                            for (var i=0;i<4-len;i++)
+                                this.loginStudies.push({})
+                        }
+                })
+            }
+        },  
         update(){
-            this.getStudies()
+            this.getDefaultStudies()
+            this.getLoginStudies()
         },
         validate () {
         var select = JSON.parse(localStorage.getItem('select'))
@@ -88,14 +105,14 @@ export default {
                 this.formData.typeName = '기타'
             }
             if (this.$refs.form.validate()) {
-                console.log(this.formData)
                 axios.post('http://192.168.31.54:8197/itda/api/createStudy', this.formData, {'headers' : {"jwt-auth-token": localStorage.getItem("access_token")}})
                 .then(()=>{
                     alert('스터디를 생성하였습니다.')
                     this.$refs.form.reset()
                     this.overlay = false
                     localStorage.removeItem('select')
-                    this.getStudies()
+                    this.getDefaultStudies()
+                    this.getLoginStudies()
                 })
                 .catch()
                 }
@@ -149,12 +166,24 @@ export default {
                     ]
             },
             overlay:false,
-            studies:[
+            defaultStudies:[
+
+            ],
+            loginStudies:[
+
             ],
         }
     },
     mounted(){
-        this.getStudies()
+        this.getDefaultStudies()
+        this.getLoginStudies()
+    },
+    watch:{
+        isLogin:{
+            deep:true,
+            immediate:true,
+            handler:'getLoginStudies'
+        }
     },
     computed: {
         ...mapState(["isLogin"])

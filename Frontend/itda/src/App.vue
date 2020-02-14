@@ -1,6 +1,6 @@
 <template>
     <v-app>
-        <page-top v-if="!ispopup"/>
+        <page-top v-if="!ispopup" />
         <v-content>
         <router-view path="/"></router-view>
         </v-content>
@@ -25,7 +25,7 @@
                 else
                     return false
             },
-		...mapState(["isLogin","isManager"])
+		...mapState(["isLogin"])
         }
         
     };

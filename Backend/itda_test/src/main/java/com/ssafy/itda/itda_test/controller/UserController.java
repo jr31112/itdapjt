@@ -131,17 +131,18 @@ public class UserController {
 	
 	@ApiOperation(value = "비밀번호가 맞는지 확인한다.", response = UserResult.class)
 	@RequestMapping(value = "/checkPW", method = RequestMethod.POST)
-	public ResponseEntity<UserResult> checkPW(@RequestBody String pw, HttpServletRequest req) throws Exception {
+	public ResponseEntity<UserResult> checkPW(@RequestBody User input, HttpServletRequest req) throws Exception {
 		logger.info("1-3-------------login------------------------------" + new Date());
-		logger.info("1-3-------------login------------------------------" + pw);
+		logger.info("1-3-------------login------------------------------" + input);
 		Map<String, Object> resultMap = new HashMap<>();
 		String token = req.getHeader("jwt-auth-token");
+		String pw = input.getPw();
 		UserResult ur = new UserResult();
 		if (token != null && !token.equals("")) {
 			resultMap.putAll(jwtService.get(token));
-			int uid = (int) resultMap.get("uid");
+			String email = (String) resultMap.get("email");
 			User model = new User();
-			model.setUid(uid);
+			model.setEmail(email);
 			model.setPw(pw);
 			User user = userService.login(model);
 			if (user == null || user.getEmail() == null || user.getEmail().equals("")) {
@@ -206,7 +207,7 @@ public class UserController {
 				wr.setCompany(company);
 				wr.setWanted(wanted);
 				wr.setStacks(wantedStacks);
-				if (wanted.getActive() == 1) {
+				if (wanted.getActive() == 0) {
 					ewrlist.add(wr);
 				} else {
 					wrlist.add(wr);

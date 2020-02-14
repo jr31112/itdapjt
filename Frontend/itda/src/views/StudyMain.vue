@@ -87,7 +87,6 @@ export default {
             }
         },  
         update(){
-            console.log('main')
             this.getDefaultStudies()
             this.getLoginStudies()
         },

@@ -31,14 +31,20 @@
         </v-simple-table>
     </v-row>
     <v-row class="mt-2" align="center" justify="center">
-        <v-btn color="blue lighten-1" class="mr-1" @click="formerPage">
+        <v-btn v-if="this.idx*5 - 5 + this.page >= 1" color="blue lighten-1" class="mr-1" @click="doubleformerPage">
+            <v-icon>arrow_back</v-icon>
+        </v-btn>
+        <v-btn v-if="this.page + this.idx*5 - 1 >= 1" color="blue lighten-1" class="mr-1" @click="formerPage">
             <v-icon>mdi-chevron-left</v-icon>
         </v-btn>
-        <v-btn v-for="pgNm in this.numberOfPages" :key="pgNm" color="blue lighten-3" class="ml-1" @click="goPage(pgNm)">
+        <v-btn v-for="pgNm in this.pagenums" :key="pgNm" color="blue lighten-3" class="ml-1" @click="goPage(pgNm)">
             {{pgNm}}
         </v-btn>
-        <v-btn color="blue lighten-1" class="ml-1" @click="nextPage">
+        <v-btn v-if="this.page + this.idx*5 + 1 <= this.numberOfPages" color="blue lighten-1" class="ml-1" @click="nextPage">
             <v-icon>mdi-chevron-right</v-icon>
+        </v-btn>
+        <v-btn v-if="this.idx*5 + 5 + this.page <= this.numberOfPages" color="blue lighten-1" class="mr-1" @click="doublenextPage">
+            <v-icon>arrow_forward</v-icon>
         </v-btn>
     </v-row>
     
@@ -51,6 +57,8 @@ export default {
     name:'searchdatacontent',
     data(){
         return{
+            idx:0,
+            pagenums:[],
             page:1,
             searchresults:[],
             compNm: ""
@@ -64,7 +72,10 @@ export default {
         all:{
             deep:true,
             immediate:true,
-            handler:'updateOptions'
+            handler(){
+                this.updateOptions()
+                this.calPageindex()
+                }
         },
         options:{
             deep:true,
@@ -73,11 +84,39 @@ export default {
         }
     },
     methods:{
+        doublenextPage () {
+        if (this.idx*5 + 5 + this.page <= this.numberOfPages) {
+            this.idx += 1
+            this.page = 1
+            this.calPageindex()
+            }
+        },
         nextPage () {
-        if (this.page + 1 <= this.numberOfPages) this.page += 1
+        if (this.page + this.idx*5 + 1 <= this.numberOfPages) {
+            this.page += 1
+            if (this.page%5 == 1){
+                this.page = 1
+                this.idx += 1
+                this.calPageindex()
+                }
+            }
+        },
+        doubleformerPage () {
+            if (this.idx*5 - 5 + this.page >= 1) {
+                this.idx -= 1
+                this.page = 1
+                this.calPageindex()
+                }
         },
         formerPage () {
-            if (this.page - 1 >= 1) this.page -= 1
+            if (this.page + this.idx*5 - 1 >= 1){
+                this.page -= 1
+                if (this.page%5 == 0){
+                    this.page = 5
+                    this.idx -= 1
+                    this.calPageindex()
+                }
+            } 
         },
         goPage(num) {
             this.page = num
@@ -97,13 +136,23 @@ export default {
         dataTr(content){
             localStorage.setItem('select', JSON.stringify(content))
             window.close()
-        }
+        },
+        calPageindex (){
+            var tmp = []
+            for (var i=1; i<=5;i++ ){
+                if (i + this.idx*5 < this.numberOfPages)
+                    tmp.push(i + this.idx*5)
+                else
+                    break
+            }
+            this.pagenums = tmp
+        },
     },
     computed:{
         numberOfPages () {
             return Math.ceil(this.searchresults.length / 10)
         },
-    }
+    },
 }
 </script>
 

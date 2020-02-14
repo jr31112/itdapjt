@@ -10,7 +10,7 @@ import RecruitCalender from '../views/RecruitCalender.vue'
 import StudyMain from '../views/StudyMain.vue'
 import SearchResult from '../views/SearchResult.vue'
 import SearchData from '../views/SearchData.vue'
-import UserModify from "../components/Mypage/UserModify.vue"
+import UserModify from "../views/UserModify.vue"
 import AboutUs from '../components/Aboutus/AboutUs.vue'
 import Calendar from '../components/RecruitCalender/Calendar.vue'
 //import { cilViewStream } from '@coreui/icons'
@@ -104,10 +104,9 @@ const routes = [
     import("../views/RecruitMain.vue")
   },
   {
-    path: "/usermodify/:userInfo",
+    path: "/usermodify/",
     name: "usermodify",
     component: UserModify
-
   },
   {
     path: "/aboutus",

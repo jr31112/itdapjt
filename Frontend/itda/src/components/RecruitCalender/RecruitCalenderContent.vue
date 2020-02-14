@@ -198,7 +198,6 @@
                                     .wid,
                                 color: 'blue'
                             })
-
                         }
                     }
                     this.tmpevents = events
@@ -207,7 +206,7 @@
 
                     var startYear = start.year
                     var startMonth = this.monthFormatter(this.start)
-                    this.calendartitle = startYear + "년   " + startMonth
+                    this.calendartitle = startYear + "년" + startMonth
                 } else {
                     return;
                 }

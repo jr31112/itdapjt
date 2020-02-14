@@ -11,8 +11,7 @@ export default new Vuex.Store({
     // selectedUser가 allUsers에 찾은 사람을 객체로 userInfo를 저장한다. 
     isLogin: false,
     isLoginError: false,
-    isDialog: true,
-    isName: ""
+    isDialog: true
   },
   //뮤테이션과 엑션스 차이는? 
   //뮤테이션 : state 값 변경. 

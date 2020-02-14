@@ -1,6 +1,6 @@
 <template>
     <div class="recruitmain">
-        <ImgBanner :imgSrc="getImgUrl('JWmain.jpg')">
+        <ImgBanner :imgSrc="getImgUrl('star.png')">
          <div
             class="font-weight-black text-center"
             style="padding-left :50px; line-height:1.2em; font-size: calc((80vw / 1240) * 40) "

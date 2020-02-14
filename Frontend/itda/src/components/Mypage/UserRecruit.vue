@@ -1,15 +1,15 @@
 <template>
-    <v-container>
+    <v-container class="px-0">
         <v-tabs v-model="tab" background-color="primary" :right="true">
             <v-tab v-for="recruit in recruits" :key="recruit.tab">{{recruit.title}}</v-tab>
         </v-tabs>
         <v-tabs-items v-model="tab">
             <v-tab-item v-for="recruit in recruits" :key="recruit.tab">
-                <v-container v-if="recruit.wanteds">
+                <v-container v-if="recruit.wanteds.length">
                     <user-recruit-detail :recruits="recruit.wanteds" v-on:update="update"/>
                 </v-container>
                 <v-container v-else>
-                    스크랩된 {{recruit.title}}이 없어요
+                    스크랩된 {{recruit.title}}가 없어요
                 </v-container>
             </v-tab-item>
         </v-tabs-items>

@@ -1,5 +1,5 @@
 <template>
-  <v-data-iterator :items="this.recruits" :page="page" hide-default-footer class="mx-auto">
+  <v-data-iterator :items="recruits" :page="page" hide-default-footer class="mx-auto">
     <v-row>
         <v-simple-table class="mx-auto" fixed-header>
             <thead class="px-auto">

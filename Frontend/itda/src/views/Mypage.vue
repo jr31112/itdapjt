@@ -36,7 +36,7 @@
                 <h2>스크랩한 공고</h2>
             </v-row>
             <v-row class="mb-4">
-                <v-col v-if="userInfo">
+                <v-col v-if="userInfo" class="px-0">
                     <user-recruit :userInfo="userInfo" v-on:update="update"/>
                 </v-col>
             </v-row>

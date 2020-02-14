@@ -173,7 +173,6 @@ export default {
         this.isResisterError = false;
         this.isPwError = true;
       }
-      ////////////////이부분의 처리 필요
       else {
         axios
           .post("http://192.168.31.54:8197/itda/api/signUp", {
@@ -227,7 +226,6 @@ export default {
     },
     socialLogin() {
       const provider = new firebase.auth.GoogleAuthProvider();
-
       firebase
         .auth()
         .signInWithPopup(provider)
@@ -256,6 +254,7 @@ export default {
                       alert("해당 email로 가입한 적이 있습니다!");
                       return;
                     } else {
+                      
                       let token = response.headers["jwt-auth-token"];
                       localStorage.setItem("access_token", token);
                       localStorage.setItem("social", "social");

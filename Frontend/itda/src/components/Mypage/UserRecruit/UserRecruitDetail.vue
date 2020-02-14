@@ -7,6 +7,7 @@
                     <th class="text-center">회사명</th>
                     <th class="text-center">공고명</th>
                     <th class="text-center">기술스택</th>
+                    <th class="text-center">스크랩해제</th>
                 </tr>
             </thead>
             <tbody>
@@ -15,6 +16,7 @@
                     <td class="text-center">{{recruit.wanted.wantedTitle}}</td>
                     <td class="text-center" v-if="recruit.stacks"><span v-for="stack in recruit.stacks" :key="stack.sid">{{stack.tname}} </span></td>
                     <td class="text-center" v-else></td>
+                    <td class="text-center"><v-icon color="yellow" @click.prevent="doScrap(recruit.wanted.wid)">star</v-icon></td>
                 </tr>
             </tbody>
         </v-simple-table>
@@ -41,6 +43,7 @@
 </template>
 
 <script>
+    import axios from "axios"
     
     export default {
         name: "userscraplist",
@@ -111,7 +114,10 @@
                 }
                 this.pagenums = tmp
             },
-
+            doScrap(wid){
+                axios.post('http://192.168.31.54:8197/itda/api/scrapWanted/',{"wid":wid},{'headers' : {"jwt-auth-token": localStorage.getItem("access_token")}})
+                    .then(()=>{this.$emit('update')})
+            },
         },
         computed:{
             numberOfPages () {

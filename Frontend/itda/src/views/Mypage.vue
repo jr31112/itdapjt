@@ -5,6 +5,27 @@
                 <v-btn class="ma-2" outlined="outlined" large="large" fab="fab" color="indigo" width="40px" height="40px">
                     <v-icon @click="goUserModifyPage">mdi-pencil</v-icon>
                 </v-btn>
+                <v-dialog v-model="overlay" scrollable max-width="500px" white>
+                    <v-container class="p-0">
+                        <v-row v-if="value" class="m-0"><v-alert class="m-0 p-0" type="error" width="500px">비밀번호가 틀렸습니다!</v-alert></v-row>
+                        <v-row class="m-0">
+                            <v-card width="500px">
+                                <v-card-title>비밀번호를 재확인 할께요</v-card-title>
+                                <v-card-text>
+                                    <v-form ref="form" v-model="valid">
+                                        <v-text-field v-model="formData.pw" type="password" label="비밀번호" :rules="[v => !!v || '비밀번호를 입력해주세요']"></v-text-field>
+                                    </v-form>
+                                </v-card-text>
+                                <v-card-actions>
+                                    <v-spacer></v-spacer>
+                                    <v-btn text color="success" class="mr-4" @click="validate">submit</v-btn>
+                                    <v-btn color="blue darken-1" text @click="reset">Reset</v-btn>
+                                    <v-btn color="blue darken-1" text @click="close">Close</v-btn>
+                                </v-card-actions>
+                            </v-card>
+                        </v-row>
+                    </v-container>
+                </v-dialog>
             </h2>
             <v-row class="mb-4">
                 <v-col>
@@ -16,7 +37,7 @@
             </v-row>
             <v-row class="mb-4">
                 <v-col v-if="userInfo">
-                    <user-recruit :userInfo="userInfo"/>
+                    <user-recruit :userInfo="userInfo" v-on:update="update"/>
                 </v-col>
             </v-row>
         </v-container>
@@ -49,8 +70,14 @@
         },
         data() {
             return {
+                value:false,
                 userInfo:{},
                 loginStudies:[],
+                overlay:false,
+                valid: true,
+                formData:{
+                    pw:''
+                }
             }
         },
         mounted() {
@@ -73,7 +100,35 @@
                     })
             },
             goUserModifyPage() {
-                router.push({name: 'usermodify'})
+                if (localStorage.getItem("social") != "social")
+                    this.overlay = true
+                else
+                    router.push({name: 'usermodify'})
+            },
+            validate () {
+                if (this.$refs.form.validate()) {
+                    console.log(this.formData.pw)
+                    axios.post('http://192.168.31.54:8197/itda/api/checkPW',this.formData,{headers:{"jwt-auth-token": localStorage.getItem("access_token")}})
+                        .then(response=>{
+
+                            if (response.data.state == "success"){
+                                router.push({name: 'usermodify'})
+                            }
+                            else {
+                                this.value = true
+                            }
+                        })
+                }
+            },
+            reset () {
+                this.formData.pw = ''
+                this.$refs.form.reset()
+            },
+            close() {
+                this.formData.pw = ''
+                this.$refs.form.reset()
+                this.overlay = false
+                this.value = false
             },
         },
     }

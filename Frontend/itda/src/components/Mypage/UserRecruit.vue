@@ -6,7 +6,7 @@
         <v-tabs-items v-model="tab">
             <v-tab-item v-for="recruit in recruits" :key="recruit.tab">
                 <v-container v-if="recruit.wanteds">
-                    <user-recruit-detail :recruits="recruit.wanteds"/>
+                    <user-recruit-detail :recruits="recruit.wanteds" v-on:update="update"/>
                 </v-container>
                 <v-container v-else>
                     스크랩된 {{recruit.title}}이 없어요
@@ -43,6 +43,9 @@
             }
         },
         methods:{
+            update(){
+                this.$emit('update')
+            },
             dataTransfer(){
                 this.recruits[0].wanteds = this.userInfo.myScrapWanteds
                 this.recruits[1].wanteds = this.userInfo.myEndedScrapWanteds

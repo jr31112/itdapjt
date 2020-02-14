@@ -41,7 +41,7 @@ export default {
     justify-content: center;
     width: 100vw;
     height: 100vh;
-    perspective:60}
+    perspective: 40px}
     @keyframes poster-ani{
     0%{
     transform: rotateY(-20deg);

@@ -89,6 +89,8 @@ export default new Vuex.Store({
       }
       axios.get("http://192.168.31.54:8197/itda/api/getUser", {headers:{"jwt-auth-token": token}})
         .then(res => {
+          console.log("정원 확인userinfo:"  )
+          console.log(res)
           let userInfo = res.data
           commit('loginSuccess', userInfo)
           localStorage.setItem("mid",userInfo.user.auth)

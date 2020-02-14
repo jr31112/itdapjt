@@ -12,7 +12,7 @@ import SearchResult from '../views/SearchResult.vue'
 import SearchData from '../views/SearchData.vue'
 import UserModify from "../views/UserModify.vue"
 import AboutUs from '../components/Aboutus/AboutUs.vue'
-import Calendar from '../components/RecruitCalender/Calendar.vue'
+
 //import { cilViewStream } from '@coreui/icons'
 Vue.use(VueRouter)
 // 관리자가 0 , 기본 1
@@ -42,11 +42,7 @@ const routes = [
     name: 'notfound',
     component: NotFound
   },
-  {
-    path: '/calendar',
-    name: 'calendar',
-    component: Calendar
-  },
+ 
   {
     path: '/',
     name: 'recruitmain',

@@ -23,18 +23,17 @@
                         @change="optionrecruit"></v-select>
                 </v-col>
                 <v-col cols="12" sm="4">
-                    <v-btn
-                        @click.stop="dialog=!dialog"
-                        aria-label="Support"
-                        class="ml-auto"
-                >
+                    <v-btn @click.stop="dialog=!dialog" aria-label="Support" class="ml-auto" width="100%" height="75%">
                         <span class="v-btn__content">
                             <span class="subtitle-1 text-capitalize font-weight-light">
                                 <div>기술 스택 검사</div>
                             </span>
                         </span>
                     </v-btn>
-                    <v-dialog v-model="dialog" max-width="800px" v-if="stacklist !== undefined">
+                    <v-dialog
+                        v-model="dialog"
+                        max-width="800px"
+                        v-if="options.selectstacklist !== undefined">
                         <v-card>
                             <v-card-title>기술 스택 리스트</v-card-title>
                             <v-divider></v-divider>
@@ -42,11 +41,12 @@
                                 <v-row v-for="i in 9" :key="i">
                                     <v-col v-for="j in i==9?1:5" :key="j">
                                         <v-checkbox
-                                            v-model="selectstacklist"
+                                            v-model="options.selectstacklist"
                                             :label="stacklist[5*(i-1) + j-1].tname"
                                             :value="stacklist[5*(i-1) + j-1].sid"></v-checkbox>
                                     </v-col>
                                 </v-row>
+
                             </v-card-text>
                             <v-divider></v-divider>
                             <v-card-actions>
@@ -59,10 +59,10 @@
 
             </v-row>
             <recruit-calender-content
-                v-if="recentlist.length != 0"
-                :wlist="recentlist"
+                v-if="recruitList.length != 0"
+                :recruitList="recruitList"
                 :options="options"
-                :selectstacklist="selectstacklist"/>
+               />
         </v-col>
     </v-layout>
 </template>
@@ -77,15 +77,15 @@
         },
         data() {
             return {
-
                 checkedNames: [],
                 options: {
-                    period: 0,
-                    recruit: 0
+                    period: 3,
+                    recruit: 3,
+                    selectstacklist: [],
                 },
                 year: "",
                 period: [],
-                recentlist: [],
+                recruitList: [],
                 techstack: [],
                 recruit: [],
 
@@ -111,27 +111,27 @@
                     {
                         sid: 1,
                         tname: "Java",
-                        cnt: 5
+                        cnt: 4
                     }, {
                         sid: 2,
                         tname: "C",
-                        cnt: 23
+                        cnt: 20
                     }, {
                         sid: 3,
                         tname: "C++",
-                        cnt: 1
+                        cnt: 3
                     }, {
                         sid: 4,
                         tname: "C#",
-                        cnt: 2
+                        cnt: 3
                     }, {
                         sid: 5,
                         tname: "Objective-C",
-                        cnt: 1
+                        cnt: 0
                     }, {
                         sid: 6,
                         tname: "Python",
-                        cnt: 4
+                        cnt: 2
                     }, {
                         sid: 7,
                         tname: "PHP",
@@ -139,11 +139,11 @@
                     }, {
                         sid: 8,
                         tname: "JavaScript",
-                        cnt: 0
+                        cnt: 1
                     }, {
                         sid: 9,
                         tname: "Kotlin",
-                        cnt: 0
+                        cnt: 1
                     }, {
                         sid: 10,
                         tname: "Unix",
@@ -151,7 +151,7 @@
                     }, {
                         sid: 11,
                         tname: "Linux",
-                        cnt: 3
+                        cnt: 5
                     }, {
                         sid: 12,
                         tname: "Windows",
@@ -163,15 +163,15 @@
                     }, {
                         sid: 14,
                         tname: "iOS",
-                        cnt: 2
+                        cnt: 1
                     }, {
                         sid: 15,
                         tname: "MySQL",
-                        cnt: 3
+                        cnt: 0
                     }, {
                         sid: 16,
                         tname: "MS-SQL",
-                        cnt: 1
+                        cnt: 2
                     }, {
                         sid: 17,
                         tname: "Oracle",
@@ -179,11 +179,11 @@
                     }, {
                         sid: 18,
                         tname: "MariaDB",
-                        cnt: 1
+                        cnt: 0
                     }, {
                         sid: 19,
                         tname: "MongoDB",
-                        cnt: 1
+                        cnt: 0
                     }, {
                         sid: 20,
                         tname: "SQLite",
@@ -191,7 +191,7 @@
                     }, {
                         sid: 21,
                         tname: "NoSQL",
-                        cnt: 2
+                        cnt: 0
                     }, {
                         sid: 22,
                         tname: "HTML",
@@ -203,11 +203,11 @@
                     }, {
                         sid: 24,
                         tname: "Vue.js",
-                        cnt: 1
+                        cnt: 0
                     }, {
                         sid: 25,
                         tname: "jQuery",
-                        cnt: 1
+                        cnt: 0
                     }, {
                         sid: 26,
                         tname: "Ajax",
@@ -227,11 +227,11 @@
                     }, {
                         sid: 30,
                         tname: "Node.js",
-                        cnt: 1
+                        cnt: 0
                     }, {
                         sid: 31,
                         tname: "JSP",
-                        cnt: 1
+                        cnt: 0
                     }, {
                         sid: 32,
                         tname: "JPA/Hibernate",
@@ -239,11 +239,11 @@
                     }, {
                         sid: 33,
                         tname: "WAS",
-                        cnt: 2
+                        cnt: 1
                     }, {
                         sid: 34,
                         tname: "AWS",
-                        cnt: 5
+                        cnt: 2
                     }, {
                         sid: 35,
                         tname: "OOP",
@@ -251,15 +251,15 @@
                     }, {
                         sid: 36,
                         tname: "AI",
-                        cnt: 2
+                        cnt: 5
                     }, {
                         sid: 37,
                         tname: "Machine Learning",
-                        cnt: 1
+                        cnt: 0
                     }, {
                         sid: 38,
                         tname: "Docker",
-                        cnt: 0
+                        cnt: 2
                     }, {
                         sid: 39,
                         tname: "RESTful-API",
@@ -271,10 +271,10 @@
                     }, {
                         sid: 41,
                         tname: "Git",
-                        cnt: 0
+                        cnt: 3
                     }
                 ],
-                selectstacklist: [],
+               
                 dialog: false
             }
         },
@@ -283,16 +283,15 @@
                 axios
                     .get(`http://192.168.31.54:8197/itda/api/getWantedAll/`)
                     .then(response => {
-                        this.recentlist = response.data
+                        this.recruitList = response.data
                     })
                     .catch(error => {
                         console.log(error)
                     })
                 },
-            // getTechStack() {     axios
-            // .get(`http://192.168.31.54:8197/itda/api/getAllStacks/`)
-            // .then(response => {             this.stacklist = response.data         })
-            // .catch(() => {             console.log("test")         })     },
+
+
+            
             optionmanager() {
                 if (this.period.length == 1) {
                     if (this.period[0] == "시작") {
@@ -301,21 +300,21 @@
                         this.options.period = 2
                     }
                 } else {
-                    this.options.period = 0
+                    this.options.period = 3
                 }
             },
+            // 1 신입만, 2 인턴, 3 신입인턴
             optionrecruit() {
                 if (this.recruit.length == 1) {
-                    if (this.recruit[0] == "인턴") {
+                    if (this.recruit[0] == "신입") {
                         this.options.recruit = 1
                     } else {
                         this.options.recruit = 2
                     }
                 } else {
-                    this.options.recruit = 0
+                    this.options.recruit = 3
                 }
-            }
-
+            },
         },
 
         mounted() {
@@ -324,6 +323,4 @@
     }
 </script>
 
-<style>
-   
-</style>
+<style></style>

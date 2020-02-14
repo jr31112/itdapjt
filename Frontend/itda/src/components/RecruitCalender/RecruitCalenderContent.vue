@@ -1,285 +1,166 @@
 <template>
-    <v-layout>
-        <v-col>
-            <v-sheet height="64">
-                <v-toolbar flat="flat" color="white">
-                    <v-btn outlined="outlined" class="mr-4" color="grey darken-2" @click="setToday">
-                        Today
-                    </v-btn>
-                    <v-btn fab="fab" text="text" small="small" color="grey darken-2" @click="prev">
-                        <v-icon small="small">mdi-chevron-left</v-icon>
-                    </v-btn>
-                    <v-toolbar-title>{{ calendartitle }}</v-toolbar-title>
-                    <v-btn fab="fab" text="text" small="small" color="grey darken-2" @click="next">
-                        <v-icon small="small">mdi-chevron-right</v-icon>
-                    </v-btn>
-                    <v-spacer></v-spacer>
-                </v-toolbar>
-            </v-sheet>
-
-         
-                <v-calendar
-                    ref="calendar"
-                    v-model="focus"
-                    color="primary"
-                    :events="tmpevents"
-                    :event-color="getEventColor"
-                    @change="updateRange"
-                    @click:event="goDetailPage"></v-calendar>
-          
-
-        </v-col>
-    </v-layout>
+    <FullCalendar
+        defaultView="dayGridMonth"
+        :plugins="calendarPlugins"
+        :weekends="true"
+        :events="calendarEvent"
+        @change="changeEvent"
+        @eventClick="handleDateClick"/>
 </template>
+
 <script>
+    import FullCalendar from '@fullcalendar/vue'
+    import dayGridPlugin from '@fullcalendar/daygrid'
+    import interactionPlugin from '@fullcalendar/interaction'
     import router from '../../router/index.js'
     export default {
-        name: 'recruitcalendercontent',
-        data: () => ({
-            focus: '',
-            start: null,
-            end: null,
-            tmpevents: [],
-            companylist: [],
-            wantedlist: [],
-            calendartitle: "",
-            selectedEvent: {}
-        }),
-        watch: {
-            options: {
-                deep: true,
-                immediate: true,
-                handler: 'updateRange'
-            },
-            selectstacklist: {
-                deep: true,
-                handler: 'updateRange'
-            },
-            calendartitle: {}
+        components: {
+            FullCalendar, // make the <FullCalendar> tag available
+        },
+
+        data() {
+            return {
+                calendarPlugins: [
+                    dayGridPlugin, interactionPlugin
+                ],
+                calendarEvent: [],
+
+                baseLen: 0
+            }
         },
         props: {
-            wlist: {
+            recruitList: {
                 type: Array
             },
             options: {
                 type: Object
-            },
-            selectstacklist: {
-                type: Array
             }
         },
-        computed: {
-            title() {
-                var {
-                    start,
-                    end
-                } = this
-                if (!start || !end) {
-                    return ''
-                }
-                var startYear = start.year
-                var startMonth = this.monthFormatter(this.start)
-                return startMonth + startYear
-            },
-            //오늘 날짜를 계산해 주는 함수
-            monthFormatter() {
-                return this
-                    .$refs
-                    .calendar
-                    .getFormatter({timeZone: 'UTC', month: 'long'})
+        watch: {
+            options: {
+                deep: true,
+                immediate: true,
+                handler: 'changeEvent'
             }
         },
-        created() {
-            this.setValues()
-        },
+
         methods: {
-            goDetailPage({nativeEvent, event}) {
-                const open = () => {
-                    this.selectedEvent = event
-                    router.push({
-                        name: 'recruitdetail',
-                        params: {
-                            id: this.selectedEvent.wid
-                        }
-                    })
-                }
-                if (this.selectedOpen) {
-                    this.selectedOpen = false
-                    setTimeout(open, 10)
-                } else {
-                    open()
-                }
-                nativeEvent.stopPropagation()
+            handleDateClick(arg) {
+            
+           router.push({ name: "recruitdetail", params: { id:arg.event._def.extendedProps.wid} });
             },
-            setValues() {
-                for (var i = 0; i < this.wlist.length; i++) {
-                    this.companylist[i] = this
-                        .wlist[i]
-                        .company
-                        this
-                        .wantedlist[i] = this
-                        .wlist[i]
+            changeEvent() {
+                this.calendarEvent = []
+                var period = this.options.period
+                var idx = []
+                for (var k = 0; k < this.recruitList.length; k++) {
+                    idx.push(k)
+                }
+                // 공고 내 인턴 혹은 신입이 있는 공고 번호를 찾는 조건문
+                if (this.options.recruit !== 3) {
+                    idx = this.filterByRecruitOption(idx, this.options.recruit)
+                }
+
+                // 공고 내 선택한 스택이 있는 공고 번호를 찾는 조건문
+                if (this.options.selectstacklist.length !== 0) {
+                    idx = this.filterByStackOption(idx, this.options.selectstacklist)
+                }
+                var idxLen = idx.length
+                for (var i = 0; i < idxLen; i++) {
+                    var wid = this
+                        .recruitList[idx[i]]
                         .wanted
-                }
-            },
-            getEventColor(event) {
-                return event.color
-            },
-            setToday() {
-                this.focus = this.today
-            },
-            prev() {
-                this
-                    .$refs
-                    .calendar
-                    .prev()
-            },
-            next() {
-                this
-                    .$refs
-                    .calendar
-                    .next()
-            },
-            updateRange({start, end}) {
-                const events = []
-                let recruitIdxList = []
-                let recuritIdxLength = 0;
-                if (this.companylist.length !== 0) {
-                    recruitIdxList = this.searchOfJtype(this.options.recruit)
-                    recuritIdxLength = recruitIdxList.length;
-                    if (this.selectstacklist.length !== 0) {
-                        if (recruitIdxList.length !== 0) {
-                            recruitIdxList = this.filterByStack(recruitIdxList)
-                        }
-                    }
-                    if (recruitIdxList === undefined) {
-                        return;
-                    }
-                    recuritIdxLength = recruitIdxList.length;
-                    for (var i = 0; i < recuritIdxLength; i++) {
-                        let corpNm = this
-                            .companylist[recruitIdxList[i]]
-                            .corpNm
-                        if (this.options.period !== 2) {
-                            events.push({
-                                name: corpNm,
-                                start: this
-                                    .wantedlist[recruitIdxList[i]]
-                                    .startDate
-                                    .substring(0, 10),
-                                end: this
-                                    .wantedlist[recruitIdxList[i]]
-                                    .startDate
-                                    .substring(0, 10),
-                                wid: this
-                                    .wantedlist[recruitIdxList[i]]
-                                    .wid,
-                                color: 'red'
-
-                            })
-
-                        }
-
-                        if (this.options.period != 1) {
-                            events.push({
-                                name: this
-                                    .companylist[recruitIdxList[i]]
-                                    .corpNm,
-                                start: this
-                                    .wantedlist[recruitIdxList[i]]
-                                    .endDate
-                                    .substring(0, 10),
-                                end: this
-                                    .wantedlist[recruitIdxList[i]]
-                                    .endDate
-                                    .substring(0, 10),
-                                wid: this
-                                    .wantedlist[recruitIdxList[i]]
-                                    .wid,
-                                color: 'blue'
-                            })
-                        }
-                    }
-                    this.tmpevents = events
-                    this.start = start
-                    this.end = end
-
-                    var startYear = start.year
-                    var startMonth = this.monthFormatter(this.start)
-                    this.calendartitle = startYear + "년" + startMonth
-                } else {
-                    return;
-                }
-
-            },
-            searchOfJtype(jtype) {
-                var tidx = []
-                if (jtype == 1) {
-                    // 인턴
-                    for (var idx = 0; idx < this.wlist.length; idx++) {
-                        for (var jobsidx = 0; jobsidx < this.wlist[idx].jobs.length; jobsidx++) {
-                            if (!this.wlist[idx].jobs[jobsidx].jtype) {
-                                continue
-                            }
-                            if (this.wlist[idx].jobs[jobsidx].jtype.includes("인턴")) {
-                                tidx.push(idx)
-                                break
-                            }
-                        }
-
-                    }
-                } else if (jtype == 2) {
-                    for (var num = 0; num < this.wlist.length; num++) {
-                        for (var jobsnum = 0; jobsnum < this.wlist[num].jobs.length; jobsnum++) {
-                            if (!this.wlist[num].jobs[jobsnum].jtype) {
-                                continue
-                            }
-                            if (this.wlist[num].jobs[jobsnum].jtype.includes("신입") || this.wlist[num].jobs[jobsnum].jtype.includes("정규")) {
-                                tidx.push(num)
-                                break
-                            }
-                        }
-                    }
-                } else {
-                    for (var k = 0; k < this.wlist.length; k++) {
-                        tidx.push(k)
-                    }
-                }
-
-                return tidx
-            },
-            filterByStack(list) {
-                var listLen = list.length
-                var stacklist = []
-                var idx = 0
-                for (var i = 0; i < listLen; i++) {
-                    var stackLen = this
-                        .wlist[list[i]]
+                        .wid
+                    var title = this
+                        .recruitList[idx[i]]
+                        .company
+                        .corpNm
+                    var start = this
+                        .recruitList[idx[i]]
+                        .wanted
+                        .startDate
+                        .substring(0, 10)
+                    var end = this
+                        .recruitList[idx[i]]
+                        .wanted
+                        .endDate
+                        .substring(0, 10)
+                    var wstack = this
+                        .recruitList[idx[i]]
                         .stacks
-                        .length
-                    if (stackLen !== 0) {
-                        out : for (var j = 0; j < this.selectstacklist.length; j++) {
-                            for (var z = 0; z < stackLen; z++) {
-                                if (this.selectstacklist[j] === this.wlist[list[i]].stacks[z].sid) {
-                                    stacklist.splice(idx++, 0, i)
-                                    break out
+                    var jobType = this
+                        .recruitList[idx[i]]
+                        .wanted
+                        .jobType
+                    // 1 시작, 2 종료 3 모두
+                    if (period !== 2) {
+                        this
+                            .calendarEvent
+                            .push({
+                                wid,
+                                title,
+                                color: "blue",
+                                textColor: "white",
+                                start: start,
+                                wstack,
+                                jobType
+                            })
+                    }
+                    // 1 시작, 2 종료 0 모두
+                    if (period !== 1) {
+                        this
+                            .calendarEvent
+                            .push({
+                                wid,
+                                title,
+                                color: "red",
+                                textColor: "white",
+                                start: end,
+                                wstack,
+                                jobType
+                            })
+                    }
+                }
+            },
+
+            //날짜를 클릭하면 나오는 것
+            handleSelect(e) {
+                console.log(e);
+            },
+            filterByRecruitOption(checkIdxList, jobNum) {
+                var idx = []
+                for (var i = 0; i < checkIdxList.length; i++) {
+                    if (this.recruitList[i].wanted.jobType === jobNum) {
+                        idx.push(i)
+                    }
+                }
+                return idx
+            },
+            filterByStackOption(checkIdxList, choiceStackList) {
+                var idx = []
+                for (var i = 0; i < checkIdxList.length; i++) {
+                    if (this.recruitList[checkIdxList[i]].stacks.length === 0) {
+                        continue
+                    } else {
+                        console.log("else enter")
+                        out : for (var j = 0; j < this.recruitList[checkIdxList[i]].stacks.length; j++) {
+                            for (var z = 0; z < choiceStackList.length; z++) {
+                                if (this.recruitList[checkIdxList[i]].stacks[j].sid === choiceStackList[z]) {
+                                    idx.push(checkIdxList[i])
+
+                                    break out;
                                 }
                             }
                         }
                     }
                 }
-     
-                return stacklist
+                return idx
             }
         }
     }
 </script>
-<style>
-    .Center {
-        margin: auto !important;
-    }
-    .CalendarSize {
-        height: 80%;
-        width: 100%;
-    }
+<style lang='scss'>
+
+    @import '~@fullcalendar/core/main.css';
+    @import '~@fullcalendar/daygrid/main.css';
 </style>

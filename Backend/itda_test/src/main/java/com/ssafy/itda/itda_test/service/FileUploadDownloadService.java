@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -37,17 +38,43 @@ public class FileUploadDownloadService {
     // 파일 저장
     public String storeFile(MultipartFile file) {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-        
+		String store_filename = null;
+
         try {
             // 파일명에 부적합 문자가 있는지 확인한다.
             if(fileName.contains(".."))
                 throw new FileUploadException("파일명에 부적합 문자가 포함되어 있습니다. " + fileName);
-            
-            Path targetLocation = this.fileLocation.resolve(fileName);
+            String lower_filename = fileName.toLowerCase();
+            if(!(lower_filename.contains(".jpg") || lower_filename.contains(".png") || lower_filename.contains(".jpeg"))){
+            	throw new FileUploadException("저장할 수 없는 확장자 입니다. " + fileName);
+            }
+            else {
+    			String uuid = UUID.randomUUID().toString();
+            	int chk_extension = 0;
+    			if (lower_filename.contains(".jpg")) {
+    				chk_extension = 1;
+    			} else if (lower_filename.contains(".png")) {
+    				chk_extension = 2;
+    			} else if (lower_filename.contains(".jpeg")) {
+    				chk_extension = 3;
+    			}
+    			switch (chk_extension) {
+    			case 1:
+    				store_filename = uuid + ".jpg";
+    				break;
+    			case 2:
+    				store_filename = uuid + ".png";
+    				break;
+    			case 3:
+    				store_filename = uuid + ".jpeg";
+    				break;
+    			}
+            }
+            Path targetLocation = this.fileLocation.resolve(store_filename);
             
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
             
-            return fileName;
+            return store_filename;
         }catch(Exception e) {
             throw new FileUploadException("["+fileName+"] 파일 업로드에 실패하였습니다. 다시 시도하십시오.",e);
         }

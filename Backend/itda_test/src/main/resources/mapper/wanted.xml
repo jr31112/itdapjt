@@ -143,7 +143,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="getWantedBySearchFullText" parameterType="java.lang.String"
 		resultType="java.lang.String">
-		SELECT DISTINCT wid
+		SELECT DISTINCT w.wid
 		FROM wanted_t AS w
 			LEFT JOIN
 				wantedStack_t AS ws ON w.wid = ws.wid
@@ -152,13 +152,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			LEFT JOIN
 				stack_t AS s ON ws.sid = s.sid
 		WHERE
-			MATCH (tname) AGAINST ('#{keyword}' )
-				OR MATCH (wantedTitle) AGAINST ('#{keyword}' )
+			MATCH (tname) AGAINST (#{keyword})
+				OR MATCH (wantedTitle) AGAINST (#{keyword})
 	</select>
 	
 	<select id="getWantedBySearchLike" parameterType="java.lang.String"
 		resultType="java.lang.String">
-		SELECT DISTINCT wid
+		SELECT DISTINCT w.wid
 		FROM wanted_t AS w
 			LEFT JOIN
 				wantedStack_t AS ws ON w.wid = ws.wid
@@ -167,8 +167,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			LEFT JOIN
 				stack_t AS s ON ws.sid = s.sid
 		WHERE
-			corpNm LIKE '%#{likeKeyword}%'
-				OR wantedTitle LIKE '%#{likeKeyword}%'
-				OR tname LIKE '%#{likeKeyword}%'
+			corpNm LIKE CONCAT('%',#{likeKeyword},'%')
+				OR wantedTitle LIKE CONCAT('%',#{likeKeyword},'%')
+				OR tname LIKE CONCAT('%',#{likeKeyword},'%')
 	</select>
 </mapper>

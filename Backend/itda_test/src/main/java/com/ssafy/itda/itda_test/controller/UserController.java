@@ -128,6 +128,37 @@ public class UserController {
 		}
 		return new ResponseEntity<UserResult>(ur, HttpStatus.OK);
 	}
+	
+	@ApiOperation(value = "비밀번호가 맞는지 확인한다.", response = UserResult.class)
+	@RequestMapping(value = "/checkPW", method = RequestMethod.POST)
+	public ResponseEntity<UserResult> checkPW(@RequestBody String pw, HttpServletRequest req) throws Exception {
+		logger.info("1-3-------------login------------------------------" + new Date());
+		logger.info("1-3-------------login------------------------------" + pw);
+		Map<String, Object> resultMap = new HashMap<>();
+		String token = req.getHeader("jwt-auth-token");
+		UserResult ur = new UserResult();
+		if (token != null && !token.equals("")) {
+			resultMap.putAll(jwtService.get(token));
+			int uid = (int) resultMap.get("uid");
+			User model = new User();
+			model.setUid(uid);
+			model.setPw(pw);
+			User user = userService.login(model);
+			if (user == null || user.getEmail() == null || user.getEmail().equals("")) {
+				ur.setMsg("비밀번호가 일치하지 않습니다.");
+				ur.setState("fail");
+			} else {
+				ur.setUser(user);
+				ur.setMsg("비밀번호가 확인되었습니다.");
+				ur.setState("success");
+			}
+		}
+		else {
+			ur.setMsg("다시 로그인하고 실행해 주세요!");
+			ur.setState("fail");
+		}
+		return new ResponseEntity<UserResult>(ur, HttpStatus.OK);
+	}
 
 	@ApiOperation(value = "토큰 정보를 확인한다.", response = Map.class)
 	@RequestMapping(value = "/info", method = RequestMethod.POST)

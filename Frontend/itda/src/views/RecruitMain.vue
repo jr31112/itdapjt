@@ -4,7 +4,7 @@
          <div
             class="font-weight-black text-center"
             style="padding-left :50px; line-height:1.2em; font-size: calc((80vw / 1240) * 40) "
-            slot="text">JUST DO IT..da!&nbsp;&nbsp;&nbsp;&nbsp; </div>              
+            slot="text">IT 취업의 길을 IT:DA<br/> 당신의 탈출을 응원합니다! </div>              
         </ImgBanner>
         <v-container>
             <recruit-recent-list v-on:update="update"/>

@@ -3,7 +3,9 @@
         defaultView="dayGridMonth"
         :plugins="calendarPlugins"
         :weekends="true"
+        :eventLimit="true"
         :events="calendarEvent"
+        :eventLimits=6
         @change="changeEvent"
         @eventClick="handleDateClick"/>
 </template>
@@ -67,29 +69,30 @@
                 }
                 var idxLen = idx.length
                 for (var i = 0; i < idxLen; i++) {
+                    var tidx = idx[i]
                     var wid = this
-                        .recruitList[idx[i]]
+                        .recruitList[tidx]
                         .wanted
                         .wid
                     var title = this
-                        .recruitList[idx[i]]
+                        .recruitList[tidx]
                         .company
                         .corpNm
                     var start = this
-                        .recruitList[idx[i]]
+                        .recruitList[tidx]
                         .wanted
                         .startDate
                         .substring(0, 10)
                     var end = this
-                        .recruitList[idx[i]]
+                        .recruitList[tidx]
                         .wanted
                         .endDate
                         .substring(0, 10)
                     var wstack = this
-                        .recruitList[idx[i]]
+                        .recruitList[tidx]
                         .stacks
                     var jobType = this
-                        .recruitList[idx[i]]
+                        .recruitList[tidx]
                         .wanted
                         .jobType
                     // 1 시작, 2 종료 3 모두
@@ -123,10 +126,6 @@
                 }
             },
 
-            //날짜를 클릭하면 나오는 것
-            handleSelect(e) {
-                console.log(e);
-            },
             filterByRecruitOption(checkIdxList, jobNum) {
                 var idx = []
                 for (var i = 0; i < checkIdxList.length; i++) {
@@ -142,7 +141,6 @@
                     if (this.recruitList[checkIdxList[i]].stacks.length === 0) {
                         continue
                     } else {
-                        console.log("else enter")
                         out : for (var j = 0; j < this.recruitList[checkIdxList[i]].stacks.length; j++) {
                             for (var z = 0; z < choiceStackList.length; z++) {
                                 if (this.recruitList[checkIdxList[i]].stacks[j].sid === choiceStackList[z]) {

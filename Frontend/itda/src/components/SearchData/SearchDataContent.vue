@@ -140,7 +140,7 @@ export default {
         calPageindex (){
             var tmp = []
             for (var i=1; i<=5;i++ ){
-                if (i + this.idx*5 < this.numberOfPages)
+                if (i + this.idx*5 <= this.numberOfPages)
                     tmp.push(i + this.idx*5)
                 else
                     break

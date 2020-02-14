@@ -8,13 +8,15 @@
             </h2>
             <v-row class="mb-4">
                 <v-col>
-                    <user-detail :userInfo="userInfo"/>
+                    <user-detail :userInfo="userInfo" v-if="userInfo"/>
                 </v-col>
             </v-row>
-            <h2>스크랩한 공고</h2>
+            <v-row>
+                <h2>스크랩한 공고</h2>
+            </v-row>
             <v-row class="mb-4">
-                <v-col>
-                    <!-- <user-recruit :UserEndedScrapWanteds="UserEndedScrapWanteds" :UserScrapWanteds="UserScrapWanteds"/> -->
+                <v-col v-if="userInfo">
+                    <user-recruit :userInfo="userInfo"/>
                 </v-col>
             </v-row>
         </v-container>
@@ -24,7 +26,7 @@
                 <h2>내 스터디 정보</h2>
               </v-col>
           </v-row>
-          <study-login-content :myStudyList="loginStudies" v-if="loginStudies.length"/>
+          <study-login-content :myStudyList="loginStudies" v-if="loginStudies.length" v-on:update="update"/>
           <v-row v-else>
               <v-col>가입한 스터디가 없어요..</v-col>
           </v-row>
@@ -35,30 +37,33 @@
 <script>
     import UserDetail from "../components/Mypage/UserDetail.vue"
     import StudyLoginContent from '../components/StudyMain/StudyLoginContent.vue'
-    // import UserRecruit from "../components/Mypage/UserRecruit.vue"
+    import UserRecruit from "../components/Mypage/UserRecruit.vue"
     import router from "../router/index.js"
     import axios from "axios"
-    // import { mapState } from 'vuex'
     export default {
-        name: "user",
+        name: "mypage",
         components: {
             UserDetail,
-            // UserRecruit,
+            UserRecruit,
             StudyLoginContent
         },
         data() {
             return {
+                userInfo:{},
                 loginStudies:[],
             }
         },
         mounted() {
-            this.getAllData();
+            this.getUserInfo()
         },
         methods: {
-            getLoginStudies(){
-            if (this.isLogin){
+            update(){
+                this.getUserInfo()
+            },
+            getUserInfo(){
                 axios.get("http://192.168.31.54:8197/itda/api/getUser", {headers:{"jwt-auth-token": localStorage.getItem("access_token")}})
                     .then(response => {
+                        this.userInfo = response.data
                         this.loginStudies = response.data.myStudies
                         var len = this.loginStudies.length % 4
                         if (len){
@@ -66,8 +71,7 @@
                                 this.loginStudies.push({})
                         }
                     })
-                }
-            },  
+            },
             goUserModifyPage() {
                 router.push({name: 'usermodify'})
             },

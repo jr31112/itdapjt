@@ -5,17 +5,22 @@ import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import com.ssafy.itda.itda_test.property.FileUploadProperties;
 import com.ssafy.itda.itda_test.security.JwtInterceptor;
 
 @EnableScheduling
 @SpringBootApplication
 @EnableTransactionManagement
+@EnableConfigurationProperties({
+	FileUploadProperties.class
+})
 public class SSAFYApplication implements WebMvcConfigurer {
 	// 이것을 실행시키면 레스트풀 메인 시작
 	public static void main(String[] args) {

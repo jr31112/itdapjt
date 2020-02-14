@@ -36,9 +36,9 @@ Vue.use(require('vue-moment'))
 //   }  
 // },
 new Vue({
-  async beforeCreate()
+  beforeCreate()
   {
-    await this.$store.dispatch("getMemberInfo");
+     this.$store.dispatch("getMemberInfo");
   },
   router,
   store,

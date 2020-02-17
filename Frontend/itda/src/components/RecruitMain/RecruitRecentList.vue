@@ -49,7 +49,7 @@ export default {
 						}
 				}	
 			}
-			axios.get(`http://192.168.31.54:8197/itda/api/getWantedByRecent/`,config)
+			axios.get(`http://54.180.140.163:8197/itda/api/getWantedByRecent/`,config)
 				.then(response=>{
 					this.recentlist = response.data
 				})

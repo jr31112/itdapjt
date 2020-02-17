@@ -1,22 +1,26 @@
 <template>
-  <v-app-bar color="blue" app>
+  <v-app-bar app>
     <router-link :to="{name:'recruitmain'}">
       <v-img :src="getImgUrl('logoo.png')" style="width :6.5rem" />
     </router-link>
     <div class="page-router">
       <v-btn
         @click="goRecruitCalanderPage()"
-        class="hidden-sm-and-down v-btn v-btn--flat v-btn--router v-btn--text theme--dark v-size--default"
+        class="btn-underline hidden-sm-and-down v-btn v-btn--flat v-btn--router v-btn--text v-size--default"
         style="min-width: 48px;"
+        text
+        color="white"
       >
-        상세보기
+        <span class="highlight">채용 공고</span>
       </v-btn>
       <v-btn
         @click="goStudyPage()"
-        class="hidden-sm-and-down v-btn v-btn--flat v-btn--router v-btn--text theme--dark v-size--default"
+        class="btn-underline hidden-sm-and-down v-btn v-btn--flat v-btn--router v-btn--text v-size--default"
         style="min-width: 48px;"
+        text
+        color="white"
       >
-        스터디보기
+        <span class="highlight">스터디</span>
       </v-btn>
     </div>
     <v-spacer></v-spacer>
@@ -65,41 +69,41 @@
     </div>
     <v-btn
       v-if="isMr()==='0'"
-      class="v-btn v-btn--flat v-btn--text theme--dark v-size--default"
+      class="btn-colored v-btn v-btn--flat v-btn--text theme--dark v-size--default"
       aria-label="Support"
       style="min-width: 48px;"
       @click="GoManagePage"
     >
-      페이지 관리
+      <span class="text-colored">페이지 관리</span>
     </v-btn>
     <v-btn
       v-if="isLogin"
-      class="v-btn v-btn--flat v-btn--text theme--dark v-size--default"
+      class="btn-colored v-btn v-btn--flat v-btn--text theme--dark v-size--default"
       aria-label="Support"
       style="min-width: 48px;"
       @click="goMypage"
     >
-      내정보 보기
+      <span class="text-colored">마이페이지</span>
     </v-btn>
     <v-btn
       v-if="isLogin"
       @click="goLogout"
       @click.stop="dialog =!dialog"
-      class="v-btn v-btn--flat v-btn--text theme--dark v-size--default"
+      class="btn-colored v-btn v-btn--flat v-btn--text theme--dark v-size--default"
       aria-label="Support"
       style="min-width: 48px;"
     >
-      로그아웃
+      <span class="text-colored">로그아웃</span>
     </v-btn>
     <v-btn
       v-else
       @click.stop="dialog=!dialog"
       @click="goLogin()"
-      class="v-btn v-btn--flat v-btn--text theme--dark v-size--default"
+      class="btn-colored v-btn v-btn--flat v-btn--text v-size--default"
       aria-label="Support"
       style="min-width: 48px;"
     >
-      로그인/회원가입
+      <span class="text-colored">로그인/회원가입</span>
     </v-btn>
     <v-dialog 
       v-if="isDialog"
@@ -176,3 +180,50 @@ export default {
   }
 };
 </script>
+
+<style>
+.highlight {
+    display: inline;
+    position:relative;
+    overflow: hidden;
+    color: #070103;
+    /* font-size: 150%; */
+}
+.highlight span {
+    position:relative;
+    z-index: -1;
+}
+.highlight::before {
+    content:'';
+    display: block;
+    width:100%;
+    height: 50%;
+    background: rgba(0, 170, 179, 0.5);
+    position: absolute;
+    bottom:0;
+    left:-100%;
+    transition: all .35s;
+}
+.btn-underline:hover .highlight::before {
+    left: 0;
+}
+
+.btn-underline {
+  color: none;
+}
+.btn-colored {
+  background:rgba(0, 170, 179);
+}
+.text-colored {
+  color: white;
+  /* font-size: 150%; */
+
+}
+/* .text-colored2 {
+  color: #070103;
+  font-size: 150%;
+}
+.btn-colored2:hover {
+  background:rgba(0, 170, 179, 0.5);
+} */
+</style>

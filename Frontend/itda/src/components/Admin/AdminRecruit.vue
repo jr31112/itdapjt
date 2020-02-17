@@ -57,7 +57,7 @@
             {
                 alert("안녕")
                  axios
-                    .post('http://192.168.31.54:8197/itda/api/createWanted/')
+                    .post('http://54.180.140.163:8197/itda/api/createWanted/')
                     .then(res => {
                         alert(res.data.msg)
                     })
@@ -69,7 +69,7 @@
             ,    
             getWantedAll() {
                 axios
-                    .get('http://192.168.31.54:8197/itda/api/getWantedAll/')
+                    .get('http://54.180.140.163:8197/itda/api/getWantedAll/')
                     .then(res => {
                         this.allwanteds = res.data
                     })

@@ -8,8 +8,7 @@
     </v-row></v-container>
     <recruit-detail-company-info :company="recruit.company"/>
     <v-container class="py-0" white></v-container>
-    <recruit-detail-wanted-info :wanted="recruit.wanted"/>
-    <recruit-detail-comment/>
+      <recruit-detail-wanted-info :wanted="recruit.wanted" :stacks="recruit.stacks"/>
   </div>
 </template>
 
@@ -18,7 +17,6 @@ import { mapState } from 'vuex'
 
 import RecruitDetailCompanyInfo from '../components/RecruitDetail/RecruitDetailCompanyInfo.vue'
 import RecruitDetailWantedInfo from '../components/RecruitDetail/RecruitDetailWantedInfo.vue'
-import RecruitDetailComment from '../components/RecruitDetail/RecruitDetailComment.vue'
 
 import axios from 'axios'
 
@@ -27,7 +25,6 @@ export default {
   components: {
     RecruitDetailCompanyInfo,
     RecruitDetailWantedInfo,
-    RecruitDetailComment
   },
   data(){
     return{
@@ -36,19 +33,19 @@ export default {
   },
   methods: {
     doScrap(wid){
-		  axios.post('http://192.168.31.54:8197/itda/api/scrapWanted/',{"wid":wid},{'headers' : {"jwt-auth-token": localStorage.getItem("access_token")}})
+		  axios.post('http://54.180.140.163:8197/itda/api/scrapWanted/',{"wid":wid},{'headers' : {"jwt-auth-token": localStorage.getItem("access_token")}})
             .then(()=>{this.getDetailData()})
 	  },
     getDetailData(){
       if (this.isLogin){
-        axios.get(`http://192.168.31.54:8197/itda/api/getWantedByID/${this.$route.params.id}`,{'headers' : {"jwt-auth-token": localStorage.getItem("access_token")}})
+        axios.get(`http://54.180.140.163:8197/itda/api/getWantedByID/${this.$route.params.id}`,{'headers' : {"jwt-auth-token": localStorage.getItem("access_token")}})
         .then(response=>{
           this.recruit = response.data
         })
         .catch(()=>{})
       }
       else{
-        axios.get(`http://192.168.31.54:8197/itda/api/getWantedByID/${this.$route.params.id}`)
+        axios.get(`http://54.180.140.163:8197/itda/api/getWantedByID/${this.$route.params.id}`)
         .then(response=>{
           this.recruit = response.data
         })
@@ -66,5 +63,4 @@ export default {
 </script>
 
 <style>
-
 </style>

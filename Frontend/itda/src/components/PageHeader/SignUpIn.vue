@@ -97,7 +97,7 @@
               {
                   email: email_lg,
                   pw: password_lg
-              }, reChk = !reChk ,
+              },
                  isCong= false
               )"
           >Login</v-btn>

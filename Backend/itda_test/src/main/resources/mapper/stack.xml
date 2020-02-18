@@ -42,5 +42,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		DELETE FROM myStack_t WHERE uid = #{uid} AND sid = #{sid}
 	</delete>
 	
+	<insert id="requestStack" parameterType="com.ssafy.itda.itda_test.model.Stack">
+		INSERT INTO stack_t (uid, tname) values (#{uid}, #{tname})
+	</insert>
 	
 </mapper>

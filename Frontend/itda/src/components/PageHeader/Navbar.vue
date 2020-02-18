@@ -1,13 +1,9 @@
 <template>
-  <v-card
-    class="mx-auto overflow-hidden"
-  >
   <v-app-bar app> 
-    <v-app-bar-nav-icon class="d-flex d-sm-none" 
-    @click="drawer=!drawer"><v-icon >menu</v-icon>
+    <v-app-bar-nav-icon class="d-flex d-sm-none" @click="drawer=true"><v-icon >menu</v-icon>
     </v-app-bar-nav-icon>
     <router-link :to="{name:'recruitmain'}">
-      <v-img :src="getImgUrl('logoo.png')" style="width :6.5rem" />
+      <v-img :src="getImgUrl('logoo.png')" style="width :6.5rem" @click="goRecruitMainPage"/>
     </router-link>
     <div class="page-router">
       <v-btn
@@ -17,7 +13,7 @@
         text
         color="white"
       >
-        <span class="highlight">채용 공고</span>
+        <span class="highlight">공고 달력</span>
       </v-btn>
       <v-btn
         @click="goStudyPage()"
@@ -30,7 +26,7 @@
       </v-btn>
     </div>
     <v-spacer></v-spacer>
-    <div class="searchbar mt-7 mr-0 mr-md-6 hidden-xs-only" style="max-width: 300px;">
+    <div class="searchbar mt-7 mr-0 mr-md-6" style="max-width: 300px;">
       <v-text-field
         outlined
         label="채용 공고 검색"
@@ -46,7 +42,7 @@
     </div>
     <v-btn
       v-if="isMr()==='0'"
-      class="btn-colored v-btn v-btn--flat v-btn--text theme--dark v-size--default"
+      class="btn-colored v-btn v-btn--flat v-btn--text theme--dark v-size--default hidden-xs-only"
       aria-label="Support"
       style="min-width: 48px;"
       @click="GoManagePage"
@@ -55,7 +51,7 @@
     </v-btn>
     <v-btn
       v-if="isLogin"
-      class="mx-3 btn-border-colored v-btn v-btn--flat v-btn--text v-size--default"
+      class="mx-3 btn-border-colored v-btn v-btn--flat v-btn--text v-size--default hidden-xs-only"
       aria-label="Support"
       style="min-width: 48px;"
       @click="goMypage"
@@ -68,7 +64,7 @@
       v-if="isLogin"
       @click="goLogout"
       @click.stop="dialog =!dialog"
-      class="btn-colored v-btn v-btn--flat v-btn--text theme--dark v-size--default"
+      class="btn-colored v-btn v-btn--flat v-btn--text theme--dark v-size--default hidden-xs-only"
       aria-label="Support"
       style="min-width: 48px;"
       depressed 
@@ -79,7 +75,7 @@
       v-else
       @click.stop="dialog=!dialog"
       @click="goLogin()"
-      class="btn-colored v-btn v-btn--flat v-btn--text v-size--default"
+      class="btn-colored v-btn v-btn--flat v-btn--text v-size--default hidden-xs-only"
       aria-label="Support"
       style="min-width: 48px;"
     >
@@ -94,68 +90,77 @@
     >
       <sign-up-in @statusControl="dialog =false"/>
     </v-dialog>
-    </v-app-bar>  
     <v-navigation-drawer 
-      v-model="drawer" 
+      :value="drawer" 
       absolute
-      temporary>
+      temporary
+      height="1000">
       <v-list
         nav
         dense
-      >
-      <v-list-item >
-        <v-list-item-avatar>
-          
-            <img src="https://randomuser.me/api/portraits/men/81.jpg">
-              <!-- <v-img 
-                  v-if="this.imageResult===null"
-                  src="../../assets/noimg.png"
-                  dark="dark"></v-img>
-              <v-img v-else
-              :src= this.imageResult
-              dark="dark"></v-img> -->
-            </v-list-item-avatar>
-
-            <v-list-item-content>
-              <v-list-item-title>김정원님!</v-list-item-title>
-              <v-list-item-subtitle>환영합니다.</v-list-item-subtitle>
-            </v-list-item-content>
-           </v-list-item>
-          <v-divider></v-divider>
-          <v-list-item>
+      > 
+        <v-list-item>
+          <v-list-item-icon class="ml-auto mr-0" @click="drawer=false">
+              <v-icon>close</v-icon>
+            </v-list-item-icon>
+        </v-list-item>
+        <v-list-item @click="goRecruitMainPage">
             <v-list-item-icon>
               <v-icon>mdi-home</v-icon>
             </v-list-item-icon>
-            <v-list-item-title>Home</v-list-item-title>
+            <v-list-item-title>메인페이지</v-list-item-title>
             <v-spacer></v-spacer>
-
-          </v-list-item>
-
-          <v-list-item>
-            <v-list-item-icon>
-              <v-icon>mdi-account</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title>Account</v-list-item-title>
-          </v-list-item>
-         </v-list>
-    </v-navigation-drawer>
-     </v-card>
-      <!-- <v-list>
-        <v-list-item
-          v-for="item in items"
-          :key="item.title"
-          link
-        >
-          <v-list-item-icon>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-icon>
-
-          <v-list-item-content>
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
-          </v-list-item-content>
         </v-list-item>
-      </v-list> -->
-    
+        <v-list-item @click="goMypage" v-if="isLogin">
+          <v-list-item-icon>
+            <v-icon>mdi-account</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>마이페이지</v-list-item-title>
+        </v-list-item>
+        <v-list-item @click="goRecruitCalanderPage()">
+          <v-list-item-icon>
+            <v-icon>calendar_today</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>공고 달력</v-list-item-title>
+        </v-list-item>
+        <v-list-item @click="goStudyPage()" v-if="isLogin">
+          <v-list-item-icon>
+            <v-icon>bookmarks</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>스터디</v-list-item-title>
+        </v-list-item>
+        <v-list-item @click="GoManagePage" v-if="isMr()==='0'">
+          <v-list-item-icon>
+            <v-icon>vpn_key</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>페이지 관리</v-list-item-title>
+        </v-list-item>
+        <v-list-item>
+          <v-btn
+            v-if="isLogin"
+            @click="goLogout"
+            @click.stop="dialog =!dialog"
+            class="btn-colored v-btn v-btn--flat v-btn--text theme--dark v-size--default mx-auto"
+            aria-label="Support"
+            style="min-width: 48px;"
+            depressed 
+          >
+            <span class="text-colored">로그아웃</span>
+          </v-btn>
+          <v-btn
+            v-else
+            @click.stop="dialog=!dialog"
+            @click="goLogin()"
+            class="btn-colored v-btn v-btn--flat v-btn--text v-size--default mx-auto"
+            aria-label="Support"
+            style="min-width: 48px;"
+          >
+            <span class="text-colored">로그인/회원가입</span>
+          </v-btn>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
+  </v-app-bar>  
 </template>
 <script>
 import SignUpIn from "./SignUpIn.vue";
@@ -192,6 +197,9 @@ export default {
     getImgUrl(img) {
       return require("../../assets/" + img)
     },
+    goRecruitMainPage() {
+      router.push({ name: "recruitmain" }).catch(() => {})
+    },
     goRecruitCalanderPage() {
       router.push({ name: "recruitcalender" }).catch(() => {})
     },
@@ -219,7 +227,7 @@ export default {
     {
       router.push({name:"admin"}).catch(() => {})
     }
-  }
+  },
 };
 </script>
 

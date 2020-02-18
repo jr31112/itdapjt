@@ -8,7 +8,7 @@
           <v-col cols="3">
             <v-card class="mx-auto ml-5">
               <v-img height="180" width="200" v-if="this.userInfo.user.uimg" :src="this.userInfo.user.uimg" dark="dark"></v-img>
-              <v-img height="180" width="200" src="../assets/noimg.png" dark="dark" :contain="true" v-else></v-img>
+              <v-img height="180" width="200" src="   ../assets/noimg.png" dark="dark" :contain="true" v-else></v-img>
             </v-card>
           </v-col>
           <v-col cols="6">

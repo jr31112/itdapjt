@@ -36,19 +36,19 @@ export default {
   },
   methods: {
     doScrap(wid){
-		  axios.post('http://192.168.31.54:8197/itda/api/scrapWanted/',{"wid":wid},{'headers' : {"jwt-auth-token": localStorage.getItem("access_token")}})
+		  axios.post('https://i02b201.p.ssafy.io:8197/itda/api/scrapWanted/',{"wid":wid},{'headers' : {"jwt-auth-token": localStorage.getItem("access_token")}})
             .then(()=>{this.getDetailData()})
 	  },
     getDetailData(){
       if (this.isLogin){
-        axios.get(`http://192.168.31.54:8197/itda/api/getWantedByID/${this.$route.params.id}`,{'headers' : {"jwt-auth-token": localStorage.getItem("access_token")}})
+        axios.get(`https://i02b201.p.ssafy.io:8197/itda/api/getWantedByID/${this.$route.params.id}`,{'headers' : {"jwt-auth-token": localStorage.getItem("access_token")}})
         .then(response=>{
           this.recruit = response.data
         })
         .catch(()=>{})
       }
       else{
-        axios.get(`http://192.168.31.54:8197/itda/api/getWantedByID/${this.$route.params.id}`)
+        axios.get(`https://i02b201.p.ssafy.io:8197/itda/api/getWantedByID/${this.$route.params.id}`)
         .then(response=>{
           this.recruit = response.data
         })

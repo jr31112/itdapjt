@@ -68,14 +68,14 @@ export default {
     },
     methods:{
         getDefaultStudies(){
-            axios.get('http://192.168.31.54:8197/itda/api/getAllStudy')
+            axios.get('https://i02b201.p.ssafy.io:8197/itda/api/getAllStudy')
             .then(response=>{
                 this.defaultStudies = response.data
             })
         },
         getLoginStudies(){
             if (this.isLogin){
-                axios.get("http://192.168.31.54:8197/itda/api/getUser", {headers:{"jwt-auth-token": localStorage.getItem("access_token")}})
+                axios.get("https://i02b201.p.ssafy.io:8197/itda/api/getUser", {headers:{"jwt-auth-token": localStorage.getItem("access_token")}})
                     .then(response => {
                         this.loginStudies = response.data.myStudies
                         var len = this.loginStudies.length % 4
@@ -105,7 +105,7 @@ export default {
                 this.formData.typeName = '기타'
             }
             if (this.$refs.form.validate()) {
-                axios.post('http://192.168.31.54:8197/itda/api/createStudy', this.formData, {'headers' : {"jwt-auth-token": localStorage.getItem("access_token")}})
+                axios.post('https://i02b201.p.ssafy.io:8197/itda/api/createStudy', this.formData, {'headers' : {"jwt-auth-token": localStorage.getItem("access_token")}})
                 .then(()=>{
                     alert('스터디를 생성하였습니다.')
                     this.$refs.form.reset()

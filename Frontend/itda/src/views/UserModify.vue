@@ -1,35 +1,46 @@
 <template>
-    <v-container>
-        <v-card>
+    <v-container >
+        <v-card >
+            <v-form ref="form" @submit.prevent="submit">
             <v-card-title>User Info</v-card-title>
             <v-card-subtitle>User Info</v-card-subtitle>
             <v-row>
-                <v-col cols='3'>
-                    <v-file-input
-                        label="your image input"
-                        filled="filled"
-                        hint="hint"
-                        height="200px"
-                        prepend-icon="mdi-camera"
-                        class="ma-2"
-                        @click="goThis()"></v-file-input>
+                <v-col cols='3' >
+                 <v-card  class="mx-auto ml-5">
+                        <v-img height="180" width="200" v-if="this.userInfo.user.uimg===null"
+                        src="../assets/noimg.png"
+                        dark="dark"></v-img>
+                        <v-img height="180" width="200" v-else
+                        :src= this.userInfo.user.uimg
+                        dark="dark"></v-img>
+                    </v-card>
                 </v-col>
                 <v-col cols='6'>
                     <v-card-subtitle>User Name</v-card-subtitle>
                     <v-card-text>
-                        <v-text-field v-model="userInfo.uname" label="Name"></v-text-field>
+                        <v-text-field v-model="userInfo.user.uname" label="Name"></v-text-field>
                     </v-card-text>
+                     <v-file-input
+                        ref='uimg'
+                        accept="image/png, image/jpeg, image/bmp"
+                        placeholder="Input Image"
+                        prepend-icon="mdi-camera"
+                        label="My Image"
+                        @change="onChange($event)"    
+                        >
+                    </v-file-input>
                 </v-col>
+                
             </v-row>
 
             <v-card-subtitle>User email</v-card-subtitle>
             <v-card-text>
-                <v-text-field v-model="userInfo.email" label="Email"></v-text-field>
+                <v-text-field v-model="userInfo.user.email" label="Email"></v-text-field>
             </v-card-text>
 
             <v-card-subtitle>User Major</v-card-subtitle>
             <v-card-text>
-                <v-text-field v-model="userInfo.major" label="Major"></v-text-field>
+                <v-text-field v-model="userInfo.user.major" label="Major"></v-text-field>
             </v-card-text>
 
             <v-card-title>Tech Stack
@@ -67,8 +78,6 @@
                             <v-btn color="blue darken-1" text="text" @click="goSaveStack">Save</v-btn>
                             <v-btn color="blue darken-1" text="text" @click="dialog = false">Close</v-btn>
                         </v-card-actions>
-                        
-                  
                     </v-card>
                 </v-dialog>
             </v-card-title>
@@ -77,10 +86,14 @@
             >
                 <!-- <v-for="i in userInfo.tname.length()" -->
                     <!-- {{userInfo.mystacks.length}} -->
-                <v-btn v-for="i in userInfo.mystacks.length" :key="i" @click="removeStack(i-1, userInfo.mystacks[i-1].sid)">{{userInfo.mystacks[i-1].tname}} </v-btn>
+                <v-btn class = ma-2 v-for="i in userInfo.mystacks.length" :key="i" @click="removeStack(i-1, userInfo.mystacks[i-1].sid)">{{userInfo.mystacks[i-1].tname}} </v-btn>
             </v-card-text>
+             <v-spacer></v-spacer>
+            <v-row justify="center">
+             <v-btn class =ma-3 color="black darken-1" text="text" @click="goSave">Submit</v-btn>
+            </v-row>
+          </v-form>
         </v-card>
-
 
         <v-divider></v-divider>
         <v-card>
@@ -98,9 +111,12 @@ import axios from 'axios'
         data() {
             return {
                 userInfo: {},
-                files: [],
-                MystackList: [],
+                image:'',
                 dialog:false,
+                // formData:
+                // {
+                //     uimg:""
+                // },
                 stacklist: [
                     {
                         sid: 1,
@@ -315,6 +331,19 @@ import axios from 'axios'
             this.getAllData()
         },
         methods: {
+            goSave()
+            {
+                console.log(this.userInfo)
+                axios.post('https://i02b201.p.ssafy.io:8197/itda/api//updateUser',this.userInfo
+                 ,{headers:{"jwt-auth-token": localStorage.getItem("access_token")}}
+                 )
+                .then(response=>{
+                    if (response.data.state == "success"){
+                    alert("수정이 완료되었습니다.")
+                    }
+                    
+                })
+            },
             removeStack(idx, sid){
                 this.userInfo.mystacks.splice(idx, 1)
                 this.stacklist[sid-1].value = false
@@ -333,8 +362,8 @@ import axios from 'axios'
                 this.userInfo.mystacks = tmp
             },
             getAllData(){
-                axios
-                    .get(`http://192.168.31.54:8197/itda/api/getUser/`, {
+                axios   
+                    .get(`https://i02b201.p.ssafy.io:8197/itda/api/getUser/`, {
                         headers: {
                             "jwt-auth-token": localStorage.getItem("access_token")
                         }
@@ -342,7 +371,8 @@ import axios from 'axios'
                     .then(response => {
                         if (response.data.state == 'success') {
                             this.userInfo = response.data
-                            var tmp_stacks = response.data.mystacks
+                            
+                            var tmp_stacks = response.data.mystacks                            
                             for (var i=0; i<tmp_stacks.length;i++){
                                 this.stacklist[tmp_stacks[i].sid-1].value = true
                             }
@@ -354,8 +384,27 @@ import axios from 'axios'
                         //에러가 났다. 다시 로그인해라.
                     })
 
-                },
-
+            },
+            onChange(event) {
+                console.log(event)
+                this.image = this.$refs.uimg.value;
+                console.log(this.image)
+                let formData = new formData()
+                formData.append('image', this.image)
+                axios   
+                    .post('https://i02b201.p.ssafy.io:8197/itda/api/uploadFile',formData , {
+                        headers: { 
+                            "jwt-auth-token": localStorage.getItem("access_token"),
+                            "Content-Type": "multipart/form-data"
+                        }
+                    })
+                    .then(response => 
+                    {
+                        console.log(response);
+                        this.imageResult= response.data.fileDownloadUri;
+                        this.userInfo.user.uimg = this.imageResult
+                    })
+            },
         }
     }
 </script>

@@ -53,7 +53,7 @@ export default {
         router.push({name:'recruitdetail',params:{id:wid}})
 	  },
 	  doScrap(wid){
-		  axios.post('http://192.168.31.54:8197/itda/api/scrapWanted/',{"wid":wid},{'headers' : {"jwt-auth-token": localStorage.getItem("access_token")}})
+		  axios.post('https://i02b201.p.ssafy.io:8197/itda/api/scrapWanted/',{"wid":wid},{'headers' : {"jwt-auth-token": localStorage.getItem("access_token")}})
             .then(()=>{
 				this.$emit('update')})
 	  },

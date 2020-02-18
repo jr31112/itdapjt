@@ -29,7 +29,7 @@ export default {
     },
     methods: {
         getWantedList() {
-            axios.get('http://192.168.31.54:8197/itda/api/getWantedAll')
+            axios.get('https://i02b201.p.ssafy.io:8197/itda/api/getWantedAll')
                 .then(response => {this.allContent = response.data})
         },
         getKeyword(){

@@ -362,7 +362,7 @@ import axios from 'axios'
                 this.userInfo.mystacks = tmp
             },
             getAllData(){
-                axios   
+                axios
                     .get(`https://i02b201.p.ssafy.io:8197/itda/api/getUser/`, {
                         headers: {
                             "jwt-auth-token": localStorage.getItem("access_token")

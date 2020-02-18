@@ -5,7 +5,7 @@
                 <v-col cols="12" sm="4">
                     <v-select
                         v-model="period"
-                        :items="periodOptions"
+                        :items="periodOptions" 
                         attach="attach"
                         chips="chips"
                         label="기간"
@@ -92,19 +92,20 @@
                 periodOptions: [
                     {
                         text: '시작',
-                        value: '시작'
+                        value: '시작',
                     }, {
                         text: '종료',
-                        value: '종료'
+                        value: '종료',
                     }
                 ],
                 recruitmentOptions: [
                     {
                         text: '인턴',
-                        value: '인턴'
+                        value: '인턴',
+                        
                     }, {
                         text: '신입',
-                        value: '신입'
+                        value: '신입',
                     }
                 ],
                 stacklist: [
@@ -287,9 +288,9 @@
                     })
                     .catch(error => {
                         console.log(error)
-                    })
-                },
-
+                })
+            },
+           
 
             
             optionmanager() {
@@ -305,6 +306,7 @@
             },
             // 1 신입만, 2 인턴, 3 신입인턴
             optionrecruit() {
+                
                 if (this.recruit.length == 1) {
                     if (this.recruit[0] == "신입") {
                         this.options.recruit = 1

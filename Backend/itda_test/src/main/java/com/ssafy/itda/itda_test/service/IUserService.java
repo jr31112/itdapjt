@@ -16,4 +16,5 @@ public interface IUserService {
 	List<Stack> getMyStacks(int uid);
 	List<String> getMyScrapWanteds(int uid);
 	void updatePermission(User model);
+	void imgUpload(User user);
 }

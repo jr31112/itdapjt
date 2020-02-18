@@ -80,7 +80,9 @@
         </v-toolbar>
         <div class="pa-4" style="max-width: 540px">
           <!-- pa는 패딩오토 -->
-          <v-text-field v-model="email_lg" label="email을 입력하세요"></v-text-field>
+          <v-text-field v-model="email_lg" 
+          @keyup.enter="goLogin()"
+          label="email을 입력하세요"></v-text-field>
           <v-text-field
             v-model="password_lg"
             type="password"
@@ -97,9 +99,10 @@
               {
                   email: email_lg,
                   pw: password_lg
-              }, reChk = !reChk ,
+              },
                  isCong= false
-              )"
+              )
+              goLogin()" 
           >Login</v-btn>
           <!-- social login -->
           <v-btn
@@ -161,7 +164,7 @@ export default {
         this.password_rg1 == null
       ) {
         this.isFormError = true;
-        this.isResisterError = false;
+        this.isregisterError = false;
         this.isPwError = false;
       } else if (
         this.email_rg.indexOf("@") == -1 ||
@@ -170,7 +173,7 @@ export default {
         this.password_rg !== this.password_rg1
       ) {
         this.isFormError = false;
-        this.isResisterError = false;
+        this.isRegisterError = false;
         this.isPwError = true;
       }
       else {
@@ -204,7 +207,7 @@ export default {
     ...mapMutations(["loginSuccess"]),
     goInit() {
       //제출 후 초기화.
-      (this.email_lg = null),
+        (this.email_lg = null),
         (this.password_lg = null),
         (this.name = null),
         (this.email_rg = null),
@@ -213,6 +216,7 @@ export default {
       if (this.isChangeLoginRegi) {
         this.reChk = false;
         this.isCong = false;
+          this.isFormError = false;
       } else {
         this.isRegisterError = false;
         this.isPwError = false;
@@ -220,10 +224,17 @@ export default {
       }
     },
     goLogin() {
+      if (
+        this.email_lg == '' ||
+        this.password_lg== ''
+      ) {
+        this.isFormError = true;
+      } 
       this.$store.dispatch("login", {
         email: this.email_lg,
         pw: this.password_lg
       });
+
     },
     socialLogin() {
       const provider = new firebase.auth.GoogleAuthProvider();

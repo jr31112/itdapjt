@@ -297,7 +297,7 @@ export default {
     },
     validate() {
       axios
-        .post("http://192.168.31.54:8197/itda/api/requstStack", this.tname, {
+        .post("http://192.168.31.54:8197/itda/api/requstStack", {tname : this.tname}, {
           headers: {
             "jwt-auth-token": localStorage.getItem("access_token")
           }

@@ -1,5 +1,27 @@
 <template>
-  <v-app-bar app>
+  <v-card
+    class="mx-auto overflow-hidden"
+    height="800"
+  >
+  <v-app-bar app> 
+    <!-- //class="d-flex d-sm-none" --> 
+    <v-app-bar-nav-icon class="d-flex d-sm-none" 
+    @click="drawer=!drawer"><v-icon >menu</v-icon>
+    </v-app-bar-nav-icon>
+ 
+    
+     <!-- <v-navigation-drawer v-model="drawer" temporary absolute> 
+        <v-list-item link>
+             <v-avatar
+                  size="30px"
+                  class="mx-3"
+             >
+            <v-img :src="getImgUrl('jw.jpg')"
+              />
+            </v-avatar>
+           <v-list-item-title>Jung Won</v-list-item-title>
+    </v-list-item>
+    </v-navigation-drawer> -->
     <router-link :to="{name:'recruitmain'}">
       <v-img :src="getImgUrl('logoo.png')" style="width :6.5rem" />
     </router-link>
@@ -24,45 +46,16 @@
       </v-btn>
     </div>
     <v-spacer></v-spacer>
-    <div class="search">
-      <div class="v-responsive mr-0 mr-md-6 hidden-xs-only" style="max-width: 300px;">
-        <div class="v-responsive__content">
-          <div class="v-input v-input--hide-details v-input--dense theme--dark v-text-field v-text-field--single-line v-text-field--solo v-text-field--solo-inverted v-text-field--solo-flat v-text-field--is-booted v-text-field--enclosed v-text-field--rounded">
-            <div class="v-input__control">
-              <div class="v-input__slot">
-                <div class="v-text-field__slot">
-                  <label
-                    for="search"
-                    class="v-label theme--dark"
-                    style="left: 0px; right: auto; position: absolute;"
-                  ></label>
-                  <input
-                    id="search"
-                    v-model="content"
-                    type="text"
-                    class="ds-input"
-                    placeholder="공고 통합 검색"
-                    autocomplete="off"
-                    spellcheck="false"
-                    role="combobox"
-                    aria-autocomplete="list"
-                    aria-expanded="false"
-                    aria-label="search input"
-                    aria-owns="algolia-autocomplete-listbox-0"
-                    dir="auto"
-                    @keyup.enter="goSearch(content)"
-                  />
-                </div>
-                <div class="v-input__prepend-inner" @click.prevent="goSearch(content)">
-                  <div class="v-input__icon v-input__icon--prepend-inner">
-                    <i aria-hidden="true" class="v-icon notranslate mdi mdi-magnify theme--dark"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div class="searchbar mt-7 mr-0 mr-md-6 hidden-xs-only" style="max-width: 300px;">
+      <v-text-field
+        outlined
+        label="채용 공고 검색"
+        @keyup.enter="goSearch(researchValue)"
+        dense="true"
+        color="teal"
+        v-model="researchValue"
+      >
+      </v-text-field>
     </div>
     <div class="user">
 
@@ -78,12 +71,14 @@
     </v-btn>
     <v-btn
       v-if="isLogin"
-      class="btn-colored v-btn v-btn--flat v-btn--text theme--dark v-size--default"
+      class="mx-3 btn-border-colored v-btn v-btn--flat v-btn--text v-size--default"
       aria-label="Support"
       style="min-width: 48px;"
       @click="goMypage"
+      outlined
+      color="teal"
     >
-      <span class="text-colored">마이페이지</span>
+      <span class="text-border-colored">마이페이지</span>
     </v-btn>
     <v-btn
       v-if="isLogin"
@@ -92,6 +87,7 @@
       class="btn-colored v-btn v-btn--flat v-btn--text theme--dark v-size--default"
       aria-label="Support"
       style="min-width: 48px;"
+      depressed 
     >
       <span class="text-colored">로그아웃</span>
     </v-btn>
@@ -114,7 +110,68 @@
     >
       <sign-up-in @statusControl="dialog =false"/>
     </v-dialog>
-  </v-app-bar>
+    </v-app-bar>  
+    <v-navigation-drawer 
+      v-model="drawer" 
+      absolute
+      temporary>
+      <v-list
+        nav
+        dense
+      >
+      <v-list-item >
+        <v-list-item-avatar>
+          
+            <img src="https://randomuser.me/api/portraits/men/81.jpg">
+              <!-- <v-img 
+                  v-if="this.imageResult===null"
+                  src="../../assets/noimg.png"
+                  dark="dark"></v-img>
+              <v-img v-else
+              :src= this.imageResult
+              dark="dark"></v-img> -->
+            </v-list-item-avatar>
+
+            <v-list-item-content>
+              <v-list-item-title>김정원님!</v-list-item-title>
+              <v-list-item-subtitle>환영합니다.</v-list-item-subtitle>
+            </v-list-item-content>
+           </v-list-item>
+          <v-divider></v-divider>
+          <v-list-item>
+            <v-list-item-icon>
+              <v-icon>mdi-home</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>Home</v-list-item-title>
+            <v-spacer></v-spacer>
+
+          </v-list-item>
+
+          <v-list-item>
+            <v-list-item-icon>
+              <v-icon>mdi-account</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>Account</v-list-item-title>
+          </v-list-item>
+         </v-list>
+    </v-navigation-drawer>
+     </v-card>
+      <!-- <v-list>
+        <v-list-item
+          v-for="item in items"
+          :key="item.title"
+          link
+        >
+          <v-list-item-icon>
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list> -->
+    
 </template>
 <script>
 import SignUpIn from "./SignUpIn.vue";
@@ -127,13 +184,16 @@ export default {
   },
   data() {
     return {
+      imageResult:false,
+      drawer:false,
       content:null,
       chk: true,
       email: null,
       password: null,
       dialog: false,
       token: localStorage.getItem("access_token"),
-      isLoginFlag: false
+      isLoginFlag: false,
+      researchValue:""
     };
   },
   computed: {
@@ -175,7 +235,6 @@ export default {
     {
       router.push({name:"admin"}).catch(() => {})
     }
-  
   }
 };
 </script>
@@ -213,10 +272,16 @@ export default {
 .btn-colored {
   background:rgba(0, 170, 179);
 }
+.btn-border-colored {
+  border: rgba(0, 170, 179);
+}
 .text-colored {
   color: white;
   /* font-size: 150%; */
 
+}
+.text-border-colored {
+  color: rgba(0, 170, 179);
 }
 /* .text-colored2 {
   color: #070103;
@@ -224,5 +289,9 @@ export default {
 }
 .btn-colored2:hover {
   background:rgba(0, 170, 179, 0.5);
+} */
+
+/* .search-input {
+  border-color: grey;
 } */
 </style>

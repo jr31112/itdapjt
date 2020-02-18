@@ -51,4 +51,9 @@ public class StackServiceImpl implements IStackService {
 		stackDao.deleteMyStack(newms);
 	}
 
+	@Override
+	public void requestStack(Stack model) {
+		stackDao.requestStack(model);
+	}
+
 }

@@ -1,5 +1,27 @@
 <template>
-  <v-app-bar app>
+  <v-card
+    class="mx-auto overflow-hidden"
+    height="800"
+  >
+  <v-app-bar app> 
+    <!-- //class="d-flex d-sm-none" --> 
+    <v-app-bar-nav-icon class="d-flex d-sm-none" 
+    @click="drawer=!drawer"><v-icon >menu</v-icon>
+    </v-app-bar-nav-icon>
+ 
+    
+     <!-- <v-navigation-drawer v-model="drawer" temporary absolute> 
+        <v-list-item link>
+             <v-avatar
+                  size="30px"
+                  class="mx-3"
+             >
+            <v-img :src="getImgUrl('jw.jpg')"
+              />
+            </v-avatar>
+           <v-list-item-title>Jung Won</v-list-item-title>
+    </v-list-item>
+    </v-navigation-drawer> -->
     <router-link :to="{name:'recruitmain'}">
       <v-img :src="getImgUrl('logoo.png')" style="width :6.5rem" />
     </router-link>
@@ -114,7 +136,68 @@
     >
       <sign-up-in @statusControl="dialog =false"/>
     </v-dialog>
-  </v-app-bar>
+    </v-app-bar>  
+    <v-navigation-drawer 
+      v-model="drawer" 
+      absolute
+      temporary>
+      <v-list
+        nav
+        dense
+      >
+      <v-list-item >
+        <v-list-item-avatar>
+          
+            <img src="https://randomuser.me/api/portraits/men/81.jpg">
+              <!-- <v-img 
+                  v-if="this.imageResult===null"
+                  src="../../assets/noimg.png"
+                  dark="dark"></v-img>
+              <v-img v-else
+              :src= this.imageResult
+              dark="dark"></v-img> -->
+            </v-list-item-avatar>
+
+            <v-list-item-content>
+              <v-list-item-title>김정원님!</v-list-item-title>
+              <v-list-item-subtitle>환영합니다.</v-list-item-subtitle>
+            </v-list-item-content>
+           </v-list-item>
+          <v-divider></v-divider>
+          <v-list-item>
+            <v-list-item-icon>
+              <v-icon>mdi-home</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>Home</v-list-item-title>
+            <v-spacer></v-spacer>
+
+          </v-list-item>
+
+          <v-list-item>
+            <v-list-item-icon>
+              <v-icon>mdi-account</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>Account</v-list-item-title>
+          </v-list-item>
+         </v-list>
+    </v-navigation-drawer>
+     </v-card>
+      <!-- <v-list>
+        <v-list-item
+          v-for="item in items"
+          :key="item.title"
+          link
+        >
+          <v-list-item-icon>
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list> -->
+    
 </template>
 <script>
 import SignUpIn from "./SignUpIn.vue";
@@ -127,6 +210,8 @@ export default {
   },
   data() {
     return {
+      imageResult:false,
+      drawer:false,
       content:null,
       chk: true,
       email: null,
@@ -176,7 +261,6 @@ export default {
     {
       router.push({name:"admin"}).catch(() => {});
     }
-  
   }
 };
 </script>

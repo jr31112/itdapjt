@@ -5,13 +5,14 @@
             <v-card-title>User Info</v-card-title>
             <v-card-subtitle>User Info</v-card-subtitle>
             <v-row>
-                <v-col cols='3' >
-                 <v-card  class="mx-auto ml-5">
-                        <v-img height="180" width="200" v-if="this.userInfo.user.uimg===null"
+                <v-col cols='3'>
+                    <v-card  class="ml-5 " height="180" width="200">
+                        <v-img height="180" width="200" 
+                        v-if="this.imageResult===null"
                         src="../assets/noimg.png"
                         dark="dark"></v-img>
                         <v-img height="180" width="200" v-else
-                        :src= this.userInfo.user.uimg
+                        :src= this.imageResult
                         dark="dark"></v-img>
                     </v-card>
                 </v-col>
@@ -21,8 +22,8 @@
                         <v-text-field v-model="userInfo.user.uname" label="Name"></v-text-field>
                     </v-card-text>
                      <v-file-input
-                        ref='uimg'
-                        accept="image/png, image/jpeg, image/bmp"
+                        input-type="file"
+                        ref="file"
                         placeholder="Input Image"
                         prepend-icon="mdi-camera"
                         label="My Image"
@@ -110,13 +111,10 @@ import axios from 'axios'
     export default {
         data() {
             return {
+                image: null,
                 userInfo: {},
-                image:'',
                 dialog:false,
-                // formData:
-                // {
-                //     uimg:""
-                // },
+                imageResult: null,
                 stacklist: [
                     {
                         sid: 1,
@@ -386,13 +384,12 @@ import axios from 'axios'
 
             },
             onChange(event) {
-                console.log(event)
-                this.image = this.$refs.uimg.value;
-                console.log(this.image)
-                let formData = new formData()
-                formData.append('image', this.image)
-                axios   
-                    .post('https://i02b201.p.ssafy.io:8197/itda/api/uploadFile',formData , {
+                this.image = event;
+                let formData = {"image": this.image}
+                // formData.append('image', this.image)
+                console.log(formData)
+                axios    
+                    .post('https://i02b201.p.ssafy.io:8197/itda/api/uploadFile', formData, {
                         headers: { 
                             "jwt-auth-token": localStorage.getItem("access_token"),
                             "Content-Type": "multipart/form-data"
@@ -400,9 +397,9 @@ import axios from 'axios'
                     })
                     .then(response => 
                     {
+                        console.log("gkdl")
                         console.log(response);
                         this.imageResult= response.data.fileDownloadUri;
-                        this.userInfo.user.uimg = this.imageResult
                     })
             },
         }

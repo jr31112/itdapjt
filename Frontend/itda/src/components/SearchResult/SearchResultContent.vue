@@ -1,8 +1,5 @@
 <template>
   <v-row>
-      <v-overlay :value="overlay">
-        <v-progress-circular indeterminate size="64"></v-progress-circular>
-      </v-overlay>
       <v-col>
           <v-tabs v-model="tab" background-color="primary" :right="true">
             <v-tab v-for="recruit in recruits" :key="recruit.tab">{{recruit.title}}</v-tab>
@@ -28,7 +25,9 @@
                     </tbody>
                 </v-simple-table>
                 <div v-else>
-                    데이터가 없어요...ㅠ
+                    <v-row>
+                        <v-col style="text-align:center">검색 결과가 존재하지 않네요</v-col>
+                    </v-row>
                 </div>
             </v-tab-item>
           </v-tabs-items>
@@ -52,7 +51,6 @@ export default {
                 {tab:1, title:"진행중인 공고", searchResult:[]},
                 {tab:2, title:"마감된 공고", searchResult:[]}
             ],
-            overlay:false
         }
     },
     methods:{
@@ -62,7 +60,6 @@ export default {
         updateOptions(){
             const presenttmp = []
             const expiredtmp = []
-            this.overlay = true
             var today = new Date()
             for (var i=0; i<this.allContent.length;i++){
                 var endday = new Date(this.allContent[i].wanted.endDate)
@@ -135,7 +132,7 @@ export default {
             }
             this.recruits[0].searchResult = presenttmp
             this.recruits[1].searchResult = expiredtmp
-            setTimeout(() => {this.overlay = false}, 1000)
+            this.overlay = false
         },
     },
     watch:{

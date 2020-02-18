@@ -50,8 +50,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="updateUser"
 	parameterType="com.ssafy.itda.itda_test.model.User">
 		UPDATE user_t
-		SET pw = sha1(#{pw}), major = #{major}, uimg = #{uimg}, uname = #{uname}
+		SET pw = sha1(#{pw}), major = #{major}, uname = #{uname}
 		WHERE uid = #{uid}
+	</update>
+	
+	<update id="imgUpload">
+		UPDATE user_t
+		SET uimg = #{uimg} WHERE uid = #{uid}
 	</update>
 	
 	<select id="getMyStacks" parameterType="java.lang.Integer" resultType="com.ssafy.itda.itda_test.model.Stack">

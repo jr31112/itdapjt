@@ -59,12 +59,9 @@ export default new Vuex.Store({
             dispatch("getMemberInfo")
           }
           else {
-            return;
+             return;
           }
         })
-        .catch(err => {
-          console.log("hi" + err);
-        });
     },
     logout({ commit }) {
       commit("logout")
@@ -90,7 +87,6 @@ export default new Vuex.Store({
       }
       axios.get("https://i02b201.p.ssafy.io:8197/itda/api/getUser", {headers:{"jwt-auth-token": token}})
         .then(res => {
-          console.log(res)
           let userInfo = res.data
           commit('loginSuccess', userInfo)
           localStorage.setItem("mid",userInfo.user.auth)

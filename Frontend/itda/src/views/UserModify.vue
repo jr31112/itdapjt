@@ -40,6 +40,27 @@
           <v-text-field v-model="userInfo.user.email" label="Email"></v-text-field>
         </v-card-text>
 
+        <v-card-subtitle>Password</v-card-subtitle>
+        <v-card-text>
+          <v-row>
+            <v-col cols="6">
+              <v-text-field
+                v-model="password_rg"
+                :value="password_rg"
+                type="password"
+                label="password*"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="6">
+              <v-text-field
+                v-model="password_rg1"
+                :value="password_rg1"
+                type="password"
+                label="password check*"
+              ></v-text-field>
+            </v-col>
+          </v-row>
+        </v-card-text>
         <v-card-subtitle>User Major</v-card-subtitle>
         <v-card-text>
           <v-text-field v-model="userInfo.user.major" label="Major"></v-text-field>
@@ -118,6 +139,8 @@ export default {
     return {
       userInfo: {},
       selectImg: "",
+      password_rg: "",
+      password_rg1: "",
       dialog: false,
       // formData:
       // {
@@ -378,17 +401,39 @@ export default {
   },
   methods: {
     goSave() {
+      if (this.password_rg != this.password_rg1) {
+        alert("비밀번호를 확인해주세요!");
+        return;
+      }
+      if (this.password_rg == "" || this.password_rg1 == "") {
+        alert("비밀번호를 입력해주세요!");
+        return;
+      }
+      if (this.userInfo.user.uname == "") {
+        alert("이름을 입력해주세요!");
+        return;
+      }
       console.log(this.userInfo);
-      alert("hello")
+      let params = {
+        user: {
+          email: this.userInfo.user.email,
+          uname: this.userInfo.user.uname,
+          major: this.userInfo.user.major,
+          pw: this.password_rg
+        },
+        mystacks: this.userInfo.mystacks
+      };
       axios
         .put(
+          //   "http://192.168.31.54:8197/itda/api/updateUser",
           "https://i02b201.p.ssafy.io:8197/itda/api/updateUser",
-          this.userInfo,
+          params,
           {
             headers: { "jwt-auth-token": localStorage.getItem("access_token") }
           }
         )
         .then(response => {
+          alert(response.data.msg);
           if (response.data.state == "success") {
             alert("수정이 완료되었습니다.");
           }
@@ -446,7 +491,11 @@ export default {
       };
 
       axios
-        .post("https://i02b201.p.ssafy.io:8197/itda/api/uploadFile", formdata, config)
+        .post(
+          "https://i02b201.p.ssafy.io:8197/itda/api/uploadFile",
+          formdata,
+          config
+        )
         // .post("http://192.168.31.54:8197/itda/api/uploadFile", formdata, config)
         .then(response => {
           console.log(response);

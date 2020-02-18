@@ -32,9 +32,11 @@
         </v-btn>
 
         <div>
+            <v-hover>
             <v-avatar size="45px" class="mx-1">
-                <v-img  :src="getImgUrl('itda1.png')" @click="goAboutus"/>
+                <v-img  :src="getImgUrl('bottom.png')" @click="goAboutus"/>
             </v-avatar>
+            </v-hover>
             &copy;
             {{new Date().getFullYear()}}</div>
     </v-footer>
@@ -50,6 +52,9 @@ import router from '../router';
                 window.open(text, "_blank");
             },
             goAboutus(){
+                if(this.$router.currentRoute.name == 'aboutus'){
+                    return;
+                }
                 router.push({name:'aboutus'})
             }
         }

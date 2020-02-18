@@ -3,7 +3,7 @@
     <v-app-bar-nav-icon class="d-flex d-sm-none" @click="drawer=true"><v-icon >menu</v-icon>
     </v-app-bar-nav-icon>
     <router-link :to="{name:'recruitmain'}">
-      <v-img :src="getImgUrl('logoo.png')" style="width :6.5rem" @click="goRecruitMainPage"/>
+      <v-img :src="getImgUrl('logo.png')" style="width :6.5rem" />
     </router-link>
     <div class="page-router">
       <v-btn

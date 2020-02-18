@@ -139,7 +139,7 @@ export default {
       imgUrl: "../../assets/"
     };
   },
-  mounted() {
+  created() {
     let private_token = "Ktzuz56Epv97yEezs463";
     let email = [
       "0713mingyu@naver.com",
@@ -222,11 +222,11 @@ export default {
                           )
                           .then(response => {
                             this.projects5 = response.data.length+"";
+                            this.readData = true;
                           });
                       });
                   });
               });
-            this.readData = true;
           });
       })
       .catch(() => {});

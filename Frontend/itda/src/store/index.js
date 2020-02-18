@@ -48,7 +48,7 @@ export default new Vuex.Store({
   {
     login({ dispatch }, { email, pw }) {
       axios
-        .post('http://192.168.31.54:8197/itda/api/login', {
+        .post('https://i02b201.p.ssafy.io:8197/itda/api/login', {
           email, pw
         })
         .then(res => {
@@ -87,7 +87,7 @@ export default new Vuex.Store({
       if(!token){
         return;
       }
-      axios.get("http://192.168.31.54:8197/itda/api/getUser", {headers:{"jwt-auth-token": token}})
+      axios.get("https://i02b201.p.ssafy.io:8197/itda/api/getUser", {headers:{"jwt-auth-token": token}})
         .then(res => {
           console.log("정원 확인userinfo:"  )
           console.log(res)

@@ -49,7 +49,7 @@
             getAllUsers() 
             {
                 axios
-                    .get('http://192.168.31.54:8197/itda/api/getAllUsers/')
+                    .get('https://i02b201.p.ssafy.io:8197/itda/api/getAllUsers/')
                     .then(res => {
                         this.allusers =res.data
                     })
@@ -64,7 +64,7 @@
                 else 
                 {
                     axios
-                    .delete('http://192.168.31.54:8197/itda/api/deleteUser/'+ item.uid)
+                    .delete('https://i02b201.p.ssafy.io:8197/itda/api/deleteUser/'+ item.uid)
                     .then(res => {
                         if(res.data.state == 'success'){
                             this.getAllUsers();
@@ -100,7 +100,7 @@
                     }
 
                     axios
-                    .put('http://192.168.31.54:8197/itda/api/updatePermission/', { uid, auth })
+                    .put('https://i02b201.p.ssafy.io:8197/itda/api/updatePermission/', { uid, auth })
                     .then(res => {
                         if(res.data.state == 'success'){
                             this.getAllUsers();

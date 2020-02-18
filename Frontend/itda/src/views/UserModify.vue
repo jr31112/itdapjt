@@ -334,7 +334,7 @@ import axios from 'axios'
             },
             getAllData(){
                 axios
-                    .get(`http://192.168.31.54:8197/itda/api/getUser/`, {
+                    .get(`https://i02b201.p.ssafy.io:8197/itda/api/getUser/`, {
                         headers: {
                             "jwt-auth-token": localStorage.getItem("access_token")
                         }

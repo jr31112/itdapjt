@@ -6,6 +6,7 @@
         :eventLimit="true"
         :events="calendarEvent"
         :eventLimits=6
+        :eventOrder="['color']"
         @change="changeEvent"
         @eventClick="handleDateClick"/>
 </template>
@@ -47,10 +48,10 @@
         },
 
         methods: {
-            handleDateClick(arg) {
-            
-           router.push({ name: "recruitdetail", params: { id:arg.event._def.extendedProps.wid} });
+            handleDateClick(arg) {     
+                router.push({ name: "recruitdetail", params: { id:arg.event._def.extendedProps.wid} });
             },
+
             changeEvent() {
                 this.calendarEvent = []
                 var period = this.options.period
@@ -124,6 +125,9 @@
                             })
                     }
                 }
+                this.calendarEvent.sort(function(a, b){
+                    return a.color - b.color
+                })
             },
 
             filterByRecruitOption(checkIdxList, jobNum) {
@@ -135,6 +139,7 @@
                 }
                 return idx
             },
+            //https://i02b201.p.ssafy.io:8197/itda
             filterByStackOption(checkIdxList, choiceStackList) {
                 var idx = []
                 for (var i = 0; i < checkIdxList.length; i++) {

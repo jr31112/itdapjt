@@ -175,7 +175,7 @@ export default {
       }
       else {
         axios
-          .post("http://192.168.31.54:8197/itda/api/signUp", {
+          .post("https://i02b201.p.ssafy.io:8197/itda/api/signUp", {
             email: this.email_rg,
             pw: this.password_rg,
             uname: this.name
@@ -238,13 +238,13 @@ export default {
           console.log(social_uid);
           axios
             .get(
-              "http://192.168.31.54:8197/itda/api/emailCheck/" + social_email
+              "https://i02b201.p.ssafy.io:8197/itda/api/emailCheck/" + social_email
             )
             .then(response => {
               if (response.data.state == "fail") {
                 //이미 있는 email이라면?
                 axios
-                  .post("http://192.168.31.54:8197/itda/api/login", {
+                  .post("https://i02b201.p.ssafy.io:8197/itda/api/login", {
                     email: social_email,
                     pw: social_uid
                   })
@@ -264,7 +264,7 @@ export default {
               } else {
                 //회원가입 시킨 뒤 로그인 시키자.
                 axios
-                  .post("http://192.168.31.54:8197/itda/api/signUp", {
+                  .post("https://i02b201.p.ssafy.io:8197/itda/api/signUp", {
                     email: social_email,
                     pw: social_uid,
                     uname: social_name
@@ -272,7 +272,7 @@ export default {
                   .then(response => {
                     if (response.data.state == "success") {
                       axios
-                        .post("http://192.168.31.54:8197/itda/api/login", {
+                        .post("https://i02b201.p.ssafy.io:8197/itda/api/login", {
                           email: social_email,
                           pw: social_uid
                         })

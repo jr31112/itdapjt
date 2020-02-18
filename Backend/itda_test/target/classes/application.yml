@@ -1,11 +1,11 @@
 server:
   port: 8197
   contextPath: /itda
-  ssl:
-    key-store: /etc/letsencrypt/live/i02b201.p.ssafy.io/keystore.p12
-    key-store-password: key-itda
-    key-store-type: PKCS12
-    key-alias: airpageserver
+#  ssl:
+#    key-store: /etc/letsencrypt/live/i02b201.p.ssafy.io/keystore.p12
+#    key-store-password: key-itda
+#    key-store-type: PKCS12
+#    key-alias: airpageserver
   
-security:
-  require-ssl:true
+#security:
+#  require-ssl:true

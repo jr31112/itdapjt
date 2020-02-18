@@ -2,7 +2,7 @@
   <div>
     <WidgetsBrand />
     <v-container class="right">
-    <v-btn class="ml-auto" @click.stop="overlay = !overlay">기술스택 등록 요청</v-btn>
+    <v-btn v-if="isLogin" class="ml-auto" @click.stop="overlay = !overlay">기술스택 등록 요청</v-btn>
     <v-dialog v-model="overlay" scrollable max-width="500px">
       <v-card>
         <v-card-title>기술스택 등록 요청</v-card-title>
@@ -156,8 +156,10 @@ export default {
   },
   data() {
     return {
+      isLogin : localStorage.getItem("access_token"),
       tname: "",
       overlay: false,
+      valid:false,
       selected: "Month",
       pjtName: "",
       pjtLink: "",
@@ -297,7 +299,7 @@ export default {
     },
     validate() {
       axios
-        .post("http://192.168.31.54:8197/itda/api/requstStack", {tname : this.tname}, {
+        .post("https://i02b201.p.ssafy.io:8197/itda/api/requstStack", {tname : this.tname}, {
           headers: {
             "jwt-auth-token": localStorage.getItem("access_token")
           }

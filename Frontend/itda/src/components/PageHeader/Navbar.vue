@@ -23,7 +23,7 @@
     </v-list-item>
     </v-navigation-drawer> -->
     <router-link :to="{name:'recruitmain'}">
-      <v-img :src="getImgUrl('logoo.png')" style="width :6.5rem" />
+      <v-img :src="getImgUrl('logo.png')" style="width :6.5rem" />
     </router-link>
     <div class="page-router">
       <v-btn

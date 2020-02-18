@@ -1,6 +1,30 @@
 <template>
   <div>
     <WidgetsBrand />
+    <v-container class="right">
+    <v-btn class="ml-auto" @click.stop="overlay = !overlay">기술스택 등록 요청</v-btn>
+    <v-dialog v-model="overlay" scrollable max-width="500px">
+      <v-card>
+        <v-card-title>기술스택 등록 요청</v-card-title>
+        <v-card-text>
+          <v-form ref="form" v-model="valid">
+            <v-text-field
+              v-model="tname"
+              :rules="[v => !!v || '기술스택 이름을 입력해주세요']"
+              label="기술스택 명"
+              required
+            ></v-text-field>
+          </v-form>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="success" text :disabled="!valid" @click="validate">submit</v-btn>
+          <v-btn color="blue darken-1" text @click="reset">Reset</v-btn>
+          <v-btn color="blue darken-1" text @click="close">Close</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    </v-container>
     <CCard>
       <CCardBody>
         <CRow>
@@ -37,14 +61,13 @@
       </CCardFooter>
     </CCard>
 
-
-<!-- 깃랩 프로젝트 commit  -->
+    <!-- 깃랩 프로젝트 commit  -->
     <CRow>
       <CCol md="12">
         <CCard>
           <CCardHeader>
             <CRow>
-            <CCol sm="12">
+              <CCol sm="12">
                 <CRow>
                   <CCol sm="12">
                     <CCallout color="warning">
@@ -53,11 +76,14 @@
                       <strong class="h4">{{pjtName}}</strong>
                       &emsp;
                       <a :href="pjtLink" target="_blank">
-                        <CIcon name="cib-gitlab" height="25"/>
+                        <CIcon name="cib-gitlab" height="25" />
                       </a>
                       &emsp;
-                      <a :href="'https://jira.ssafy.com/projects/S02P13B201/'" target="_blank">
-                        <CIcon name="cib-jira"  height="25"/>
+                      <a
+                        :href="'https://jira.ssafy.com/projects/S02P13B201/'"
+                        target="_blank"
+                      >
+                        <CIcon name="cib-jira" height="25" />
                       </a>
                     </CCallout>
                   </CCol>
@@ -81,7 +107,8 @@
                 </div>
               </td>
               <td slot="user" slot-scope="{item}">
-                <div>{{item.user.name}}
+                <div>
+                  {{item.user.name}}
                   | Email : {{item.user.email}}
                 </div>
                 <div class="small text-muted">
@@ -105,7 +132,7 @@
               </td>
               <td slot="activity" slot-scope="{item}">
                 <a :href="item.activity" target="_blank">
-                  <CIcon name="cib-gitlab"/>
+                  <CIcon name="cib-gitlab" />
                 </a>
               </td>
             </CDataTable>
@@ -119,7 +146,7 @@
 <script>
 import MainChartExample from "./charts/MainChartExample";
 import WidgetsBrand from "./WidgetsBrand";
-import axios from 'axios'
+import axios from "axios";
 
 export default {
   name: "Dashboard",
@@ -129,6 +156,8 @@ export default {
   },
   data() {
     return {
+      tname: "",
+      overlay: false,
       selected: "Month",
       pjtName: "",
       pjtLink: "",
@@ -137,29 +166,56 @@ export default {
       tableItems: [
         {
           avatar: { url: "", status: "" },
-          user: { name: "", email :"0713mingyu@naver.com", roll: "팀장", team: "Front-end" },
+          user: {
+            name: "",
+            email: "0713mingyu@naver.com",
+            roll: "팀장",
+            team: "Front-end"
+          },
           usage: { value: 0 },
           activity: ""
         },
         {
           avatar: { url: "", status: "" },
-          user: { name: "", email :"drk0830@naver.com", roll: "CTO", team: "Back-end" },
-          usage: { value: 0 },
-          activity: ""
-        },{
-          avatar: { url: "", status: "" },
-          user: { name: "", email :"jr435@naver.com", roll: "배포", team: "Front-end" },
-          usage: { value: 0 },
-          activity: ""
-        },{
-          avatar: { url: "", status: "" },
-          user: { name: "", email :"koo_m@naver.com", roll: "테스트", team: "Front-end" },
+          user: {
+            name: "",
+            email: "drk0830@naver.com",
+            roll: "CTO",
+            team: "Back-end"
+          },
           usage: { value: 0 },
           activity: ""
         },
         {
           avatar: { url: "", status: "" },
-          user: { name: "", email :"genie121110@gmail.com", roll: "데이터베이스", team: "Back-end" },
+          user: {
+            name: "",
+            email: "jr435@naver.com",
+            roll: "배포",
+            team: "Front-end"
+          },
+          usage: { value: 0 },
+          activity: ""
+        },
+        {
+          avatar: { url: "", status: "" },
+          user: {
+            name: "",
+            email: "koo_m@naver.com",
+            roll: "테스트",
+            team: "Front-end"
+          },
+          usage: { value: 0 },
+          activity: ""
+        },
+        {
+          avatar: { url: "", status: "" },
+          user: {
+            name: "",
+            email: "genie121110@gmail.com",
+            roll: "데이터베이스",
+            team: "Back-end"
+          },
           usage: { value: 0 },
           activity: ""
         }
@@ -186,52 +242,87 @@ export default {
       }
       return $color;
     },
-    getDataFromAPI(){
-      let private_token = 'Ktzuz56Epv97yEezs463'
+    getDataFromAPI() {
+      let private_token = "Ktzuz56Epv97yEezs463";
       axios
-        .get('https://lab.ssafy.com/api/v4/projects/17324/members/?private_token=' + private_token)
-        .then(response =>{
-          for(var i = 0; i <response.data.length; i++){
+        .get(
+          "https://lab.ssafy.com/api/v4/projects/17324/members/?private_token=" +
+            private_token
+        )
+        .then(response => {
+          for (var i = 0; i < response.data.length; i++) {
             this.tableItems[i].avatar.url = response.data[i].avatar_url;
             this.tableItems[i].user.name = response.data[i].username;
             this.tableItems[i].activity = response.data[i].web_url;
           }
           axios
-            .get('https://lab.ssafy.com/api/v4/projects/17324/repository/contributors/?private_token=' + private_token)
-            .then(response =>{
+            .get(
+              "https://lab.ssafy.com/api/v4/projects/17324/repository/contributors/?private_token=" +
+                private_token
+            )
+            .then(response => {
               var totalCommit = 0;
-              var commits = [0,0,0,0,0];
-              for(var i = 0; i < response.data.length; i++){
+              var commits = [0, 0, 0, 0, 0];
+              for (var i = 0; i < response.data.length; i++) {
                 totalCommit += response.data[i].commits;
-                for(var j = 0; j < this.tableItems.length; j++){
-                  if(response.data[i].email == this.tableItems[j].user.email){
+                for (var j = 0; j < this.tableItems.length; j++) {
+                  if (response.data[i].email == this.tableItems[j].user.email) {
                     commits[j] = response.data[i].commits;
                   }
                 }
               }
-              for(var k = 0; k < commits.length; k++){
-                this.tableItems[k].usage.value = Math.round((commits[k] / totalCommit) * 100);
+              for (var k = 0; k < commits.length; k++) {
+                this.tableItems[k].usage.value = Math.round(
+                  (commits[k] / totalCommit) * 100
+                );
               }
             })
-            .catch(() => {})
+            .catch(() => {});
         })
-        .catch(() => {})
+        .catch(() => {});
     },
-    getPjtFromAPI(){
-      let private_token = 'Ktzuz56Epv97yEezs463'
+    getPjtFromAPI() {
+      let private_token = "Ktzuz56Epv97yEezs463";
       axios
-        .get('https://lab.ssafy.com/api/v4/projects/17324/?private_token=' + private_token)
+        .get(
+          "https://lab.ssafy.com/api/v4/projects/17324/?private_token=" +
+            private_token
+        )
         .then(response => {
           this.pjtName = response.data.name_with_namespace;
           this.pjtRepo = response.data.http_url_to_repo;
           this.pjtLink = response.data.web_url;
           this.pjtReadme = response.data.readme_url;
+        });
+    },
+    validate() {
+      axios
+        .post("http://192.168.31.54:8197/itda/api/requstStack", this.tname, {
+          headers: {
+            "jwt-auth-token": localStorage.getItem("access_token")
+          }
         })
+        .then((response) => {
+          if(response.data.state == 'success'){
+            alert("기술스택 요청을 완료하였습니다.");
+          }else{
+            alert("기술 스택 요청에 실패하였습니다.");
+          }
+          this.overlay = false;
+        })
+        .catch();
+    },
+    reset() {
+      this.tname="";
+    },
+    close() {
+      this.tname="";
+      this.overlay = false;
     }
   },
-  mounted(){
-    this.getDataFromAPI()
-    this.getPjtFromAPI()
+  mounted() {
+    this.getDataFromAPI();
+    this.getPjtFromAPI();
   }
 };
 </script>

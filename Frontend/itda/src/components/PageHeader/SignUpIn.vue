@@ -124,7 +124,7 @@
   </v-layout>
 </template>
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions, mapMutations } from "vuex";
 import axios from "axios";
 import firebase from "firebase";
 
@@ -200,7 +200,8 @@ export default {
           });
       }
     },
-    ...mapActions(["login", "register"]),
+    ...mapActions(["login", "register", ]),
+    ...mapMutations(["loginSuccess"]),
     goInit() {
       //제출 후 초기화.
       (this.email_lg = null),
@@ -281,6 +282,7 @@ export default {
                             let token = response.headers["jwt-auth-token"];
                             localStorage.setItem("access_token", token);
                             localStorage.setItem("social", "social");
+                            
                             this.$router.go();
                           }
                         });

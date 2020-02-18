@@ -106,14 +106,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		resultType="com.ssafy.itda.itda_test.model.Stack">
 		select distinct s.sid, s.tname
 		from wanted_t as w,
-		wantedstack_t as ws, stack_t as s
+		wantedStack_t as ws, stack_t as s
 		where w.wid = ws.wid and ws.sid =
 		s.sid and w.wid = #{wid}
 	</select>
 
 	<select id="getWantedByStack" parameterType="java.lang.Integer"
 		resultType="java.lang.String">
-		select distinct w.wid from mystack_t as ms, wantedstack_t
+		select distinct w.wid from myStack_t as ms, wantedStack_t
 		as ws, wanted_t as w
 		where ms.uid = #{uid} and ms.sid = ws.sid order by
 		endDate limit 10

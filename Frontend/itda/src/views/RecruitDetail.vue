@@ -8,8 +8,7 @@
     </v-row></v-container>
     <recruit-detail-company-info :company="recruit.company"/>
     <v-container class="py-0" white></v-container>
-    <recruit-detail-wanted-info :wanted="recruit.wanted"/>
-    <recruit-detail-comment/>
+      <recruit-detail-wanted-info :wanted="recruit.wanted" :stacks="recruit.stacks"/>
   </div>
 </template>
 
@@ -18,7 +17,6 @@ import { mapState } from 'vuex'
 
 import RecruitDetailCompanyInfo from '../components/RecruitDetail/RecruitDetailCompanyInfo.vue'
 import RecruitDetailWantedInfo from '../components/RecruitDetail/RecruitDetailWantedInfo.vue'
-import RecruitDetailComment from '../components/RecruitDetail/RecruitDetailComment.vue'
 
 import axios from 'axios'
 
@@ -27,7 +25,6 @@ export default {
   components: {
     RecruitDetailCompanyInfo,
     RecruitDetailWantedInfo,
-    RecruitDetailComment
   },
   data(){
     return{
@@ -66,5 +63,4 @@ export default {
 </script>
 
 <style>
-
 </style>

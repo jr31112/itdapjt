@@ -33,13 +33,14 @@
 
         <div>
             <v-avatar size="45px" class="mx-1">
-                <v-img :src="getImgUrl('itda1.png')"/>
+                <v-img  :src="getImgUrl('itda1.png')" @click="goAboutus"/>
             </v-avatar>
             &copy;
             {{new Date().getFullYear()}}</div>
     </v-footer>
 </template>
 <script>
+import router from '../router';
     export default {
         methods: {
             getImgUrl(img) {
@@ -47,6 +48,9 @@
             },
             onMove(text) {
                 window.open(text, "_blank");
+            },
+            goAboutus(){
+                router.push({name:'aboutus'})
             }
         }
     };

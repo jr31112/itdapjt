@@ -379,6 +379,7 @@ export default {
   methods: {
     goSave() {
       console.log(this.userInfo);
+      alert("hello")
       axios
         .put(
           "https://i02b201.p.ssafy.io:8197/itda/api/updateUser",
@@ -445,7 +446,7 @@ export default {
       };
 
       axios
-        .post("https://i02b201.p.ssafy.io/itda/api/uploadFile", formdata, config)
+        .post("https://i02b201.p.ssafy.io:8197/itda/api/uploadFile", formdata, config)
         // .post("http://192.168.31.54:8197/itda/api/uploadFile", formdata, config)
         .then(response => {
           console.log(response);

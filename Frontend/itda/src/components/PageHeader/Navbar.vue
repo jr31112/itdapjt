@@ -36,7 +36,7 @@
                     class="v-label theme--dark"
                     style="left: 0px; right: auto; position: absolute;"
                   ></label>
-                  <input
+                  <!-- <input
                     id="search"
                     v-model="content"
                     type="text"
@@ -50,7 +50,7 @@
                     aria-label="search input"
                     aria-owns="algolia-autocomplete-listbox-0"
                     dir="auto"
-                    @keyup.enter="goSearch(content)"
+                    @keyup.enter="goSearch(content)" -->
                   />
                 </div>
                 <div class="v-input__prepend-inner" @click.prevent="goSearch(content)">

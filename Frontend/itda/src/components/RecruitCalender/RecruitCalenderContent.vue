@@ -20,7 +20,6 @@
         components: {
             FullCalendar, // make the <FullCalendar> tag available
         },
-
         data() {
             return {
                 calendarPlugins: [
@@ -46,7 +45,6 @@
                 handler: 'changeEvent'
             }
         },
-
         methods: {
             handleDateClick(arg) {     
                 router.push({ name: "recruitdetail", params: { id:arg.event._def.extendedProps.wid} });

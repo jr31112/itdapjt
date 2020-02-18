@@ -59,7 +59,7 @@ export default new Vuex.Store({
             dispatch("getMemberInfo")
           }
           else {
-            return;
+             return;
           }
         })
         .catch(err => {

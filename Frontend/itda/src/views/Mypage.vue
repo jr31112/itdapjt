@@ -12,13 +12,19 @@
                             <v-card width="500px">
                                 <v-card-title>비밀번호를 재확인 할께요</v-card-title>
                                 <v-card-text>
-                                    <v-form ref="form" v-model="valid" v-on:keyup.enter="validate()">
-                                        <v-text-field v-model="formData.pw" type="password" label="비밀번호" :rules="[v => !!v || '비밀번호를 입력해주세요']"></v-text-field>
+                                    <v-form ref="form" v-model="valid">
+                                        <v-text-field 
+                                        v-model="formData.pw" 
+                                       
+                                        type="password" 
+                                        label="비밀번호" 
+                                        :rules="[v => !!v || '비밀번호를 입력해주세요']"
+                                        ></v-text-field>
                                     </v-form>
                                 </v-card-text>
                                 <v-card-actions>
                                     <v-spacer></v-spacer>
-                                    <v-btn text color="success" class="mr-4" @click="validate">submit</v-btn>
+                                    <v-btn text color="success" class="mr-4" @click="validate"  v-on:keydown.enter.prevent="validate">submit</v-btn>
                                     <v-btn color="blue darken-1" text @click="reset">Reset</v-btn>
                                     <v-btn color="blue darken-1" text @click="close">Close</v-btn>
                                 </v-card-actions>
@@ -106,7 +112,7 @@
                     router.push({name: 'usermodify'})
             },
             validate () {
-                console.log("validtae")
+                console.log("validate")
                 if (this.$refs.form.validate()) {
                     axios.post('https://i02b201.p.ssafy.io:8197/itda/api/checkPW',this.formData
                     ,{headers:{"jwt-auth-token": localStorage.getItem("access_token")}}

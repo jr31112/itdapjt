@@ -35,6 +35,8 @@ export default {
         getKeyword(){
             if (this.$route.query.cont)
                 this.options.keyword = this.$route.query.cont
+            if (this.$route.query.type)
+                this.options.type = this.$route.query.type
         }
     },
     mounted(){

@@ -65,4 +65,9 @@ public class UserServiceImpl implements IUserService {
 	public void updatePermission(User model) {
 		userDao.updatePermission(model);
 	}
+
+	@Override
+	public void imgUpload(User user) {
+		userDao.imgUpload(user);
+	}
 }

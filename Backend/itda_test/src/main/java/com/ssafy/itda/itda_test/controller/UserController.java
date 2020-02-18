@@ -311,7 +311,7 @@ public class UserController {
 
 				// 새로 입력한 기술스택이 없으면 넣어준다.
 				for (Stack i : input_stack) {
-					if (!myStacks.contains(input_stack)) {
+					if (!myStacks.contains(i)) {
 						MyStack newms = new MyStack();
 						newms.setUid(uid);
 						newms.setSid(i.getSid());

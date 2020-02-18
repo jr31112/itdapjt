@@ -56,10 +56,9 @@ public class FileUploadController {
 					uimg_file.delete();
 				}
 			}
-			fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/images/").path(fileName)
-					.toUriString();
+			fileDownloadUri = ServletUriComponentsBuilder.fromPath("/images/").path(fileName).toUriString();
 			user.setUimg(fileDownloadUri);
-			userService.updateUser(user);
+			userService.imgUpload(user);
 			return new FileUploadResponse(fileName, fileDownloadUri, file.getContentType(), file.getSize());
 		} else {
 			return new FileUploadResponse(null, null, null, 0L);

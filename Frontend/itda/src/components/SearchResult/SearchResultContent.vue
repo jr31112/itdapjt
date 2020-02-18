@@ -1,5 +1,8 @@
 <template>
   <v-row>
+      <v-overlay :value="overlay">
+        <v-progress-circular indeterminate size="64"></v-progress-circular>
+      </v-overlay>
       <v-col>
           <v-tabs v-model="tab" background-color="primary" :right="true">
             <v-tab v-for="recruit in recruits" :key="recruit.tab">{{recruit.title}}</v-tab>
@@ -49,6 +52,7 @@ export default {
                 {tab:1, title:"진행중인 공고", searchResult:[]},
                 {tab:2, title:"마감된 공고", searchResult:[]}
             ],
+            overlay:false
         }
     },
     methods:{
@@ -58,6 +62,7 @@ export default {
         updateOptions(){
             const presenttmp = []
             const expiredtmp = []
+            this.overlay = true
             var today = new Date()
             for (var i=0; i<this.allContent.length;i++){
                 var endday = new Date(this.allContent[i].wanted.endDate)
@@ -130,6 +135,7 @@ export default {
             }
             this.recruits[0].searchResult = presenttmp
             this.recruits[1].searchResult = expiredtmp
+            setTimeout(() => {this.overlay = false}, 1000)
         },
     },
     watch:{

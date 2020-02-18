@@ -88,7 +88,7 @@
                 this.getUserInfo()
             },
             getUserInfo(){
-                axios.get("http://192.168.31.54:8197/itda/api/getUser", {headers:{"jwt-auth-token": localStorage.getItem("access_token")}})
+                axios.get("http://54.180.140.163:8197/itda/api/getUser", {headers:{"jwt-auth-token": localStorage.getItem("access_token")}})
                     .then(response => {
                         this.userInfo = response.data
                         this.loginStudies = response.data.myStudies
@@ -108,7 +108,7 @@
             validate () {
                 if (this.$refs.form.validate()) {
                     console.log(this.formData.pw)
-                    axios.post('http://192.168.31.54:8197/itda/api/checkPW',this.formData,{headers:{"jwt-auth-token": localStorage.getItem("access_token")}})
+                    axios.post('http://54.180.140.163:8197/itda/api/checkPW',this.formData,{headers:{"jwt-auth-token": localStorage.getItem("access_token")}})
                         .then(response=>{
 
                             if (response.data.state == "success"){

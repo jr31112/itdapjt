@@ -19,7 +19,7 @@
 					<v-col class="pt-0 text-left grey--text" style="height:48px">{{ wanted.wantedTitle }}</v-col>
 				</v-row>
 				<v-row>
-					<v-col class="pt-1" v-if="stacks.length"><span v-for="i in stacks.length > len ? len: stacks.length" :key="i" style="color:blue">#{{stacks[i-1].tname}} </span></v-col>
+					<v-col class="pt-1" v-if="stacks.length"><span v-for="i in stacks.length > len ? len: stacks.length" :key="i" style="color:blue" @click="goSearch(stacks[i-1].tname)">#{{stacks[i-1].tname}} </span></v-col>
 				</v-row>
 			</v-container>
 		</v-card>
@@ -49,11 +49,15 @@ export default {
 	  getImgUrl(img) {
 	    return require('../../../assets/' + img)
 	  },
+	  goSearch(content)
+	  {
+	    router.push({name:"searchresult", query:{cont: content, type:3}})
+	  },
 	  goDetailPage(wid){
         router.push({name:'recruitdetail',params:{id:wid}})
 	  },
 	  doScrap(wid){
-		  axios.post('http://192.168.31.54:8197/itda/api/scrapWanted/',{"wid":wid},{'headers' : {"jwt-auth-token": localStorage.getItem("access_token")}})
+		  axios.post('http://54.180.140.163:8197/itda/api/scrapWanted/',{"wid":wid},{'headers' : {"jwt-auth-token": localStorage.getItem("access_token")}})
             .then(()=>{
 				this.$emit('update')})
 	  },

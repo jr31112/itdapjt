@@ -71,6 +71,8 @@ export default {
             axios.get('https://i02b201.p.ssafy.io:8197/itda/api/getAllStudy')
             .then(response=>{
                 this.defaultStudies = response.data
+                if (!this.defaultStudies)
+                    this.defaultStudies = []
             })
         },
         getLoginStudies(){
@@ -166,12 +168,8 @@ export default {
                     ]
             },
             overlay:false,
-            defaultStudies:[
-
-            ],
-            loginStudies:[
-
-            ],
+            defaultStudies:[],
+            loginStudies:[],
         }
     },
     mounted(){

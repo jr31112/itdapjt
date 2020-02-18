@@ -146,14 +146,13 @@ export default {
       return token
     },
     getImgUrl(img) {
-      
-      return require("../../assets/" + img);
+      return require("../../assets/" + img)
     },
     goRecruitCalanderPage() {
-      router.push({ name: "recruitcalender" }).catch(() => {});
+      router.push({ name: "recruitcalender" }).catch(() => {})
     },
     goStudyPage() {
-      router.push({ name: "studymain" }).catch(() => {});
+      router.push({ name: "studymain" }).catch(() => {})
     },
     goLogin()
     {
@@ -163,18 +162,18 @@ export default {
     {
       this.$store.state.isDialog = false 
       this.$store.dispatch('logout')
-      router.push({name:"recruitmain"}).catch(() => {});
+      router.push({name:"recruitmain"}).catch(() => {})
     },
     goSearch(content)
     {
-       router.push({ name: "searchresult", query:{cont: content}}).catch(() => {});
+       router.push({ name: "searchresult", query:{cont: content}}).catch(() => {})
     },
     goMypage(){
-      router.push({name:"mypage",params:{id:1}})
+      router.push({name:"mypage",params:{id:1}}).catch(() => {})
     },
     GoManagePage()
     {
-      router.push({name:"admin"}).catch(() => {});
+      router.push({name:"admin"}).catch(() => {})
     }
   
   }

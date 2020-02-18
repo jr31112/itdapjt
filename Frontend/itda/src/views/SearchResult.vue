@@ -1,9 +1,12 @@
 <template>
   <div class="searchresult">
-      <v-container class="my-0">
-          <search-filter :options="options"/>
-          <search-result-content :options="options" :allContent="allContent"/>
-      </v-container>
+    <v-overlay :value="overlay">
+        <v-progress-circular indeterminate size="64"></v-progress-circular>
+    </v-overlay>
+    <v-container class="my-0">    
+        <search-filter :options="options"/>
+        <search-result-content :options="options" :allContent="allContent"/>
+    </v-container>
   </div>
 </template>
 
@@ -24,13 +27,18 @@ export default {
             options:{
                 type: 0,
                 keyword: '',
-            }
+            },
+            overlay:false
         }
     },
-    methods: {
+    methods: {        
         getWantedList() {
+            this.overlay = true
             axios.get('https://i02b201.p.ssafy.io:8197/itda/api/getWantedAll')
-                .then(response => {this.allContent = response.data})
+                .then(response => {
+                    this.allContent = response.data
+                    this.overlay = false
+                })
         },
         getKeyword(){
             if (this.$route.query.cont)

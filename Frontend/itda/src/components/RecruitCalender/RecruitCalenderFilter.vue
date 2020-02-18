@@ -1,5 +1,8 @@
 <template>
-    <v-layout>
+    <v-container>
+        <v-overlay :value="overlay">
+        <v-progress-circular indeterminate size="64"></v-progress-circular>
+      </v-overlay>
         <v-col>
             <v-row justify="center">
                 <v-col cols="12" sm="4">
@@ -64,7 +67,7 @@
                 :options="options"
                />
         </v-col>
-    </v-layout>
+    </v-container>
 </template>
 
 <script>
@@ -77,6 +80,7 @@
         },
         data() {
             return {
+                overlay: false,
                 checkedNames: [],
                 options: {
                     period: 3,
@@ -281,10 +285,12 @@
         },
         methods: {
             getRecentRecruit() {
+                this.overlay = true
                 axios
                     .get(`https://i02b201.p.ssafy.io:8197/itda/api/getWantedAll/`)
                     .then(response => {
                         this.recruitList = response.data
+                        this. overlay = false
                     })
                     .catch(error => {
                         console.log(error)

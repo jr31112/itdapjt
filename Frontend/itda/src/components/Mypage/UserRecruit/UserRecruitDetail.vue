@@ -38,7 +38,6 @@
             <v-icon>arrow_forward</v-icon>
         </v-btn>
     </v-row>
-    
   </v-data-iterator>
 </template>
 

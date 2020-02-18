@@ -111,7 +111,6 @@
                     router.push({name: 'usermodify'})
             },
             validate () {
-                console.log("validate")
                 if (this.$refs.form.validate()) {
                     axios.post('https://i02b201.p.ssafy.io:8197/itda/api/checkPW',this.formData
                     ,{headers:{"jwt-auth-token": localStorage.getItem("access_token")}}

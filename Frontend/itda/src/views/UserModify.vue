@@ -7,14 +7,8 @@
         <v-row>
           <v-col cols="3">
             <v-card class="mx-auto ml-5">
-              <v-img
-                height="180"
-                width="200"
-                v-if="this.userInfo.user.uimg===null"
-                src="../assets/noimg.png"
-                dark="dark"
-              ></v-img>
-              <v-img height="180" width="200" v-else :src="this.userInfo.user.uimg" dark="dark"></v-img>
+              <v-img height="180" width="200" v-if="this.userInfo.user.uimg" :src="this.userInfo.user.uimg" dark="dark"></v-img>
+              <v-img height="180" width="200" src="../assets/noimg.png" dark="dark" :contain="true" v-else></v-img>
             </v-card>
           </v-col>
           <v-col cols="6">
@@ -31,7 +25,6 @@
               label="My Image"
               @change="onChange()"
             />
-            <!-- </input> -->
           </v-col>
         </v-row>
 
@@ -108,8 +101,6 @@
           </v-dialog>
         </v-card-title>
         <v-card-text :rules="[v => !!v || 'Stack을 입력해주세요']">
-          <!-- <v-for="i in userInfo.tname.length()" -->
-          <!-- {{userInfo.mystacks.length}} -->
           <v-btn
             class="ma-2"
             v-for="i in userInfo.mystacks.length"
@@ -137,15 +128,22 @@ import axios from "axios";
 export default {
   data() {
     return {
-      userInfo: {},
+      userInfo: {
+        user:{
+          auth:1,
+          cid:null,
+          email:null,
+          major:null,
+          pw:null,
+          uimg:null,
+          uname:null,
+        },
+        mystacks:[]
+      },
       selectImg: "",
       password_rg: "",
       password_rg1: "",
       dialog: false,
-      // formData:
-      // {
-      //     uimg:""
-      // },
       stacklist: [
         {
           sid: 1,
@@ -413,19 +411,17 @@ export default {
         alert("이름을 입력해주세요!");
         return;
       }
-      console.log(this.userInfo);
       let params = {
         user: {
-          email: this.userInfo.user.email,
-          uname: this.userInfo.user.uname,
-          major: this.userInfo.user.major,
-          pw: this.password_rg
+          'email': this.userInfo.user.email,
+          'uname': this.userInfo.user.uname,
+          'major': this.userInfo.user.major,
+          'pw': this.password_rg
         },
         mystacks: this.userInfo.mystacks
       };
       axios
         .put(
-          //   "http://192.168.31.54:8197/itda/api/updateUser",
           "https://i02b201.p.ssafy.io:8197/itda/api/updateUser",
           params,
           {
@@ -471,12 +467,9 @@ export default {
             for (var i = 0; i < tmp_stacks.length; i++) {
               this.stacklist[tmp_stacks[i].sid - 1].value = true;
             }
-          } else {
-            //실패했으니 다시 로그인해라고 알려주든지?
           }
         })
         .catch(() => {
-          //에러가 났다. 다시 로그인해라.
         });
     },
     onChange() {
@@ -496,9 +489,7 @@ export default {
           formdata,
           config
         )
-        // .post("http://192.168.31.54:8197/itda/api/uploadFile", formdata, config)
         .then(response => {
-          console.log(response);
           this.imageResult = response.data.fileDownloadUri;
           this.userInfo.user.uimg = this.imageResult;
         });

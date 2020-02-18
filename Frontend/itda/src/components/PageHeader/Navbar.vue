@@ -1,27 +1,11 @@
 <template>
   <v-card
     class="mx-auto overflow-hidden"
-    height="800"
   >
   <v-app-bar app> 
-    <!-- //class="d-flex d-sm-none" --> 
     <v-app-bar-nav-icon class="d-flex d-sm-none" 
     @click="drawer=!drawer"><v-icon >menu</v-icon>
     </v-app-bar-nav-icon>
- 
-    
-     <!-- <v-navigation-drawer v-model="drawer" temporary absolute> 
-        <v-list-item link>
-             <v-avatar
-                  size="30px"
-                  class="mx-3"
-             >
-            <v-img :src="getImgUrl('jw.jpg')"
-              />
-            </v-avatar>
-           <v-list-item-title>Jung Won</v-list-item-title>
-    </v-list-item>
-    </v-navigation-drawer> -->
     <router-link :to="{name:'recruitmain'}">
       <v-img :src="getImgUrl('logoo.png')" style="width :6.5rem" />
     </router-link>
@@ -51,7 +35,7 @@
         outlined
         label="채용 공고 검색"
         @keyup.enter="goSearch(researchValue)"
-        dense="true"
+        :dense="true"
         color="teal"
         v-model="researchValue"
       >

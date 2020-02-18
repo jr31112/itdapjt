@@ -14,4 +14,5 @@ public interface IStackService {
 	List<Stack> getWantedStacks(String wid);
 	List<Stack> getMyStacks(int uid);
 	void deleteMyStack(MyStack newms);
+	void requestStack(Stack model);
 }

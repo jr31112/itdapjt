@@ -22,13 +22,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.itda.itda_test.help.Result;
 import com.ssafy.itda.itda_test.help.UserResult;
 import com.ssafy.itda.itda_test.help.WantedResult;
 import com.ssafy.itda.itda_test.model.Company;
 import com.ssafy.itda.itda_test.model.MyStack;
 import com.ssafy.itda.itda_test.model.Stack;
 import com.ssafy.itda.itda_test.model.Study;
-import com.ssafy.itda.itda_test.model.StudyGroup;
 import com.ssafy.itda.itda_test.model.User;
 import com.ssafy.itda.itda_test.model.Wanted;
 import com.ssafy.itda.itda_test.service.IStackService;
@@ -57,10 +57,10 @@ public class UserController {
 
 	@Autowired
 	private IStackService stackService;
-	
+
 	@Autowired
 	private IStudyService studyService;
-	
+
 	@Autowired
 	private IStudyGroupService studyGroupService;
 
@@ -128,7 +128,7 @@ public class UserController {
 		}
 		return new ResponseEntity<UserResult>(ur, HttpStatus.OK);
 	}
-	
+
 	@ApiOperation(value = "비밀번호가 맞는지 확인한다.", response = UserResult.class)
 	@RequestMapping(value = "/checkPW", method = RequestMethod.POST)
 	public ResponseEntity<UserResult> checkPW(@RequestBody User input, HttpServletRequest req) throws Exception {
@@ -153,8 +153,7 @@ public class UserController {
 				ur.setMsg("비밀번호가 확인되었습니다.");
 				ur.setState("success");
 			}
-		}
-		else {
+		} else {
 			ur.setMsg("다시 로그인하고 실행해 주세요!");
 			ur.setState("fail");
 		}
@@ -215,7 +214,7 @@ public class UserController {
 			}
 			List<Integer> my_studyGroup = studyGroupService.getMyStudyGroup(uid);
 			List<Study> my_study = new LinkedList<>();
-			for(int i : my_studyGroup) {
+			for (int i : my_studyGroup) {
 				Study s = studyService.getStudy(i);
 				my_study.add(s);
 			}
@@ -247,7 +246,7 @@ public class UserController {
 	public ResponseEntity<UserResult> deleteUser(@PathVariable int uid) throws Exception {
 		logger.info("1-5-------------deleteUser------------------------------" + new Date());
 		logger.info("1-5-------------deleteUser------------------------------" + uid);
-		
+
 		User user = userService.getUser(uid);
 		UserResult ur = new UserResult();
 		if (user == null || user.getEmail() == null || user.getEmail().equals("")) {
@@ -312,7 +311,7 @@ public class UserController {
 
 				// 새로 입력한 기술스택이 없으면 넣어준다.
 				for (Stack i : input_stack) {
-					if (!myStacks.contains(input_stack)) {
+					if (!myStacks.contains(i)) {
 						MyStack newms = new MyStack();
 						newms.setUid(uid);
 						newms.setSid(i.getSid());
@@ -355,5 +354,27 @@ public class UserController {
 		ur.setMsg("성공적으로 회원 권한 수정을 완료했습니다.");
 		ur.setState("success");
 		return new ResponseEntity<UserResult>(ur, HttpStatus.OK);
+	}
+
+	@ApiOperation(value = "사용자가 관리자에게 기술스택을 요청한다.", response = Result.class)
+	@RequestMapping(value = "/requestStack", method = RequestMethod.POST)
+	public ResponseEntity<Result> requestStack(@RequestBody Stack model, HttpServletRequest req) throws Exception {
+		logger.info("1-3-------------login------------------------------" + new Date());
+		logger.info("1-3-------------login------------------------------" + model);
+		Map<String, Object> resultMap = new HashMap<>();
+		String token = req.getHeader("jwt-auth-token");
+		Result r = new Result();
+		if (token != null && !token.equals("")) {
+			resultMap.putAll(jwtService.get(token));
+			int uid = (int) resultMap.get("uid");
+			model.setUid(uid);
+			stackService.requestStack(model);
+			r.setMsg("기술 스택 추가 요청이 완료되었습니다.");
+			r.setState("success");
+		} else {
+			r.setMsg("다시 로그인하고 실행해 주세요!");
+			r.setState("fail");
+		}
+		return new ResponseEntity<Result>(r, HttpStatus.OK);
 	}
 }

@@ -47,4 +47,8 @@ public class StackDao {
 		sqlSession.delete(ns + "deleteMyStack", newms);
 	}
 
+	public void requestStack(Stack model) {
+		sqlSession.insert(ns + "requestStack", model);
+	}
+
 }

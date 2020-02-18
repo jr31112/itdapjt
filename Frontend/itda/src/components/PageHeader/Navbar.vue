@@ -46,45 +46,16 @@
       </v-btn>
     </div>
     <v-spacer></v-spacer>
-    <div class="search">
-      <div class="v-responsive mr-0 mr-md-6 hidden-xs-only" style="max-width: 300px;">
-        <div class="v-responsive__content">
-          <div class="v-input v-input--hide-details v-input--dense theme--dark v-text-field v-text-field--single-line v-text-field--solo v-text-field--solo-inverted v-text-field--solo-flat v-text-field--is-booted v-text-field--enclosed v-text-field--rounded">
-            <div class="v-input__control">
-              <div class="v-input__slot">
-                <div class="v-text-field__slot">
-                  <label
-                    for="search"
-                    class="v-label theme--dark"
-                    style="left: 0px; right: auto; position: absolute;"
-                  ></label>
-                  <input
-                    id="search"
-                    v-model="content"
-                    type="text"
-                    class="ds-input"
-                    placeholder="공고 통합 검색"
-                    autocomplete="off"
-                    spellcheck="false"
-                    role="combobox"
-                    aria-autocomplete="list"
-                    aria-expanded="false"
-                    aria-label="search input"
-                    aria-owns="algolia-autocomplete-listbox-0"
-                    dir="auto"
-                    @keyup.enter="goSearch(content)"
-                  />
-                </div>
-                <div class="v-input__prepend-inner" @click.prevent="goSearch(content)">
-                  <div class="v-input__icon v-input__icon--prepend-inner">
-                    <i aria-hidden="true" class="v-icon notranslate mdi mdi-magnify theme--dark"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div class="searchbar mt-7 mr-0 mr-md-6 hidden-xs-only" style="max-width: 300px;">
+      <v-text-field
+        outlined
+        label="채용 공고 검색"
+        @keyup.enter="goSearch(researchValue)"
+        dense="true"
+        color="teal"
+        v-model="researchValue"
+      >
+      </v-text-field>
     </div>
     <div class="user">
 
@@ -100,12 +71,14 @@
     </v-btn>
     <v-btn
       v-if="isLogin"
-      class="btn-colored v-btn v-btn--flat v-btn--text theme--dark v-size--default"
+      class="mx-3 btn-border-colored v-btn v-btn--flat v-btn--text v-size--default"
       aria-label="Support"
       style="min-width: 48px;"
       @click="goMypage"
+      outlined
+      color="teal"
     >
-      <span class="text-colored">마이페이지</span>
+      <span class="text-border-colored">마이페이지</span>
     </v-btn>
     <v-btn
       v-if="isLogin"
@@ -114,6 +87,7 @@
       class="btn-colored v-btn v-btn--flat v-btn--text theme--dark v-size--default"
       aria-label="Support"
       style="min-width: 48px;"
+      depressed 
     >
       <span class="text-colored">로그아웃</span>
     </v-btn>
@@ -218,7 +192,8 @@ export default {
       password: null,
       dialog: false,
       token: localStorage.getItem("access_token"),
-      isLoginFlag: false
+      isLoginFlag: false,
+      researchValue:""
     };
   },
   computed: {
@@ -252,7 +227,7 @@ export default {
     },
     goSearch(content)
     {
-       router.push({ name: "searchresult", query:{cont: content}}).catch(() => {});
+       router.push({ name: "searchresult", query:{cont: content}})
     },
     goMypage(){
       router.push({name:"mypage",params:{id:1}})
@@ -298,10 +273,16 @@ export default {
 .btn-colored {
   background:rgba(0, 170, 179);
 }
+.btn-border-colored {
+  border: rgba(0, 170, 179);
+}
 .text-colored {
   color: white;
   /* font-size: 150%; */
 
+}
+.text-border-colored {
+  color: rgba(0, 170, 179);
 }
 /* .text-colored2 {
   color: #070103;
@@ -309,5 +290,9 @@ export default {
 }
 .btn-colored2:hover {
   background:rgba(0, 170, 179, 0.5);
+} */
+
+/* .search-input {
+  border-color: grey;
 } */
 </style>

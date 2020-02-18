@@ -6,6 +6,8 @@
       <v-img :src="imgSrc" max-height= 25% max-width= 25% class="star2"/>
       <v-img :src="imgSrc" max-height= 60% max-width= 60% class="star3"/>
       <v-img :src="imgSrc" max-height= 15% max-width= 15% class="star4"/>
+      <v-img :src="imgSrc" max-height= 12% max-width= 15% class="star6"/>
+      <v-img :src="imgSrc" max-height= 7% max-width= 15% class="star7"/>
      </section>
   </div>
 </template>
@@ -41,7 +43,8 @@ export default {
     justify-content: center;
     width: 100vw;
     height: 100vh;
-    perspective: 40px}
+    perspective: 70px
+    }
     @keyframes poster-ani{
     0%{
     transform: rotateY(-20deg);
@@ -89,7 +92,10 @@ export default {
     bottom: 1%;
     transform: translateZ(80px);
    }
-
+    .star1
+    {
+      perspective: 1000px
+    }
 /* 
    <template>
   <div>

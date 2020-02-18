@@ -17,23 +17,29 @@
     </v-container>
 </template>
 <script>
-export default {
-  name:"notfound"
-  ,
-  components:
-  {
-  }
-  ,
-  methods: 
-  {
-     
-  }
-}
+    export default {
+        name: "notfound",
+        data() {
+            return {
+              image:'',
+              check:false,
+              formData:{
+                    images:''
+                }
 
+            }
+        },
+        methods: {
+            getImgSrc()
+            {
+                return this.imageResult
+            }
+           
+        }
+    }
 </script>
 <style>
-div#wrapper { margin-left: 500px ;}
-
+    div#wrapper {
+        margin-left: 500px;
+    }
 </style>
-
-

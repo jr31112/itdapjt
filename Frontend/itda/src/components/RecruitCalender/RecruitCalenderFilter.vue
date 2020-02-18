@@ -281,7 +281,7 @@
         methods: {
             getRecentRecruit() {
                 axios
-                    .get(`http://54.180.140.163:8197/itda/api/getWantedAll/`)
+                    .get(`https://i02b201.p.ssafy.io:8197/itda/api/getWantedAll/`)
                     .then(response => {
                         this.recruitList = response.data
                     })

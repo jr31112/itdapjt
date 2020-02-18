@@ -66,12 +66,12 @@
             },
             getLoginContent(){
                 if (this.isLogin){
-                    axios.get(`http://54.180.140.163:8197/itda/api/getWantedByScrap/`, {'headers' : {"jwt-auth-token": localStorage.getItem("access_token")}})
+                    axios.get(`https://192.168.31.54:8197/itda/api/getWantedByScrap/`, {'headers' : {"jwt-auth-token": localStorage.getItem("access_token")}})
                         .then(response => {
                             this.wantedlist.loginContent.scrapList = response.data;
                         })
                         .catch(() => {});
-                    axios.get(`http://54.180.140.163:8197/itda/api/getWantedByStack/`, {'headers' : {"jwt-auth-token": localStorage.getItem("access_token")}})
+                    axios.get(`https://192.168.31.54:8197/itda/api/getWantedByStack/`, {'headers' : {"jwt-auth-token": localStorage.getItem("access_token")}})
                         .then(response => {
                             this.wantedlist.loginContent.stackList = response.data;
                         })
@@ -79,12 +79,12 @@
                 }
             },
             getDefaultContent(){
-                axios.get(`http://54.180.140.163:8197/itda/api/getWantedByRecent/`)
+                axios.get(`https://192.168.31.54:8197/itda/api/getWantedByRecent/`)
                     .then(response=>{
                         this.wantedlist.defaultContent.deadlineList = response.data
                     })
                     .catch(()=>{})
-                axios.get(`http://54.180.140.163:8197/itda/api/getWantedByView/`)
+                axios.get(`https://192.168.31.54:8197/itda/api/getWantedByView/`)
                     .then(response=>{
                         this.wantedlist.defaultContent.popularList = response.data
                     })
@@ -92,7 +92,7 @@
             },
             getLoginStudies(){
                 if (this.isLogin){
-                    axios.get("http://54.180.140.163:8197/itda/api/getUser", {headers:{"jwt-auth-token": localStorage.getItem("access_token")}})
+                    axios.get("https://192.168.31.54:8197/itda/api/getUser", {headers:{"jwt-auth-token": localStorage.getItem("access_token")}})
                         .then(response => {
                             this.loginStudies = response.data.myStudies
                             var len = this.loginStudies.length % 4

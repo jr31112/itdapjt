@@ -12,7 +12,7 @@
                             <v-card width="500px">
                                 <v-card-title>비밀번호를 재확인 할께요</v-card-title>
                                 <v-card-text>
-                                    <v-form ref="form" v-model="valid">
+                                    <v-form ref="form" v-model="valid" v-on:keyup.enter="validate()">
                                         <v-text-field v-model="formData.pw" type="password" label="비밀번호" :rules="[v => !!v || '비밀번호를 입력해주세요']"></v-text-field>
                                     </v-form>
                                 </v-card-text>
@@ -88,7 +88,7 @@
                 this.getUserInfo()
             },
             getUserInfo(){
-                axios.get("http://54.180.140.163:8197/itda/api/getUser", {headers:{"jwt-auth-token": localStorage.getItem("access_token")}})
+                axios.get("https://i02b201.p.ssafy.io:8197/itda/api/getUser", {headers:{"jwt-auth-token": localStorage.getItem("access_token")}})
                     .then(response => {
                         this.userInfo = response.data
                         this.loginStudies = response.data.myStudies
@@ -106,11 +106,12 @@
                     router.push({name: 'usermodify'})
             },
             validate () {
+                console.log("validtae")
                 if (this.$refs.form.validate()) {
-                    console.log(this.formData.pw)
-                    axios.post('http://54.180.140.163:8197/itda/api/checkPW',this.formData,{headers:{"jwt-auth-token": localStorage.getItem("access_token")}})
+                    axios.post('https://i02b201.p.ssafy.io:8197/itda/api/checkPW',this.formData
+                    ,{headers:{"jwt-auth-token": localStorage.getItem("access_token")}}
+                    )
                         .then(response=>{
-
                             if (response.data.state == "success"){
                                 router.push({name: 'usermodify'})
                             }

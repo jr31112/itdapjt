@@ -55,7 +55,7 @@ export default {
             this.overlayRead = false
         },
         enter() {
-            axios.post('http://54.180.140.163:8197/itda/api/createStudyGroup',{"stid":this.study.stid},{'headers' : {"jwt-auth-token": localStorage.getItem("access_token")}})
+            axios.post('https://i02b201.p.ssafy.io:8197/itda/api/createStudyGroup',{"stid":this.study.stid},{'headers' : {"jwt-auth-token": localStorage.getItem("access_token")}})
             .then(
                 ()=>{
                     alert('스터디 가입이 완료되었습니다.')
@@ -64,7 +64,7 @@ export default {
             })
         },
         exit() {
-            axios.delete('http://54.180.140.163:8197/itda/api/deleteStudyGroup/' + this.study.stid ,{'headers' : {"jwt-auth-token": localStorage.getItem("access_token")}})
+            axios.delete('https://i02b201.p.ssafy.io:8197/itda/api/deleteStudyGroup/' + this.study.stid ,{'headers' : {"jwt-auth-token": localStorage.getItem("access_token")}})
             .then(
                 ()=>{
                     alert('스터디 탈퇴가 완료되었습니다.')
@@ -73,7 +73,7 @@ export default {
             })
         },
         del() {
-            axios.delete('http://54.180.140.163:8197/itda/api/deleteStudy/' + this.study.stid ,{'headers' : {"jwt-auth-token": localStorage.getItem("access_token")}})
+            axios.delete('https://i02b201.p.ssafy.io:8197/itda/api/deleteStudy/' + this.study.stid ,{'headers' : {"jwt-auth-token": localStorage.getItem("access_token")}})
             .then(
                 ()=>{
                     alert('스터디 삭제가 완료되었습니다.')
@@ -82,7 +82,7 @@ export default {
             })
         },
         getStudyDetail(id){
-            axios.get('http://54.180.140.163:8197/itda/api/getStudyGroup/'+id)
+            axios.get('https://i02b201.p.ssafy.io:8197/itda/api/getStudyGroup/'+id)
                 .then(response => {
                     this.person = response.data
                 })

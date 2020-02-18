@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,6 +25,7 @@ import com.ssafy.itda.itda_test.service.FileUploadDownloadService;
 import com.ssafy.itda.itda_test.service.IUserService;
 import com.ssafy.itda.itda_test.service.JwtServiceImpl;
 
+@CrossOrigin(origins = { "*" }, maxAge = 6000)
 @RequestMapping("/api")
 @RestController
 public class FileUploadController {

@@ -161,8 +161,8 @@ export default {
     },
     goLogout()
     {
-      this.$store.dispatch('logout')
       this.$store.state.isDialog = false 
+      this.$store.dispatch('logout')
       router.push({name:"recruitmain"}).catch(() => {});
     },
     goSearch(content)

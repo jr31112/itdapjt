@@ -124,7 +124,7 @@
   </v-layout>
 </template>
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions, mapMutations } from "vuex";
 import axios from "axios";
 import firebase from "firebase";
 
@@ -175,7 +175,7 @@ export default {
       }
       else {
         axios
-          .post("http://54.180.140.163:8197/itda/api/signUp", {
+          .post("https://i02b201.p.ssafy.io:8197/itda/api/signUp", {
             email: this.email_rg,
             pw: this.password_rg,
             uname: this.name
@@ -200,7 +200,8 @@ export default {
           });
       }
     },
-    ...mapActions(["login", "register"]),
+    ...mapActions(["login", "register", ]),
+    ...mapMutations(["loginSuccess"]),
     goInit() {
       //제출 후 초기화.
       (this.email_lg = null),
@@ -233,18 +234,15 @@ export default {
           var social_email = result.user.email;
           var social_uid = result.user.uid;
           var social_name = result.user.displayName;
-          console.log(result);
-          console.log(social_email);
-          console.log(social_uid);
           axios
             .get(
-              "http://54.180.140.163:8197/itda/api/emailCheck/" + social_email
+              "https://i02b201.p.ssafy.io:8197/itda/api/emailCheck/" + social_email
             )
             .then(response => {
               if (response.data.state == "fail") {
                 //이미 있는 email이라면?
                 axios
-                  .post("http://54.180.140.163:8197/itda/api/login", {
+                  .post("https://i02b201.p.ssafy.io:8197/itda/api/login", {
                     email: social_email,
                     pw: social_uid
                   })
@@ -264,7 +262,7 @@ export default {
               } else {
                 //회원가입 시킨 뒤 로그인 시키자.
                 axios
-                  .post("http://54.180.140.163:8197/itda/api/signUp", {
+                  .post("https://i02b201.p.ssafy.io:8197/itda/api/signUp", {
                     email: social_email,
                     pw: social_uid,
                     uname: social_name
@@ -272,7 +270,7 @@ export default {
                   .then(response => {
                     if (response.data.state == "success") {
                       axios
-                        .post("http://54.180.140.163:8197/itda/api/login", {
+                        .post("https://i02b201.p.ssafy.io:8197/itda/api/login", {
                           email: social_email,
                           pw: social_uid
                         })
@@ -281,6 +279,7 @@ export default {
                             let token = response.headers["jwt-auth-token"];
                             localStorage.setItem("access_token", token);
                             localStorage.setItem("social", "social");
+                            
                             this.$router.go();
                           }
                         });

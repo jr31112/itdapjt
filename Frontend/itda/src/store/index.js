@@ -48,7 +48,7 @@ export default new Vuex.Store({
   {
     login({ dispatch }, { email, pw }) {
       axios
-        .post('http://54.180.140.163:8197/itda/api/login', {
+        .post('https://i02b201.p.ssafy.io:8197/itda/api/login', {
           email, pw
         })
         .then(res => {
@@ -69,6 +69,7 @@ export default new Vuex.Store({
     logout({ commit }) {
       commit("logout")
       if(localStorage.getItem("social") == 'social'){
+        alert("하이소셜로그인 ")
         firebase.auth().signOut()
           .then(()=>{
             alert("소셜 로그아웃 성공!")
@@ -87,9 +88,8 @@ export default new Vuex.Store({
       if(!token){
         return;
       }
-      axios.get("http://54.180.140.163:8197/itda/api/getUser", {headers:{"jwt-auth-token": token}})
+      axios.get("https://i02b201.p.ssafy.io:8197/itda/api/getUser", {headers:{"jwt-auth-token": token}})
         .then(res => {
-          console.log("정원 확인userinfo:"  )
           console.log(res)
           let userInfo = res.data
           commit('loginSuccess', userInfo)

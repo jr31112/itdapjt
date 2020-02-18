@@ -57,7 +57,7 @@
             {
                 alert("안녕")
                  axios
-                    .post('http://54.180.140.163:8197/itda/api/createWanted/')
+                    .post('https://i02b201.p.ssafy.io:8197/itda/api/createWanted/')
                     .then(res => {
                         alert(res.data.msg)
                     })
@@ -69,7 +69,7 @@
             ,    
             getWantedAll() {
                 axios
-                    .get('http://54.180.140.163:8197/itda/api/getWantedAll/')
+                    .get('https://i02b201.p.ssafy.io:8197/itda/api/getWantedAll/')
                     .then(res => {
                         this.allwanteds = res.data
                     })

@@ -8,4 +8,4 @@ server:
 #    key-alias: airpageserver
   
 #security:
-#  require-ssl: true
+#  require-ssl:true

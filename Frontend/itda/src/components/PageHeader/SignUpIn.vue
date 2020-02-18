@@ -233,9 +233,6 @@ export default {
           var social_email = result.user.email;
           var social_uid = result.user.uid;
           var social_name = result.user.displayName;
-          console.log(result);
-          console.log(social_email);
-          console.log(social_uid);
           axios
             .get(
               "http://192.168.31.54:8197/itda/api/emailCheck/" + social_email

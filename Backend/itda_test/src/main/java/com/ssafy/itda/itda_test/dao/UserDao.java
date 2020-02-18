@@ -55,4 +55,8 @@ public class UserDao {
 	public void updatePermission(User model) {
 		sqlSession.update(ns + "updatePermission", model);
 	}
+
+	public void imgUpload(User user) {
+		sqlSession.update(ns + "imgUpload", user);
+	}
 }

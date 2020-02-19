@@ -8,6 +8,7 @@ import RecruitMain from '../views/RecruitMain.vue'
 import RecruitDetail from '../views/RecruitDetail.vue'
 import RecruitCalender from '../views/RecruitCalender.vue'
 import StudyMain from '../views/StudyMain.vue'
+import StudyDetail from '../views/StudyDetail.vue'
 import SearchResult from '../views/SearchResult.vue'
 import SearchData from '../views/SearchData.vue'
 import UserModify from "../views/UserModify.vue"
@@ -79,6 +80,11 @@ const routes = [
     path: "/study",
     name: "studymain",
     component: StudyMain
+  },
+  {
+    path: "/study/:id",
+    name: "studydetail",
+    component: StudyDetail
   },
   {
     path: "/searchdata/:type",

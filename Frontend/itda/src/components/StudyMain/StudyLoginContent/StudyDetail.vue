@@ -1,17 +1,12 @@
 <template>
-  <v-col class="studydetail" cols="6" md="3" v-if="study.stid">
+  <v-col class="studydetail" cols="12" md="3" v-if="study.stid">
     <v-hover v-slot:default="{ hover }">
       <v-card light align-center height="200" :elevation="hover ? 16 : 2" class="mx-auto" @click.prevent="openRead">
-        <v-container>
-          <v-row align="center">
-            <v-col cols="9">
-              {{study.stname}}
-            </v-col>
-            <v-col cols="3">
-              {{study.pcnt}} / {{study.maxPcnt}}
-            </v-col>
-          </v-row>
-        </v-container>
+        <v-card-title>{{study.stname}}</v-card-title>
+        <v-divider class="my-0"></v-divider>
+        <v-card-text>
+          
+        </v-card-text>
       </v-card>
     </v-hover>
     <v-dialog v-model="overlayRead" scrollable max-width="500px" white>

@@ -66,6 +66,7 @@
 </template>
 
 <script>
+    import { mapState } from 'vuex'
     import RecruitCalenderContent from "./RecruitCalenderContent.vue"
     import axios from 'axios'
     export default {
@@ -87,7 +88,6 @@
                 recruitList: [],
                 techstack: [],
                 recruit: [],
-
                 periodOptions: [
                     {
                         text: '시작',
@@ -107,174 +107,6 @@
                         value: '신입',
                     }
                 ],
-                stacklist: [
-                    {
-                        sid: 1,
-                        tname: "Java",
-                        cnt: 4
-                    }, {
-                        sid: 2,
-                        tname: "C",
-                        cnt: 20
-                    }, {
-                        sid: 3,
-                        tname: "C++",
-                        cnt: 3
-                    }, {
-                        sid: 4,
-                        tname: "C#",
-                        cnt: 3
-                    }, {
-                        sid: 5,
-                        tname: "Objective-C",
-                        cnt: 0
-                    }, {
-                        sid: 6,
-                        tname: "Python",
-                        cnt: 2
-                    }, {
-                        sid: 7,
-                        tname: "PHP",
-                        cnt: 0
-                    }, {
-                        sid: 8,
-                        tname: "JavaScript",
-                        cnt: 1
-                    }, {
-                        sid: 9,
-                        tname: "Kotlin",
-                        cnt: 1
-                    }, {
-                        sid: 10,
-                        tname: "Unix",
-                        cnt: 0
-                    }, {
-                        sid: 11,
-                        tname: "Linux",
-                        cnt: 5
-                    }, {
-                        sid: 12,
-                        tname: "Windows",
-                        cnt: 1
-                    }, {
-                        sid: 13,
-                        tname: "Android",
-                        cnt: 1
-                    }, {
-                        sid: 14,
-                        tname: "iOS",
-                        cnt: 1
-                    }, {
-                        sid: 15,
-                        tname: "MySQL",
-                        cnt: 0
-                    }, {
-                        sid: 16,
-                        tname: "MS-SQL",
-                        cnt: 2
-                    }, {
-                        sid: 17,
-                        tname: "Oracle",
-                        cnt: 2
-                    }, {
-                        sid: 18,
-                        tname: "MariaDB",
-                        cnt: 0
-                    }, {
-                        sid: 19,
-                        tname: "MongoDB",
-                        cnt: 0
-                    }, {
-                        sid: 20,
-                        tname: "SQLite",
-                        cnt: 0
-                    }, {
-                        sid: 21,
-                        tname: "NoSQL",
-                        cnt: 0
-                    }, {
-                        sid: 22,
-                        tname: "HTML",
-                        cnt: 3
-                    }, {
-                        sid: 23,
-                        tname: "CSS",
-                        cnt: 2
-                    }, {
-                        sid: 24,
-                        tname: "Vue.js",
-                        cnt: 0
-                    }, {
-                        sid: 25,
-                        tname: "jQuery",
-                        cnt: 0
-                    }, {
-                        sid: 26,
-                        tname: "Ajax",
-                        cnt: 0
-                    }, {
-                        sid: 27,
-                        tname: "Spring",
-                        cnt: 3
-                    }, {
-                        sid: 28,
-                        tname: "Django",
-                        cnt: 0
-                    }, {
-                        sid: 29,
-                        tname: "Flask",
-                        cnt: 0
-                    }, {
-                        sid: 30,
-                        tname: "Node.js",
-                        cnt: 0
-                    }, {
-                        sid: 31,
-                        tname: "JSP",
-                        cnt: 0
-                    }, {
-                        sid: 32,
-                        tname: "JPA/Hibernate",
-                        cnt: 0
-                    }, {
-                        sid: 33,
-                        tname: "WAS",
-                        cnt: 1
-                    }, {
-                        sid: 34,
-                        tname: "AWS",
-                        cnt: 2
-                    }, {
-                        sid: 35,
-                        tname: "OOP",
-                        cnt: 0
-                    }, {
-                        sid: 36,
-                        tname: "AI",
-                        cnt: 5
-                    }, {
-                        sid: 37,
-                        tname: "Machine Learning",
-                        cnt: 0
-                    }, {
-                        sid: 38,
-                        tname: "Docker",
-                        cnt: 2
-                    }, {
-                        sid: 39,
-                        tname: "RESTful-API",
-                        cnt: 0
-                    }, {
-                        sid: 40,
-                        tname: "JIRA",
-                        cnt: 0
-                    }, {
-                        sid: 41,
-                        tname: "Git",
-                        cnt: 3
-                    }
-                ],
-               
                 dialog: false
             }
         },
@@ -291,9 +123,6 @@
                         console.log(error)
                 })
             },
-           
-
-            
             optionmanager() {
                 if (this.period.length == 1) {
                     if (this.period[0] == "시작") {
@@ -319,9 +148,11 @@
                 }
             },
         },
-
         mounted() {
             this.getRecentRecruit()
+        },
+        computed:{
+            ...mapState(["stacklist"]),
         }
     }
 </script>

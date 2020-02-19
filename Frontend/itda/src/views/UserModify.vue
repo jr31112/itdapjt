@@ -124,7 +124,8 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from "axios"
+import { mapState } from 'vuex'
 export default {
   data() {
     return {
@@ -144,254 +145,6 @@ export default {
       password_rg: "",
       password_rg1: "",
       dialog: false,
-      stacklist: [
-        {
-          sid: 1,
-          tname: "Java",
-          cnt: 5,
-          value: false
-        },
-        {
-          sid: 2,
-          tname: "C",
-          cnt: 23,
-          value: false
-        },
-        {
-          sid: 3,
-          tname: "C++",
-          cnt: 1,
-          value: false
-        },
-        {
-          sid: 4,
-          tname: "C#",
-          cnt: 2,
-          value: false
-        },
-        {
-          sid: 5,
-          tname: "Objective-C",
-          cnt: 1,
-          value: false
-        },
-        {
-          sid: 6,
-          tname: "Python",
-          cnt: 4,
-          value: false
-        },
-        {
-          sid: 7,
-          tname: "PHP",
-          cnt: 0,
-          value: false
-        },
-        {
-          sid: 8,
-          tname: "JavaScript",
-          cnt: 0,
-          value: false
-        },
-        {
-          sid: 9,
-          tname: "Kotlin",
-          cnt: 0,
-          value: false
-        },
-        {
-          sid: 10,
-          tname: "Unix",
-          cnt: 0,
-          value: false
-        },
-        {
-          sid: 11,
-          tname: "Linux",
-          cnt: 3,
-          value: false
-        },
-        {
-          sid: 12,
-          tname: "Windows",
-          cnt: 1,
-          value: false
-        },
-        {
-          sid: 13,
-          tname: "Android",
-          cnt: 1,
-          value: false
-        },
-        {
-          sid: 14,
-          tname: "iOS",
-          cnt: 2,
-          value: false
-        },
-        {
-          sid: 15,
-          tname: "MySQL",
-          cnt: 3,
-          value: false
-        },
-        {
-          sid: 16,
-          tname: "MS-SQL",
-          cnt: 1,
-          value: false
-        },
-        {
-          sid: 17,
-          tname: "Oracle",
-          cnt: 2,
-          value: false
-        },
-        {
-          sid: 18,
-          tname: "MariaDB",
-          cnt: 1,
-          value: false
-        },
-        {
-          sid: 19,
-          tname: "MongoDB",
-          cnt: 1,
-          value: false
-        },
-        {
-          sid: 20,
-          tname: "SQLite",
-          cnt: 0,
-          value: false
-        },
-        {
-          sid: 21,
-          tname: "NoSQL",
-          cnt: 2,
-          value: false
-        },
-        {
-          sid: 22,
-          tname: "HTML",
-          cnt: 3,
-          value: false
-        },
-        {
-          sid: 23,
-          tname: "CSS",
-          cnt: 2,
-          value: false
-        },
-        {
-          sid: 24,
-          tname: "Vue.js",
-          cnt: 1,
-          value: false
-        },
-        {
-          sid: 25,
-          tname: "jQuery",
-          cnt: 1,
-          value: false
-        },
-        {
-          sid: 26,
-          tname: "Ajax",
-          cnt: 0,
-          value: false
-        },
-        {
-          sid: 27,
-          tname: "Spring",
-          cnt: 3,
-          value: false
-        },
-        {
-          sid: 28,
-          tname: "Django",
-          cnt: 0,
-          value: false
-        },
-        {
-          sid: 29,
-          tname: "Flask",
-          cnt: 0,
-          value: false
-        },
-        {
-          sid: 30,
-          tname: "Node.js",
-          cnt: 1,
-          value: false
-        },
-        {
-          sid: 31,
-          tname: "JSP",
-          cnt: 1,
-          value: false
-        },
-        {
-          sid: 32,
-          tname: "JPA/Hibernate",
-          cnt: 0,
-          value: false
-        },
-        {
-          sid: 33,
-          tname: "WAS",
-          cnt: 2,
-          value: false
-        },
-        {
-          sid: 34,
-          tname: "AWS",
-          cnt: 5,
-          value: false
-        },
-        {
-          sid: 35,
-          tname: "OOP",
-          cnt: 0,
-          value: false
-        },
-        {
-          sid: 36,
-          tname: "AI",
-          cnt: 2,
-          value: false
-        },
-        {
-          sid: 37,
-          tname: "Machine Learning",
-          cnt: 1,
-          value: false
-        },
-        {
-          sid: 38,
-          tname: "Docker",
-          cnt: 0,
-          value: false
-        },
-        {
-          sid: 39,
-          tname: "RESTful-API",
-          cnt: 0,
-          value: false
-        },
-        {
-          sid: 40,
-          tname: "JIRA",
-          cnt: 0,
-          value: false
-        },
-        {
-          sid: 41,
-          tname: "Git",
-          cnt: 0,
-          value: false
-        }
-      ]
     };
   },
   created() {
@@ -431,13 +184,13 @@ export default {
         .then(response => {
           alert(response.data.msg);
           if (response.data.state == "success") {
-            alert("수정이 완료되었습니다.");
+            alert("수정이 완료되었습니다.")
           }
         });
     },
     removeStack(idx, sid) {
-      this.userInfo.mystacks.splice(idx, 1);
-      this.stacklist[sid - 1].value = false;
+      this.userInfo.mystacks.splice(idx, 1)
+      this.stacklist[sid - 1].value = false
     },
     goSaveStack() {
       this.dialog = false;
@@ -447,7 +200,7 @@ export default {
           tmp.push({
             sid: this.stacklist[i].sid,
             tname: this.stacklist[i].tname
-          });
+          })
         }
       }
       this.userInfo.mystacks = tmp;
@@ -470,7 +223,7 @@ export default {
           }
         })
         .catch(() => {
-        });
+        })
     },
     onChange() {
       this.selectImg = this.$refs.uimg.files[0];
@@ -481,7 +234,7 @@ export default {
           "Content-Type": "multipart/form-data",
           "jwt-auth-token": localStorage.getItem("access_token")
         }
-      };
+      }
 
       axios
         .post(
@@ -492,10 +245,13 @@ export default {
         .then(response => {
           this.imageResult = response.data.fileDownloadUri;
           this.userInfo.user.uimg = this.imageResult;
-        });
+        })
     }
+  },
+  computed:{
+    ...mapState(["stacklist"]),
   }
-};
+}
 </script>
 
 <style></style>

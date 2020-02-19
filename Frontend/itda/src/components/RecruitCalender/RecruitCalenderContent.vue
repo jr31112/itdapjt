@@ -1,4 +1,5 @@
 <template>
+    <v-row>
     <FullCalendar
         defaultView="dayGridMonth"
         :plugins="calendarPlugins"
@@ -9,6 +10,7 @@
         :eventOrder="['color']"
         @change="changeEvent"
         @eventClick="handleDateClick"/>
+    </v-row>
 </template>
 
 <script>
@@ -18,7 +20,7 @@
     import router from '../../router/index.js'
     export default {
         components: {
-            FullCalendar, // make the <FullCalendar> tag available
+            FullCalendar, 
         },
         data() {
             return {
@@ -57,12 +59,9 @@
                 for (var k = 0; k < this.recruitList.length; k++) {
                     idx.push(k)
                 }
-                // 공고 내 인턴 혹은 신입이 있는 공고 번호를 찾는 조건문
                 if (this.options.recruit !== 3) {
                     idx = this.filterByRecruitOption(idx, this.options.recruit)
                 }
-
-                // 공고 내 선택한 스택이 있는 공고 번호를 찾는 조건문
                 if (this.options.selectstacklist.length !== 0) {
                     idx = this.filterByStackOption(idx, this.options.selectstacklist)
                 }
@@ -137,7 +136,6 @@
                 }
                 return idx
             },
-            //https://i02b201.p.ssafy.io:8197/itda
             filterByStackOption(checkIdxList, choiceStackList) {
                 var idx = []
                 for (var i = 0; i < checkIdxList.length; i++) {

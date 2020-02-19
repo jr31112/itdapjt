@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -22,15 +23,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mysql.cj.protocol.a.NativeConstants.StringLengthDataType;
 import com.ssafy.itda.itda_test.help.Result;
 import com.ssafy.itda.itda_test.help.WantedResult;
 import com.ssafy.itda.itda_test.model.Company;
-import com.ssafy.itda.itda_test.model.WantedStack;
 import com.ssafy.itda.itda_test.model.Scrap;
 import com.ssafy.itda.itda_test.model.Stack;
+import com.ssafy.itda.itda_test.model.Study;
 import com.ssafy.itda.itda_test.model.Wanted;
 import com.ssafy.itda.itda_test.service.IStackService;
+import com.ssafy.itda.itda_test.service.IStudyService;
 import com.ssafy.itda.itda_test.service.IWantedService;
 import com.ssafy.itda.itda_test.service.JwtServiceImpl;
 
@@ -50,6 +51,9 @@ public class WantedController {
 
 	@Autowired
 	private IStackService stackService;
+
+	@Autowired
+	private IStudyService studyService;
 
 	@Autowired
 	private JwtServiceImpl jwtService;
@@ -75,38 +79,37 @@ public class WantedController {
 
 	@ApiOperation(value = " 공고 정보를 확인한다.", response = WantedResult.class)
 	@RequestMapping(value = "/getWantedByID/{wid}", method = RequestMethod.GET)
-	public ResponseEntity<WantedResult> getWantedByID(@PathVariable String wid, HttpServletRequest req) throws Exception {
+	public ResponseEntity<WantedResult> getWantedByID(@PathVariable String wid, HttpServletRequest req)
+			throws Exception {
 		logger.info("5-------------getWantedByID-----------------------------" + new Date());
 		Map<String, Object> resultMap = new HashMap<>();
 		String token = req.getHeader("jwt-auth-token");
 		WantedResult wr = new WantedResult();
+		String cid = wantedService.getCompanyId(wid);
+		Company company = wantedService.getCompanyInfo(cid);
+		Wanted wanted = wantedService.getWantedInfo(wid);
+		List<Stack> wantedStacks = wantedService.getWantedStackInfo(wid);
+		List<Study> companyStudys = studyService.getStudyByCompany(cid);
+		List<Study> wantedStudys = studyService.getStudyByWanted(wid);
+		List<Study> studys = new LinkedList<>();
+		studys.addAll(companyStudys);
+		studys.addAll(wantedStudys);
+		wr.setCompany(company);
+		wr.setWanted(wanted);
+		wr.setStacks(wantedStacks);
+		wr.setStudys(studys);
 		if (token != null && !token.equals("")) {
 			resultMap.putAll(jwtService.get(req.getHeader("jwt-auth-token")));
 			int uid = (int) resultMap.get("uid");
-			String cid = wantedService.getCompanyId(wid);
-			Company company = wantedService.getCompanyInfo(cid);
-			Wanted wanted = wantedService.getWantedInfo(wid);
-			List<Stack> wantedStacks = wantedService.getWantedStackInfo(wid);
 			Scrap model = new Scrap();
 			model.setUid(uid);
 			model.setWid(wid);
 			Scrap scrap = wantedService.isScraped(model);
-			wr.setCompany(company);
-			wr.setWanted(wanted);
-			wr.setStacks(wantedStacks);
 			if (scrap == null) {
 				wr.setScrap(false);
 			} else {
 				wr.setScrap(true);
 			}
-		} else {
-			String cid = wantedService.getCompanyId(wid);
-			Company company = wantedService.getCompanyInfo(cid);
-			Wanted wanted = wantedService.getWantedInfo(wid);
-			List<Stack> wantedStacks = wantedService.getWantedStackInfo(wid);
-			wr.setCompany(company);
-			wr.setWanted(wanted);
-			wr.setStacks(wantedStacks);
 		}
 		// vcnt 조회수 update
 		wantedService.updateVcnt(wid);
@@ -274,9 +277,10 @@ public class WantedController {
 		if (wid == null || wid.equals("") || wanted == null) {
 			r.setMsg("존재하지 않는 wid값입니다.");
 			r.setState("fail");
-		} else if (model.getCid() == null || model.getCid().equals("") || model.getWantedTitle() == null || model.getWantedTitle().equals("")
-				|| model.getStartDate() == null || model.getStartDate().equals("") || model.getEndDate() == null
-				|| model.getEndDate().equals("") || model.getDetail() == null || model.getDetail().equals("")) {
+		} else if (model.getCid() == null || model.getCid().equals("") || model.getWantedTitle() == null
+				|| model.getWantedTitle().equals("") || model.getStartDate() == null || model.getStartDate().equals("")
+				|| model.getEndDate() == null || model.getEndDate().equals("") || model.getDetail() == null
+				|| model.getDetail().equals("")) {
 			r.setMsg("입력되지 않은 필수값이 있습니다.");
 			r.setState("fail");
 		} else {
@@ -289,7 +293,8 @@ public class WantedController {
 
 	@ApiOperation(value = "키워드에 맞는 공고를 검색한다.", response = List.class)
 	@RequestMapping(value = "/getWantedBySearch/{keyword}", method = RequestMethod.GET)
-	public ResponseEntity<List<WantedResult>> getWantedBySearch(@PathVariable String keyword, HttpServletRequest req) throws Exception {
+	public ResponseEntity<List<WantedResult>> getWantedBySearch(@PathVariable String keyword, HttpServletRequest req)
+			throws Exception {
 		logger.info("-------------getWantedBySearch-----------------------------" + new Date());
 		Map<String, Object> resultMap = new HashMap<>();
 		String token = req.getHeader("jwt-auth-token");
@@ -309,7 +314,7 @@ public class WantedController {
 			}
 			Iterator<String> it = widSet.iterator();
 			List<String> widList = new ArrayList<>();
-			while(it.hasNext()) {
+			while (it.hasNext()) {
 				widList.add(it.next());
 			}
 			List<WantedResult> wrlist = getWantedListFunction(widList, uid);
@@ -328,14 +333,14 @@ public class WantedController {
 			}
 			Iterator<String> it = widSet.iterator();
 			List<String> widList = new ArrayList<>();
-			while(it.hasNext()) {
+			while (it.hasNext()) {
 				widList.add(it.next());
 			}
 			List<WantedResult> wrlist = getWantedListFunction(widList);
 			return new ResponseEntity<List<WantedResult>>(wrlist, HttpStatus.OK);
 		}
 	}
-	
+
 	private List<WantedResult> getWantedListFunction(List<String> widList, int uid) {
 		List<WantedResult> wrlist = new ArrayList<>();
 		for (String i : widList) {

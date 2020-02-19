@@ -8,7 +8,7 @@ public class Study implements Serializable {
 	private int maxPcnt;
 	private int pcnt;
 	private int stype;
-	private int typeFk;
+	private String typeFk;
 	private String typeName;
 	private int sgroup;
 	private String content;
@@ -17,21 +17,6 @@ public class Study implements Serializable {
 	public Study() {
 		super();
 		// TODO Auto-generated constructor stub
-	}
-
-	public Study(int stid, String stname, int maxPcnt, int pcnt, int stype, int typeFk, String typeName, int sgroup,
-			String content, int captain) {
-		super();
-		this.stid = stid;
-		this.stname = stname;
-		this.maxPcnt = maxPcnt;
-		this.pcnt = pcnt;
-		this.stype = stype;
-		this.typeFk = typeFk;
-		this.typeName = typeName;
-		this.sgroup = sgroup;
-		this.content = content;
-		this.captain = captain;
 	}
 
 	public int getStid() {
@@ -74,11 +59,11 @@ public class Study implements Serializable {
 		this.stype = stype;
 	}
 
-	public int getTypeFk() {
+	public String getTypeFk() {
 		return typeFk;
 	}
 
-	public void setTypeFk(int typeFk) {
+	public void setTypeFk(String typeFk) {
 		this.typeFk = typeFk;
 	}
 

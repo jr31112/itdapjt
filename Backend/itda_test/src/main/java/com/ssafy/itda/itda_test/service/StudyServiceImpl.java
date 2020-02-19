@@ -41,4 +41,14 @@ public class StudyServiceImpl implements IStudyService {
 		studyDao.deleteStudy(stid);
 	}
 
+	@Override
+	public List<Study> getStudyByWanted(String wid) {
+		return studyDao.getStudyByWanted(wid);
+	}
+
+	@Override
+	public List<Study> getStudyByCompany(String cid) {
+		return studyDao.getStudyByCompany(cid);
+	}
+
 }

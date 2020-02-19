@@ -17,16 +17,15 @@
                         <study-detail v-for="study in studies.slice(10*(page-1), 10*(page-1) + 10)" :key="study.stid" :study="study" v-on:update="update"/>
                     </tbody>
                 </v-simple-table>
-                
             </v-row>
-            <v-row class="mt-2" align="center" justify="center">
-                <v-btn color="blue lighten-1" class="mr-1" @click="formerPage">
+            <v-row class="mt-2" align="center" justify="center" >
+                <v-btn text="text" class="mr-1 " @click="formerPage">
                     <v-icon>mdi-chevron-left</v-icon>
                 </v-btn>
-                <v-btn v-for="pgNm in this.numberOfPages" :key="pgNm" color="blue lighten-3" class="ml-1" @click="goPage(pgNm)">
+                <v-btn  v-for="pgNm in this.numberOfPages" :key="pgNm" text class="ml-1" @click="goPage(pgNm)">
                     {{pgNm}}
                 </v-btn>
-                <v-btn color="blue lighten-1" class="ml-1" @click="nextPage">
+                <v-btn  text="text" class="ml-1" @click="nextPage">
                     <v-icon>mdi-chevron-right</v-icon>
                 </v-btn>
             </v-row>
@@ -123,5 +122,8 @@ export default {
     #response{
         display: none;
     }
+}
+.btn-colored {
+  background:rgba(0, 170, 179);
 }
 </style>

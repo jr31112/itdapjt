@@ -1,5 +1,5 @@
 <template>
-    <v-footer app="app">
+    <v-footer app="app" padless>
         <v-spacer></v-spacer>
         <v-btn
             @click="onMove('https://www.jobplanet.co.kr/')"

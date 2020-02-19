@@ -30,7 +30,19 @@
             </tbody>
         </v-simple-table>
     </v-row>
-    <v-row class="mt-2" align="center" justify="center">
+    <v-row  align="center" justify="center">
+    <div class="text-center">
+    <v-pagination
+      v-model="page"
+      color="rgba(0, 170, 179)"
+      :length="4"
+      :total-visible="totalVisible"
+      prev-icon="mdi-menu-left"
+      next-icon="mdi-menu-right"
+    ></v-pagination>
+     </div>
+     </v-row>
+    <!-- <v-row class="mt-2" align="center" justify="center">
         <v-btn v-if="this.idx*5 - 5 + this.page >= 1" color="blue lighten-1" class="mr-1" @click="doubleformerPage">
             <v-icon>arrow_back</v-icon>
         </v-btn>
@@ -46,8 +58,7 @@
         <v-btn v-if="this.idx*5 + 5 + this.page <= this.numberOfPages" color="blue lighten-1" class="mr-1" @click="doublenextPage">
             <v-icon>arrow_forward</v-icon>
         </v-btn>
-    </v-row>
-    
+    </v-row> -->
   </v-data-iterator>
 
 </template>

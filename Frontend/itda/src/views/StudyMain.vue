@@ -46,7 +46,6 @@
           <v-row><v-col><h2>스터디 전체 보기</h2></v-col></v-row>
           <study-filter :options="this.options" style="max-width:930px"/>
           <study-default-content :options="this.options" :allstudy="this.defaultStudies" :islogin="isLogin" v-on:update="update"/>
-                
       </v-container>
  </div>
 </template>

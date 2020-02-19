@@ -1,15 +1,12 @@
 <template>
   <v-container class="detailcompanyinfo white py-0">
     <v-row><v-col class="pb-0"><h2>기업정보</h2></v-col></v-row>
-    <v-row justify="center">
-      <v-col cols="2" align-self="center">
-          
-        <v-img v-if="company.logo" :src="company.logo" :alt="company.corpNm" aspect-ratio="1" :contain="true"></v-img>
-        <v-img v-else :src="getImgUrl()" alt="noimg" aspect-ratio="1" :contain="true"></v-img>
-          
-       
+    <v-row>
+      <v-col cols="4" sm="2" class="my-auto">
+        <v-img v-if="company.logo" :src="company.logo" :alt="company.corpNm" aspect-ratio="1" :contain="true" style="border-style: solid; border-width: thin"></v-img>
+        <v-img v-else :src="getImgUrl()" alt="noimg" aspect-ratio="1" :contain="true" style="border-style: solid; border-width: thin"></v-img>
       </v-col>
-      <v-col cols="10" justify="center">
+      <v-col cols="12" sm="10" justify="center">
         <h3>{{company.corpNm}}</h3>
         <br>
         <p v-if="company.homePg">홈페이지 : <a :href="company.homePg" style="text-decoration: none; color:black;">{{company.homePg}}</a></p>

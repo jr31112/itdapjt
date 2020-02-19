@@ -30,16 +30,10 @@ export default {
 
 <style>
 .renewal_template_style4{
-  border: black;
-  border-width: medium;
-  border-style: inset;
   margin-left: auto;
   margin-right: auto;
 }
 .new_template_style4{
-  border: black;
-  border-width: medium;
-  border-style: inset;
   margin-left: auto;
   margin-right: auto;
 }

@@ -1,12 +1,13 @@
 <template>
   <div class="studymain">
-      <v-container class="my-0" white >
+      <ImgBanner :imgSrc="bannerImg"/>
+      <v-container white class="my-0" v-if="isLogin">
           <v-row>
-            <v-col><h1 class="text-center">Study</h1></v-col>
-          </v-row>
-          <v-row>
+              <v-col>
+                <h2>내가 가입한 스터디 보기</h2>
+              </v-col>
               <v-spacer></v-spacer>
-                <v-btn class="mr-5" @click.stop="overlay = !overlay" v-if="isLogin">스터디 새로등록</v-btn>
+                <v-btn class="mr-5" color="rgba(0, 170, 179)" dark @click.stop="overlay = !overlay" v-if="isLogin">스터디 새로등록</v-btn>
                 <v-dialog v-model="overlay" scrollable max-width="500px">
                     <v-card>
                         <v-card-title>스터디 등록</v-card-title>
@@ -29,13 +30,8 @@
                     </v-card>
                 </v-dialog>
           </v-row>
-      </v-container>
-      
-      <v-container class="my-0" white v-if="isLogin">
           <v-row>
-              <v-col>
-                <h2>내가 가입한 스터디 보기</h2>
-              </v-col>
+              
           </v-row>
           <study-login-content :myStudyList="loginStudies" v-if="loginStudies.length" v-on:update="update"/>
           <v-row v-else>
@@ -57,10 +53,11 @@ import StudyFilter from '../components/StudyMain/StudyFilter.vue'
 import StudyDefaultContent from '../components/StudyMain/StudyDefaultContent.vue'
 import axios from 'axios'
 import { mapState } from 'vuex'
-
+import ImgBanner from '../components/RecruitMain/ImgBanner.vue'
 export default {
     name:"studymain",
     components:{
+        ImgBanner,
         StudyLoginContent,
         StudyFilter,
         StudyDefaultContent,
@@ -134,6 +131,9 @@ export default {
             let routeData = this.$router.resolve({name: 'searchdata', params: {type: type}})
             window.open(routeData.href, '_blank', 'width=500,height=700,')
         },
+        getImgUrl(img) {
+                return require('../assets/' + img)
+        },
     },
     data(){
         return{
@@ -169,6 +169,10 @@ export default {
             overlay:false,
             defaultStudies:[],
             loginStudies:[],
+            bannerImg:[
+                    this.getImgUrl('banner1.png'),
+                    this.getImgUrl('banner2.png')
+                ]
         }
     },
     mounted(){

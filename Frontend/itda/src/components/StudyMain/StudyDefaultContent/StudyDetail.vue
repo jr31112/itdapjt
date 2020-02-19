@@ -39,7 +39,6 @@
             <v-card-title class="pa-0 pl-6">Desired time zone</v-card-title>
              <v-card-text  class="pa-0 pl-6">
                 <v-chip-group
-                    v-model="selection"
                     active-class="deep-purple accent-4 white--text"
                     column
                 >

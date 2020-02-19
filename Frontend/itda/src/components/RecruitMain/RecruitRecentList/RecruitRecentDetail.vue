@@ -3,7 +3,11 @@
 		<v-card light align-center height="260" :elevation="hover ? 16 : 2" class="mx-auto">
 			<v-container>
 				<v-row align="center">
-					<v-col cols="10" @click="goDetailPage(wanted.wid)">
+					<v-col v-if="!isLogin" @click="goDetailPage(wanted.wid)">
+						<v-img v-if="company.logo" :src="company.logo" :alt="company.corpNm" height="60" :contain="true"></v-img>
+						<v-img v-else :src="getImgUrl('noimg.png')" alt="noimg" height="60" :contain="true"></v-img>
+					</v-col>
+					<v-col v-if="isLogin" cols="10" @click="goDetailPage(wanted.wid)">
 						<v-img v-if="company.logo" :src="company.logo" :alt="company.corpNm" height="60" :contain="true"></v-img>
 						<v-img v-else :src="getImgUrl('noimg.png')" alt="noimg" height="60" :contain="true"></v-img>
 					</v-col>

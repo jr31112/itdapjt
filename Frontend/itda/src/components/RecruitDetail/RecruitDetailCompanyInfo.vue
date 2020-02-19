@@ -3,10 +3,10 @@
     <v-row><v-col class="pb-0"><h2>기업정보</h2></v-col></v-row>
     <v-row justify="center">
       <v-col cols="2" align-self="center">
-          <v-card width="150" height="150">
-            <v-img v-if="company.logo" :src="company.logo" :alt="company.corpNm" width="150" aspect-ratio="1" :contain="true"></v-img>
-            <v-img v-else :src="getImgUrl()" alt="noimg" width="150" aspect-ratio="1" :contain="true"></v-img>
-          </v-card>
+          
+        <v-img v-if="company.logo" :src="company.logo" :alt="company.corpNm" aspect-ratio="1" :contain="true"></v-img>
+        <v-img v-else :src="getImgUrl()" alt="noimg" aspect-ratio="1" :contain="true"></v-img>
+          
        
       </v-col>
       <v-col cols="10" justify="center">

@@ -1,10 +1,11 @@
 <template>
   <div class="recruitdetail" v-if="Object.keys(recruit).length">
     <v-container class="py-0" white><v-row class="py-0">
-      <h1>{{recruit.wanted.wantedTitle}}</h1>
-      <v-col v-if="isLogin && recruit.scrap" class="px-0" cols="4"><v-icon color="yellow" size="200%" @click.prevent="doScrap(recruit.wanted.wid)">star</v-icon></v-col>
-      <v-col v-if="isLogin && !recruit.scrap" class="px-0" cols="4"><v-icon color="grey lighten-2" size="200%" @click.prevent="doScrap(recruit.wanted.wid)">star_border</v-icon></v-col>
-      <v-col cols="4"></v-col>
+      <v-col>
+        <span class="headline">{{recruit.wanted.wantedTitle}}</span>
+        <v-icon v-if="isLogin && recruit.scrap" id="icon" color="yellow" size="200%" @click.prevent="doScrap(recruit.wanted.wid)">star</v-icon>
+        <v-icon v-if="isLogin && !recruit.scrap" id="icon" color="grey lighten-2" size="200%" @click.prevent="doScrap(recruit.wanted.wid)">star_border</v-icon>
+      </v-col>
     </v-row></v-container>
     <recruit-detail-company-info :company="recruit.company"/>
     <v-container class="py-0" white></v-container>
@@ -63,4 +64,8 @@ export default {
 </script>
 
 <style>
+#icon{
+  position:relative;
+  top: -5px;
+}
 </style>

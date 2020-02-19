@@ -14,25 +14,19 @@ import SearchData from '../views/SearchData.vue'
 import UserModify from "../views/UserModify.vue"
 import AboutUs from '../components/Aboutus/AboutUs.vue'
 
-//import { cilViewStream } from '@coreui/icons'
 Vue.use(VueRouter)
 // 관리자가 0 , 기본 1
 const rejectAuthUser = (to, from, next)=>
 {
-  //새로운 페이지로 들어올 때 오류가 있구나, 
- // this.$store.dispatch("getMemberInfo");
-  // store.dispatch("getMemberInfo");
-  let token = localStorage.getItem("mid")
-  console.log(token+ "TokenS") 
+  let token = localStorage.getItem("mid") 
   if(token === '0')   
   { 
-    next() //to=> from으로 간다. 
+    next()
   } 
   else 
   {
     alert("관리자페이지입니다.")
-    next("/") //from에서 / (home,to기능)으로 간다. 
-
+    next("/")
   }
 }
 

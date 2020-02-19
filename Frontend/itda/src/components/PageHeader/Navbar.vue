@@ -1,6 +1,6 @@
 <template>
   <v-app-bar app> 
-    <v-app-bar-nav-icon class="d-flex d-sm-none" @click="drawer=true, goJW()" ><v-icon >menu</v-icon>
+    <v-app-bar-nav-icon class="d-flex d-sm-none" @click="drawer=true" ><v-icon >menu</v-icon>
     </v-app-bar-nav-icon>
     <router-link :to="{name:'recruitmain'}">
       <v-img :src="getImgUrl('logo.png')" style="width :6.5rem" />
@@ -199,10 +199,6 @@ export default {
     ...mapState([ "isLogin", "isLoginError", "isDialog"])
   },
   methods: {
-    goJW()
-    {
-      console.log(this.drawer)
-    },
     isMr()
     {
       let token = localStorage.getItem("mid")
@@ -231,8 +227,9 @@ export default {
       router.push({name:"recruitmain"}).catch(() => {})
     },
     goSearch(content)
-    {
-       router.push({ name: "searchresult", query:{cont: content}}).catch(() => {})
+    { 
+      this.researchValue = ''
+      router.push({ name: "searchresult", query:{cont: content}})
     },
     goMypage(){
       router.push({name:"mypage",params:{id:1}}).catch(() => {})

@@ -1,6 +1,6 @@
 <template>
   <v-app-bar app> 
-    <v-app-bar-nav-icon class="d-flex d-sm-none" @click="drawer=true"><v-icon >menu</v-icon>
+    <v-app-bar-nav-icon class="d-flex d-sm-none" @click="drawer=true, goJW()" ><v-icon >menu</v-icon>
     </v-app-bar-nav-icon>
     <router-link :to="{name:'recruitmain'}">
       <v-img :src="getImgUrl('logo.png')" style="width :6.5rem" />
@@ -91,7 +91,7 @@
       <sign-up-in @statusControl="dialog =false"/>
     </v-dialog>
     <v-navigation-drawer 
-      :value="drawer" 
+      v-model="drawer" 
       absolute
       temporary
       height="1000">
@@ -101,9 +101,22 @@
       > 
         <v-list-item>
           <v-list-item-icon class="ml-auto mr-0" @click="drawer=false">
+              <v-icon >menu</v-icon>
+          </v-list-item-icon>
+            <v-list-item class="ml-auto mt-0">
+              <router-link :to="{name:'recruitmain'}">
+                  <v-img :src="getImgUrl('logo.png')" style="width :4.2rem"/>
+              </router-link>
+              </v-list-item >
+          <v-spacer></v-spacer>
+                    
+          <v-list-item-icon class="ml-auto mr-0" @click="drawer=false">
               <v-icon>close</v-icon>
+              
+
             </v-list-item-icon>
         </v-list-item>
+        <v-divider></v-divider>
         <v-list-item @click="goRecruitMainPage">
             <v-list-item-icon>
               <v-icon>mdi-home</v-icon>
@@ -129,35 +142,32 @@
           </v-list-item-icon>
           <v-list-item-title>스터디</v-list-item-title>
         </v-list-item>
+        
         <v-list-item @click="GoManagePage" v-if="isMr()==='0'">
           <v-list-item-icon>
             <v-icon>vpn_key</v-icon>
           </v-list-item-icon>
           <v-list-item-title>페이지 관리</v-list-item-title>
         </v-list-item>
-        <v-list-item>
-          <v-btn
-            v-if="isLogin"
-            @click="goLogout"
-            @click.stop="dialog =!dialog"
-            class="btn-colored v-btn v-btn--flat v-btn--text theme--dark v-size--default mx-auto"
-            aria-label="Support"
-            style="min-width: 48px;"
-            depressed 
-          >
-            <span class="text-colored">로그아웃</span>
-          </v-btn>
-          <v-btn
-            v-else
-            @click.stop="dialog=!dialog"
-            @click="goLogin()"
-            class="btn-colored v-btn v-btn--flat v-btn--text v-size--default mx-auto"
-            aria-label="Support"
-            style="min-width: 48px;"
-          >
-            <span class="text-colored">로그인/회원가입</span>
-          </v-btn>
+        <v-divider></v-divider>
+
+        <v-list-item v-if="isLogin"
+        @click="goLogout"
+        @click.stop="dialog =!dialog">
+          <v-list-item-icon>
+            <v-icon>power_settings_new</v-icon>
+            </v-list-item-icon>
+          <v-list-item-title>로그아웃</v-list-item-title>
         </v-list-item>
+
+        <v-list-item v-else
+           @click="goLogin"
+           @click.stop="dialog =!dialog">
+           <v-list-item-icon>
+             <v-icon>power_settings_new</v-icon>
+           </v-list-item-icon>
+          <v-list-item-title>로그인/회원가입</v-list-item-title>
+        </v-list-item>         
       </v-list>
     </v-navigation-drawer>
   </v-app-bar>  
@@ -189,6 +199,10 @@ export default {
     ...mapState([ "isLogin", "isLoginError", "isDialog"])
   },
   methods: {
+    goJW()
+    {
+      console.log(this.drawer)
+    },
     isMr()
     {
       let token = localStorage.getItem("mid")

@@ -1,8 +1,6 @@
 <template>
     <div class="recruitmain">
-        <ImgBanner :imgSrc="getImgUrl('banner.png')">
-           
-        </ImgBanner>    
+        <ImgBanner :imgSrc="bannerImg"/>
         <v-container>
             <recruit-recent-list v-on:update="update"/>
             <recruit-login-content v-if="isLogin" :loginContent="wantedlist.loginContent"/>
@@ -51,7 +49,11 @@
                         popularList:[]
                     }
                 },
-                loginStudies:[]
+                loginStudies:[],
+                bannerImg:[
+                    this.getImgUrl('banner1.png'),
+                    this.getImgUrl('banner2.png')
+                ]
             }
         },
         methods: {

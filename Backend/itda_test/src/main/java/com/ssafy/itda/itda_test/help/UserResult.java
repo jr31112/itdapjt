@@ -25,6 +25,7 @@ public class UserResult implements Serializable {
 	// Response result
 	private String msg;
 	private String state;
+	private String isSocial;
 
 	public UserResult() {
 		super();
@@ -87,11 +88,19 @@ public class UserResult implements Serializable {
 		this.myStudies = myStudies;
 	}
 
+	public String getIsSocial() {
+		return isSocial;
+	}
+
+	public void setIsSocial(String isSocial) {
+		this.isSocial = isSocial;
+	}
+
 	@Override
 	public String toString() {
 		return "UserResult [user=" + user + ", mystacks=" + mystacks + ", myScrapWanteds=" + myScrapWanteds
 				+ ", myEndedScrapWanteds=" + myEndedScrapWanteds + ", myStudies=" + myStudies + ", msg=" + msg
-				+ ", state=" + state + "]";
+				+ ", state=" + state + ", isSocial=" + isSocial + "]";
 	}
 
 }

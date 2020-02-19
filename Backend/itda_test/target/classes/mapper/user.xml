@@ -54,6 +54,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE uid = #{uid}
 	</update>
 	
+	<update id="updateUserWithoutPw" parameterType="com.ssafy.itda.itda_test.model.User">
+		UPDATE user_t
+		SET major = #{major}, uname = #{uname}
+		WHERE uid = #{uid}
+	</update>
+	
 	<update id="imgUpload">
 		UPDATE user_t
 		SET uimg = #{uimg} WHERE uid = #{uid}

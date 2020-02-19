@@ -1,7 +1,11 @@
 <template>
   <div>
-    <v-img :src="imgSrc" id="desk" aspect-ratio="2.0" style="height:60vh; width:100%"></v-img>
-    <v-img :src="imgSrc" id="mobile" :contain="true" aspect-ratio="2" max-height="60vh"></v-img>
+    <v-carousel v-if="imgSrc.length" height="auto" :hide-delimiters="true" :show-arrows="false" :cycle="true" interval="3000">
+			<v-carousel-item v-for="k in 2" :key="k">
+				<v-img :src="imgSrc[k-1]" id="desk" :aspect-ratio="1520/350"></v-img>
+        <v-img :src="imgSrc[k-1]" id="mobile" :contain="true" :aspect-ratio="1520/350" max-height="60vh"></v-img>
+			</v-carousel-item>
+    </v-carousel>
   </div>
 </template>
 
@@ -11,7 +15,7 @@
 export default {
 	name: 'imgBanner',
 	props: {
-		imgSrc: {type: String},
+		imgSrc: {type: Array},
 		text: {type: String}
 	},
 	methods: {

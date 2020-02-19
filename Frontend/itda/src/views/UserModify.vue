@@ -2,16 +2,25 @@
   <v-container>
     <v-card>
       <v-form ref="form" @submit.prevent="submit">
-        <v-card-title>User Info</v-card-title>
-        <v-card-subtitle>User Info</v-card-subtitle>
+        <v-card-title>User Info
+
+          <v-spacer></v-spacer>
+          <router-link :to="{name:'mypage'}">
+           <v-btn
+          class="mt-0"
+          text
+          >
+          <v-icon>undo</v-icon>
+          </v-btn></router-link>
+        </v-card-title>
         <v-row>
-          <v-col cols="3">
+          <v-col cols="5">
             <v-card  max-height="180" max-width="200" class="mx-auto ml-5">
               <v-img height="180" width="200" v-if="this.userInfo.user.uimg" :src="this.userInfo.user.uimg" dark="dark"></v-img>
               <v-img height="180" width="200" v-else src="../assets/noimg.png" dark="dark" :contain="true" ></v-img>
             </v-card>
           </v-col>
-          <v-col cols="6">
+          <v-col cols="7">
             <v-card-subtitle>User Name</v-card-subtitle>
             <v-card-text>
               <v-text-field v-model="userInfo.user.uname" label="Name"></v-text-field>
@@ -27,14 +36,14 @@
             />
           </v-col>
         </v-row>
-
+       
         <v-card-subtitle>User email</v-card-subtitle>
         <v-card-text>
-          <v-text-field v-model="userInfo.user.email" label="Email"></v-text-field>
+          <v-text-field :value="userInfo.user.email" readonly label="수정이 불가능한 항목입니다."  color="red"></v-text-field>
         </v-card-text>
-
-        <v-card-subtitle>Password</v-card-subtitle>
-        <v-card-text>
+        
+        <v-card-subtitle v-if="local_Chk">Password</v-card-subtitle>
+        <v-card-text v-if="local_Chk">
           <v-row>
             <v-col cols="6">
               <v-text-field
@@ -124,11 +133,12 @@
 </template>
 
 <script>
-import axios from "axios"
-import { mapState } from 'vuex'
+import axios from "axios";
+import router from "../router";
 export default {
   data() {
     return {
+      local_Chk: false,
       userInfo: {
         user:{
           auth:1,
@@ -183,8 +193,10 @@ export default {
         )
         .then(response => {
           alert(response.data.msg);
+          console.log(response.data)
           if (response.data.state == "success") {
-            alert("수정이 완료되었습니다.")
+            // alert("수정이 완료되었습니다.");
+            router.push({ name: "mypage" }).catch(() => {})
           }
         });
     },
@@ -206,6 +218,15 @@ export default {
       this.userInfo.mystacks = tmp;
     },
     getAllData() {
+      if(localStorage.getItem("social")!='social')
+      {
+          this.local_Chk= true
+      }
+      else 
+      {
+          this.local_Chk= false
+      }
+      console.log(this.local_Chk)
       axios
         .get(`https://i02b201.p.ssafy.io:8197/itda/api/getUser/`, {
           headers: {
@@ -226,26 +247,35 @@ export default {
         })
     },
     onChange() {
-      this.selectImg = this.$refs.uimg.files[0];
-      var formdata = new FormData();
-      formdata.append("file", this.selectImg);
-      const config = {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          "jwt-auth-token": localStorage.getItem("access_token")
-        }
-      }
+          if(confirm("사진을 업로드하시겠습니까?") === true){    //확인
 
-      axios
-        .post(
-          "https://i02b201.p.ssafy.io:8197/itda/api/uploadFile",
-          formdata,
-          config
-        )
-        .then(response => {
-          this.imageResult = response.data.fileDownloadUri;
-          this.userInfo.user.uimg = this.imageResult;
-        })
+            console.log("확인");
+            this.selectImg = this.$refs.uimg.files[0];
+            var formdata = new FormData();
+            formdata.append("file", this.selectImg);
+            const config = {
+              headers: {
+                "Content-Type": "multipart/form-data",
+                "jwt-auth-token": localStorage.getItem("access_token")
+                }
+             };
+          axios
+            .post(
+              "https://i02b201.p.ssafy.io:8197/itda/api/uploadFile",
+              formdata,
+              config
+            )
+            .then(response => {
+              this.imageResult = response.data.fileDownloadUri;
+              this.userInfo.user.uimg = this.imageResult;
+            });
+          }
+          else{   //취소
+              this.file = null
+              return false;
+             }
+
+    
     }
   },
   computed:{

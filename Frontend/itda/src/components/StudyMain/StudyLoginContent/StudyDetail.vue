@@ -2,8 +2,18 @@
   <v-col class="studydetail" cols="12" md="3" v-if="study.stid">
     <v-hover v-slot:default="{ hover }">
       <v-card light align-center height="200" :elevation="hover ? 16 : 2" class="mx-auto" @click.prevent="openRead">
-        <v-card-title>{{study.stname}}</v-card-title>
+        <v-card-title class="py-1 px-0 mx-auto" style="text">{{study.stname}}</v-card-title>
+        <v-container>
+        <v-row v-text="study.stname"></v-row>
+        </v-container>
         <v-divider class="my-0"></v-divider>
+        <v-container class="pb-0">
+          <v-row justify="center">
+            <p class="mx-1 pa-1 deep-purple lighten-3 white--text">{{category1[study.stype-1]}}</p>
+            <p class="mx-1 pa-1 light-blue lighten-3 white--text" >{{study.typeName}}</p>
+            <p class="mx-1 pa-1 green lighten-3 white--text">{{category2[study.sgroup-1]}}</p>
+          </v-row>
+        </v-container>
         <v-card-text>
           
         </v-card-text>

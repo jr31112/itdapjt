@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        <v-overlay :value="overlay">
+      <v-overlay :value="overlay">
         <v-progress-circular indeterminate size="64"></v-progress-circular>
       </v-overlay>
         <v-col>
@@ -25,20 +25,15 @@
                         multiple="multiple"
                         @change="optionrecruit"></v-select>
                 </v-col>
-                <v-col cols="12" sm="4">
-                    <v-btn @click.stop="dialog=!dialog" aria-label="Support" class="ml-auto" width="100%" height="75%">
-                        <span class="v-btn__content">
-                            <span class="subtitle-1 text-capitalize font-weight-light">
-                                <div>기술 스택 검사</div>
-                            </span>
-                        </span>
-                    </v-btn>
-                    <v-dialog
-                        v-model="dialog"
-                        max-width="800px"
-                        v-if="options.selectstacklist !== undefined">
+                <v-col align-self="center" cols="12" sm="4">
+                    
+                        <v-btn @click.stop="dialog=!dialog" class="ml-auto my-auto" width="100%">
+                            기술 스택
+                        </v-btn>
+                    
+                    <v-dialog v-model="dialog" max-width="800px">
                         <v-card>
-                            <v-card-title>기술 스택 리스트</v-card-title>
+                            <v-card-title>원하는 기술스택을 골라주세요!</v-card-title>
                             <v-divider></v-divider>
                             <v-card-text>
                                 <v-row v-for="i in 9" :key="i">
@@ -53,16 +48,16 @@
                             </v-card-text>
                             <v-divider></v-divider>
                             <v-card-actions>
+                                <v-spacer></v-spacer>
+                                <v-btn color="green darken-1" text="text" @click="dialog = false">Save</v-btn>
                                 <v-btn color="blue darken-1" text="text" @click="dialog = false">Close</v-btn>
-                                <v-btn color="blue darken-1" text="text" @click="dialog = false">Save</v-btn>
                             </v-card-actions>
                         </v-card>
                     </v-dialog>
                 </v-col>
-
             </v-row>
             <recruit-calender-content
-                v-if="recruitList.length != 0"
+                v-if="recruitList.length"
                 :recruitList="recruitList"
                 :options="options"
                />

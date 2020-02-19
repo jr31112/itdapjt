@@ -20,6 +20,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -184,7 +185,12 @@ public class WantedServiceImpl implements IWantedService {
 
 	}
 
+	@Transactional
 	private void inputWanted(JsonNode job) throws IOException {
+		String wid = job.get("id").textValue();
+		if (wantedDao.getWantedInfo(wid) != null) {
+			return;
+		}
 		JsonNode hrefNode = job.get("company").get("detail").get("href");
 		if (hrefNode == null) {
 			return;
@@ -206,10 +212,6 @@ public class WantedServiceImpl implements IWantedService {
 					}
 					break;
 				}
-			}
-			String wid = job.get("id").textValue();
-			if (wantedDao.getWantedInfo(wid) != null) {
-				return;
 			}
 			String wantedTitle = job.get("position").get("title").textValue();
 			int active = job.get("active").intValue();

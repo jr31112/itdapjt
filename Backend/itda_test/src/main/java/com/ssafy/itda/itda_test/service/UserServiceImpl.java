@@ -70,4 +70,9 @@ public class UserServiceImpl implements IUserService {
 	public void imgUpload(User user) {
 		userDao.imgUpload(user);
 	}
+
+	@Override
+	public void updateUserWithoutPw(User u) {
+		userDao.updateUserWithoutPw(u);
+	}
 }

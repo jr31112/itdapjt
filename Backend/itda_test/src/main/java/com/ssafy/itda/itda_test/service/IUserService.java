@@ -17,4 +17,5 @@ public interface IUserService {
 	List<String> getMyScrapWanteds(int uid);
 	void updatePermission(User model);
 	void imgUpload(User user);
+	void updateUserWithoutPw(User u);
 }

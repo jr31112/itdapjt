@@ -292,13 +292,17 @@ public class UserController {
 			} else {
 				// User Info Update
 				User update_input_user = model.getUser();
-				if (update_input_user.getUname() == null || update_input_user.getUname().equals("")
-						|| update_input_user.getPw() == null || update_input_user.getPw().equals("")) {
+				if (update_input_user.getUname() == null || update_input_user.getUname().equals("")) {
 					ur.setMsg("입력되지 않은 필수값이 있습니다.");
 					ur.setState("fail");
 					return new ResponseEntity<UserResult>(ur, HttpStatus.OK);
 				} else {
-					userService.updateUser(update_input_user);
+					if (model.getIsSocial() != null || update_input_user.getPw() == ""
+							|| update_input_user.getPw() == null) {
+						userService.updateUserWithoutPw(update_input_user);
+					} else {
+						userService.updateUser(update_input_user);
+					}
 					ur.setUser(userService.getUser(uid));
 				}
 				// User Tech Stack Update

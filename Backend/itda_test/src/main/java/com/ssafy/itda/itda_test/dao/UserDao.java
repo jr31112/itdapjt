@@ -47,16 +47,20 @@ public class UserDao {
 	public List<Stack> getMyStacks(int uid) {
 		return sqlSession.selectList(ns + "getMyStacks", uid);
 	}
-	
-	public List<String> getMyScrapWanteds(int uid){
+
+	public List<String> getMyScrapWanteds(int uid) {
 		return sqlSession.selectList(ns + "getMyScrapWanteds", uid);
 	}
-	
+
 	public void updatePermission(User model) {
 		sqlSession.update(ns + "updatePermission", model);
 	}
 
 	public void imgUpload(User user) {
 		sqlSession.update(ns + "imgUpload", user);
+	}
+
+	public void updateUserWithoutPw(User u) {
+		sqlSession.update(ns + "updateUserWithoutPw", u);
 	}
 }

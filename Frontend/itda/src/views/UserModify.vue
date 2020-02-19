@@ -2,22 +2,33 @@
   <v-container>
     <v-card>
       <v-form ref="form" @submit.prevent="submit">
-        <v-card-title>User Info
-
+        <v-card-title>
+          User Info
           <v-spacer></v-spacer>
           <router-link :to="{name:'mypage'}">
-           <v-btn
-          class="mt-0"
-          text
-          >
-          <v-icon>undo</v-icon>
-          </v-btn></router-link>
+            <v-btn class="mt-0" text>
+              <v-icon>undo</v-icon>
+            </v-btn>
+          </router-link>
         </v-card-title>
         <v-row>
           <v-col cols="5">
-            <v-card  max-height="180" max-width="200" class="mx-auto ml-5">
-              <v-img height="180" width="200" v-if="this.userInfo.user.uimg" :src="this.userInfo.user.uimg" dark="dark"></v-img>
-              <v-img height="180" width="200" v-else src="../assets/noimg.png" dark="dark" :contain="true" ></v-img>
+            <v-card max-height="180" max-width="200" class="mx-auto ml-5">
+              <v-img
+                height="180"
+                width="200"
+                v-if="this.userInfo.user.uimg"
+                :src="this.userInfo.user.uimg"
+                dark="dark"
+              ></v-img>
+              <v-img
+                height="180"
+                width="200"
+                v-else
+                src="../assets/noimg.png"
+                dark="dark"
+                :contain="true"
+              ></v-img>
             </v-card>
           </v-col>
           <v-col cols="7">
@@ -36,12 +47,12 @@
             />
           </v-col>
         </v-row>
-       
+
         <v-card-subtitle>User email</v-card-subtitle>
         <v-card-text>
-          <v-text-field :value="userInfo.user.email" readonly label="수정이 불가능한 항목입니다."  color="red"></v-text-field>
+          <v-text-field :value="userInfo.user.email" readonly label="수정이 불가능한 항목입니다." color="red"></v-text-field>
         </v-card-text>
-        
+
         <v-card-subtitle v-if="local_Chk">Password</v-card-subtitle>
         <v-card-text v-if="local_Chk">
           <v-row>
@@ -134,29 +145,29 @@
 
 <script>
 import axios from "axios";
-import router from "../router"
-import { mapState } from 'vuex'
+import router from "../router";
+import { mapState } from "vuex";
 
 export default {
   data() {
     return {
       local_Chk: false,
       userInfo: {
-        user:{
-          auth:1,
-          cid:null,
-          email:null,
-          major:null,
-          pw:null,
-          uimg:null,
-          uname:null,
+        user: {
+          auth: 1,
+          cid: null,
+          email: null,
+          major: null,
+          pw: null,
+          uimg: null,
+          uname: null
         },
-        mystacks:[]
+        mystacks: []
       },
       selectImg: "",
       password_rg: "",
       password_rg1: "",
-      dialog: false,
+      dialog: false
     };
   },
   created() {
@@ -164,13 +175,11 @@ export default {
   },
   methods: {
     goSave() {
-      if (this.password_rg != this.password_rg1) {
-        alert("비밀번호를 확인해주세요!");
-        return;
-      }
-      if (this.password_rg == "" || this.password_rg1 == "") {
-        alert("비밀번호를 입력해주세요!");
-        return;
+      if (this.password_rg != "") {
+        if (this.password_rg != this.password_rg1) {
+          alert("비밀번호를 확인해주세요!");
+          return;
+        }
       }
       if (this.userInfo.user.uname == "") {
         alert("이름을 입력해주세요!");
@@ -178,33 +187,30 @@ export default {
       }
       let params = {
         user: {
-          'email': this.userInfo.user.email,
-          'uname': this.userInfo.user.uname,
-          'major': this.userInfo.user.major,
-          'pw': this.password_rg
+          email: this.userInfo.user.email,
+          uname: this.userInfo.user.uname,
+          major: this.userInfo.user.major,
+          pw: this.password_rg
         },
+        isSocial: localStorage.getItem("social"),
         mystacks: this.userInfo.mystacks
       };
       axios
-        .put(
-          "https://i02b201.p.ssafy.io:8197/itda/api/updateUser",
-          params,
-          {
-            headers: { "jwt-auth-token": localStorage.getItem("access_token") }
-          }
-        )
+        .put("https://i02b201.p.ssafy.io:8197/itda/api/updateUser", params, {
+          headers: { "jwt-auth-token": localStorage.getItem("access_token") }
+        })
         .then(response => {
           alert(response.data.msg);
-          console.log(response.data)
+          console.log(response.data);
           if (response.data.state == "success") {
             // alert("수정이 완료되었습니다.");
-            router.push({ name: "mypage" }).catch(() => {})
+            router.push({ name: "mypage" }).catch(() => {});
           }
         });
     },
     removeStack(idx, sid) {
-      this.userInfo.mystacks.splice(idx, 1)
-      this.stacklist[sid - 1].value = false
+      this.userInfo.mystacks.splice(idx, 1);
+      this.stacklist[sid - 1].value = false;
     },
     goSaveStack() {
       this.dialog = false;
@@ -214,21 +220,18 @@ export default {
           tmp.push({
             sid: this.stacklist[i].sid,
             tname: this.stacklist[i].tname
-          })
+          });
         }
       }
       this.userInfo.mystacks = tmp;
     },
     getAllData() {
-      if(localStorage.getItem("social")!='social')
-      {
-          this.local_Chk= true
+      if (localStorage.getItem("social") != "social") {
+        this.local_Chk = true;
+      } else {
+        this.local_Chk = false;
       }
-      else 
-      {
-          this.local_Chk= false
-      }
-      console.log(this.local_Chk)
+      console.log(this.local_Chk);
       axios
         .get(`https://i02b201.p.ssafy.io:8197/itda/api/getUser/`, {
           headers: {
@@ -245,45 +248,43 @@ export default {
             }
           }
         })
-        .catch(() => {
-        })
+        .catch(() => {});
     },
     onChange() {
-          if(confirm("사진을 업로드하시겠습니까?") === true){    //확인
+      if (confirm("사진을 업로드하시겠습니까?") === true) {
+        //확인
 
-            console.log("확인");
-            this.selectImg = this.$refs.uimg.files[0];
-            var formdata = new FormData();
-            formdata.append("file", this.selectImg);
-            const config = {
-              headers: {
-                "Content-Type": "multipart/form-data",
-                "jwt-auth-token": localStorage.getItem("access_token")
-                }
-             };
-          axios
-            .post(
-              "https://i02b201.p.ssafy.io:8197/itda/api/uploadFile",
-              formdata,
-              config
-            )
-            .then(response => {
-              this.imageResult = response.data.fileDownloadUri;
-              this.userInfo.user.uimg = this.imageResult;
-            });
+        console.log("확인");
+        this.selectImg = this.$refs.uimg.files[0];
+        var formdata = new FormData();
+        formdata.append("file", this.selectImg);
+        const config = {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            "jwt-auth-token": localStorage.getItem("access_token")
           }
-          else{   //취소
-              this.file = null
-              return false;
-             }
-
-    
+        };
+        axios
+          .post(
+            "https://i02b201.p.ssafy.io:8197/itda/api/uploadFile",
+            formdata,
+            config
+          )
+          .then(response => {
+            this.imageResult = response.data.fileDownloadUri;
+            this.userInfo.user.uimg = this.imageResult;
+          });
+      } else {
+        //취소
+        this.file = null;
+        return false;
+      }
     }
   },
-  computed:{
-    ...mapState(["stacklist"]),
+  computed: {
+    ...mapState(["stacklist"])
   }
-}
+};
 </script>
 
 <style></style>

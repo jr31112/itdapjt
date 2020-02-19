@@ -1,7 +1,7 @@
 <template>
   <v-row>
       <v-col>
-          <v-tabs v-model="tab" background-color="primary" :right="true">
+          <v-tabs v-model="tab" background-color="rgba(0, 170, 179)" dark :right="true">
             <v-tab v-for="recruit in recruits" :key="recruit.tab">{{recruit.title}}</v-tab>
           </v-tabs>
           <v-tabs-items v-model="tab">

@@ -13,7 +13,7 @@
         <v-container style="height:400px" white>
           <v-row
             id="wanted"
-            v-for="i in scrapList.length==5*j?5:scrapList.length-5*(j-1)"
+            v-for="i in scrapList.length>=5*j?5:scrapList.length-5*(j-1)"
             :key="i"
             style="height:78px;"
             @click.prevent="goDetailPage(scrapList[5*(j-1)+i-1].wanted.wid)"

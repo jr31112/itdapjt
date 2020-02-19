@@ -54,13 +54,13 @@ public class CommentController {
 
 	@Autowired
 	private ICommentService commentService;
-	
+
 	@Autowired
 	private IUserService userService;
 
 	@Autowired
 	private JwtServiceImpl jwtService;
-	
+
 	@ApiOperation(value = "스터디에 속한 댓글 목록을 조회한다.", response = List.class)
 	@RequestMapping(value = "/getCommentById/{stid}", method = RequestMethod.GET)
 	public ResponseEntity<List<CommentResult>> getCommentById(@PathVariable int stid) throws Exception {
@@ -75,13 +75,13 @@ public class CommentController {
 			cr.setUimg(user.getUimg());
 			crList.add(cr);
 		}
-		
+
 		return new ResponseEntity<List<CommentResult>>(crList, HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "스터디 상세 페이지에서 댓글을 작성한다.", response = Result.class)
 	@RequestMapping(value = "/createComment", method = RequestMethod.POST)
-	public ResponseEntity<Result> createComment (HttpServletRequest req, @RequestBody Comment model) throws Exception {
+	public ResponseEntity<Result> createComment(HttpServletRequest req, @RequestBody Comment model) throws Exception {
 		logger.info("2-------------createComment -----------------------------" + new Date());
 		Map<String, Object> resultMap = new HashMap<>();
 		String token = req.getHeader("jwt-auth-token");
@@ -104,10 +104,10 @@ public class CommentController {
 		}
 		return new ResponseEntity<Result>(r, HttpStatus.OK);
 	}
-	
+
 	@ApiOperation(value = "스터디 상세 페이지에서 댓글을 수정한다.", response = Result.class)
 	@RequestMapping(value = "/updateComment", method = RequestMethod.PUT)
-	public ResponseEntity<Result> updateComment (HttpServletRequest req, @RequestBody Comment model) throws Exception {
+	public ResponseEntity<Result> updateComment(HttpServletRequest req, @RequestBody Comment model) throws Exception {
 		logger.info("3-------------updateComment -----------------------------" + new Date());
 		Map<String, Object> resultMap = new HashMap<>();
 		String token = req.getHeader("jwt-auth-token");
@@ -129,10 +129,10 @@ public class CommentController {
 		}
 		return new ResponseEntity<Result>(r, HttpStatus.OK);
 	}
-	
+
 	@ApiOperation(value = "스터디 상세 페이지에서 댓글을 삭제한다.", response = Result.class)
 	@RequestMapping(value = "/deleteComment/{cmid}", method = RequestMethod.DELETE)
-	public ResponseEntity<Result> deleteComment (HttpServletRequest req, @RequestBody int cmid) throws Exception {
+	public ResponseEntity<Result> deleteComment(HttpServletRequest req, @RequestBody int cmid) throws Exception {
 		logger.info("4-------------deleteComment -----------------------------" + new Date());
 		Map<String, Object> resultMap = new HashMap<>();
 		String token = req.getHeader("jwt-auth-token");

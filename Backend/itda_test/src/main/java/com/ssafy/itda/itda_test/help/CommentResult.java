@@ -8,7 +8,7 @@ public class CommentResult implements Serializable {
 	private Comment comment;
 	private String uname;
 	private String uimg;
-	
+
 	public CommentResult() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -49,5 +49,5 @@ public class CommentResult implements Serializable {
 	public String toString() {
 		return "CommentResult [comment=" + comment + ", uname=" + uname + ", uimg=" + uimg + "]";
 	}
-	
+
 }

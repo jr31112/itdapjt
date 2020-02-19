@@ -93,13 +93,16 @@ public class StudyController {
 			resultMap.putAll(jwtService.get(token));
 			int captain = (int) resultMap.get("uid");
 			if (model.getStname() == null || model.getStname().equals("") || model.getMaxPcnt() == 0
-					|| model.getStype() == 0 || model.getSgroup() == 0
-					|| model.getContent() == null || model.getContent().equals("")) {
+					|| model.getStype() == 0 || model.getSgroup() == 0 || model.getContent() == null
+					|| model.getContent().equals("")) {
 				r.setMsg("필수 입력값이 누락되었습니다.");
 				r.setState("fail");
 				return new ResponseEntity<Result>(r, HttpStatus.OK);
 			}
 			model.setCaptain(captain);
+			if (model.getStype() != 1 || model.getStype() != 2) {
+				model.setTypeFk(null);
+			}
 			int stid = studyService.createStudy(model);
 			StudyGroup sg = new StudyGroup();
 			sg.setStid(stid);

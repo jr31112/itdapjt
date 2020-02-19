@@ -35,4 +35,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE stid = #{stid}
 	</delete>
 	
+	<select id="getStudyByCompany" parameterType="java.lang.String"
+		resultType="com.ssafy.itda.itda_test.model.Study">
+		SELECT stid, stname, maxPcnt, pcnt, stype, typeFk, typeName, sgroup, content, captain
+		FROM study_t WHERE stype = 2 AND typeFk = #{cid}
+	</select>
+	
+	<select id="getStudyByWanted" parameterType="java.lang.String"
+		resultType="com.ssafy.itda.itda_test.model.Study">
+		SELECT stid, stname, maxPcnt, pcnt, stype, typeFk, typeName, sgroup, content, captain
+		FROM study_t WHERE stype = 1 AND typeFk = #{wid}
+	</select>
+	
 </mapper>

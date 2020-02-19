@@ -127,6 +127,22 @@ create table studyGroup_t(
     foreign key(stid) references study_t(stid) on update cascade on delete cascade
 );
 
+-- 댓글 테이블 
+-- DEFAULT CURRENT_TIMESTAMP
+-- 현재 Timestamp 값을 Insert 시점에 기본값으로 Set 한다.
+-- ON UPDATE CURRENT_TIMESTAMP
+-- 해당 row가 Update될 경우 자동으로 해당 시점의 Timestamp 값으로 set 된다.
+create table comment_t(
+    cmid int primary key auto_increment,
+    uid int not null,
+    stid int not null,
+    content text not null,
+    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updatedAt DATETIME ON UPDATE CURRENT_TIMESTAMP,
+    foreign key(uid) references user_t(uid) on delete cascade on update cascade,
+    foreign key(stid) references study_t(stid) on delete cascade on update cascade
+);
+
 alter table stack_t add fulltext index tname (tname) visible;
 alter table wanted_t add fulltext index wantedTitle (wantedTitle) visible;
 alter table company_t add fulltext index corpNm (corpNm) visible;

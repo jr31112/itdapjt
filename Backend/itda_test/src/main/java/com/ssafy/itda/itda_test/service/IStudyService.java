@@ -9,4 +9,6 @@ public interface IStudyService {
 	Study getStudy(int stid);
 	int createStudy(Study model);
 	void deleteStudy(int stid);
+	List<Study> getStudyByWanted(String wid);
+	List<Study> getStudyByCompany(String cid);
 }

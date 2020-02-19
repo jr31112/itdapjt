@@ -33,4 +33,12 @@ public class StudyDao {
 	public void deleteStudy(int stid) {
 		sqlSession.delete(ns + "deleteStudy", stid);
 	}
+
+	public List<Study> getStudyByWanted(String wid) {
+		return sqlSession.selectList(ns + "getStudyByWanted", wid);
+	}
+
+	public List<Study> getStudyByCompany(String cid) {
+		return sqlSession.selectList(ns + "getStudyByCompany", cid);
+	}
 }

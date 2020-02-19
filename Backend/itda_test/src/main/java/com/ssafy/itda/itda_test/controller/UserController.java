@@ -297,6 +297,7 @@ public class UserController {
 					ur.setState("fail");
 					return new ResponseEntity<UserResult>(ur, HttpStatus.OK);
 				} else {
+					update_input_user.setUid(uid);
 					if (model.getIsSocial() != null || update_input_user.getPw() == ""
 							|| update_input_user.getPw() == null) {
 						userService.updateUserWithoutPw(update_input_user);

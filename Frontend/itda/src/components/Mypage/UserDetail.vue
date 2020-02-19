@@ -3,7 +3,7 @@
         <v-col cols='12' sm="4">
             <v-card max-hight="300" max-width="300" class="mx-auto">
                 <v-img
-                    src="http://cdn.vuetifyjs.com/images/lists/ali.png"
+                    :src="this.userInfo.user.uimg"
                     height="300px"
                     dark="dark"></v-img>
             </v-card>

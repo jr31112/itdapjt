@@ -110,14 +110,14 @@
               </v-list-item >    
           <v-spacer></v-spacer>
                     
-          <v-list-item-icon class="ml-auto mr-0" @click="drawer=false, getA()">
+          <v-list-item-icon class="ml-auto mr-0" @click="drawer=false">
               <v-icon>close</v-icon>
             </v-list-item-icon>
         </v-list-item>
           <v-list-item v-if="isLogin">
             <v-list-item-avatar>
               <v-img v-if="!this.$store.state.userInfo.user.uimg" src="../../assets/NoPersonImg.png" />
-              <v-img v-else @click="getA()" :src='this.$store.state.userInfo.user.uimg'/>
+              <v-img v-else :src='this.$store.state.userInfo.user.uimg'/>
             </v-list-item-avatar>
             <v-list-item-content class ="ml-3 mt-1">
               <v-list-item-title>{{this.$store.state.userInfo.user.uname}}님 </v-list-item-title>
@@ -207,10 +207,6 @@ export default {
     ...mapState([ "isLogin", "isLoginError", "isDialog"])
   },
   methods: {
-    getA()
-    {
-        console.log(this.$store.state.userInfo.user.uimg)
-    },
     isMr()
     {
       let token = localStorage.getItem("mid")

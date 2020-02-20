@@ -1,8 +1,12 @@
 <template>
     <div class="recruitmain">
         <ImgBanner :imgSrc="bannerImg"/>
+        <div style="background-color:white;">
+            <v-container>
+                <recruit-recent-list v-on:update="update"/>
+            </v-container>
+        </div>
         <v-container>
-            <recruit-recent-list v-on:update="update"/>
             <recruit-login-content v-if="isLogin" :loginContent="wantedlist.loginContent"/>
             <recruit-default-content :defaultContent="wantedlist.defaultContent"/>
         </v-container>

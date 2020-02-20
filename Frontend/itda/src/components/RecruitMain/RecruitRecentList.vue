@@ -1,8 +1,8 @@
 <template>
   <v-row class="recruitrecentlist">
 	<v-col class="px-0">
-		<v-carousel v-if="recentlist.length" height="auto" hide-delimiters>
-			<h2>앗! 뜨거~ 요즘 최신공고 </h2>
+		<v-carousel v-if="recentlist.length" height="auto" hide-delimiters >
+			<span><b>따끈따끈</b> 최신공고</span>
 			<v-carousel-item v-for="k in 3" :key="k">
 				<v-container>
 					<v-row v-for="j in 2" :key="j">

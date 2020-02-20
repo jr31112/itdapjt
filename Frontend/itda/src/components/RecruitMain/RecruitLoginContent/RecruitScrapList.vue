@@ -18,6 +18,7 @@
         <v-carousel-item v-for="j in scrapList.length>5?2:scrapList.length>0?1:0" :key="j">
           <v-container style="height:400px" white>
             <v-row
+              class="main-list"
               id="wanted"
               v-for="i in scrapList.length>=5*j?5:scrapList.length-5*(j-1)"
               :key="i"

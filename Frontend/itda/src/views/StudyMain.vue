@@ -14,7 +14,7 @@
                         <v-card-text>
                         <v-form ref="form" v-model="valid"> 
                             <v-text-field v-model="formData.stname" :rules="[v => !!v || '스터디 이름을 입력해주세요']" label="스터디명" required></v-text-field>
-                            <v-text-field v-model.number="formData.maxPcnt" type="number" :rules="[v => !!v || '인원수를 입력해주세요']" label="인원수" required></v-text-field>
+                            <v-text-field v-model.number="formData.maxPcnt"  min="2" max="20" type="number" :rules="[v => !!v || '인원수를 입력해주세요(최대20명)']" label="인원수" required></v-text-field>
                             <v-select v-model="formData.stype" :items="formCategory.category1" :rules="[v => !!v || '스터디 종류를 선택해주세요']" label="스터디 종류" required></v-select>
                             <v-btn v-if="formData.stype && formData.stype!=4" @click="openPopup(formData.stype)">스터디 주제 입력</v-btn>
                             <v-select v-model="formData.sgroup" :items="formCategory.category2" :rules="[v => !!v || '스터디 내용를 선택해주세요']" label="스터디 내용" required></v-select>

@@ -119,9 +119,6 @@
                         this.recruitList = response.data
                         this. overlay = false
                     })
-                    .catch(error => {
-                        console.log(error)
-                })
             },
             optionmanager() {
                 if (this.period.length == 1) {

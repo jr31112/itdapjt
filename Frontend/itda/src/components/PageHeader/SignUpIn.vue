@@ -1,6 +1,9 @@
 <template>
   <!-- 컨테이너 크기를 500으로해 해주고, fill-heigt를 통해서아래 align center를 이용할 수 있게 됨. -->
   <v-layout wrap="no wrap">
+    <v-overlay :value="overlay">
+        <v-progress-circular indeterminate size="64"></v-progress-circular>
+    </v-overlay>
     <v-flex xs12="xs12">
       <v-alert class="mb-1" :value="reChk" type="error">아이디와 비밀번호를 확인해주세요.</v-alert>
       <v-alert
@@ -147,7 +150,8 @@ export default {
       password_lg: "",
       name: "",
       dialog: false,
-      token: localStorage.getItem("access_token")
+      token: localStorage.getItem("access_token"),
+      overlay:false,
     };
   },
   computed: {
@@ -238,6 +242,7 @@ export default {
     },
     socialLogin() {
       const provider = new firebase.auth.GoogleAuthProvider();
+      this.overlay = true
       firebase
         .auth()
         .signInWithPopup(provider)
@@ -261,6 +266,7 @@ export default {
                     if (response.data.state == "fail") {
                       //로그인 실패면 이미 해당 이메일로 회원가입한 적이 있을 것!
                       alert("해당 email로 가입한 적이 있습니다!");
+                      this.overlay = true
                       return;
                     } else {
                       
@@ -268,6 +274,7 @@ export default {
                       localStorage.setItem("access_token", token);
                       localStorage.setItem("social", "social");
                       this.$router.go();
+                      this.overlay = false
                     }
                   });
               } else {
@@ -290,8 +297,8 @@ export default {
                             let token = response.headers["jwt-auth-token"];
                             localStorage.setItem("access_token", token);
                             localStorage.setItem("social", "social");
-                            
                             this.$router.go();
+                            this.overlay = false
                           }
                         });
                     }
@@ -301,6 +308,7 @@ export default {
         })
         .catch(err => {
           alert("Google Login이 정상적으로 실행되지 않았습니다!" + err.message);
+          this.overlay = false
         });
     }
   }

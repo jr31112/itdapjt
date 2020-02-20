@@ -7,7 +7,7 @@
       <v-carousel v-if="deadlineList.length" hide-delimiters :show-arrows="false" cycle interval="2500" height="400">
         <v-carousel-item v-for="j in 2" :key="j">
           <v-container white>
-            <v-row id="wanted" v-for="i in 5" :key="i" style="height:78px;"
+            <v-row id="wanted" class="main-list" v-for="i in 5" :key="i" style="height:78px;"
               @click.prevent="goDetailPage(deadlineList[5*(j-1)+i-1].wanted.wid)">
               <v-col cols="3">
                 <v-img v-if="deadlineList[5*(j-1)+i-1].company.logo" :src="deadlineList[5*(j-1)+i-1].company.logo"
@@ -98,5 +98,9 @@
     display: inline-block;
     padding: 4px;
     border-radius: 5px;
+  }
+
+  .main-list {
+    cursor: pointer;
   }
 </style>

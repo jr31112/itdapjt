@@ -2,7 +2,7 @@
 	<v-hover v-slot:default="{ hover }">
 		<v-card light align-center height="260" :elevation="hover ? 16 : 2" class="mx-auto">
 			<v-container>
-				<v-row align="center">
+				<v-row align="center" style="cursor:pointer">
 					<v-col v-if="!isLogin" @click="goDetailPage(wanted.wid)">
 						<v-img v-if="company.logo" :src="company.logo" :alt="company.corpNm" height="60" :contain="true"></v-img>
 						<v-img v-else :src="getImgUrl('noimg.png')" alt="noimg" height="60" :contain="true"></v-img>
@@ -15,15 +15,15 @@
 					<v-col v-if="isLogin && !scrap" class="px-0" cols="1"><v-icon color="grey lighten-2" @click.prevent="doScrap(wanted.wid)">star_border</v-icon></v-col>
 				</v-row>
 				<v-divider></v-divider>
-				<v-row @click="goDetailPage(wanted.wid)">
+				<v-row style="cursor:pointer;" @click="goDetailPage(wanted.wid)">
 					<v-col class="text-left pr-0" cols="9" id="headline">{{ company.corpNm }}</v-col>
 					<v-col class="text-right pl-0" cols="3">{{ leftDate }}</v-col>
 				</v-row>
-				<v-row @click="goDetailPage(wanted.wid)">
+				<v-row style="cursor:pointer;" @click="goDetailPage(wanted.wid)">
 					<v-col class="pt-0 text-left grey--text" style="height:48px">{{ wanted.wantedTitle }}</v-col>
 				</v-row>
 				<v-row>
-					<v-col class="pt-1" v-if="stacks.length"><span v-for="i in stacks.length > len ? len: stacks.length" :key="i" style="color:blue" @click="goSearch(stacks[i-1].tname)">#{{stacks[i-1].tname}} </span></v-col>
+					<v-col class="pt-1" v-if="stacks.length"><span v-for="i in stacks.length > len ? len: stacks.length" :key="i" style="color:blue;cursor:pointer;" @click="goSearch(stacks[i-1].tname)">#{{stacks[i-1].tname}} </span></v-col>
 				</v-row>
 			</v-container>
 		</v-card>

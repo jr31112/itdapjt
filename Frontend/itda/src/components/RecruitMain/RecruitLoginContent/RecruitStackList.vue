@@ -15,6 +15,7 @@
         <v-carousel-item v-for="j in 2" :key="j">
           <v-container white>
             <v-row
+              class="main-list"
               id="wanted"
               v-for="i in 5"
               :key="i"

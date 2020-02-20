@@ -36,7 +36,6 @@
       v-model="page"
       color="rgba(0, 170, 179)"
       :length="4"
-      :total-visible="totalVisible"
       prev-icon="mdi-menu-left"
       next-icon="mdi-menu-right"
     ></v-pagination>
@@ -60,7 +59,6 @@
         </v-btn>
     </v-row> -->
   </v-data-iterator>
-
 </template>
 
 <script>

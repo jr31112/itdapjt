@@ -342,7 +342,6 @@ export default new Vuex.Store({
         })
         .catch(() => {
           localStorage.clear();
-          alert("다시 로그인해주세요!")
         })
     }
   },

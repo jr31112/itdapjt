@@ -19,8 +19,8 @@
                         <tr v-for="part in recruit.searchResult" :key="part.wanted.wid" @click="goDetailPage(part.wanted.wid)">
                             <td class="text-center">{{part.company.corpNm}}</td>
                             <td class="text-center">{{part.wanted.wantedTitle}}</td>
-                            <td class="text-center">{{part.wanted.startDate.slice(0,10)}}일{{part.wanted.startDate.slice(11,13)}}시 </td>
-                            <td class="text-center">{{part.wanted.endDate.slice(0,10)}}일 {{part.wanted.endDate.slice(11,13)}}시</td>
+                            <td class="text-center">{{part.wanted.startDate.slice(0,10)}} {{part.wanted.startDate.slice(11,13)}}시 </td>
+                            <td class="text-center">{{part.wanted.endDate.slice(0,10)}} {{part.wanted.endDate.slice(11,13)}}시</td>
                         </tr>
                     </tbody>
                 </v-simple-table>

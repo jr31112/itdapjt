@@ -22,11 +22,10 @@
             :search="search">
           
             <template v-slot:item.wanted.startDate="{ item }">
-                {{item.wanted.startDate.slice(0,10)}}일 
-                {{item.wanted.startDate.slice(11,13)}}시
+                {{item.wanted.startDate.slice(0,10)}} {{item.wanted.startDate.slice(11,13)}}시
             </template>
              <template v-slot:item.wanted.endDate="{ item }">
-                 {{item.wanted.endDate.slice(0,10)}}일 
+                 {{item.wanted.endDate.slice(0,10)}} 
                  {{item.wanted.endDate.slice(11,13)}}시
             </template>
             <template v-slot:item.action="{ item }">
@@ -55,7 +54,6 @@
             },
             createdWanted()
             {
-                alert("안녕")
                  axios
                     .post('https://i02b201.p.ssafy.io:8197/itda/api/createWanted/')
                     .then(res => {

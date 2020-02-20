@@ -274,6 +274,12 @@ export default new Vuex.Store({
       state.isDialog = false
       state.userInfo = payload
     },
+    FisrtloginSocialSuccess(state)
+    {
+      alert("먼저와라")
+      state.isLogin = true
+      alert(state.isLogin)
+    },
     //로그인이 실패했을 때.
     loginError(state) {
       state.isLogin = false
@@ -341,6 +347,7 @@ export default new Vuex.Store({
         })
         .catch(() => {
           localStorage.clear();
+          alert("로그인 하시겠어요 ?!")
         })
     },
   },

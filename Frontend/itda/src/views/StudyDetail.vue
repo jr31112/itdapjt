@@ -100,7 +100,14 @@
                 </v-card>
             </v-dialog>
         </v-container>
-        <v-container>
+        <div>
+            <StudyChat 
+            :study="study"
+            :person="person"
+            ></StudyChat>
+            <!-- 파일 업로드 -->
+        </div>
+    </div>
 
             <h2>파일 업로드</h2>
             <v-file-input
@@ -121,7 +128,7 @@
     import FullCalendar from '@fullcalendar/vue'
     import timeGridPlugin from '@fullcalendar/timegrid';
     import resourceTimelinePlugin from '@fullcalendar/resource-timeline'
-
+    import StudyChat from '../components/StudyMain/StudyChat.vue'
     export default {
         name: "studydetail",
         data() {
@@ -154,7 +161,7 @@
             }
         },
         components: {
-
+            StudyChat,
             FullCalendar
         },
         methods: {

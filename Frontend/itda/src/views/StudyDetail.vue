@@ -100,6 +100,18 @@
                 </v-card>
             </v-dialog>
         </v-container>
+        <v-container>
+            <h2>파일 업로드</h2>
+            <v-file-input
+                label="파일을 선택해주세요."
+                accept="image/*,.pdf,.doc,.docx,.ppt,.pptx,.hwp,.hwpx,.xlsx,.xls"
+                ref="file"
+                show-size
+                dense
+                outlined
+                clearable=false
+                @change="upload()"/>
+        </v-container>
         <div>
             <StudyChat 
             :study="study"
@@ -108,7 +120,6 @@
             <!-- 파일 업로드 -->
         </div>
     </div>
-
 </template>
 
 <script>
@@ -160,6 +171,7 @@
                     .log(this.overlayRead)
             },
             upload() {
+                console.log(this.$refs.file)
                 alert("hello")
             },
             getStudy() {

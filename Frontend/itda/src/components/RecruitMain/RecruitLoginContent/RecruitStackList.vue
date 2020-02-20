@@ -58,10 +58,10 @@
         height="400"
       >
         <v-carousel-item>
-          <v-container class="d-flex align-center" style="height:400px" white @click="goMypage()">
+          <v-container class="d-flex align-center" style="height:400px; cursor:pointer;" white @click="goMypage()">
             <v-row justify="center">
               <v-col class="text-center">
-                원하는 기술스택을 입력해주세요!!
+                기술스택을 추가하면 맞춤 공고를 볼 수 있어요!
               </v-col>
             </v-row>
           </v-container>

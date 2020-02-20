@@ -305,8 +305,8 @@ public class WantedServiceImpl implements IWantedService {
 			return false;
 		}
 
-		Elements thumb_company = doc.getElementsByClass("thumb_company");
-		company.setLogo(thumb_company.get(0).getElementsByTag("img").attr("src"));
+		Elements thumb_company = doc.getElementsByClass("thumb_company");		
+		company.setLogo("https" + thumb_company.get(0).getElementsByTag("img").attr("src").substring(4));
 
 		Elements txt_address = doc.getElementsByClass("txt_address");
 		company.setCorpAddr(txt_address.text());

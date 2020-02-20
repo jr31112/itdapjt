@@ -17,6 +17,7 @@ C:\Users\multicampus\Desktop\Sub-PJT 3\s02p13b201\Backend\itda_test\src\main\jav
 C:\Users\multicampus\Desktop\Sub-PJT 3\s02p13b201\Backend\itda_test\src\main\java\com\ssafy\itda\itda_test\service\IUserService.java
 C:\Users\multicampus\Desktop\Sub-PJT 3\s02p13b201\Backend\itda_test\src\main\java\com\ssafy\itda\itda_test\App.java
 C:\Users\multicampus\Desktop\Sub-PJT 3\s02p13b201\Backend\itda_test\src\main\java\com\ssafy\itda\itda_test\model\User.java
+C:\Users\multicampus\Desktop\Sub-PJT 3\s02p13b201\Backend\itda_test\src\main\java\com\ssafy\itda\itda_test\dao\FileDao.java
 C:\Users\multicampus\Desktop\Sub-PJT 3\s02p13b201\Backend\itda_test\src\main\java\com\ssafy\itda\itda_test\dao\UserDao.java
 C:\Users\multicampus\Desktop\Sub-PJT 3\s02p13b201\Backend\itda_test\src\main\java\com\ssafy\itda\itda_test\dao\StudyGroupDao.java
 C:\Users\multicampus\Desktop\Sub-PJT 3\s02p13b201\Backend\itda_test\src\main\java\com\ssafy\itda\itda_test\help\CommentResult.java
@@ -36,10 +37,13 @@ C:\Users\multicampus\Desktop\Sub-PJT 3\s02p13b201\Backend\itda_test\src\main\jav
 C:\Users\multicampus\Desktop\Sub-PJT 3\s02p13b201\Backend\itda_test\src\main\java\com\ssafy\itda\itda_test\service\StudyServiceImpl.java
 C:\Users\multicampus\Desktop\Sub-PJT 3\s02p13b201\Backend\itda_test\src\main\java\com\ssafy\itda\itda_test\controller\UserController.java
 C:\Users\multicampus\Desktop\Sub-PJT 3\s02p13b201\Backend\itda_test\src\main\java\com\ssafy\itda\itda_test\help\StudyResult.java
+C:\Users\multicampus\Desktop\Sub-PJT 3\s02p13b201\Backend\itda_test\src\main\java\com\ssafy\itda\itda_test\service\FileServiceImpl.java
 C:\Users\multicampus\Desktop\Sub-PJT 3\s02p13b201\Backend\itda_test\src\main\java\com\ssafy\itda\itda_test\help\WantedResult.java
 C:\Users\multicampus\Desktop\Sub-PJT 3\s02p13b201\Backend\itda_test\src\main\java\com\ssafy\itda\itda_test\controller\CompanyController.java
 C:\Users\multicampus\Desktop\Sub-PJT 3\s02p13b201\Backend\itda_test\src\main\java\com\ssafy\itda\itda_test\model\Study.java
+C:\Users\multicampus\Desktop\Sub-PJT 3\s02p13b201\Backend\itda_test\src\main\java\com\ssafy\itda\itda_test\service\IFileService.java
 C:\Users\multicampus\Desktop\Sub-PJT 3\s02p13b201\Backend\itda_test\src\main\java\com\ssafy\itda\itda_test\service\ICommentService.java
+C:\Users\multicampus\Desktop\Sub-PJT 3\s02p13b201\Backend\itda_test\src\main\java\com\ssafy\itda\itda_test\model\Files.java
 C:\Users\multicampus\Desktop\Sub-PJT 3\s02p13b201\Backend\itda_test\src\main\java\com\ssafy\itda\itda_test\help\CompanyResult.java
 C:\Users\multicampus\Desktop\Sub-PJT 3\s02p13b201\Backend\itda_test\src\main\java\com\ssafy\itda\itda_test\model\Comment.java
 C:\Users\multicampus\Desktop\Sub-PJT 3\s02p13b201\Backend\itda_test\src\main\java\com\ssafy\itda\itda_test\service\ICompanyService.java

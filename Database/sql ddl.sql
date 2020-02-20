@@ -143,6 +143,17 @@ create table comment_t(
     foreign key(stid) references study_t(stid) on delete cascade on update cascade
 );
 
+create table file_t(
+	fid int primary key auto_increment,
+    stid int not null,
+    uid int not null,
+    url varchar(100) not null,
+    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    foreign key(uid) references user_t(uid) on delete cascade on update cascade,
+    foreign key(stid) references study_t(stid) on delete cascade on update cascade
+);
+
+
 alter table stack_t add fulltext index tname (tname) visible;
 alter table wanted_t add fulltext index wantedTitle (wantedTitle) visible;
 alter table company_t add fulltext index corpNm (corpNm) visible;

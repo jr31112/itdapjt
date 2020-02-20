@@ -153,6 +153,14 @@ create table file_t(
     foreign key(stid) references study_t(stid) on delete cascade on update cascade
 );
 
+create table meeting_t(
+	mid int primary key auto_increment,
+    title varchar(100) not null,
+    startTime timestamp not null,
+    endTime timestamp not null,
+    stid int not null,
+    foreign key(stid) references study_t(stid) on delete cascade on update cascade
+); 
 
 alter table stack_t add fulltext index tname (tname) visible;
 alter table wanted_t add fulltext index wantedTitle (wantedTitle) visible;

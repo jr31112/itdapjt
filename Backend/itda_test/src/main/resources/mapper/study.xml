@@ -47,4 +47,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM study_t WHERE stype = 1 AND typeFk = #{wid}
 	</select>
 	
+	<insert id="createMeeting" parameterType="com.ssafy.itda.itda_test.model.Study">
+		INSERT INTO meeting_t (title, startTime, endTime, stid) values (#{title}, #{startTime}, #{endTime}, #{stid})
+	</insert>
+	
 </mapper>

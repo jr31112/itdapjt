@@ -91,16 +91,16 @@ public class CommentController {
 			int uid = (int) resultMap.get("uid");
 			if (model.getStid() == 0 || model.getContent() == null || model.getContent().equals("")) {
 				r.setMsg("필수값이 누락되었습니다.");
-				r.setState("false");
+				r.setState("fail");
 			} else {
 				model.setUid(uid);
 				commentService.createComment(model);
 				r.setMsg("댓글 작성이 완료되었습니다.");
-				r.setState("true");
+				r.setState("success");
 			}
 		} else {
 			r.setMsg("uid 값이 없습니다.");
-			r.setState("false");
+			r.setState("fail");
 		}
 		return new ResponseEntity<Result>(r, HttpStatus.OK);
 	}
@@ -117,15 +117,15 @@ public class CommentController {
 			int uid = (int) resultMap.get("uid");
 			if (model.getCmid() == 0 || model.getContent() == null || model.getContent().equals("")) {
 				r.setMsg("필수값이 누락되었습니다.");
-				r.setState("false");
+				r.setState("fail");
 			} else {
 				commentService.updateComment(model);
 				r.setMsg("댓글 수정이 완료되었습니다.");
-				r.setState("true");
+				r.setState("success");
 			}
 		} else {
 			r.setMsg("uid 값이 없습니다.");
-			r.setState("false");
+			r.setState("fail");
 		}
 		return new ResponseEntity<Result>(r, HttpStatus.OK);
 	}
@@ -142,15 +142,15 @@ public class CommentController {
 			int uid = (int) resultMap.get("uid");
 			if (cmid == 0) {
 				r.setMsg("키값이 누락되었습니다.");
-				r.setState("false");
+				r.setState("fail");
 			} else {
 				commentService.deleteComment(cmid);
 				r.setMsg("댓글 삭제가 완료되었습니다.");
-				r.setState("true");
+				r.setState("success");
 			}
 		} else {
 			r.setMsg("uid 값이 없습니다.");
-			r.setState("false");
+			r.setState("fail");
 		}
 		return new ResponseEntity<Result>(r, HttpStatus.OK);
 	}

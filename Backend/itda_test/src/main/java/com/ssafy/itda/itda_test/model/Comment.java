@@ -8,22 +8,12 @@ public class Comment implements Serializable {
 	private int uid;
 	private int stid;
 	private String content;
-	private Timestamp createdAt;
-	private Timestamp updatedAt;
+	private String createdAt;
+	private String updatedAt;
 
 	public Comment() {
 		super();
 		// TODO Auto-generated constructor stub
-	}
-
-	public Comment(int cmid, int uid, int stid, String content, Timestamp createdAt, Timestamp updatedAt) {
-		super();
-		this.cmid = cmid;
-		this.uid = uid;
-		this.stid = stid;
-		this.content = content;
-		this.createdAt = createdAt;
-		this.updatedAt = updatedAt;
 	}
 
 	public int getCmid() {
@@ -58,19 +48,19 @@ public class Comment implements Serializable {
 		this.content = content;
 	}
 
-	public Timestamp getCreatedAt() {
+	public String getCreatedAt() {
 		return createdAt;
 	}
 
-	public void setCreatedAt(Timestamp createdAt) {
+	public void setCreatedAt(String createdAt) {
 		this.createdAt = createdAt;
 	}
 
-	public Timestamp getUpdatedAt() {
+	public String getUpdatedAt() {
 		return updatedAt;
 	}
 
-	public void setUpdatedAt(Timestamp updatedAt) {
+	public void setUpdatedAt(String updatedAt) {
 		this.updatedAt = updatedAt;
 	}
 

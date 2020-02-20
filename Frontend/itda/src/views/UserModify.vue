@@ -1,18 +1,18 @@
 <template>
   <v-container>
-    <v-card>
+    <v-card >
       <v-form ref="form" @submit.prevent="submit">
-        <v-card-title>
+        <v-card-title align:center>
           User Info
           <v-spacer></v-spacer>
           <router-link :to="{name:'mypage'}">
-            <v-btn class="mt-0" text>
-              <v-icon>undo</v-icon>
+            <v-btn class="mb-0" text>
+              <v-icon>backspace</v-icon>
             </v-btn>
           </router-link>
         </v-card-title>
         <v-row>
-          <v-col cols="5">
+          <v-col cols="3">
             <v-card max-height="180" max-width="200" class="mx-auto ml-5">
               <v-img
                 height="180"
@@ -34,7 +34,7 @@
           <v-col cols="7">
             <v-card-subtitle>User Name</v-card-subtitle>
             <v-card-text>
-              <v-text-field v-model="userInfo.user.uimg" label="Name"></v-text-field>
+              <v-text-field v-model="userInfo.user.uname" label="Name"></v-text-field>
             </v-card-text>
             <input
               type="file"
@@ -47,16 +47,20 @@
             />
           </v-col>
         </v-row>
-
+        
         <v-card-subtitle>User email</v-card-subtitle>
+        
+        <v-row>
+        <v-col cols="10">
         <v-card-text>
-          <v-text-field :value="userInfo.user.email" readonly label="수정이 불가능한 항목입니다." color="red"></v-text-field>
+        <v-text-field :value="userInfo.user.email" readonly label="수정이 불가능한 항목입니다." color="red"></v-text-field>
         </v-card-text>
-
+        </v-col>
+        </v-row>
         <v-card-subtitle v-if="local_Chk">Password</v-card-subtitle>
         <v-card-text v-if="local_Chk">
           <v-row>
-            <v-col cols="6">
+            <v-col cols="5">
               <v-text-field
                 v-model="password_rg"
                 :value="password_rg"
@@ -64,7 +68,7 @@
                 label="password*"
               ></v-text-field>
             </v-col>
-            <v-col cols="6">
+            <v-col cols="5">
               <v-text-field
                 v-model="password_rg1"
                 :value="password_rg1"
@@ -266,7 +270,7 @@ export default {
         };
         axios
           .post(
-            "https://i02b201.p.ssafy.io:8197/itda/api/uploadFile",
+            "https://i02b201.p.ssafy.io:8197/itda/api/uploadImg",
             formdata,
             config
           )

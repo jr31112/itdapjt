@@ -2,8 +2,11 @@
   <v-col class="wantedstack" cols="12" md="6">
     <div class="main-box">
       <div class="main-box-h-div">
-        <h5 class="mb-0 main-box-h p-1">스크랩</h5>
+        <h5 class="mb-0 main-box-h p-1"><b>{{this.$store.state.userInfo.user.uname}}</b>님 맞춤공고</h5>
       </div>
+      <span class="main-box-desc">
+        <v-icon>hashtag</v-icon>
+        기술스택에 맞는 공고를 추천해드립니다.</span>
       <v-carousel
         v-if="stackList.length"
         hide-delimiters

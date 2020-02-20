@@ -110,13 +110,14 @@
                     
                       <v-row>
                         <div class="pa-0"><v-checkbox class="mt-0" v-model="stacklist[5*(i-1) + j-1].value"></v-checkbox></div>
-                        <div class="pa-0">
+                        <div class="pa-0 mx-auto" style="position:relative;left:-15px">
                             <v-img class="mx-auto" height="20" width="20" :src="getImgUrl(5*(i-1) + j)" aspect-ratio="1" contain></v-img>
                             <p class="text-center">{{stacklist[5*(i-1) + j-1].tname}}</p>
                         </div>
                         
                       </v-row>
                   </v-col>
+                  <v-col v-for="j in i==9?4:0" :key="j+1"></v-col>
                 </v-row>
               </v-card-text>
               <v-divider></v-divider>

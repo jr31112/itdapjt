@@ -108,7 +108,8 @@
                 <v-row v-for="i in 9" :key="i">
                   <v-col v-for="j in i==9?1:5" :key="j">
                     <v-checkbox v-model="stacklist[5*(i-1) + j-1].value"></v-checkbox>
-                    <v-img height="20" aspect-ratio="1" contain></v-img>
+                    <!-- <v-img :src="getImg(5*(i-1) + j-1)"></v-img> -->
+                    <!-- <v-img height="20" aspect-ratio="1" contain></v-img> -->
                     {{stacklist[5*(i-1) + j-1].tname}}
                   </v-col>
                 </v-row>
@@ -161,7 +162,7 @@ export default {
           cid: null,
           email: null,
           major: null,
-          pw: null,
+          pw: null, 
           uimg: null,
           uname: null
         },
@@ -171,13 +172,59 @@ export default {
       password_rg: "",
       password_rg1: "",
       dialog: false,
+      imgsrc1: [
+           '../assets/stacks/1.png',
+           '../assets/stacks/2.png',
+           '../assets/stacks/3.png',
+           '../assets/stacks/4.png',
+           '../assets/stacks/5.png',
+           '../assets/stacks/6.png',
+           '../assets/stacks/7.png',
+           '../assets/stacks/8.png',
+           '../assets/stacks/9.png',
+           '../assets/stacks/10.png',
+           
+           '../assets/stacks/11.png',
+           '../assets/stacks/12.png',
+           '../assets/stacks/13.png',
+           '../assets/stacks/14.png',
+           '../assets/stacks/15.png',
+           '../assets/stacks/16.png',
+           '../assets/stacks/17.png',
+           '../assets/stacks/18.png',
+           '../assets/stacks/19.png',
+           '../assets/stacks/20.png',
 
+           '../assets/stacks/21.png',
+           '../assets/stacks/22.png',
+           '../assets/stacks/23.png',
+           '../assets/stacks/24.png',
+           '../assets/stacks/25.png',
+           '../assets/stacks/26.png',
+           '../assets/stacks/27.png',
+           '../assets/stacks/28.png',
+           '../assets/stacks/29.png',
+           '../assets/stacks/30.png',
+           
+           '../assets/stacks/31.png',
+           '../assets/stacks/32.png',
+           '../assets/stacks/33.png',
+           '../assets/stacks/34.png',
+           '../assets/stacks/35.png',
+           '../assets/stacks/36.png',
+           '../assets/stacks/37.png',
+           '../assets/stacks/38.png',
+           '../assets/stacks/39.png',
+           '../assets/stacks/40.png',
+           '../assets/stacks/41.png'     
+      ]
     };
   },
   created() {
     this.getAllData();
   },
   methods: {
+    
     goSave() {
       if (this.password_rg != "") {
         if (this.password_rg != this.password_rg1) {

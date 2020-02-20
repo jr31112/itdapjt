@@ -69,6 +69,10 @@
                 <v-divider></v-divider>
         </v-container>
         <div>
+            <StudyChat 
+            :study="study"
+            :person="person"
+            ></StudyChat>
             <!-- 파일 업로드 -->
         </div>
     </div>
@@ -80,6 +84,7 @@
     import FullCalendar from '@fullcalendar/vue'
     import timeGridPlugin from '@fullcalendar/timegrid';
     import resourceTimelinePlugin from '@fullcalendar/resource-timeline'
+    import StudyChat from '../components/StudyMain/StudyChat.vue'
     export default {
         name: "stduydetail",
         data() {
@@ -95,7 +100,7 @@
             }
         },
         components: {
-
+            StudyChat,
             FullCalendar
         },
         methods: {

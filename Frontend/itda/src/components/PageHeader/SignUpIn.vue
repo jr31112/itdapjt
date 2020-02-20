@@ -54,7 +54,7 @@
           <v-layout>
             <v-btn
               class="mb-1"
-              color="primary"
+              color="rgba(0, 170, 179)"
               depressed="depressed"
               block="block"
               large="large"
@@ -94,9 +94,10 @@
           ></v-text-field>
           <v-btn
             class="mb-1"
-            color="primary"
+            color="rgba(0, 170, 179)"
             depressed="depressed"
             block="block"
+            dark
             large="large"
             @click="login(
               {
@@ -154,7 +155,7 @@ export default {
       overlay:false,
     };
   },
-  computed: {
+  beforecreated: {
     ...mapState(["isLogin", "isDialog"])
   },
   components: {},
@@ -208,7 +209,7 @@ export default {
       }
     },
     ...mapActions(["login", "register", ]),
-    ...mapMutations(["loginSuccess"]),
+    ...mapMutations(["FisrtloginSocialSuccess"]),
     goInit() {
       //제출 후 초기화.
         (this.email_lg = null),
@@ -273,7 +274,9 @@ export default {
                       let token = response.headers["jwt-auth-token"];
                       localStorage.setItem("access_token", token);
                       localStorage.setItem("social", "social");
-                      this.$router.go();
+                        this.$router.go()
+                      // this.$store.commit('FisrtloginSocialSuccess');
+                      // alert( this.$store.state.IsLogin)
                       this.overlay = false
                     }
                   });
@@ -298,6 +301,8 @@ export default {
                             localStorage.setItem("access_token", token);
                             localStorage.setItem("social", "social");
                             this.$router.go();
+                            // this.$store.commit('FisrtloginSocialSuccess');
+                            // alert( this.$store.state.IsLogin)
                             this.overlay = false
                           }
                         });

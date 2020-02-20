@@ -4,6 +4,7 @@
         <v-select
             v-model="options.category1"
             :items="category1Options"
+            color="teal"
             label="스터디 종류">
             </v-select>
       </v-col>
@@ -11,6 +12,7 @@
           <v-select
             v-model="options.category2"
             :items="category2Options"
+            color="teal"
             label="스터디 내용"
             ></v-select>
       </v-col>
@@ -19,6 +21,7 @@
             v-model="options.keyword"
             label="키워드"
             placeholder="키워드를 입력해주세요"
+            color="teal"
             outlined
           ></v-text-field>
       </v-col>
@@ -53,5 +56,16 @@ export default {
 </script>
 
 <style>
+.v-list-item{
+    background-color: white;
 
+}
+.v-list-item:hover{
+    background-color: #E0F2F1;
+
+}
+.v-list-item--active {
+    background-color: #E0F2F1;
+    color: rgba(0, 170, 179) !important;
+}
 </style>

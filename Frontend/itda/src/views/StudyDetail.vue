@@ -107,7 +107,7 @@
             ></StudyChat>
             <!-- 파일 업로드 -->
         </div>
-    </div>
+        <v-container>
 
             <h2>파일 업로드</h2>
             <v-file-input

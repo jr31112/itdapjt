@@ -255,8 +255,8 @@ export default {
     display: inline;
     position:relative;
     overflow: hidden;
-    color: #070103;
-    /* font-size: 150%; */
+    color: #525252;
+    font-size: 150%;
 }
 .highlight span {
     position:relative;
@@ -266,7 +266,7 @@ export default {
     content:'';
     display: block;
     width:100%;
-    height: 50%;
+    height: 30%;
     background: rgba(0, 170, 179, 0.5);
     position: absolute;
     bottom:0;

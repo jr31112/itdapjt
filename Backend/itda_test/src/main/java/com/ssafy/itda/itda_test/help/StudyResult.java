@@ -1,11 +1,14 @@
 package com.ssafy.itda.itda_test.help;
 
 import java.io.Serializable;
+import java.util.List;
 
+import com.ssafy.itda.itda_test.model.Comment;
 import com.ssafy.itda.itda_test.model.Study;
 
 public class StudyResult implements Serializable {
 	private Study study;
+	private List<Comment> comments;
 
 	private String msg;
 	private String state;
@@ -46,9 +49,17 @@ public class StudyResult implements Serializable {
 		this.state = state;
 	}
 
+	public List<Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
+	}
+
 	@Override
 	public String toString() {
-		return "StudyResult [study=" + study + ", msg=" + msg + ", state=" + state + "]";
+		return "StudyResult [study=" + study + ", comments=" + comments + ", msg=" + msg + ", state=" + state + "]";
 	}
 
 }

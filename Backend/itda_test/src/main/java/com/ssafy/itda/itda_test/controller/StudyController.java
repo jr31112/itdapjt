@@ -21,13 +21,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.itda.itda_test.help.Result;
 import com.ssafy.itda.itda_test.help.StudyResult;
-import com.ssafy.itda.itda_test.help.UserResult;
+import com.ssafy.itda.itda_test.model.Comment;
 import com.ssafy.itda.itda_test.model.Study;
 import com.ssafy.itda.itda_test.model.StudyGroup;
+import com.ssafy.itda.itda_test.service.ICommentService;
 import com.ssafy.itda.itda_test.service.IStudyGroupService;
 import com.ssafy.itda.itda_test.service.IStudyService;
 import com.ssafy.itda.itda_test.service.JwtServiceImpl;
-import com.ssafy.itda.itda_test.service.StudyServiceImpl;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -45,6 +45,9 @@ public class StudyController {
 
 	@Autowired
 	private IStudyGroupService studyGroupService;
+
+	@Autowired
+	private ICommentService CommentService;
 
 	@Autowired
 	private JwtServiceImpl jwtService;
@@ -71,12 +74,14 @@ public class StudyController {
 		if (stid == 0 || s == null || s.getStname() == null || s.getStname().equals("") || s.getMaxPcnt() == 0
 				|| s.getPcnt() == 0 || s.getStype() == 0 || s.getSgroup() == 0 || s.getContent() == null
 				|| s.getContent().equals("") || s.getCaptain() == 0) {
-			sr.setMsg("회원 정보를 가져오는데 실패하였습니다.");
+			sr.setMsg("스터디 정보를 가져오는데 실패하였습니다.");
 			sr.setState("Fail");
 			return new ResponseEntity<StudyResult>(sr, HttpStatus.OK);
 		}
 		sr.setStudy(s);
-		sr.setMsg("회원 정보를 가져오는데 성공하였습니다.");
+		List<Comment> comments = CommentService.getComments(stid);
+		sr.setComments(comments);
+		sr.setMsg("스터디 정보를 가져오는데 성공하였습니다.");
 		sr.setState("success");
 		return new ResponseEntity<StudyResult>(sr, HttpStatus.OK);
 	}

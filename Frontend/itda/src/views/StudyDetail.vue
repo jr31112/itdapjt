@@ -1,7 +1,6 @@
 <template>
     <div>
         <v-container>
-            <v-divider></v-divider>
             <v-card>
                 <v-card-title>스터디</v-card-title>
                 <v-list-item >
@@ -52,7 +51,6 @@
                         </v-col>
                     </v-row>
                 </v-list-item>
-
             </v-card>
             <v-divider></v-divider>
         </v-container>
@@ -124,129 +122,38 @@
 
 <script>
     import axios from 'axios'
-    import FullCalendar from '@fullcalendar/vue'
-    import timeGridPlugin from '@fullcalendar/timegrid';
-    import resourceTimelinePlugin from '@fullcalendar/resource-timeline'
+    
     import StudyChat from '../components/StudyMain/StudyChat.vue'
+    import StudySchedule from '../components/StudyDetail/StudySchedule.vue'
     export default {
         name: "studydetail",
-        data() {
-            return {
-                calendarPlugins: [
-                    timeGridPlugin, resourceTimelinePlugin
-                ],
-                minTime: '12:00',
-                maxTime: '24:00',
-                contentHeight: 'auto',
-                person: [],
-                study: {},
-                meetingDate:"",
-                startTime: "",
-                endTime: "",
-                valid: {},
-                overlayRead: false,
-                picker: null,
-                header: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'StudyAdd'
-                },
-                customButtons: {
-                    StudyAdd: {
-                        text: "스터디 추가",
-                        click: () => this.changeOverlay() // assuming you use Vue Router
-                    }
-                }
-            }
-        },
         components: {
             StudyChat,
-            FullCalendar
+            StudySchedule,
+        },
+        data(){
+            return{
+                study:{},
+                person:[],
+                overlayRead:false
+            }
         },
         methods: {
             changeOverlay() {
-                this.overlayRead = !this
-                    .overlayRead
-                    console
-                    .log(this.overlayRead)
+                this.overlayRead = !this.overlayRead
             },
             upload() {
                 console.log(this.$refs.file)
                 alert("hello")
             },
             getStudy() {
-                axios
-                    .get(
-                        'https://i02b201.p.ssafy.io:8197/itda/api/getStudy/' + this.$route.params.id
-                    )
-                    .then(response => {
-                        this.study = response.data.study
-                    })
+                axios.get('https://i02b201.p.ssafy.io:8197/itda/api/getStudy/' + this.$route.params.id)
+                    .then(response => {this.study = response.data.study})
             },
             getPerson() {
-                axios
-                    .get(
-                        'https://i02b201.p.ssafy.io:8197/itda/api/getStudyGroup/' + this.$route.params.id
-                    )
-                    .then(response => {
-                        this.person = response.data
-                    })
+                axios.get('https://i02b201.p.ssafy.io:8197/itda/api/getStudyGroup/' + this.$route.params.id)
+                    .then(response => {this.person = response.data})
             },
-            validate() {
-                var select = JSON.parse(localStorage.getItem('select'))
-                if (!select && this.formData.stype != 4) {
-                    alert('스터디 주제를 확인해주세요')
-                } else {
-                    if (select) {
-                        this.formData.typeFk = select.id
-                        this.formData.typeName = select.Nm
-                    } else {
-                        this.formData.typeFk = 0
-                        this.formData.typeName = '기타'
-                    }
-                    if (this.$refs.form.validate()) {
-                        axios
-                            .post(
-                                'https://i02b201.p.ssafy.io:8197/itda/api/createStudy',
-                                this.formData,
-                                {
-                                    'headers': {
-                                        "jwt-auth-token": localStorage.getItem("access_token")
-                                    }
-                                }
-                            )
-                            .then(() => {
-                                alert('스터디를 생성하였습니다.')
-                                this
-                                    .$refs
-                                    .form
-                                    .reset()
-                                this.overlay = false
-                                localStorage.removeItem('select')
-                                this.getDefaultStudies()
-                                this.getLoginStudies()
-                            })
-                            .catch()
-                        }
-                }
-            },
-            close() {
-                this.formData = {
-                    stname: '',
-                    content: '',
-                    maxPcnt: null,
-                    stype: null,
-                    sgroup: null,
-                    typeFk: null,
-                    typeName: ''
-                },
-                this
-                    .$refs
-                    .form
-                    .reset()
-                localStorage.removeItem('select')
-                this.overlay = false
-            }
         },
         created() {
             this.getStudy()

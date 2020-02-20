@@ -11,7 +11,7 @@
         <v-col  cols='12' sm="8">
             <v-card  max-hight="300"  class="mx-auto" v-if="userInfo.user">
                 <v-list one-line="two-line">
-                    <v-list-item >
+                    <v-list-item class="myInfo">
                         <v-row>
                             <v-col class="pl-5" cols='4'>
                             <v-list-item-title> 이메일 </v-list-item-title>
@@ -22,7 +22,7 @@
                         </v-row>
                     </v-list-item>
                     <v-divider></v-divider>
-                    <v-list-item>
+                    <v-list-item  class="myInfo">
                         <v-row>
                             <v-col class="pl-5" cols='4'>
                             <v-list-item-title>이름 </v-list-item-title>
@@ -33,7 +33,7 @@
                         </v-row>
                     </v-list-item>
                     <v-divider></v-divider>
-                    <v-list-item>
+                    <v-list-item  class="myInfo">
                          <v-row>
                             <v-col class="pl-5" cols='4'>
                             <v-list-item-title>전공 </v-list-item-title>
@@ -44,7 +44,7 @@
                         </v-row>
                     </v-list-item>
                     <v-divider></v-divider>
-                    <v-list-item>
+                    <v-list-item  class="myInfo">
                          <v-row>
                             <v-col class="pl-5" cols='4'>
                             <v-list-item-title>기술스택</v-list-item-title>
@@ -77,4 +77,9 @@
     }
 </script>
 
-<style></style>
+<style>
+.myInfo:hover {
+    border: none !important;
+    background-color:white !important;
+}
+</style>

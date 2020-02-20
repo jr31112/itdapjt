@@ -2,21 +2,11 @@
     <div style="padding: 80px 0px 0px 0px">
         <v-container>
             <h2>내 정보
-                <v-btn
-                    class="ma-2"
-                    outlined="outlined"
-                    large="large"
-                    fab="fab"
-                    color="indigo"
-                    width="40px"
-                    height="40px">
+                <v-btn class="ma-2" outlined="outlined" large="large" fab="fab" width="40px"
+                    height="40px" style="color: #00AAB3;">
                     <v-icon @click="goUserModifyPage">mdi-pencil</v-icon>
                 </v-btn>
-                <v-dialog
-                    v-model="this.overlay"
-                    scrollable="scrollable"
-                    max-width="500px"
-                    white="white">
+                <v-dialog v-model="overlay" scrollable="scrollable" max-width="500px" white="white">
                     <v-container class="p-0">
                         <v-row v-if="value" class="m-0">
                             <v-alert class="m-0 p-0" type="error" width="500px">비밀번호가 틀렸습니다!</v-alert>
@@ -26,18 +16,16 @@
                                 <v-card-title>비밀번호를 재확인 할께요</v-card-title>
                                 <v-card-text>
                                     <v-form ref="form" v-model="valid">
-                                        <v-text-field
-                                            v-model="formData.pw"
-                                            @keydown.enter.prevent="validate"
-                                            type="password"
-                                            label="비밀번호"
-                                            :rules="[v => !!v || '비밀번호를 입력해주세요']"></v-text-field>
+                                        <v-text-field v-model="formData.pw" @keydown.enter.prevent="validate"
+                                            type="password" label="비밀번호" :rules="[v => !!v || '비밀번호를 입력해주세요']">
+                                        </v-text-field>
                                     </v-form>
                                 </v-card-text>
                                 <v-card-actions>
                                     <v-spacer></v-spacer>
 
-                                    <v-btn type="submit" text="text" color="success" class="mr-4" @click="validate">submit</v-btn>
+                                    <v-btn type="submit" text="text" color="success" class="mr-4" @click="validate">
+                                        submit</v-btn>
                                     <v-btn color="blue darken-1" text="text" @click="reset">Reset</v-btn>
                                     <v-btn color="blue darken-1" text="text" @click="close">Close</v-btn>
                                 </v-card-actions>
@@ -46,30 +34,29 @@
                     </v-container>
                 </v-dialog>
             </h2>
-                <v-row class="mb-4">
-                    <v-col>
-                        <user-detail :userInfo="userInfo" v-if="userInfo"/>
-                    </v-col>
-                </v-row>    
+            <v-row class="mb-4">
+                <v-col>
+                    <user-detail :userInfo="userInfo" v-if="userInfo" />
+                </v-col>
+            </v-row>
             <v-row>
-                <h2>스크랩한 공고</h2>
+                <v-icon>star</v-icon>
+                <span>&nbsp;스크랩 공고</span>
             </v-row>
             <v-row class="mb-4">
                 <v-col v-if="userInfo" class="px-0">
-                    <user-recruit :userInfo="userInfo" v-on:update="update"/>
+                    <user-recruit :userInfo="userInfo" v-on:update="update" />
                 </v-col>
             </v-row>
         </v-container>
         <v-container class="my-0" white="white">
             <v-row>
                 <v-col>
-                    <h2>내 스터디 정보</h2>
+                    <v-icon>edit</v-icon>
+                    <span>&nbsp;내가 가입한 <b>스터디</b></span>
                 </v-col>
             </v-row>
-            <study-login-content
-                :myStudyList="loginStudies"
-                v-if="loginStudies.length"
-                v-on:update="update"/>
+            <study-login-content :myStudyList="loginStudies" v-if="loginStudies.length" v-on:update="update" />
             <v-row v-else>
                 <v-col>가입한 스터디가 없어요..</v-col>
             </v-row>
@@ -108,6 +95,36 @@
             this.getUserInfo()
         },
         methods: {
+            onChange() {
+                if (confirm("사진을 업로드하시겠습니까?") === true) {
+                    //확인
+
+                    console.log("확인");
+                    this.selectImg = this.$refs.uimg.files[0];
+                    var formdata = new FormData();
+                    formdata.append("file", this.selectImg);
+                    const config = {
+                        headers: {
+                            "Content-Type": "multipart/form-data",
+                            "jwt-auth-token": localStorage.getItem("access_token")
+                        }
+                    };
+                    axios
+                        .post(
+                            "https://i02b201.p.ssafy.io:8197/itda/api/uploadImg",
+                            formdata,
+                            config
+                        )
+                        .then(response => {
+                            this.imageResult = response.data.fileDownloadUri;
+                            this.userInfo.user.uimg = this.imageResult;
+                        });
+                } else {
+                    //취소
+                    this.file = null;
+                    return false;
+                }
+            },
             hellotest() {
                 alert("hello")
             },
@@ -126,18 +143,20 @@
                         this.loginStudies = response.data.myStudies
                         var len = this.loginStudies.length % 4
                         if (len) {
-                            for (var i = 0; i < 4 - len; i++) 
+                            for (var i = 0; i < 4 - len; i++)
                                 this
-                                    .loginStudies
-                                    .push({})
-                            }
+                                .loginStudies
+                                .push({})
+                        }
                     })
             },
             goUserModifyPage() {
-                if (localStorage.getItem("social") != "social") 
+                if (localStorage.getItem("social") != "social")
                     this.overlay = true
-                else 
-                    router.push({name: 'usermodify'})
+                else
+                    router.push({
+                        name: 'usermodify'
+                    })
             },
             validate() {
                 if (this.$refs.form.validate()) {
@@ -149,7 +168,9 @@
                         })
                         .then(response => {
                             if (response.data.state == "success") {
-                                router.push({name: 'usermodify'})
+                                router.push({
+                                    name: 'usermodify'
+                                })
                             } else {
                                 this.value = true
                             }

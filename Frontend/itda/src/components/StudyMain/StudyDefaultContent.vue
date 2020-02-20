@@ -19,13 +19,13 @@
                 </v-simple-table>
             </v-row>
             <v-row class="mt-2" align="center" justify="center" >
-                <v-btn text="text" class="mr-1 " @click="formerPage">
+                <v-btn text="text" class="mr-1 pa-0" @click="formerPage" width="10">
                     <v-icon>mdi-chevron-left</v-icon>
                 </v-btn>
-                <v-btn  v-for="pgNm in this.numberOfPages" :key="pgNm" text class="ml-1" @click="goPage(pgNm)">
+                <v-btn v-for="pgNm in this.numberOfPages" :key="pgNm" text class="ml-1 pa-0" @click="goPage(pgNm)">
                     {{pgNm}}
                 </v-btn>
-                <v-btn  text="text" class="ml-1" @click="nextPage">
+                <v-btn  text="text" class="ml-1 pa-0" @click="nextPage">
                     <v-icon>mdi-chevron-right</v-icon>
                 </v-btn>
             </v-row>

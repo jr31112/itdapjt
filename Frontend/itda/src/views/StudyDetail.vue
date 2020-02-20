@@ -92,7 +92,7 @@
     import resourceTimelinePlugin from '@fullcalendar/resource-timeline'
 
     export default {
-        name: "stduydetail",
+        name: "studydetail",
         data() {
             return {
                 calendarPlugins: [
@@ -132,11 +132,7 @@
                         'https://i02b201.p.ssafy.io:8197/itda/api/getStudy/' + this.$route.params.id
                     )
                     .then(response => {
-                        this.study = response
-                            .data
-                            .study
-                            console
-                            .log(this.study)
+                        this.study = response.data.study
                     })
             },
             getPerson() {
@@ -145,10 +141,7 @@
                         'https://i02b201.p.ssafy.io:8197/itda/api/getStudyGroup/' + this.$route.params.id
                     )
                     .then(response => {
-                        this.person = response
-                            .data
-                            console
-                            .log(this.person)
+                        this.person = response.data
                     })
             }
         },

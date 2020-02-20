@@ -137,12 +137,12 @@ public class WantedServiceImpl implements IWantedService {
 	public void updateVcnt(String wid) {
 		wantedDao.updateVcnt(wid);
 	}
-	
+
 	@Override
 	public List<String> getWantedBySearchFullText(String keyword) {
 		return wantedDao.getWantedBySearchFullText(keyword);
 	}
-	
+
 	@Override
 	public List<String> getWantedBySearchLike(String likeKeyword) {
 		return wantedDao.getWantedBySearchLike(likeKeyword);
@@ -166,14 +166,14 @@ public class WantedServiceImpl implements IWantedService {
 		System.out.println("Scheduler Saramin API!!");
 		String access_key = "0Q5ESrsPZNoxQPN98JpXKSFYmIHImsAyLfHbS2hUMGQUlxZ5O";
 		String search_option = "&count=110&job_type=1+4+11&job_category=4&sort=pd&start=";
-		for(int i = 0 ; i < 100; i++) {
+		for (int i = 0; i < 100; i++) {
 			String api_url = "https://oapi.saramin.co.kr/job-search/?access-key=" + access_key + search_option;
 			RestTemplate restTemplate = new RestTemplate();
 			HttpHeaders headers = new HttpHeaders();
 			headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
 			HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
-			
-			ResponseEntity<String> result = restTemplate.exchange(api_url+i, HttpMethod.GET, entity, String.class);
+
+			ResponseEntity<String> result = restTemplate.exchange(api_url + i, HttpMethod.GET, entity, String.class);
 			ObjectMapper mapper = new ObjectMapper();
 			JsonNode root = mapper.readTree(result.getBody());
 			JsonNode job = root.findPath("job");
@@ -222,21 +222,20 @@ public class WantedServiceImpl implements IWantedService {
 			boolean chk_intern = false;
 			while (st.hasMoreTokens()) {
 				String now = st.nextToken();
-				if(now.equals("1")) {
+				if (now.equals("1")) {
 					chk_junior = true;
 				}
-				if(now.equals("4") || now.equals("11")) {
+				if (now.equals("4") || now.equals("11")) {
 					chk_intern = true;
 				}
 			}
-			if(chk_junior && !chk_intern) {
+			if (chk_junior && !chk_intern) {
 				jobType = 1;
-			} else if(!chk_junior && chk_intern) {
+			} else if (!chk_junior && chk_intern) {
 				jobType = 2;
-			} else if(chk_junior && chk_intern) {
+			} else if (chk_junior && chk_intern) {
 				jobType = 3;
-			}
-			else {
+			} else {
 				return;
 			}
 			String startDate = job.get("opening-timestamp").textValue();
@@ -245,7 +244,7 @@ public class WantedServiceImpl implements IWantedService {
 					+ "&rec_seq=0";
 			Document doc = Jsoup.connect(detail_url).get();
 			String detail = doc.getElementsByClass("user_content").html();
-			
+
 			Wanted wanted = new Wanted(wid, wantedTitle, active, startDate, endDate, 0, cid, detail, jobType);
 			wantedDao.createWanted(wanted);
 			checkStack(detail_url, wid);
@@ -257,8 +256,8 @@ public class WantedServiceImpl implements IWantedService {
 		Document doc = Jsoup.connect(detail).get();
 		String[] docs = doc.getElementsByClass("user_content").text().split("\\s\\n ,/.");
 		for (Stack s : stacks) {
-			for(String comp : docs) {
-				if(comp.contains(s.getTname())){
+			for (String comp : docs) {
+				if (comp.contains(s.getTname())) {
 					WantedStack ws = new WantedStack();
 					ws.setSid(s.getSid());
 					ws.setWid(wid);
@@ -300,14 +299,15 @@ public class WantedServiceImpl implements IWantedService {
 				company.setYrSalesAmt(list_items.get(i).getElementsByClass("desc").text());
 			}
 		}
-		
-		if(company.getBusiSize() == null ||company.getBusiSize().contains("중소")) {
+
+		if (company.getBusiSize() == null || company.getBusiSize().contains("중소")) {
 			return false;
 		}
 
-		Elements thumb_company = doc.getElementsByClass("thumb_company");		
-		company.setLogo("https" + thumb_company.get(0).getElementsByTag("img").attr("src").substring(4));
-
+		Elements thumb_company = doc.getElementsByClass("thumb_company");
+		if (thumb_company.get(0).getElementsByTag("img").attr("src").length() > 4) {
+			company.setLogo("https" + thumb_company.get(0).getElementsByTag("img").attr("src").substring(4));
+		}
 		Elements txt_address = doc.getElementsByClass("txt_address");
 		company.setCorpAddr(txt_address.text());
 
@@ -329,7 +329,7 @@ public class WantedServiceImpl implements IWantedService {
 				}
 			}
 		}
-		
+
 		companyDao.createCompany(company);
 		return true;
 	}

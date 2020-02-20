@@ -1,8 +1,5 @@
 <template>
     <v-container>
-      <v-overlay :value="overlay">
-        <v-progress-circular indeterminate size="64"></v-progress-circular>
-      </v-overlay>
         <v-col>
             <v-row justify="center">
                 <v-col cols="12" sm="4">
@@ -68,7 +65,6 @@
 <script>
     import { mapState } from 'vuex'
     import RecruitCalenderContent from "./RecruitCalenderContent.vue"
-    import axios from 'axios'
     export default {
         name: "recruitcalenderfilter",
         components: {
@@ -85,7 +81,6 @@
                 },
                 year: "",
                 period: [],
-                recruitList: [],
                 techstack: [],
                 recruit: [],
                 periodOptions: [
@@ -111,15 +106,7 @@
             }
         },
         methods: {
-            getRecentRecruit() {
-                this.overlay = true
-                axios
-                    .get(`https://i02b201.p.ssafy.io:8197/itda/api/getWantedAll/`)
-                    .then(response => {
-                        this.recruitList = response.data
-                        this. overlay = false
-                    })
-            },
+            
             optionmanager() {
                 if (this.period.length == 1) {
                     if (this.period[0] == "시작") {
@@ -145,11 +132,8 @@
                 }
             },
         },
-        mounted() {
-            this.getRecentRecruit()
-        },
         computed:{
-            ...mapState(["stacklist"]),
+            ...mapState(["stacklist", "recruitList"]),
         }
     }
 </script>

@@ -22,10 +22,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ssafy.itda.itda_test.help.Result;
 import com.ssafy.itda.itda_test.help.StudyResult;
 import com.ssafy.itda.itda_test.model.Comment;
+import com.ssafy.itda.itda_test.model.Files;
 import com.ssafy.itda.itda_test.model.Meeting;
 import com.ssafy.itda.itda_test.model.Study;
 import com.ssafy.itda.itda_test.model.StudyGroup;
 import com.ssafy.itda.itda_test.service.ICommentService;
+import com.ssafy.itda.itda_test.service.IFileService;
 import com.ssafy.itda.itda_test.service.IStudyGroupService;
 import com.ssafy.itda.itda_test.service.IStudyService;
 import com.ssafy.itda.itda_test.service.JwtServiceImpl;
@@ -49,6 +51,9 @@ public class StudyController {
 
 	@Autowired
 	private ICommentService CommentService;
+
+	@Autowired
+	private IFileService fileService;
 
 	@Autowired
 	private JwtServiceImpl jwtService;
@@ -81,7 +86,9 @@ public class StudyController {
 		}
 		sr.setStudy(s);
 		List<Comment> comments = CommentService.getComments(stid);
+		List<Files> files = fileService.getFiles(stid);
 		sr.setComments(comments);
+		sr.setFiles(files);
 		sr.setMsg("스터디 정보를 가져오는데 성공하였습니다.");
 		sr.setState("success");
 		return new ResponseEntity<StudyResult>(sr, HttpStatus.OK);

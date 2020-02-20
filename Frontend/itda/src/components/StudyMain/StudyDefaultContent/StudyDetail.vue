@@ -5,7 +5,7 @@
     <td class="text-center">{{study.typeName}}</td>
     <td class="text-center" id="response">{{category2[study.sgroup-1]}}</td>
     <td class="text-left">{{study.stname}}</td>
-    <td class="text-center"> {{study.pcnt}} ({{study.maxPcnt}})</td>
+    <td class="text-center"> {{study.pcnt}} / {{study.maxPcnt}}</td>
     <v-dialog v-model="overlayRead"  max-width="500px" white>
         <v-card>
             <v-card-title class="headline justify-center pb-0">STUDY</v-card-title>

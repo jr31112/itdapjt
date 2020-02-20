@@ -10,11 +10,11 @@
                             <th class="text-center">스터디 주제</th>
                             <th class="text-center" id="response">스터디 내용</th>
                             <th class="text-left" style="width:30vw">스터디 이름</th>
-                            <th class="text-center">인원/(최대) </th>
+                            <th class="text-center">인원/최대 인원 </th>
                         </tr>
                     </thead>
                     <tbody>
-                        <study-detail v-for="study in studies.slice(10*(page-1), 10*(page-1) + 10)" :key="study.stid" :study="study" v-on:update="update"/>
+                        <study-detail style="cursor:pointer;" v-for="study in studies.slice(10*(page-1), 10*(page-1) + 10)" :key="study.stid" :study="study" v-on:update="update"/>
                     </tbody>
                 </v-simple-table>
             </v-row>

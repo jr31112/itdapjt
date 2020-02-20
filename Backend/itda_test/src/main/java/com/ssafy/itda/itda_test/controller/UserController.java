@@ -40,6 +40,8 @@ import com.ssafy.itda.itda_test.service.JwtServiceImpl;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import net.gpedro.integrations.slack.SlackApi;
+import net.gpedro.integrations.slack.SlackMessage;
 
 //http://localhost:8197/humans/swagger-ui.html
 @CrossOrigin(origins = { "*" }, maxAge = 6000)
@@ -374,6 +376,11 @@ public class UserController {
 			int uid = (int) resultMap.get("uid");
 			model.setUid(uid);
 			stackService.requestStack(model);
+			String webhook_url = "https://hooks.slack.com/services/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";
+			String title = "기술 스택 요청이 있습니다!";
+			String text = "기술스택 : " + model.getTname() + "에 대한 요청입니다.";
+			SlackApi api = new SlackApi(webhook_url);
+			api.call(new SlackMessage("#webhook_api", title, text));
 			r.setMsg("기술 스택 추가 요청이 완료되었습니다.");
 			r.setState("success");
 		} else {

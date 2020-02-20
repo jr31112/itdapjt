@@ -107,17 +107,25 @@
               <router-link :to="{name:'recruitmain'}">
                   <v-img :src="getImgUrl('logo.png')" style="width :4.2rem"/>
               </router-link>
-              </v-list-item >
+              </v-list-item >    
           <v-spacer></v-spacer>
                     
           <v-list-item-icon class="ml-auto mr-0" @click="drawer=false">
               <v-icon>close</v-icon>
-              
-
             </v-list-item-icon>
         </v-list-item>
+          <v-list-item v-if="isLogin">
+            <v-list-item-avatar>
+              <v-img v-if="!this.$store.state.userInfo.user.uimg" src="../../assets/NoPersonImg.png" />
+              <v-img v-else :src='this.$store.state.userInfo.user.uimg'/>
+            </v-list-item-avatar>
+            <v-list-item-content class ="ml-3 mt-1">
+              <v-list-item-title>{{this.$store.state.userInfo.user.uname}}님 </v-list-item-title>
+              <v-list-item-subtitle >환영합니다!</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
         <v-divider></v-divider>
-        <v-list-item @click="goRecruitMainPage">
+        <v-list-item @click="goRecruitMainPage ">
             <v-list-item-icon>
               <v-icon>mdi-home</v-icon>
             </v-list-item-icon>
@@ -136,7 +144,7 @@
           </v-list-item-icon>
           <v-list-item-title>공고 달력</v-list-item-title>
         </v-list-item>
-        <v-list-item @click="goStudyPage()" v-if="isLogin">
+        <v-list-item @click="goStudyPage()" >
           <v-list-item-icon>
             <v-icon>bookmarks</v-icon>
           </v-list-item-icon>
@@ -153,7 +161,7 @@
 
         <v-list-item v-if="isLogin"
         @click="goLogout"
-        @click.stop="dialog =!dialog">
+        @click.stop="dialog =!dialog, drawer=!drawer">
           <v-list-item-icon>
             <v-icon>power_settings_new</v-icon>
             </v-list-item-icon>
@@ -162,7 +170,7 @@
 
         <v-list-item v-else
            @click="goLogin"
-           @click.stop="dialog =!dialog">
+           @click.stop="dialog =!dialog, drawer=!drawer">
            <v-list-item-icon>
              <v-icon>power_settings_new</v-icon>
            </v-list-item-icon>

@@ -34,7 +34,7 @@
           <v-col cols="7">
             <v-card-subtitle>User Name</v-card-subtitle>
             <v-card-text>
-              <v-text-field v-model="userInfo.user.uname" label="Name"></v-text-field>
+              <v-text-field v-model="userInfo.user.uimg" label="Name"></v-text-field>
             </v-card-text>
             <input
               type="file"

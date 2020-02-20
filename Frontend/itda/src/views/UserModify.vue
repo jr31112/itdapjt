@@ -106,12 +106,18 @@
               <v-divider></v-divider>
               <v-card-text style="height: 500px;">
                 <v-row v-for="i in 9" :key="i">
-                  <v-col v-for="j in i==9?1:5" :key="j">
-                    <v-checkbox v-model="stacklist[5*(i-1) + j-1].value"></v-checkbox>
-                    <!-- <v-img :src="getImg(5*(i-1) + j-1)"></v-img> -->
-                    <!-- <v-img height="20" aspect-ratio="1" contain></v-img> -->
-                    {{stacklist[5*(i-1) + j-1].tname}}
+                  <v-col class="py-0 pr-0" v-for="j in i==9?1:5" :key="j">
+                    
+                      <v-row>
+                        <div class="pa-0"><v-checkbox class="mt-0" v-model="stacklist[5*(i-1) + j-1].value"></v-checkbox></div>
+                        <div class="pa-0 mx-auto" style="position:relative;left:-15px">
+                            <v-img class="mx-auto" height="20" width="20" :src="getImgUrl(5*(i-1) + j)" aspect-ratio="1" contain></v-img>
+                            <p class="text-center">{{stacklist[5*(i-1) + j-1].tname}}</p>
+                        </div>
+                        
+                      </v-row>
                   </v-col>
+                  <v-col v-for="j in i==9?4:0" :key="j+1"></v-col>
                 </v-row>
               </v-card-text>
               <v-divider></v-divider>
@@ -330,9 +336,20 @@ export default {
     }
   },
   computed: {
-    ...mapState(["stacklist"])
+    ...mapState(["stacklist"]),
+    getImgUrl() {
+      return (img)=>{
+        return require("../assets/stacks/" + img + '.png')
+      }
+    },
+
   }
 };
 </script>
 
-<style></style>
+<style>
+#center{
+  position:relative;
+  top: 20px;
+}
+</style>

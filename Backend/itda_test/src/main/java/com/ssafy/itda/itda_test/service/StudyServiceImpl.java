@@ -10,6 +10,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.itda.itda_test.dao.StudyDao;
+import com.ssafy.itda.itda_test.model.Meeting;
 import com.ssafy.itda.itda_test.model.Study;
 
 @Service
@@ -17,7 +18,7 @@ public class StudyServiceImpl implements IStudyService {
 
 	@Autowired
 	private StudyDao studyDao;
-	
+
 	@Override
 	public List<Study> getAllStudy() {
 		// TODO Auto-generated method stub
@@ -49,6 +50,11 @@ public class StudyServiceImpl implements IStudyService {
 	@Override
 	public List<Study> getStudyByCompany(String cid) {
 		return studyDao.getStudyByCompany(cid);
+	}
+
+	@Override
+	public void createMeeting(Meeting model) {
+		studyDao.createMeeting(model);
 	}
 
 }

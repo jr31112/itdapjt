@@ -43,7 +43,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 	
 	<insert id="requestStack" parameterType="com.ssafy.itda.itda_test.model.Stack">
-		INSERT INTO stack_t (uid, tname) values (#{uid}, #{tname})
+		INSERT INTO reqStack_t (uid, tname) values (#{uid}, #{tname})
 	</insert>
 	
 </mapper>

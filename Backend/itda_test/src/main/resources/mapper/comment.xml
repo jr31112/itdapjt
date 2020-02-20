@@ -9,7 +9,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	resultType="com.ssafy.itda.itda_test.model.Comment">
 		SELECT *
 		FROM comment_t
-		WHERE stid = #{stid}
+		WHERE stid = #{stid} order by createdAt
 	</select>
 	
 	<insert id="createComment"

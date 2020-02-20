@@ -132,7 +132,8 @@
 </template>
 <script>
 import { mapState, mapActions, mapMutations } from "vuex";
-import axios from "axios";
+import axios from "axios"
+import router from "../../router"
 import firebase from "firebase";
 
 export default {
@@ -270,14 +271,17 @@ export default {
                       this.overlay = true
                       return;
                     } else {
-                      
-                      let token = response.headers["jwt-auth-token"];
-                      localStorage.setItem("access_token", token);
-                      localStorage.setItem("social", "social");
-                        this.$router.go()
-                      // this.$store.commit('FisrtloginSocialSuccess');
-                      // alert( this.$store.state.IsLogin)
-                      this.overlay = false
+                      let token = response.headers["jwt-auth-token"]
+                      localStorage.setItem("access_token", token)
+                      localStorage.setItem("social", "social")
+                      axios.get("https://i02b201.p.ssafy.io:8197/itda/api/getUser", {headers:{"jwt-auth-token": token}})
+                          .then(res => {
+                            let userInfo = res.data
+                            this.$store.commit('loginSuccess', userInfo)
+                            localStorage.setItem("mid",userInfo.user.auth)
+                            this.overlay = false
+                            router.push({'name':'recruitmain'}).catch(()=>{})
+                          })
                     }
                   });
               } else {
@@ -297,13 +301,17 @@ export default {
                         })
                         .then(response => {
                           if (response.data.state == "success") {
-                            let token = response.headers["jwt-auth-token"];
-                            localStorage.setItem("access_token", token);
-                            localStorage.setItem("social", "social");
-                            this.$router.go();
-                            // this.$store.commit('FisrtloginSocialSuccess');
-                            // alert( this.$store.state.IsLogin)
-                            this.overlay = false
+                            let token = response.headers["jwt-auth-token"]
+                            localStorage.setItem("access_token", token)
+                            localStorage.setItem("social", "social")
+                            axios.get("https://i02b201.p.ssafy.io:8197/itda/api/getUser", {headers:{"jwt-auth-token": token}})
+                            .then(res => {
+                              let userInfo = res.data
+                              this.$store.commit('loginSuccess', userInfo)
+                              localStorage.setItem("mid",userInfo.user.auth)
+                              this.overlay = false
+                              router.push({'name':'recruitmain'}).catch(()=>{})
+                            })
                           }
                         });
                     }

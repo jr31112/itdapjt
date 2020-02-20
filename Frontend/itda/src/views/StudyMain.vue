@@ -4,10 +4,11 @@
       <v-container white class="my-0" v-if="isLogin">
           <v-row>
               <v-col>
-                <h2>내가 가입한 스터디 보기</h2>
+                <v-icon>edit</v-icon>
+                <span>&nbsp;내가 가입한 <b>스터디</b></span>
               </v-col>
               <v-spacer></v-spacer>
-                <v-btn class="mr-5" color="rgba(0, 170, 179)" dark @click.stop="overlay = !overlay" v-if="isLogin">스터디 새로등록</v-btn>
+                <v-btn class="mr-5 study-create-btn" style="color: grey;" text @click.stop="overlay = !overlay" v-if="isLogin"><b>새 스터디</b></v-btn>
                 <v-dialog v-model="overlay" scrollable max-width="500px">
                     <v-card>
                         <v-card-title>스터디 등록</v-card-title>
@@ -39,7 +40,7 @@
           </v-row>
       </v-container>
       <v-container class="my-0" white>
-          <v-row><v-col><h2>스터디 전체 보기</h2></v-col></v-row>
+          <v-row><v-col><span><b>전체</b></span></v-col></v-row>
           <study-filter :options="this.options" style="max-width:930px"/>
           <study-default-content :options="this.options" :allstudy="this.defaultStudies" :islogin="isLogin" v-on:update="update"/>
       </v-container>
@@ -192,5 +193,10 @@ export default {
 </script>
 
 <style>
-
+.study-create-btn {
+    border: 1px solid rgba(0, 170, 179);
+}
+.study-create-btn:hover {
+    color: rgba(0, 170, 179) !important; 
+}
 </style>

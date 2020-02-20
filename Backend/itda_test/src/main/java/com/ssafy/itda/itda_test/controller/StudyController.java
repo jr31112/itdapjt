@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ssafy.itda.itda_test.help.Result;
 import com.ssafy.itda.itda_test.help.StudyResult;
 import com.ssafy.itda.itda_test.model.Comment;
+import com.ssafy.itda.itda_test.model.Meeting;
 import com.ssafy.itda.itda_test.model.Study;
 import com.ssafy.itda.itda_test.model.StudyGroup;
 import com.ssafy.itda.itda_test.service.ICommentService;
@@ -137,6 +138,48 @@ public class StudyController {
 		studyService.deleteStudy(stid);
 		r.setMsg("스터디 삭제가 성공적으로 완료되었습니다.");
 		r.setState("success");
+		return new ResponseEntity<Result>(r, HttpStatus.OK);
+	}
+
+	@ApiOperation(value = "미팅을 생성한다.", response = Result.class)
+	@RequestMapping(value = "/createMeeting", method = RequestMethod.POST)
+	public ResponseEntity<Result> createMeeting(@RequestBody Meeting model, HttpServletRequest req) throws Exception {
+		logger.info("3-------------createMeeting-----------------------------" + new Date());
+		logger.info("3-------------createMeeting-----------------------------" + model);
+		Result r = new Result();
+		Map<String, Object> resultMap = new HashMap<>();
+		String token = req.getHeader("jwt-auth-token");
+		if (token != null && !token.equals("")) {
+			resultMap.putAll(jwtService.get(token));
+			int uid = (int) resultMap.get("uid");
+			int stid = model.getStid();
+			boolean ingroup = false;
+			List<StudyGroup> sglist = studyGroupService.getStudyGroup(stid);
+			for (StudyGroup sg : sglist) {
+				if (sg.getUid() == uid) {
+					ingroup = true;
+					break;
+				}
+			}
+			if (ingroup) {
+				if (model.getTitle() == null || model.getTitle().equals("") || model.getStartTime() == null
+						|| model.getStartTime().equals("") || model.getEndTime() == null
+						|| model.getEndTime().equals("")) {
+					r.setMsg("필수 입력값이 입려되지 않았습니다!");
+					r.setState("fail");
+				}
+				studyService.createMeeting(model);
+
+				r.setMsg("성공적으로 미팅을 성공했습니다!");
+				r.setState("success");
+			} else {
+				r.setMsg("해당 스터디 그룹에 속해있지 않습니다!");
+				r.setState("fail");
+			}
+		} else {
+			r.setMsg("사용자 정보를 읽어올 수 없습니다.");
+			r.setState("fail");
+		}
 		return new ResponseEntity<Result>(r, HttpStatus.OK);
 	}
 

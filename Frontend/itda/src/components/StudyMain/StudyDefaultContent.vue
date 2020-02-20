@@ -10,22 +10,22 @@
                             <th class="text-center">스터디 주제</th>
                             <th class="text-center" id="response">스터디 내용</th>
                             <th class="text-left" style="width:30vw">스터디 이름</th>
-                            <th class="text-center">인원/(최대) </th>
+                            <th class="text-center">인원/최대 인원 </th>
                         </tr>
                     </thead>
                     <tbody>
-                        <study-detail v-for="study in studies.slice(10*(page-1), 10*(page-1) + 10)" :key="study.stid" :study="study" v-on:update="update"/>
+                        <study-detail style="cursor:pointer;" v-for="study in studies.slice(10*(page-1), 10*(page-1) + 10)" :key="study.stid" :study="study" v-on:update="update"/>
                     </tbody>
                 </v-simple-table>
             </v-row>
             <v-row class="mt-2" align="center" justify="center" >
-                <v-btn text="text" class="mr-1 " @click="formerPage">
+                <v-btn text="text" class="mr-1 pa-0" @click="formerPage" width="10">
                     <v-icon>mdi-chevron-left</v-icon>
                 </v-btn>
-                <v-btn  v-for="pgNm in this.numberOfPages" :key="pgNm" text class="ml-1" @click="goPage(pgNm)">
+                <v-btn v-for="pgNm in this.numberOfPages" :key="pgNm" text class="ml-1 pa-0" @click="goPage(pgNm)">
                     {{pgNm}}
                 </v-btn>
-                <v-btn  text="text" class="ml-1" @click="nextPage">
+                <v-btn  text="text" class="ml-1 pa-0" @click="nextPage">
                     <v-icon>mdi-chevron-right</v-icon>
                 </v-btn>
             </v-row>

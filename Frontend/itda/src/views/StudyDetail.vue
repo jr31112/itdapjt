@@ -248,7 +248,7 @@
                 this.overlay = false
             }
         },
-        mounted() {
+        created() {
             this.getStudy()
             this.getPerson()
         }

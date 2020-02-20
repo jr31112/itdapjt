@@ -100,7 +100,7 @@
                             .push({
                                 wid,
                                 title,
-                                color: "blue",
+                                color: "#7986CB",
                                 textColor: "white",
                                 start: start,
                                 wstack,
@@ -114,7 +114,7 @@
                             .push({
                                 wid,
                                 title,
-                                color: "red",
+                                color: "#FF8A65",
                                 textColor: "white",
                                 start: end,
                                 wstack,

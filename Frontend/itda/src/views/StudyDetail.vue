@@ -1,7 +1,7 @@
 <template>
-    <div class="studydetail">
+    <div>
         <v-container>
-             <v-divider></v-divider>
+            <v-divider></v-divider>
             <v-card>
                 <v-card-title>스터디</v-card-title>
                 <v-list-item >
@@ -52,27 +52,37 @@
                         </v-col>
                     </v-row>
                 </v-list-item>
-               
+
             </v-card>
-             <v-divider></v-divider>
+            <v-divider></v-divider>
         </v-container>
-        
+
         <v-container>
             <v-divider></v-divider>
             <FullCalendar
                 defalutView="timeGridWeek"
                 :plugins="calendarPlugins"
+                :custom-buttons="customButtons"
+                :header="header"
                 :minTime='minTime'
                 :maxTime='maxTime'
-                :contentHeight="contentHeight"
-                />
-                <v-divider></v-divider>
+                :contentHeight="contentHeight"/>
+            <v-divider></v-divider>
         </v-container>
-        <div>
-            <!-- 파일 업로드 -->
-        </div>
-    </div>
+        <v-container>
 
+            <h2>파일 업로드</h2>
+            <v-file-input
+                multiple="multiple"
+                label="File input"
+                ref="file"
+                @change="upload()"/>
+            <!-- <input type="file" ref="uimg" accept="image/png, image/jpeg, image/bmp"
+            placeholder="Input Image" prepend-icon="mdi-camera" label="My Image"
+            @change="onChange()" /> -->
+
+        </v-container>
+    </div>
 </template>
 
 <script>
@@ -80,6 +90,7 @@
     import FullCalendar from '@fullcalendar/vue'
     import timeGridPlugin from '@fullcalendar/timegrid';
     import resourceTimelinePlugin from '@fullcalendar/resource-timeline'
+
     export default {
         name: "stduydetail",
         data() {
@@ -91,7 +102,20 @@
                 maxTime: '24:00',
                 contentHeight: 'auto',
                 person: [],
-                study: {}
+                study: {},
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'StudyAdd'
+                },
+                customButtons: {
+                    StudyAdd: {
+                        text: "스터디 추가",
+                        click: () => this
+                            .$router
+                            .push({name: "yourLeader"}) // assuming you use Vue Router
+                    }
+                }
             }
         },
         components: {
@@ -99,6 +123,9 @@
             FullCalendar
         },
         methods: {
+            upload() {
+                alert("hello")
+            },
             getStudy() {
                 axios
                     .get(

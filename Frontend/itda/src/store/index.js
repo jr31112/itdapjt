@@ -303,7 +303,7 @@ export default new Vuex.Store({
           if (res.data.state == 'success') {
             let token = res.headers['jwt-auth-token']
             localStorage.setItem("access_token", token)
-            localStorage.setItem("uid", res.data.user.uid)
+            localStorage.setItem("uname", res.data.user.uname)
             dispatch("getMemberInfo")
           }
           else {
@@ -314,13 +314,10 @@ export default new Vuex.Store({
     logout({ commit }) {
       commit("logout")
       if(localStorage.getItem("social") == 'social'){
-        alert("하이소셜로그인 ")
+        
         firebase.auth().signOut()
           .then(()=>{
-            alert("소셜 로그아웃 성공!")
-          })
-          .catch((err)=>{
-            alert(err.message)
+            alert("성공적으로 로그아웃 되었습니다.")
           })
       }
       else{

@@ -8,24 +8,24 @@
       </v-col>
     </v-row></v-container>
     <recruit-detail-company-info :company="recruit.company"/>
-    <v-container class="py-0" white></v-container>
-      <recruit-detail-wanted-info :wanted="recruit.wanted" :stacks="recruit.stacks"/>
+    <recruit-detail-wanted-info :wanted="recruit.wanted" :stacks="recruit.stacks"/>
+    <recruit-detail-studies :studies="recruit.studys"/>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
 import { mapState } from 'vuex'
-
 import RecruitDetailCompanyInfo from '../components/RecruitDetail/RecruitDetailCompanyInfo.vue'
 import RecruitDetailWantedInfo from '../components/RecruitDetail/RecruitDetailWantedInfo.vue'
-
-import axios from 'axios'
+import RecruitDetailStudies from '../components/RecruitDetail/RecruitDetailStudies.vue'
 
 export default {
   name: 'RecruitDetail',
   components: {
     RecruitDetailCompanyInfo,
     RecruitDetailWantedInfo,
+    RecruitDetailStudies
   },
   data(){
     return{

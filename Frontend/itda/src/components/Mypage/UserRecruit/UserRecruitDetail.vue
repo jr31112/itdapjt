@@ -11,7 +11,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="recruit in recruits.slice(10*(page-1), 10*(page-1) + 10)" :key="recruit.wanted.wid">
+                <tr style="cursor:pointer" v-for="recruit in recruits.slice(10*(page-1), 10*(page-1) + 10)" :key="recruit.wanted.wid">
                     <td class="text-center">{{recruit.company.corpNm}}</td>
                     <td class="text-center">{{recruit.wanted.wantedTitle}}</td>
                     <td class="text-center" v-if="recruit.stacks"><span v-for="stack in recruit.stacks" :key="stack.sid">{{stack.tname}} </span></td>
@@ -22,19 +22,19 @@
         </v-simple-table>
     </v-row>
     <v-row class="mt-2" align="center" justify="center">
-        <v-btn v-if="this.idx*5 - 5 + this.page >= 1" color="blue lighten-1" class="mr-1" @click="doubleformerPage">
+        <v-btn v-if="this.idx*5 - 5 + this.page >= 1" color="teal darken-1" class="mr-1" @click="doubleformerPage">
             <v-icon>arrow_back</v-icon>
         </v-btn>
-        <v-btn v-if="this.page + this.idx*5 - 1 >= 1" color="blue lighten-1" class="mr-1" @click="formerPage">
+        <v-btn v-if="this.page + this.idx*5 - 1 >= 1" color="teal lighten-2" class="mr-1" @click="formerPage">
             <v-icon>mdi-chevron-left</v-icon>
         </v-btn>
-        <v-btn v-for="pgNm in this.pagenums" :key="pgNm" color="blue lighten-3" class="ml-1" @click="goPage(pgNm)">
+        <v-btn v-for="pgNm in this.pagenums" :key="pgNm" color="teal lighten-4" class="ml-1" @click="goPage(pgNm)">
             {{pgNm}}
         </v-btn>
-        <v-btn v-if="this.page + this.idx*5 + 1 <= this.numberOfPages" color="blue lighten-1" class="ml-1" @click="nextPage">
+        <v-btn v-if="this.page + this.idx*5 + 1 <= this.numberOfPages" color="teal lighten-2" class="ml-1" @click="nextPage">
             <v-icon>mdi-chevron-right</v-icon>
         </v-btn>
-        <v-btn v-if="this.idx*5 + 5 + this.page <= this.numberOfPages" color="blue lighten-1" class="mr-1" @click="doublenextPage">
+        <v-btn v-if="this.idx*5 + 5 + this.page <= this.numberOfPages" color="teal darken-1" class="mr-1" @click="doublenextPage">
             <v-icon>arrow_forward</v-icon>
         </v-btn>
     </v-row>
@@ -129,4 +129,5 @@
 
 </script>
 
-<style></style>
+<style>
+</style>

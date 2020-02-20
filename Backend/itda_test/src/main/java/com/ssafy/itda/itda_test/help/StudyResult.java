@@ -4,12 +4,13 @@ import java.io.Serializable;
 import java.util.List;
 
 import com.ssafy.itda.itda_test.model.Comment;
+import com.ssafy.itda.itda_test.model.Files;
 import com.ssafy.itda.itda_test.model.Study;
 
 public class StudyResult implements Serializable {
 	private Study study;
 	private List<Comment> comments;
-
+	private List<Files> files;
 	private String msg;
 	private String state;
 
@@ -57,9 +58,18 @@ public class StudyResult implements Serializable {
 		this.comments = comments;
 	}
 
+	public List<Files> getFiles() {
+		return files;
+	}
+
+	public void setFiles(List<Files> files) {
+		this.files = files;
+	}
+
 	@Override
 	public String toString() {
-		return "StudyResult [study=" + study + ", comments=" + comments + ", msg=" + msg + ", state=" + state + "]";
+		return "StudyResult [study=" + study + ", comments=" + comments + ", files=" + files + ", msg=" + msg
+				+ ", state=" + state + "]";
 	}
 
 }

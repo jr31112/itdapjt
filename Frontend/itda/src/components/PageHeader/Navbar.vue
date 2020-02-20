@@ -99,22 +99,22 @@
         nav
         dense
       > 
-        <v-list-item>
-          <v-list-item-icon class="ml-auto mr-0" @click="drawer=false">
+        <v-list-item class="sideBar-list">
+          <v-list-item-icon class="ml-auto mr-0" @click="drawer=false" style="cursor:pointer;">
               <v-icon >menu</v-icon>
           </v-list-item-icon>
-            <v-list-item class="ml-auto mt-0">
+            <v-list-item class="ml-auto mt-0 sideBar-list">
               <router-link :to="{name:'recruitmain'}">
                   <v-img :src="getImgUrl('logo.png')" style="width :4.2rem"/>
               </router-link>
               </v-list-item >    
           <v-spacer></v-spacer>
                     
-          <v-list-item-icon class="ml-auto mr-0" @click="drawer=false">
+          <v-list-item-icon class="ml-auto mr-0 " @click="drawer=false" style="cursor:pointer;">
               <v-icon>close</v-icon>
             </v-list-item-icon>
         </v-list-item>
-          <v-list-item v-if="isLogin">
+          <v-list-item class="sideBar-list" v-if="isLogin">
             <v-list-item-avatar>
               <v-img v-if="!this.$store.state.userInfo.user.uimg" src="../../assets/NoPersonImg.png" />
               <v-img v-else :src='this.$store.state.userInfo.user.uimg'/>
@@ -293,6 +293,10 @@ export default {
 }
 .text-border-colored {
   color: rgba(0, 170, 179);
+}
+.sideBar-list:hover {
+  border: none !important;
+  background-color:white !important;
 }
 /* .text-colored2 {
   color: #070103;

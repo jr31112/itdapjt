@@ -2,7 +2,7 @@
   <v-col class="wantedscrap" cols="12" md="6">
     <div class="main-box">
       <div class="main-box-h-div">
-        <h5 class="mb-0 main-box-h p-1"><b>{{this.$store.state.userInfo.user.uname}}</b>님 맞춤공고</h5>
+        <h5 class="mb-0 main-box-h p-1"><b>{{userInfo.user.uname}}</b>님 맞춤공고</h5>
       </div>
       <span class="main-box-desc">
         <v-icon>hashtag</v-icon>
@@ -73,16 +73,14 @@
 
 <script>
 import router from '../../../router'
-
+import { mapState } from 'vuex'
 export default {
   name: "recruitscraplist",
   props:{
     scrapList:{type:Array}
   },
-  data(){
-    return{
-      uname : localStorage.getItem("uname"),
-    }
+  computed:{
+    ...mapState(["userInfo"])
   },
   methods: {
     getImgUrl(img) {

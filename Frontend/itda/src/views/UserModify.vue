@@ -107,10 +107,9 @@
               <v-card-text style="height: 500px;">
                 <v-row v-for="i in 9" :key="i">
                   <v-col v-for="j in i==9?1:5" :key="j">
-                    <v-checkbox
-                      v-model="stacklist[5*(i-1) + j-1].value"
-                      :label="stacklist[5*(i-1) + j-1].tname"
-                    ></v-checkbox>
+                    <v-checkbox v-model="stacklist[5*(i-1) + j-1].value"></v-checkbox>
+                    <v-img height="20" aspect-ratio="1" contain></v-img>
+                    {{stacklist[5*(i-1) + j-1].tname}}
                   </v-col>
                 </v-row>
               </v-card-text>
@@ -171,7 +170,8 @@ export default {
       selectImg: "",
       password_rg: "",
       password_rg1: "",
-      dialog: false
+      dialog: false,
+
     };
   },
   created() {
@@ -205,9 +205,7 @@ export default {
         })
         .then(response => {
           alert(response.data.msg);
-          console.log(response.data);
           if (response.data.state == "success") {
-            // alert("수정이 완료되었습니다.");
             router.push({ name: "mypage" }).catch(() => {});
           }
         });
@@ -235,7 +233,6 @@ export default {
       } else {
         this.local_Chk = false;
       }
-      console.log(this.local_Chk);
       axios
         .get(`https://i02b201.p.ssafy.io:8197/itda/api/getUser/`, {
           headers: {

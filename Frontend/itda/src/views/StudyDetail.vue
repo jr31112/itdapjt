@@ -107,19 +107,6 @@
             ></StudyChat>
             <!-- 파일 업로드 -->
         </div>
-        <v-container>
-
-            <h2>파일 업로드</h2>
-            <v-file-input
-                multiple="multiple"
-                label="File input"
-                ref="file"
-                @change="upload()"/>
-            <!-- <input type="file" ref="uimg" accept="image/png, image/jpeg, image/bmp"
-            placeholder="Input Image" prepend-icon="mdi-camera" label="My Image"
-            @change="onChange()" /> -->
-            <h2 v-if="this.overlayRead">Hello</h2>
-        </v-container>
     </div>
 </template>
 

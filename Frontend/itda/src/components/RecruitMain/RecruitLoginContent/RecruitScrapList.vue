@@ -73,16 +73,14 @@
 
 <script>
 import router from '../../../router'
-
+import { mapState } from 'vuex'
 export default {
   name: "recruitscraplist",
   props:{
     scrapList:{type:Array}
   },
-  data(){
-    return{
-      uname : localStorage.getItem("uname"),
-    }
+  computed:{
+    ...mapState(["userInfo"])
   },
   methods: {
     getImgUrl(img) {

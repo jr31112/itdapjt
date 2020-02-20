@@ -13,7 +13,7 @@
                     <v-icon @click="goUserModifyPage">mdi-pencil</v-icon>
                 </v-btn>
                 <v-dialog
-                    v-model="overlay"
+                    v-model="this.overlay"
                     scrollable="scrollable"
                     max-width="500px"
                     white="white">

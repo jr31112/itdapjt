@@ -259,7 +259,8 @@ export default new Vuex.Store({
         cnt: 0,
         value: false
       }
-    ]
+    ],
+    recruitList:[],
   },
   //뮤테이션과 엑션스 차이는? 
   //뮤테이션 : state 값 변경. 
@@ -286,11 +287,13 @@ export default new Vuex.Store({
       state.userInfo = null
       localStorage.clear()
     },
-    ////////////추가
     set_name(state, name)
     {
       state.name =name
-    }  
+    },
+    setAllRecruit(state, response){
+      state.recruitList = response.data 
+    }
   },
   actions:
   {
@@ -323,8 +326,7 @@ export default new Vuex.Store({
       else{
         alert("성공적으로 로그아웃 되었습니다.")
       }
-    }
-    ,
+    },
     getMemberInfo({commit}) {
       let token = localStorage.getItem("access_token")
       if(!token){
@@ -340,6 +342,7 @@ export default new Vuex.Store({
         .catch(() => {
           localStorage.clear();
         })
-    }
+    },
   },
+  
 })

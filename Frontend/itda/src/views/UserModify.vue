@@ -3,7 +3,7 @@
     <v-card >
       <v-form ref="form" @submit.prevent="submit">
         <v-card-title align:center>
-          User Info
+          정보 수정
           <v-spacer></v-spacer>
           <router-link :to="{name:'mypage'}">
             <v-btn class="mb-0" text>
@@ -12,8 +12,8 @@
           </router-link>
         </v-card-title>
         <v-row>
-          <v-col cols="3">
-            <v-card max-height="180" max-width="200" class="mx-auto ml-5">
+          <v-col cols="7">
+            <v-card max-height="180" max-width="200" min-width="200" class="mx-auto ml-5">
               <v-img
                 height="180"
                 width="200"
@@ -31,11 +31,7 @@
               ></v-img>
             </v-card>
           </v-col>
-          <v-col cols="7">
-            <v-card-subtitle>User Name</v-card-subtitle>
-            <v-card-text>
-              <v-text-field v-model="userInfo.user.uname" label="Name"></v-text-field>
-            </v-card-text>
+          <v-col>
             <input
               type="file"
               ref="uimg"
@@ -47,8 +43,15 @@
             />
           </v-col>
         </v-row>
+        <v-row>
+          <v-col cols="10">
+            <v-card-text>
+              <v-text-field color="teal" v-model="userInfo.user.uname" label="이름"></v-text-field>
+            </v-card-text>
+          </v-col>
+        </v-row>
         
-        <v-card-subtitle>User email</v-card-subtitle>
+        <v-card-subtitle>이메일</v-card-subtitle>
         
         <v-row>
         <v-col cols="10">
@@ -78,13 +81,13 @@
             </v-col>
           </v-row>
         </v-card-text>
-        <v-card-subtitle>User Major</v-card-subtitle>
+        
         <v-card-text>
-          <v-text-field v-model="userInfo.user.major" label="Major"></v-text-field>
+          <v-text-field color="teal" v-model="userInfo.user.major" label="전공"></v-text-field>
         </v-card-text>
 
         <v-card-title>
-          Tech Stack
+          기술스택
           <v-spacer></v-spacer>
           <v-dialog v-model="dialog" scrollable="scrollable" max-width="700px">
             <template v-slot:activator="{ on }">
@@ -92,7 +95,7 @@
                 class="mx-3"
                 fab="fab"
                 dark="dark"
-                color="gray"
+                color="#00AAB3"
                 width="30px"
                 height="30px"
                 v-on="on"
@@ -102,7 +105,7 @@
               <v-icon dark="dark">mdi-plus</v-icon>
             </template>
             <v-card width="500px">
-              <v-card-title>Select Stack</v-card-title>
+              <v-card-title>기술 스택</v-card-title>
               <v-divider></v-divider>
               <v-card-text style="height: 500px;">
                 <v-row v-for="i in 9" :key="i">
@@ -124,8 +127,8 @@
               <v-spacer></v-spacer>
               <v-card-actions class="mb-3">
                 <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" text="text" @click="goSaveStack">Save</v-btn>
-                <v-btn color="blue darken-1" text="text" @click="dialog = false">Close</v-btn>
+                <v-btn color="#00AAB3" text="text" @click="goSaveStack">Save</v-btn>
+                <v-btn color="black darken-1" text="text" @click="dialog = false">Close</v-btn>
               </v-card-actions>
             </v-card>
           </v-dialog>
@@ -140,15 +143,9 @@
         </v-card-text>
         <v-spacer></v-spacer>
         <v-row justify="center">
-          <v-btn class="ma-3" color="black darken-1" text="text" @click="goSave">Submit</v-btn>
+          <v-btn class="ma-3" color="#00AAB3" text="text" @click="goSave">수정</v-btn>
         </v-row>
       </v-form>
-    </v-card>
-
-    <v-divider></v-divider>
-    <v-card>
-      <v-card-title>My study Info</v-card-title>
-      <v-card-text></v-card-text>
     </v-card>
   </v-container>
 </template>

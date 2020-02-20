@@ -52,8 +52,8 @@
                             <v-col cols='8' v-if="userInfo.mystacks.length">
                                 <span v-for="k in userInfo.mystacks" :key="k.tmp">{{k.tname}} </span>
                                 </v-col>
-                            <v-col cols='10' v-else>
-                                <tr><td>기술 스택을 추가해주세요!</td></tr>
+                            <v-col cols='8' v-else>
+                                <span>기술 스택을 추가해주세요!!</span>
                             </v-col>
                         </v-row>
                     </v-list-item>

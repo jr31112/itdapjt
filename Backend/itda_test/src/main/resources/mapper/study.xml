@@ -55,4 +55,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT mid, title, startTime, endTime FROM meeting_t WHERE stid = #{stid} 
 	</select>
 	
+	<select id="getMeeting" parameterType="java.lang.Integer" resultType="com.ssafy.itda.itda_test.model.Meeting">
+		SELECT mid, title, startTime, endTime, stid FROM meeting_t WHERE mid = #{mid}
+	</select>
+	
+	<delete id="deleteMeeting" parameterType="java.lang.Integer">
+		DELETE FROM meeting_t WHERE mid = #{mid}
+	</delete>
+	
 </mapper>

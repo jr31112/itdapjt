@@ -21,13 +21,11 @@ public class StudyServiceImpl implements IStudyService {
 
 	@Override
 	public List<Study> getAllStudy() {
-		// TODO Auto-generated method stub
 		return studyDao.getAllStudy();
 	}
 
 	@Override
 	public Study getStudy(int stid) {
-		// TODO Auto-generated method stub
 		return studyDao.getStudy(stid);
 	}
 
@@ -38,7 +36,6 @@ public class StudyServiceImpl implements IStudyService {
 
 	@Override
 	public void deleteStudy(int stid) {
-		// TODO Auto-generated method stub
 		studyDao.deleteStudy(stid);
 	}
 
@@ -60,6 +57,16 @@ public class StudyServiceImpl implements IStudyService {
 	@Override
 	public List<Meeting> getStudyMeeting(int stid) {
 		return studyDao.getStudyMeeting(stid);
+	}
+
+	@Override
+	public Meeting getMeeting(int mid) {
+		return studyDao.getMeeting(mid);
+	}
+
+	@Override
+	public void deleteMeeting(int mid) {
+		studyDao.deleteMeeting(mid);
 	}
 	
 	

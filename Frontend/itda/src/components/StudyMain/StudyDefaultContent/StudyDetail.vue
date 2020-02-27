@@ -36,18 +36,6 @@
                 <!-- <v-card-text>
                 <p v-for="people in person" :key="people.uid+people.uname">{{people.uname}} </p>
                 </v-card-text> -->
-            <v-card-title class="pa-0 pl-6">Desired time zone</v-card-title>
-             <v-card-text  class="pa-0 pl-6">
-                <v-chip-group
-                    active-class="deep-purple accent-4 white--text"
-                    column
-                >
-                    <v-chip>5:30PM</v-chip>
-                    <v-chip>7:30PM</v-chip>
-                    <v-chip>8:00PM</v-chip>
-                    <v-chip>9:00PM</v-chip>
-                </v-chip-group>
-            </v-card-text>
                 <v-card-title >스터디 내용</v-card-title>
                 <v-card-text>
                 <p>{{study.content}}</p>

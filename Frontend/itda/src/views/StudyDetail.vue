@@ -52,7 +52,7 @@
                 </v-list-item>
             <v-divider></v-divider>
         </v-container>
-        <study-schedule :study="study"/>
+        <study-schedule :study="study" :meetings="meetings" v-on:update="update"/>
         <v-container>
             <h2>파일 업로드</h2>
             <v-file-input
@@ -82,11 +82,16 @@
         data(){
             return{
                 study:{},
+                meetings:[],
                 person:[],
                 overlayRead:false
             }
         },
         methods: {
+            update(){
+                this.getStudy()
+                console.log('emit')
+            },
             changeOverlay() {
                 this.overlayRead = !this.overlayRead
             },
@@ -98,6 +103,7 @@
                 axios.get('https://i02b201.p.ssafy.io:8197/itda/api/getStudy/' + this.$route.params.id)
                     .then(response => {
                         this.study = response.data.study
+                        this.meetings = response.data.meetings
                         })
             },
             getPerson() {

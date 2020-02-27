@@ -144,9 +144,15 @@ public class CommentController {
 				r.setMsg("키값이 누락되었습니다.");
 				r.setState("fail");
 			} else {
-				commentService.deleteComment(cmid);
-				r.setMsg("댓글 삭제가 완료되었습니다.");
-				r.setState("success");
+				Comment comment = commentService.getComment(cmid);
+				if (comment.getUid() == uid || comment.getUid() == 1) {
+					commentService.deleteComment(cmid);
+					r.setMsg("댓글 삭제가 완료되었습니다.");
+					r.setState("success");
+				} else {
+					r.setMsg("권한이 없습니다.");
+					r.setState("fail");
+				}
 			}
 		} else {
 			r.setMsg("uid 값이 없습니다.");

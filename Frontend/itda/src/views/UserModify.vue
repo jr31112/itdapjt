@@ -470,31 +470,25 @@
       onChange() {
         if (confirm("사진을 업로드하시겠습니까?") === true) {
           //확인
-
-          console.log("확인");
-          this.selectImg = this.$refs.uimg.files[0];
-          var formdata = new FormData();
-          formdata.append("file", this.selectImg);
+          this.selectImg = this.$refs.uimg.files[0]
+          var formdata = new FormData()
+          formdata.append("file", this.selectImg)
           const config = {
             headers: {
               "Content-Type": "multipart/form-data",
               "jwt-auth-token": localStorage.getItem("access_token")
             }
-          };
+          }
           axios
-            .post(
-              "https://i02b201.p.ssafy.io:8197/itda/api/uploadImg",
-              formdata,
-              config
-            )
+            .post("https://i02b201.p.ssafy.io:8197/itda/api/uploadImg", formdata, config)
             .then(response => {
-              this.imageResult = response.data.fileDownloadUri;
-              this.userInfo.user.uimg = this.imageResult;
-            });
+              this.imageResult = response.data.fileDownloadUri
+              this.userInfo.user.uimg = this.imageResult
+            })
         } else {
           //취소
-          this.file = null;
-          return false;
+          this.file = null
+          return false
         }
       }
     },

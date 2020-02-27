@@ -8,9 +8,8 @@
     <td class="text-center"> {{study.pcnt}} / {{study.maxPcnt}}</td>
     <v-dialog v-model="overlayRead"  max-width="500px" white>
         <v-card>
-            <v-card-title class="headline justify-center pb-0">STUDY</v-card-title>
+            <v-card-title class="headline justify-center pb-0">{{study.stname}}</v-card-title>
             <v-divider></v-divider>
-            <v-card-title >{{study.stname}}</v-card-title>
             <v-card-text class="pa-0 pl-6 pb-3">
                 <p>스터디 종류 : {{category1[study.stype-1]}}</p>
                 <p>스터디 주제 : {{study.typeName}}</p>

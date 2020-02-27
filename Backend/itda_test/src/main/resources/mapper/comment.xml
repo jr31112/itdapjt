@@ -27,11 +27,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		#{stid}
 	</update>
 
-	<select id="getComment" parameterType="java.lang.Integer">
+	<select id="getComment" parameterType="java.lang.Integer" resultType="com.ssafy.itda.itda_test.model.Comment">
 		SELECT * FROM comment_t WHERE cmid = #{cmid} 
 	</select>
 
-	<delete id="deletedcomment" parameterType="java.lang.Integer">
+	<delete id="deleteComment" parameterType="java.lang.Integer">
 		DELETE FROM comment_t
 		WHERE cmid = #{cmid}
 	</delete>

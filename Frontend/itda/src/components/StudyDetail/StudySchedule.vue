@@ -4,8 +4,9 @@
         defalutView="timeGridWeek"
         :plugins="calendarPlugins"
         :custom-buttons="customButtons"
+        :events="weekEvent"
         :header="header"
-        minTime='18:00'
+        minTime='12:00'
         maxTime='24:00'
         :config="config"
         contentHeight="auto"/>
@@ -48,7 +49,8 @@ export default {
         Datetime,
     },
     props:{
-        study:{type:Object}
+        study:{type:Object},
+        meetings:{type:Array}
     },
     data() {
         return {
@@ -74,12 +76,12 @@ export default {
             },
             config:{
                 locale:'ko'
-            }
+            },
+            weekEvent:[],
         }
     },
     methods:{
         submit() {
-            console.log(this.$refs.form.validate())
             if (this.$refs.form.validate()){
                 var tmp = {
                         startTime:this.formData.startTime.slice(0,10) + ' ' + this.formData.startTime.slice(11,16),
@@ -95,6 +97,7 @@ export default {
                         this.formData.title = null
                         this.formData.startTime = ''
                         this.formData.endTime = ''
+                        this.$emit('update')
                     })
                     .catch(err=>{console.log(err)})
                 }
@@ -104,8 +107,24 @@ export default {
             },
             close() {
                 this.modal = false
+            },
+            updateMeetings(){
+                this.weekEvent = []
+                for (var i = 0; i < this.meetings.length; i++){
+                    this.weekEvent.push({start:this.meetings[i].startTime,end:this.meetings[i].endTime,title:this.meetings[i].title,mid:this.meetings[i].mid})
+                }
             }
         },
+    mounted(){
+        this.updateMeetings()
+    },
+    watch:{
+        meetings:{
+            deep:true,
+            immediate:true,
+            handler:"updateMeetings"
+        }
+    }
 }
 </script>
 

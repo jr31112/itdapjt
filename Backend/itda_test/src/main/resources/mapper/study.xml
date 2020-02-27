@@ -51,7 +51,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		INSERT INTO meeting_t (title, startTime, endTime, stid) values (#{title}, #{startTime}, #{endTime}, #{stid})
 	</insert>
 	
-	<select id="getStudyMeeting" parameterType="java.lang.String" resultType="com.ssafy.itda.itda_test.model.Meeting">
+	<select id="getStudyMeeting" parameterType="java.lang.Integer" resultType="com.ssafy.itda.itda_test.model.Meeting">
 		SELECT mid, title, startTime, endTime FROM meeting_t WHERE stid = #{stid} 
 	</select>
 	

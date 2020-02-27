@@ -87,8 +87,10 @@ public class StudyController {
 		sr.setStudy(s);
 		List<Comment> comments = CommentService.getComments(stid);
 		List<Files> files = fileService.getFiles(stid);
+		List<Meeting> meetings = studyService.getStudyMeeting(stid);
 		sr.setComments(comments);
 		sr.setFiles(files);
+		sr.setMeetings(meetings);
 		sr.setMsg("스터디 정보를 가져오는데 성공하였습니다.");
 		sr.setState("success");
 		return new ResponseEntity<StudyResult>(sr, HttpStatus.OK);
@@ -174,6 +176,7 @@ public class StudyController {
 						|| model.getEndTime().equals("")) {
 					r.setMsg("필수 입력값이 입려되지 않았습니다!");
 					r.setState("fail");
+					return new ResponseEntity<Result>(r, HttpStatus.OK);
 				}
 				studyService.createMeeting(model);
 

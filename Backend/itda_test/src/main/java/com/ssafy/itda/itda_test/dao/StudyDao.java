@@ -43,7 +43,11 @@ public class StudyDao {
 		return sqlSession.selectList(ns + "getStudyByCompany", cid);
 	}
 
-	public Object createMeeting(Meeting model) {
-		return sqlSession.insert(ns + "createMeeting", model);
+	public void createMeeting(Meeting model) {
+		sqlSession.insert(ns + "createMeeting", model);
+	}
+
+	public List<Meeting> getStudyMeeting(int stid) {
+		return sqlSession.selectList(ns + "getStudyMeeting", stid);
 	}
 }

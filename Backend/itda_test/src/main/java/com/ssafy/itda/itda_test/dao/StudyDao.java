@@ -50,4 +50,12 @@ public class StudyDao {
 	public List<Meeting> getStudyMeeting(int stid) {
 		return sqlSession.selectList(ns + "getStudyMeeting", stid);
 	}
+
+	public Meeting getMeeting(int mid) {
+		return sqlSession.selectOne(ns + "getMeeting", mid);
+	}
+	
+	public void deleteMeeting(int mid) {
+		sqlSession.delete(ns + "deleteMeeting", mid);
+	}
 }

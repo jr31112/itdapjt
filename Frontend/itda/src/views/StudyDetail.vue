@@ -90,7 +90,6 @@
         methods: {
             update(){
                 this.getStudy()
-                console.log('emit')
             },
             changeOverlay() {
                 this.overlayRead = !this.overlayRead

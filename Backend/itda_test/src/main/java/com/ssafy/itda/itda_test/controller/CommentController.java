@@ -145,7 +145,7 @@ public class CommentController {
 				r.setState("fail");
 			} else {
 				Comment comment = commentService.getComment(cmid);
-				if (comment.getUid() == uid || comment.getUid() == 1) {
+				if (comment.getUid() == uid || uid == 1) {
 					commentService.deleteComment(cmid);
 					r.setMsg("댓글 삭제가 완료되었습니다.");
 					r.setState("success");

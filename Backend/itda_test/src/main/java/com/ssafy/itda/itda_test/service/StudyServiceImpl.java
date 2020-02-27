@@ -57,4 +57,11 @@ public class StudyServiceImpl implements IStudyService {
 		studyDao.createMeeting(model);
 	}
 
+	@Override
+	public List<Meeting> getStudyMeeting(int stid) {
+		return studyDao.getStudyMeeting(stid);
+	}
+	
+	
+
 }
